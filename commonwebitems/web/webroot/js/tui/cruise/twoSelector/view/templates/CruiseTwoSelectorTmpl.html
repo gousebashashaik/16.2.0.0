@@ -1,0 +1,26 @@
+ 
+{% for ship in ships %}
+<a href="{{ship.itineraryShipSelectorUrl}} "  data-index= "{{forloop.counter}}">
+	<span class="ship-type" data-index= "{{forloop.counter}}">
+			{% if  ship.galleryImages.0.mainSrc  %}
+				<img  data-index= "{{forloop.counter}}" class="ship-image" src="{{ship.galleryImages.0.mainSrc}}" width="67" height="42" />
+			{% else %}
+				<img  data-index= "{{forloop.counter}}" class="ship-image" src="../images/cruise/default-small.png" width="67" height="42" />
+			{% endif %}
+			 <span class="ship-tab-text text-width"  data-index= "{{forloop.counter}}">
+				<h3  data-index= "{{forloop.counter}}"  class="ship-name">  {% if  ship.shipName  %} {{ship.shipName}} {% endif %} </h3>
+				{% if  ship.differentiatedProduct %}
+				<span class="diff-label diff-label-block {{ship.differentiatedCode|lower}} diff-prod"  data-index= "{{forloop.counter}}"></span>
+				{% endif %}	
+				<p class="uc"  data-index= "{{forloop.counter}}">
+				 {% if  ship.keyFacts %}
+					{% for key, val in ship.keyFacts.items %}	 
+						{{val}} {{key}}  {% if forloop.last %}  {% else %} | {% endif %} 
+					{% endfor %} 
+			{% endif %}			
+				</p>
+			</span>	
+	</span>
+	</a>
+{% endfor %}
+<div class="arrow-icon-top"></div>	

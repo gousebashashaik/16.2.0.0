@@ -1,0 +1,37 @@
+{% ifequal templateView "initialize" %}
+<ul class="tabs nights-choice-menu">{% for tab in model.defaultDisplay %}
+    <li class="duration-standard {% ifequal tab model.activeDuration %} active {% endifequal %}" data-dojo-value="{{tab}}"><a href="javascript:void(0);" class="tab">{{tab}} {{searchMessaging.night}}{{tab|pluralize}}</a></li>{% endfor %}
+    <li class="custom-dates" tabindex="0">
+        <span>{{searchMessaging.moreOptions}}</span>
+        <span class="more-arrow"></span>
+        <div class="custom-durations">
+            {% if moreChoices %}<ul>
+            {% for choice in moreChoices %}<li class="preset" data-dojo-value="{{choice}}" tabindex="0">{{choice}} {{searchMessaging.night}}{{choice|pluralize}}</li>{% endfor %}
+        </ul>{% endif %}
+            <div class="customize">
+                <p class="message">{{selectYourOwnMsg|safe}}</p>
+                <div class="custom-duration-input">
+                    <input maxlength="2" placeholder="{{searchMessaging.holidayDuration.placeholder}}" value="" type="text" tabindex="0" class="custom-duration-textfield">
+                    <a class="button" tabindex="0" href="javascript:void(0);">{{searchMessaging.search}}</a>
+                </div>
+            </div>
+        </div>
+    </li>
+
+</ul>
+{% endifequal %}
+{% ifequal templateView "newtab" %}
+<li class="duration-standard active" id="duration-custom" data-dojo-value="{{value}}"><a href="javascript:void(0);" class="tab">{% ifnotequal value 1 %}{{value}} {{searchMessaging.night}}{{value|pluralize}}{% else %}Day Trip{% endifnotequal %}</a></li>
+{% endifequal %}
+{% ifequal templateView "customize" %}
+<div class="customize">
+    <p class="message">{{selectYourOwnMsg|safe}}</p>
+    <div class="custom-duration-input">
+        <input maxlength="2" placeholder="{{searchMessaging.holidayDuration.placeholder}}" value="" type="text" tabindex="0" class="custom-duration-textfield">
+        <a class="button" tabindex="0" href="javascript:void(0);">{{searchMessaging.search}}</a>
+    </div>
+</div>
+{% endifequal %}
+{% ifequal templateView "error" %}
+<p class="message error"><i class="icon icon-med icon-warning">&nbsp;</i> {{message|safe}}</p>
+{% endifequal %}

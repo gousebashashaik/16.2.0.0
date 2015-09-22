@@ -1,0 +1,139 @@
+<li class="search-listing calendar-variant">
+    {% if holiday.titleExist %}
+    <a name="{{holiday.hashTarget}}"></a>
+    <div id="{{holiday.hashTarget}}" class="month-title uc open" style="float:left;width:100%;background:#fcb712;padding:2px 0;text-align:center;font-size:16.5px;color:#fff;margin-bottom: 2%; font-weight: bold; cursor: pointer;   line-height: 28px;">
+        {{holiday.title}} <i class="icon icon-arrow"></i>
+    </div>
+    {% endif %}
+<div class="image-with-content">
+{% for sailing in holiday.sailings %}
+<div class="media-comp">
+	<a  class="ensLinkTrack" href="{{sailing.url}}">
+		<img src="{{holiday.itineraries.image}}" size="medium" width="273" height="162"/>
+	</a>
+</div>
+
+<div class="listings">
+    <h2><a  class="ensLinkTrack" href="{{sailing.url}}">{{holiday.itineraries.name}}</a></h2>
+    <span class="staticText">{{messages.visiting}}:</span>
+    <ul class="square">
+        {% for leg in holiday.itineraries.left %}
+        <li>{{leg.nameOfPort}}, {{leg.parentLocationName}}</li>
+        {% endfor %}
+    </ul>
+    <ul class="square">
+        {% for leg in holiday.itineraries.right %}
+        <li>{{leg.nameOfPort}}, {{leg.parentLocationName}}</li>
+        {% endfor %}
+    </ul>
+</div>
+    
+<div class="details-box">
+ <div class="listwithIcon">
+	<div class="item-list">
+	 <ul class="item">
+         {% if sailing.shipName.available %}
+         <li class="listing-ship-icon">
+             <i></i><span class="name">{{sailing.shipName.name|title:""}}</span>
+         </li>
+         {% endif %}
+         <li class="listing-calander-icon">
+             <i></i><span class="name">Departs {{sailing.durationInfo.departureDate|default:""}} | {{sailing.durationInfo.cruiseDuration|default:""}}-night cruise</span>
+         </li>
+         {% for offer in sailing.offers %}
+         <li class="listing-free-child-icon">
+             <i></i><span class="name">{{offer.description}}</span>
+         </li>
+         {% endfor %}
+         {% if sailing.cruiseNStay.available %}
+         <li class="listing-cruise-stay-icon">
+             <i></i><span class="name">{{sailing.cruiseNStay.name|default:""}}
+             <span class="question search-tooltip" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{sailing.cruiseNStay.tooltip}}'"></span></span>
+         </li>
+         {% endif %}
+	</ul>
+	 <ul class="item">
+         {% if sailing.sailingAirport.available %}
+         <li class="listing-flight-icon">
+             <i></i><span class="name">Return flights <span class="question search-tooltip" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: 'You can choose from a range of departure airports before completing your booking'"></span></span>
+         </li>
+         {% endif %}
+		  {% if sailing.dreamlinerLogo %}
+                                <li class="dreamliner dlinerlogo"><span class="info-block dliner" lang="en" data-dojo-props="tooltipTitle: '{{messages.dreamliner.title}}', list: '{{messages.dreamliner.features|safe}}', listClass:'bullets', width: 'jumbo'" data-dojo-type="tui.searchResults.view.Tooltips">787 Dreamliner <span class="question">?</span></span></li>
+                            {% endif %}
+         {% if sailing.boardBasis.available %}
+         <li class="listing-board-icon">
+             <i></i><span class="name">{{sailing.boardBasis.name|default:""}} cruise {{sailing.boardBasis.additionalText}}</span>
+         </li>
+         {% endif %}
+	</ul>
+	</div>
+	<!-- Changes in Price Detaisl-->
+     <div class="priceDetails">
+         <div class="floater accom-price price-box">
+             <div class="all-details">
+                 <p class="price">
+                     <span class="currency size-color">&pound;</span>
+                    <span class="price-value pp-price">{{sailing.price.perPerson|floatformat:"0"}}
+                       <span class="info-text" style="font-size:11.5px;top:3px;right: -12px;text-transform:lowercase;position: absolute;">pp</span>
+					   <span class="from uc" style="
+    width: 100%;    float: left;font-size: 12.5px;    position: absolute;left: -6px;top: -14px;line-height: 12px;color: #333;
+    text-transform: uppercase;">From</span>
+                       </span>
+                    <span class="price-value total-price">{{sailing.price.total|floatformat:"0"}}
+                       <span class="info-text uc">Total Price<span class="from">From</span></span>
+                    </span>
+                 </p>
+                  <p   style="color: #000; left: -14px;"  lang="en" class="question-info-text size-and-margin"><span data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: 'This price is for: {{sailing.durationInfo.departureDate}}| {{sailing.durationInfo.cruiseDuration}} nights with flights from {{sailing.sailingAirport.name}} based on {{sailing.cabins.0.occupancy.adults}} adults sharing', className:'whatsPrice'">WHAT IS THIS PRICE <span  class="question pp-tooltip"></span></span>
+				  </p>
+                 {% ifnotequal sailing.price.discount "0.0" %}
+                     <span class="discount highlight total-discount">
+                        <p lang="en" class="question-info-text size-and-margin">Includes &pound;{{sailing.price.discount|floatformat:"0"}} discount</p>
+                     </span>
+                 {% endifnotequal %}
+                 {% ifnotequal sailing.price.discountPP "0.0" %}
+                     <span class="discount highlight pp-discount">
+                         <p lang="en" class="question-info-text size-and-margin">Includes &pound;{{sailing.price.discountPP|floatformat:"0"}}pp discount</p>
+                     </span>
+                 {% endifnotequal %}
+             </div>
+             {% if sailing.price.lowDepositExists %}
+                       <div class="pay-deposit total-deposit">Pay only &pound;{{sailing.price.depositAmount|floatformat:"0"}} low deposit today</div>
+                       <div class="pay-deposit pp-deposit">Pay only &pound;{{sailing.price.depositAmountPP|floatformat:"0"}}pp low deposit today</div>
+                    {% endif %}
+					 {% if sailing.price.depositExists %}
+                       <div class="pay-deposit total-deposit">Pay only &pound;{{sailing.price.depositAmount|floatformat:"0"}} deposit today</div>
+                       <div class="pay-deposit pp-deposit">Pay only &pound;{{sailing.price.depositAmountPP|floatformat:"0"}}pp deposit today</div>
+                    {% endif %}
+         </div>
+     </div>
+
+
+ <div class="link-box">
+ <!-- Changes in browseItinerary-->
+<div class="option-list">
+<ul class="item">
+                {% if sailing.includeOption.available %}
+                               {% for name in sailing.includeOption.names %}
+                                  <li class="listing-option-icon"><i></i><span class="name">{{name}}</span></li>
+                               {% endfor %}
+                {% endif %}
+</ul>
+</div>
+<div class="cta-buttons">
+
+<a  class="button cta jumbo url ensLinkTrack" href="{{sailing.url}}">More details</a>
+</div>
+</div>
+</div>
+    <div class="specials">
+        {% if sailing.differentiatedProduct.differentiatedProduct %}
+        <span class="diff-label {{sailing.differentiatedProduct.code|lower}}" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{sailing.differentiatedProduct.featureCodesAndValues.strapline[0]}}'"></span>
+        <span class="corner"></span>
+        {% endif %}
+
+    </div>
+</div>
+    {% endfor %}
+</div>
+</li>

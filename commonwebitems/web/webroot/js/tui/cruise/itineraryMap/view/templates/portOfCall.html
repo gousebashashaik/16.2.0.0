@@ -1,0 +1,23 @@
+{% if itinerary.locationData.atSea %}
+<div class="mapPositionDiv" style="{{coordinates}}">
+    {% for day in itinerary.locationData.days %}
+    <span class="dayDiv" style="top:{%widthratio forloop.counter 1 -16%}px;">DAY {{day}}</span>
+    {% endfor %}
+</div>
+<!--
+Teaser Markup...
+    <div style="position:absolute;{{coordinates}}background:#71AEDF;border-radius: 3px;z-index:7;text-transform:uppercase">
+        <span style="position:absolute;top:-7px;left:9px;width:28px;height:17px;background: url('../images/cruise/arrow-up.png') no-repeat scroll 0 -0;">&nbsp;</span>
+        <span style="float:left;background: url('../images/cruise/itinerary_icon_sprite.png') no-repeat scroll 6px -32px #71AEDF;height:28px;width:28px;border-radius: 3px;">&nbsp;</span>
+    </div>
+-->
+{% else %}
+    <div class="mapPositionDiv" style="{{coordinates}}">
+        <span class="imgDiv" id="{{itinerary.locationData.locationName}}" style="">&nbsp;</span>
+            <a href="javascript:void(0);" id="{{itinerary.locationData.locationName}}" class="loction-name" style="">{{itinerary.locationData.locationName}}</a>
+			<span class="imgPointer" style="">&nbsp;</span>
+			{% for day in itinerary.locationData.days %}
+				<span class="dayDiv" style="top:{%widthratio forloop.counter 1 -16%}px;">DAY {{day}}</span>
+			{% endfor %}
+    </div>
+{% endif %}

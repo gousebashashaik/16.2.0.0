@@ -1,0 +1,8 @@
+<div class="tooltip error medium nomatch {{floatWhere}}">
+    <h4><span class='icon-warning sprite-img-grp-1'></span>We don't fly this route</h4>
+    <p>
+        <span class="block">Sorry, <b>{% for destination in unavailableDestinations%}{{destination.name}}{%if not forloop.last %}{{"&"}}{% endif %}{% endfor %}</b> is not available with your search criteria</span>
+        <span class="block">Either amend your departure airport or travel date, or continue your search with {% for destination in availableDestinations%}{{destination.name}}{%if not forloop.last %}{{"&"}}{% endif %}{% endfor %}</span>
+    </p>
+    <span class="arrow"></span>
+</div>

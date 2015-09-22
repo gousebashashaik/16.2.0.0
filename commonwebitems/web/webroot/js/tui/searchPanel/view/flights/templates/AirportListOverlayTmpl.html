@@ -1,0 +1,197 @@
+<div class="guide airport {{expandableProp}}" tabindex="0">
+	<script type="text/javascript">
+   		 dojoConfig.addModuleName("tui/widget/taggable/Navigation");
+	</script>
+    <span class="arrow"></span>
+	<div class="wrapper tui-theme">
+       
+        <!-- custom code --> 
+        <div class="title-bar">
+        	{% ifequal widgetController.searchApi "searchPanel" %}
+        	
+            <!--<h3>{{searchMessaging.airportGuide.title}} {{fromLimit}} {{searchMessaging.airports}}  
+                 <span class="status">
+                    <span class="airport-guide-count">{{searchPanelModel.from.selectedSize}}</span> {{searchMessaging.airports}} {{searchMessaging.selected}}
+                </span> 
+              <a href="javascript:void(0);" class="empty-airport-model{% ifequal searchPanelModel.from.selectedSize 0 %} inactive{% endifequal %}">
+              	<!-- {{searchMessaging.unselect}} 
+              </a>-->
+            </h3>
+	        {% endifequal %} 
+	        {% ifequal widgetController.searchApi "getPrice" %}
+	        
+	        <h3>{{searchMessaging.airportGuide.title}} {{fromLimit}} {{searchMessaging.airports}}</h3>
+	        <ul class="status-info list list-inline">
+                <li class="status-count"><span class="airport-guide-count">{{searchPanelModel.from.selectedSize}}</span> {{searchMessaging.airports}} {{searchMessaging.selected}}</li>
+		        <li class="status-remove"><a href="#" class="empty-airport-model{% ifequal searchPanelModel.from.selectedSize 0 %} inactive{% endifequal %}">{{searchMessaging.unselect}}</a></li>
+            </ul>
+	        {% endifequal %}
+        
+         
+          <h3 class="arrivingFrom">Select a departure airport </h3>
+          <a href="javascript:void(0);" analytics-id="COM_FO_SEARCH_PANEL" analytics-instance="1" analytics-text="ClearSelection1" class="empty-airport-model{% ifequal searchPanelModel.from.selectedSize 0 %} inactive{% endifequal %}">{{searchMessaging.clearSelection}}</a>
+          
+          
+          
+           <!-- <div class="textfieldairport" id="textfieldairport">
+				<div class="guideTextBox">
+			         <div id="pillsOnFly" class="col from">
+			         	Add airport multifield textbox here
+			         </div> 
+		         </div>	
+			</div> -->
+        </div>
+        
+          
+        <!-- Tabs: ukairports and overseas   -->
+        <div class="page-tabs" id="airportTabs"> 
+        	<ul class="tabs airporttype" data-dojo-type="tui.widget.taggable.Navigation"> 
+        		 <li class="">         		 
+        		 	<a href="javascript:void(0);" class="ensLinkTrack" data-componentId="ukairports" id="ukairports" analytics-id="COM_FO_SEARCH_PANEL" analytics-instance="1" analytics-text="UKAirports" >UK AIRPORTS</a>
+        		 </li>
+        		<li class="">
+        		 	<a href="javascript:void(0);" class="ensLinkTrack" data-componentId="overseasairports" id="overseasairports" analytics-id="COM_FO_SEARCH_PANEL" analytics-instance="1" analytics-text="OverSeasAirport">OVERSEAS AIRPORTS</a>
+        		</li>
+        	</ul>
+        </div>
+        <!-- ukairports and overseas buttons -->
+        <!-- <div class="airporttype">
+	        <div id="ukairports" class="ukairports">UK AIRPORTS</div>
+	        <div class="overseasairports" id="overseasairports" >OVERSEAS AIRPORTS</div>
+        </div> -->
+        <!-- custom code -->
+  	<div class="ukairports-container" id="ukairportsContainer" analytics-id="COM_FO_SEARCH_PANEL" analytics-instance="1" analytics-text="OverallFlyingFrom">
+		<div class="col">
+          <ul>
+         
+            {% for airport in ukairportList %}
+            	<li>
+            	 {% ifequal airport.cFlag true%}
+             		<span class="grpHeading">{{ airport.countryName }}</span>
+             	{% endifequal %}
+              <label for="{{airport.id}}" class="{% if not airport.available %}disabled {% endif %}
+                    {% for from in searchPanelModel.from.data %}
+                        {% if from.children.length > 0 %}
+                            {% for child in from.children %}
+                                {% ifequal child airport.id %}selected {% endifequal %}
+                            {% endfor %}
+                        {% else %}
+                            {% ifequal from.id airport.id %}selected {% endifequal %}
+                        {% endif %}
+                    {% endfor %}" >
+                  <input data-dojo-type="dijit.form.CheckBox"
+                         data-airportmodel-id="{{airport.id}}"
+                         data-airportmodel-name="{{airport.name}}"
+                         data-airportmodel-groups="{{airport.group}}"
+                          data-airportmodel-countryCode="{{airport.countryCode}}"
+                         name="{{airport.id}}"
+                         id="{{airport.id}}"
+                         value="{{airport.id}}"
+                         class="{{airport.id}}"
+                  {% for from in searchPanelModel.from.data %}
+                      {% if from.children.length > 0 %}
+                        {% for child in from.children %}
+                            {% ifequal child airport.id %}
+                      checked=checked
+                            {% endifequal %}
+                        {% endfor %}
+                      {% else %}
+                        {% ifequal from.id airport.id %}
+                      checked=checked
+                        {% endifequal %}
+                      {% endif %}
+                  {% endfor %}
+                  />
+                  {{airport.name}} ({{airport.id}})<span class="radio"></span></label>
+              </li>
+            
+           {% ifequal airport.nextCol true %}
+            {% if not forloop.last   %}
+            
+         	
+          </ul>
+        </div>
+        <div class="col">
+          <ul>
+            {% endif %} 
+               {% endifequal %}         
+              
+            {% endfor %}
+          </ul>
+          
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="overseas-container" id="overseasContainer"  analytics-id="COM_FO_SEARCH_PANEL" analytics-instance="1" analytics-text="OverallFlyingFrom1">
+         <div class="textfieldairport" id="textfieldairport">
+	       	<div class="guideTextBox">
+		        <div id="pillsOnFly" class="col from">
+		        	<!-- Add airport multifield textbox here -->
+		        </div>
+		    </div>
+		   </div>       
+        <div class="col overseas">
+          <ul>
+            {% for airport in airportList %}
+               {% ifnotequal airport.countryCode "GBR" %}
+            <li>
+             {% ifequal airport.cFlag true%}
+             	<span class="grpHeading">{{ airport.countryName }}</span>
+             {% endifequal %}
+              <label for="{{airport.id}}" class="{% if not airport.available %}disabled {% endif %}
+                    {% for from in searchPanelModel.from.data %}
+                        {% if from.children.length > 0 %}
+                            {% for child in from.children %}
+                                {% ifequal child airport.id %}selected {% endifequal %}
+                            {% endfor %}
+                        {% else %}
+                            {% ifequal from.id airport.id %}selected {% endifequal %}
+                        {% endif %}
+                    {% endfor %}" >
+                  <input type="radio"
+                         data-airportmodel-id="{{airport.id}}"
+                         data-airportmodel-name="{{airport.name}}"
+                         data-airportmodel-groups="{{airport.group}}"
+                           data-airportmodel-countryCode="{{airport.countryCode}}"
+                         name="{{airport.id}}"
+                         id="{{airport.id}}"
+                         value="{{airport.id}}"
+                         class="{{airport.id}}"
+                  {% for from in searchPanelModel.from.data %}
+                      {% if from.children.length > 0 %}
+                        {% for child in from.children %}
+                            {% ifequal child airport.id %}
+                      checked=checked
+                            {% endifequal %}
+                        {% endfor %}
+                      {% else %}
+                        {% ifequal from.id airport.id %}
+                      checked=checked
+                        {% endifequal %}
+                      {% endif %}
+                  {% endfor %}
+                  />
+                  {{airport.name}} ({{airport.id}})<span class="radio"></span></label>
+              </li>
+            	   
+              {% ifequal airport.nextCol true %}
+            {% if not forloop.last %}
+			            
+          </ul>
+        </div>
+        <div class="col overseas">
+          <ul>
+
+          {% endif %}
+         {% endifequal %}
+         {% endifnotequal %}
+         {% endfor %}
+          </ul>
+        </div>
+         <div class="clear"></div>
+        </div>
+		<a href="javascript:void(0);" class="close close-hide"></a>
+	</div>
+    
+    
+</div>

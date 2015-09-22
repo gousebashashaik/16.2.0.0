@@ -1,0 +1,11 @@
+{% if  flag %}
+	{% if deckData.items.length > 0 %}
+	<h3>Key to Cabin Categories</h3> 
+	{% endif %}
+{% endif %}
+<div class="cabin-legend-type">
+	{% for key, val in  deckData.items %}
+		<span class="color" style="background-color: {% if  val %} {{val}}{% endif %}">&nbsp;</span>
+		{{key}}
+	{% endfor %}
+</div>

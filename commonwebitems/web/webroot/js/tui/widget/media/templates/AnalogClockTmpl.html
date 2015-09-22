@@ -1,0 +1,16 @@
+<div>
+{% if IE8 %}
+<img class="placeHolder" src="{{tuiCdnPath}}/images/clock/LateCheckOutPlaceholder.jpg" />
+{% else %}
+<div class="clock-wrapper">
+<div class="clock">
+  <div class="hours-container" style="-webkit-transform: rotate({{hour_as_degree}}deg);transform: rotate({{hour_as_degree}}deg);-ms-transform: rotate({{hour_as_degree}}deg);">
+    <div class="hours"></div>
+  </div>
+  <div class="minutes-container"  style="-webkit-transform: rotate({{minute_as_degree}}deg);transform: rotate({{minute_as_degree}}deg);-ms-transform: rotate({{minute_as_degree}}deg)">
+    <div class="minutes"></div>
+  </div>  
+</div>
+</div>
+{% endif %}
+</div>

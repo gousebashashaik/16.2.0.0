@@ -1,0 +1,54 @@
+<div class="span modal-window  controller pos-fixed popup-with-scroll">
+   <div class="wrapper">
+   <div class="deck content">
+      <a class="close abs fr" href="javascript:void(0);">close</a>
+   
+   <h2  class="underline loaded width99">{{deckString}}</h2>
+   
+
+  	<div  class="item-content"  data-item-no="${counter.index}" data-deck-no="{{deckNo}}"  >
+                            <div class="item-content-wrap">
+                             
+                                
+                               <div class="row dashed-border-gray mb15px">
+                                <div class="{{deckClassName}} fl">
+								</div>
+                               <div class="fl deckFacilitiesCont">
+                               
+                               		<p class="marginBot10 clearFix">
+								<label class="section_heading uppercase">Facilities on {{deckString}}</label>
+								</p>
+                                <div class="list mb10px ">
+                                	<div class="cabin-facilites pb10px" data-dojo-type="tui.cruise.deck.view.DeckFacilities" data-dojo-props="data:''">
+					                </div>
+                                </div>
+                               </div>
+                               
+                               
+                               </div>
+                                
+                                <div class="row" >
+                              	  	
+                              	  	<div class="cabin-image hz-scroller" data-dojo-type="tui.widget.ScrollHorizontal" style="position:relative; overflow: hidden;">
+	                                	<div class="deck-SVG " data-dojo-type="tui.cruise.deck.view.DeckInteractiveSVG"  data-dojo-props=" deckNo:{{deckNo}}, shipCode: {{shipCode}}" >
+		                                    <div class="svg-container"></div>
+		                                     <div class="svg-container-ie"></div>
+	                                    </div>
+	                                  </div>  
+                                   </div>
+                             
+                               <div class="row">
+					                <div class="cabin-legend legend-${deckLayer.no}" data-dojo-type="tui.cruise.deck.view.DeckLegend" data-dojo-props="data:''">
+					                </div>
+					            </div>
+					               <div class="row">
+					                <div class="cabin-option options-${deckLayer.no}" data-dojo-type="tui.cruise.deck.view.DeckCabinOptions" data-dojo-props="data:''"></div>
+					            </div>   
+                                  
+                               
+                            </div>
+      </div>
+	<div class="loading-overlay"></div>
+	</div>
+	</div>
+</div>

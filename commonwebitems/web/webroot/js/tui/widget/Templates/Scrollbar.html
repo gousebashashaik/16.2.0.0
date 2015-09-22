@@ -1,0 +1,31 @@
+<style type="text/css">
+	.scroller { position:relative; }
+	.scroller .viewport { width:100%; }
+	.scroller .track { width:20px; position:absolute; top:0; right:0; background:#000; }
+	.scroller .track .handle { width:20px; background:#f00; }
+	
+</style>
+<!--
+<div class="span-quarter" data-dojo-type="scrollable(height:144px)">
+	<ul>
+		<li><a href="#">List item 1</a></li>
+		<li><a href="#">List item 1</a></li>
+		<li><a href="#">List item 1</a></li>
+		<li><a href="#">List item 1</a></li>
+	</ul>
+</div>
+
+-->
+<div class="span-quarter scroller" data-dojo-type="scrollable">
+	<div class="viewport" style="height:144px;overflow:hidden;">
+		<ul style="height:400px;background:yellow;">
+			<li><a href="#">List item 1</a></li>
+			<li><a href="#">List item 1</a></li>
+			<li><a href="#">List item 1</a></li>
+			<li><a href="#">List item 1</a></li>
+		</ul>
+	</div>
+	<div class="track" style="height:144px;">
+		<div class="handle" style="height:50px;"></div>
+	</div>
+</div>

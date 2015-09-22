@@ -1,0 +1,74 @@
+{% for accomData in jsonData.accomodationDatas %}
+				<li>
+					<div
+					class="  product
+					 {% if accomData.productRanges %}{% ifnotequal accomData.productRanges.0.code '' %} {{accomData.productRanges.0.code|lower|safe}} special {% endifnotequal %} {% endif %}
+					">
+						<div class="image-container">
+							{% ifequal accomData.productRanges.0.code|lower|safe 'smr' %}
+                         <span data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="floatWhere:'position-top-center', text:'{% if accomData.productRanges.0.featureCodesAndValues.strapline %}{{accomData.productRanges.0.featureCodesAndValues.strapline.0|safe}} {% endif %}'" class="diff-label cou-sensimar"></span>
+                        {% else %}
+                         <span data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="floatWhere:'position-top-center', text:'{% if accomData.productRanges.0.featureCodesAndValues.strapline %}{{accomData.productRanges.0.featureCodesAndValues.strapline.0|safe}} {% endif %}'" class="diff-label {{accomData.productRanges.0.code|lower|safe}}"></span>
+                        {% endifequal %}
+
+							<a href="{{ accomData.deepLinkUrl }}" class="ensLinkTrack"
+								data-componentId="{{compUid}}"
+								baynote_slot='{{accomData.baynoteTrackingData.baynoteSlot}}'
+								baynote_widget='{{accomData.baynoteTrackingData.baynoteWidget}}'
+								baynote_pid='{{accomData.baynoteTrackingData.baynotePid}}'
+							>
+								 {% ifnotequal accomData.featuredImgUrl '' %}
+										<img src="{{ cdnDomain }}/images/b.gif"
+										data-dojo-type="tui.widget.LazyLoadImage"
+										data-dojo-props="source:'{{ accomData.featuredImgUrl }}'" width="232" height="130" />
+									 {% endifnotequal %}
+
+
+								    {% ifequal accomData.featuredImgUrl '' %}
+										<img src="{{ cdnDomain }}/images/b.gif"
+										data-dojo-type="tui.widget.LazyLoadImage"
+										data-dojo-props="source:'{{ cdnDomain }}/images/{{ siteName }}/default-small.png'" width="232" height="130" />
+									{% endifequal %}
+
+							</a>
+
+
+						</div>
+
+						<h4><a href="{{ accomData.deepLinkUrl }}" class="ensLinkTrack"
+								data-componentId="{{compUid}}"
+								baynote_slot='{{accomData.baynoteTrackingData.baynoteSlot}}'
+								baynote_widget='{{accomData.baynoteTrackingData.baynoteWidget}}'
+								baynote_pid='{{accomData.baynoteTrackingData.baynotePid}}'
+						>{{accomData.name}}</a>
+						</h4>
+						{% if accomData.featureCodesAndValues.tRating %}
+							{% ifnotequal accomData.featureCodesAndValues.tRating '' %}
+								<p class="rating rating-md  t{{accomData.featureCodesAndValues.tRating.0|cut:" " }}  ">
+								Rating: {{accomData.featureCodesAndValues.tRating.0 }}
+								</p>
+							{% endifnotequal %}
+						{% endif %}
+
+						<p class="location-info">in {% if accomData.resortName %}{{accomData.resortName}}, {{accomData.countryName|safe}}{% else %}{{accomData.countryName|safe}}{% endif %}</p>
+
+					 <div class="boxout floater">
+					 	{% ifnotequal accomData.boardBasis '' %}
+					 	<p class="boardBasisInfo">{{accomData.boardBasis.0.name|safe}} From</p>
+							<p class="price left">
+								<strong>&pound;{{accomData.boardBasis.0.price|safe}}
+								</strong>
+								per person
+							</p>
+						{% endifnotequal %}
+							<a href="{{ accomData.deepLinkUrl }}" class="button right ensLinkTrack"
+								data-componentId="{{compUid}}"
+								baynote_slot='{{accomData.baynoteTrackingData.baynoteSlot}}'
+								baynote_widget='{{accomData.baynoteTrackingData.baynoteWidget}}'
+								baynote_pid='{{accomData.baynoteTrackingData.baynotePid}}'
+							>View details</a>
+
+						</div>
+					</div>
+				</li>
+			{% endfor %}

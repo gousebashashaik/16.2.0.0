@@ -1,0 +1,54 @@
+<div class="popup modal-window third-party-flight">
+	<a href="javascript:void(0)" class="close sprite-img-grp-1"></a>
+	<h2>Return flights: {{itinerary.departureAirport}} - {{itinerary.arrivalAirport}}</h2>
+	<div class="assurance-text">
+		<p>
+		  {% if outboundInfo %}
+		   	{{ itinerary.outbounds.0.carrier.thirdPartyInfo.aimText|default:" "|safe}}
+		  {% endif %}
+		  {% if  inboundInfo %}
+		    {{ itinerary.inbounds.0.carrier.thirdPartyInfo.aimText|default:" "|safe}}
+		  {% endif %}
+		</p>
+		<p>
+		   {% if outboundInfo %}
+		   	{{ itinerary.outbounds.0.carrier.thirdPartyInfo.otherCarrierText|default:" "|safe}}
+		   {% endif %}
+		   {% if  inboundInfo %}
+		    {{ itinerary.inbounds.0.carrier.thirdPartyInfo.otherCarrierText|default:" "|safe}}
+		   {% endif %}
+		</p>
+		<p>
+		  {% if outboundInfo %}
+		   	{{ itinerary.outbounds.0.carrier.thirdPartyInfo.assuranceText|default:" "|safe}}
+		   {% endif %}
+		  {% if  inboundInfo %}
+		    {{ itinerary.inbounds.0.carrier.thirdPartyInfo.assuranceText|default:" "|safe}}
+		  {% endif %}
+		</p>
+	</div>
+	{% if outBound %}
+		<div class="flight-details outBound  cf">
+		        <span class="icon"></span>
+				<span class="date">{{itinerary.outbounds.0.schedule.departureDate|default:" "|safe}}</span>
+				<span class="time">{{itinerary.outbounds.0.schedule.departureTime|default:" "|safe}}</span>
+				<span class="carrierLogo {{itinerary.outbounds.0.carrier.carrierCode|lower|safe}}" style="background : url('{{itinerary.outbounds.0.carrier.thirdPartyInfo.logoUrl}}') 0px center no-repeat"></span>
+		</div>
+	{% endif %}
+	{% if inBound %}
+		<div class="flight-details inBound cf">
+				<span class="icon"></span>
+				<span class="date">{{itinerary.inbounds.0.schedule.departureDate|default:" "|safe}}</span>
+				<span class="time">{{itinerary.inbounds.0.schedule.departureTime|default:" "|safe}}</span>
+				<span class="carrierLogo {{itinerary.inbounds.0.carrier.carrierCode|lower|safe}}" style="background : url('{{itinerary.inbounds.0.carrier.thirdPartyInfo.logoUrl}}') 0px center no-repeat"></span>
+		</div>
+	{% endif %}
+	<p class="change-carrier">
+	 	 {% if outboundInfo %}
+		   	{{ itinerary.outbounds.0.carrier.thirdPartyInfo.changeCarrierText|default:" "|safe}}
+		   {% endif %}
+		  {% if  inboundInfo %}
+		    {{ itinerary.inbounds.0.carrier.thirdPartyInfo.changeCarrierText|default:" "|safe}}
+		  {% endif %}
+	</p>
+</div>

@@ -1,0 +1,48 @@
+{% if toggleDisplayFlag %}
+	<p class="text fl">
+	Price shown for 
+			<span class="textBold"> {{cruiseViewData.accomName|default:" "}}</span>
+			{{jsonData.flightOptionsStaticContentViewData.genericContentViewData.genericContentMap.Generic_with_Text|default:" "}}
+			
+			{% if multipleRoomOrCabin %}
+				{{roomOrCabinCount|default:" "}} cabins
+				{% else %}
+			<span class="textBold"> {{cruiseViewData.roomViewData.0.description|default:" "}} </span>
+			{% endif %}
+			
+			{{jsonData.flightOptionsStaticContentViewData.genericContentViewData.genericContentMap.Generic_and_Text|default:" "}}
+			
+			<span class="textBold"> {{cruiseViewData.boardBasisName|default:" "}}</span>
+			
+	</p>
+	
+	
+ {% else %}
+ <p class="text fl width75">
+	Price shown for 
+			<span class="textBold"> {{cruiseViewData.accomName|default:" "}}</span>
+			{{jsonData.flightOptionsStaticContentViewData.genericContentViewData.genericContentMap.Generic_with_Text|default:" "}}
+			
+			{% if multipleRoomOrCabin %}
+				{{roomOrCabinCount|default:" "}} cabins
+				{% else %}
+			<span class="textBold"> {{cruiseViewData.roomViewData.0.description|default:" "}} </span>
+			{% endif %}
+			
+			{{jsonData.flightOptionsStaticContentViewData.genericContentViewData.genericContentMap.Generic_and_Text|default:" "}}
+			
+			<span class="textBold"> {{cruiseViewData.boardBasisName|default:" "}}</span>
+			including stay at <span class="textBold"> {{roomViewData.accomName|default:" "}}</span> 
+			{{jsonData.flightOptionsStaticContentViewData.genericContentViewData.genericContentMap.Generic_with_Text|default:" "}}
+			
+			{% if multipleRoomOrCabin %}
+				{{roomOrCabinCount|default:" "}} rooms
+				{% else %}
+			<span class="textBold">{{roomViewData.roomViewData.0.description|default:" "}}</span>
+			{% endif %}
+			
+			{{jsonData.flightOptionsStaticContentViewData.genericContentViewData.genericContentMap.Generic_and_Text|default:" "}}
+			
+			<span class="textBold"> {{roomViewData.boardBasisName|default:" "}}</span>
+	</p>		
+ {% endif %}

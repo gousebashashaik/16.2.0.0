@@ -1,0 +1,857 @@
+<!-- Compare View Heading & Controls -->
+
+{% if holidays %}
+<div class="heading-with-controls c">
+    <h1>Compare saved holidays</h1>
+    <div id="controls">
+        <span class="label">Compare by:</span>
+
+        <div class="addHolidaysPopupSelectMobile select blue sort-menu">
+            <span class="text">Key facts</span>
+            <span class="arrow"><span></span></span>
+            <select>
+                <option value="keyfacts">Key facts<i class="caret tick blue"></i></option>
+                <option value="facilities">Facilities &amp; size<i class="caret tick blue"></i></option>
+                <option value="weather">Weather &amp; location<i class="caret tick blue"></i></option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="right-panel compare-types">
+    <h2>Compare by</h2>
+    <ul>
+        <li class="compare-keyfacts active"><span class="compare-arrow show"><i class="caret back"></i></span>Key facts</li>
+        <li class="compare-facilities activex"><span class="compare-arrow hide"><i class="caret back"></i></span>Facilities &amp; size</li>
+        <li class="compare-weather activex"><span class="compare-arrow hide"><i class="caret back"></i></span>Weather &amp; location</li>
+    </ul>
+    <a class="ensLinkTrack"  {% if componentUid %}data-componentid="{{componentUid}}"{% endif %} href="{{tuiWebrootPath}}/viewShortlist/viewsavedholidaysPage"><i class="caret link"></i>Back to your shortlisted holidays</a>
+</div>
+
+<div class="columns cb" data-dojo-type="tui.widget.customeraccount.scrollControls" data-dojo-props="compareViewScroll:true">
+<div class="cvscroll pin" data-scroll-dw="false" data-scroll-options="{'scrollX': true, 'scrollY': false, 'eventPassthrough': true,'probeType': 3}">
+
+<ul class="holiday-info c pinning" style="position:fixed; z-index:22; top:0;">
+{% for holiday in holidays %}
+{% ifnotequal holiday.wishlistEntryId "" %}
+
+<li class="hol{{forloop.counter}} b">
+<div class="pinned">
+    {% if holiday.accomViewData.accomName %}
+    {% if holiday.galleryImages.0.mainSrc %}
+    <img class="accomImage nomobile nominitablet notablet" alt="{{holiday.accomViewData.accomName}}" title="{{holiday.accomViewData.accomName}}" src="{{holiday.galleryImages.0.mainSrc}}" />
+    {% else %}
+    <img class="accomImage nomobile nominitablet notablet" alt="{% if holiday.accomViewData.resortName %}{{holiday.accomViewData.resortName}}{% endif %}" title="{% if holiday.accomViewData.resortName %}{{holiday.accomViewData.resortName}}{% endif %}" src="{{tuiWebrootPath}}/images/shortlist/ca_blank_image.png" />
+    {% endif %}
+    {% endif %}
+
+    <div class="top-summary c">
+        <h4>
+            <a  class="ensLinkTrack"  {% if componentUid %}data-componentid="{{componentUid}}"{% endif %} 
+            {% if holiday.accomViewData.accomName %}
+            {% if holiday.locationMap.RESORT %}
+            {% if holiday.accomViewData.accomCode %}
+            href="/{{holiday.brandTypeDomain}}/accommodation/overview/{{holiday.locationMap.RESORT|slugify}}/{{holiday.accomViewData.accomName|slugify}}-{{holiday.accomViewData.accomCode}}"
+            {% endif %}
+            {% else %}
+            {% if holiday.locationMap.DESTINATION %}
+            {% if holiday.accomViewData.accomCode %}
+            href="/{{holiday.brandTypeDomain}}/accommodation/overview/{{holiday.locationMap.DESTINATION|slugify}}/{{holiday.accomViewData.accomName|slugify}}-{{holiday.accomViewData.accomCode}}"
+            {% endif %}
+            {% else %}
+            {% if holiday.locationMap.REGION %}
+            {% if holiday.accomViewData.accomCode %}
+            href="/{{holiday.brandTypeDomain}}/accommodation/overview/{{holiday.locationMap.REGION|slugify}}/{{holiday.accomViewData.accomName|slugify}}-{{holiday.accomViewData.accomCode}}"
+            {% endif %}
+            {% else %}
+            {% if holiday.locationMap.COUNTRY %}
+            {% if holiday.accomViewData.accomCode %}
+            href="/{{holiday.brandTypeDomain}}/accommodation/overview/{{holiday.locationMap.COUNTRY|slugify}}/{{holiday.accomViewData.accomName|slugify}}-{{holiday.accomViewData.accomCode}}"
+            {% endif %}
+            {% endif %}
+            {% endif %}
+            {% endif %}
+            {% endif %}
+            {% endif %}
+
+            >{{holiday.accomViewData.accomName}}</a>
+            {% if holiday.accomViewData.rating %}
+            <span class="t-rating nomobile nominitablet notablet" data-dojo-type="tui.widget.customeraccount.displayTRating" data-dojo-props='wishlistEntryId:"{{holiday.wishlistEntryId}}", RefId:"trating_{{holiday.wishlistEntryId}}",trating:"{{holiday.accomViewData.rating}}", brandType:"{{holiday.brandType}}"'>&nbsp;<span id="trating_plus_{{holiday.wishlistEntryId}}"></span></span>
+            {% endif %}
+        </h4>
+        <p class="where nomobile nominitablet notablet">{% if holiday.accomViewData.resortName %}{{holiday.accomViewData.resortName}},{% endif %} {% if holiday.accomViewData.destinationName %}{{holiday.accomViewData.destinationName}}{% endif %}</p>
+        <p class="total-price nomobile nominitablet notablet">{% if holiday.priceBreakdownViewData.3.description %}{{holiday.priceBreakdownViewData.3.description}}{% endif %}<span>&pound;<b>{% if holiday.priceBreakdownViewData.3.price %}{{holiday.priceBreakdownViewData.3.price}}{% endif %}</b></span></p>
+    </div>
+</div>
+
+</li>
+{% endifnotequal %}
+{% endfor %}
+
+{% if emptyRange %}
+{% for i in noOfEmptyHolidays %}
+<li class="hol3 b empty">
+    <div class="pinned">
+        <div>
+            <h3>You can compare up to 3 holidays</h3>
+            <a href="javascript:void(0);" style="margin-top:15px;" id="" name="" class="swapAnchorEmpty button cta blue ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %}>Add holiday</a>
+        </div>
+    </div>
+</li>
+{% endfor %}
+{% endif %}
+
+</ul>
+</div>
+
+<div class="cvscroll" data-scroll-dw="false" data-scroll-options="{'scrollX': true, 'scrollY': false, 'eventPassthrough': true,'probeType': 3}">
+
+<ul class="holiday-info c pinit">
+{% for holiday in holidays %}
+{% ifnotequal holiday.wishlistEntryId "" %}
+
+<li class="hol{{forloop.counter}} b">
+<div class="pinnedit" >
+    {% if holiday.accomViewData.accomName %}
+    {% if holiday.galleryImages.0.mainSrc %}
+    <img class="accomImage" alt="{{holiday.accomViewData.accomName}}" title="{{holiday.accomViewData.accomName}}" src="{{holiday.galleryImages.0.mainSrc}}" />
+    {% else %}
+    <img class="accomImage" alt="{{holiday.accomViewData.resortName}}" title="{{holiday.accomViewData.resortName}}" src="{{tuiWebrootPath}}/images/shortlist/ca_blank_image.png" />
+    {% endif %}
+    {% endif %}
+
+    <div class="top-summary c">
+        <h4>
+            <a  class="ensLinkTrack"  {% if componentUid %}data-componentid="{{componentUid}}"{% endif %} 
+            {% if holiday.accomViewData.accomName %}
+            {% if holiday.locationMap.RESORT %}
+            {% if holiday.accomViewData.accomCode %}
+            href="/{{holiday.brandTypeDomain}}/accommodation/overview/{{holiday.locationMap.RESORT|slugify}}/{{holiday.accomViewData.accomName|slugify}}-{{holiday.accomViewData.accomCode}}"
+            {% endif %}
+            {% else %}
+            {% if holiday.locationMap.DESTINATION %}
+            {% if holiday.accomViewData.accomCode %}
+            href="/{{holiday.brandTypeDomain}}/accommodation/overview/{{holiday.locationMap.DESTINATION|slugify}}/{{holiday.accomViewData.accomName|slugify}}-{{holiday.accomViewData.accomCode}}"
+            {% endif %}
+            {% else %}
+            {% if holiday.locationMap.REGION %}
+            {% if holiday.accomViewData.accomCode %}
+            href="/{{holiday.brandTypeDomain}}/accommodation/overview/{{holiday.locationMap.REGION|slugify}}/{{holiday.accomViewData.accomName|slugify}}-{{holiday.accomViewData.accomCode}}"
+            {% endif %}
+            {% else %}
+            {% if holiday.locationMap.COUNTRY %}
+            {% if holiday.accomViewData.accomCode %}
+            href="/{{holiday.brandTypeDomain}}/accommodation/overview/{{holiday.locationMap.COUNTRY|slugify}}/{{holiday.accomViewData.accomName|slugify}}-{{holiday.accomViewData.accomCode}}"
+            {% endif %}
+            {% endif %}
+            {% endif %}
+            {% endif %}
+            {% endif %}
+            {% endif %}
+
+            >{{holiday.accomViewData.accomName}}</a>
+            {% if holiday.accomViewData.rating %}
+            <span class="t-rating" data-dojo-type="tui.widget.customeraccount.displayTRating" data-dojo-props='wishlistEntryId:"{{holiday.wishlistEntryId}}", RefId:"trating_{{holiday.wishlistEntryId}}",trating:"{{holiday.accomViewData.rating}}", brandType:"{{holiday.brandType}}"'>&nbsp;<span id="trating_plus_{{holiday.wishlistEntryId}}"></span></span>
+            {% endif %}
+        </h4>
+        <p class="where">{% if holiday.accomViewData.resortName %}{{holiday.accomViewData.resortName}},{% endif %} {% if holiday.accomViewData.destinationName %}{{holiday.accomViewData.destinationName}}{% endif %}</p>
+        <p class="total-price">{% if holiday.priceBreakdownViewData.3.description %}{{holiday.priceBreakdownViewData.3.description}}{% endif %}<span>&pound;<b>{% if holiday.priceBreakdownViewData.3.price %}{{holiday.priceBreakdownViewData.3.price}}{% endif %}</b></span></p>
+    </div>
+</div>
+
+
+<ul class="category-container">
+<li class="keyfacts open">
+    <div class="comparison-data">
+        <div class="category-line date">
+            <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Date &amp; duration{% endifequal %}</span></div>
+            <p class="b">{% if holiday.flightViewData.outboundSectors.0.schedule.departureDate %}{{holiday.flightViewData.outboundSectors.0.schedule.departureDate}} {% if holiday.flightViewData.duration %} for {{holiday.flightViewData.duration}} nights{% endif %}{% else %}<i class="caret minus"></i>{% endif %}</p>
+        </div>
+        <div class="category-line passengers">
+            <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Passengers{% endifequal %}</span></div>
+            <p class="b calcHt">{% if holiday.paxViewData.noOfAdults %}{{holiday.paxViewData.noOfAdults}} adult{% ifnotequal holiday.paxViewData.noOfAdults  1 %}s{% endifnotequal %}{% if holiday.paxViewData.noOfChildren  %}, {{holiday.paxViewData.noOfChildren}} child{% ifnotequal holiday.paxViewData.noOfChildren  1 %}ren{% endifnotequal %}{% endif %}{% if holiday.paxViewData.noOfInfants %}, {{holiday.paxViewData.noOfInfants}} infant{% ifnotequal holiday.paxViewData.noOfInfants  1 %}s{% endifnotequal %}{% endif %}{% else %}<i class="caret minus"></i>{% endif %}</p>
+        </div>
+        <div class="category-line flights">
+            <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Flights{% endifequal %}</span></div>
+            <p class="b calcHt">
+                {% if holiday.flightViewData.inboundSectors.0.departureAirport %}
+                <span>{% if holiday.flightViewData.outboundSectors.0.departureAirport.name%}{{holiday.flightViewData.outboundSectors.0.departureAirport.name}}{% endif %} - {% if holiday.flightViewData.outboundSectors.0.arrivalAirport.name%}{{holiday.flightViewData.outboundSectors.0.arrivalAirport.name}}{% endif %}</span>
+                {% if holiday.flightViewData.outboundSectors.0.schedule.departureDate %}
+                <span><i class="caret flyout"></i>{% if holiday.flightViewData.outboundSectors.0.schedule.departureDate %}{{holiday.flightViewData.outboundSectors.0.schedule.departureDate}}{% endif %} <span><i class="caret time"></i>{% if holiday.flightViewData.outboundSectors.0.schedule.depTime %} {{holiday.flightViewData.outboundSectors.0.schedule.depTime}} {% endif %} <i class="caret next brown"></i>{% if holiday.flightViewData.outboundSectors.0.schedule.arrTime %}{{holiday.flightViewData.outboundSectors.0.schedule.arrTime}} {% endif %}</span></span>
+                {% if holiday.flightViewData.outboundSectors.0.carrierCode %}<span class="airline-logo {{holiday.flightViewData.outboundSectors.0.carrierCode}}"></span>{% endif %}
+                {% endif %}
+                {% if holiday.flightViewData.inboundSectors.0.schedule.departureDate %}
+                <span><i class="caret flyin"></i>{% if holiday.flightViewData.inboundSectors.0.schedule.departureDate %}{{holiday.flightViewData.inboundSectors.0.schedule.departureDate}}{% endif %} <span><i class="caret time"></i>{% if holiday.flightViewData.inboundSectors.0.schedule.depTime %} {{holiday.flightViewData.inboundSectors.0.schedule.depTime}} {% endif %}<i class="caret next brown"></i>{% if holiday.flightViewData.inboundSectors.0.schedule.arrTime %}{{holiday.flightViewData.inboundSectors.0.schedule.arrTime}} {% endif %}</span>{% if holiday.flightViewData.arrivalDateDiff %}+{{holiday.flightViewData.arrivalDateDiff}} Day{% endif %}</span>
+                {% if holiday.flightViewData.inboundSectors.0.carrierCode %}<span class="airline-logo {{holiday.flightViewData.inboundSectors.0.carrierCode}}"></span>{% endif %}
+                {% endif %}
+
+                {% if holiday.flightViewData.dreamLiner %}
+                <a href="#" data-dojo-type="tui.widget.customeraccount.Tooltips" data-dojo-props="eventType:'mouseover',floatWhere:'position-bottom-center',topClass:'top', text:'<p>787 Dreamliner flights</p><ul class=\'square yellow\' ><li>Up to 34 inch seat pitch in economy and 38 inches in Premium</li><li>30% bigger windows, horizon view wherever you sit</li><li>Even at its lowest point the cabin is over 6-fioot high &ndash; a real sense of space</li><li>Altered cabin pressure &ndash; leave the flight feeling fresher</li><li>60% less noise than standard planes during take-off and landing</li></ul>'">
+                    {{holiday.flightViewData.dreamLiner}}
+                </a>
+                {% endif %}
+                {% endif %}
+            </p>
+        </div>
+		
+		
+        <div class="category-line discount">
+            <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Discount{% endifequal %}</span></div>
+            <p class="b calcHt">{% if holiday.onlineDiscount %}&pound;{{holiday.onlineDiscount}}pp{% else %}<i class="caret minus"></i>{% endif %}</p>
+        </div>
+        <div class="category-line deposit">
+            <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Deposit{% endifequal %}</span></div>
+            <p class="b calcHt">{% if holiday.deposit %}&pound;{{holiday.deposit}}pp{% else %}<i class="caret minus"></i>{% endif %}</p>
+        </div>
+        <div class="category-line special">
+            <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Special offer{% endifequal %}</span></div>
+            <p class="b calcHt">{% if holiday.freeChildPlace %}{{holiday.freeChildPlace}}{% else %}<i class="caret minus"></i>{% endif %}</p>
+        </div>
+		
+		
+		
+        <div class="category-line extras">
+            <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Extras you've added{% endifequal %}</span></div>
+            <p class="b calcHt">
+                {% if holiday.extrasCount %}
+                {% if holiday.ancillariesBreakup %}
+                {% for ancillary in holiday.ancillariesBreakup %}
+                {% if forloop.last %}
+                {{ancillary.ancillaryName}}
+                {% else %}
+                {{ancillary.ancillaryName}},{{ }}
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% else %}
+                <i class="caret minus"></i>
+                {% endif %}</p>
+        </div>
+        <div class="category-line board">
+            <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Board basis{% endifequal %}</span></div>
+            <p class="b calcHt">{% if holiday.accomViewData.boardBasisName %}{{holiday.accomViewData.boardBasisName}}{% else %}<i class="caret minus"></i>{% endif %}</p>
+        </div>
+		
+		
+		
+        <div class="category-line room">
+            <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Room{% endifequal %}</span></div>
+            <p class="b calcHt">
+                {% if holiday.accomViewData.roomsMap %}
+                {% for rooms in holiday.accomViewData.roomsMap %}								
+				  <span>
+					{{rooms.1}} * {{rooms.0}} 
+					{% ifequal rooms.2 "true" %} {{rooms.3}}
+					{% ifnotequal rooms.3 "0" %}
+						- <a data-dojo-props="eventType:'mouseover',floatWhere:'position-bottom-center',topClass:'top',text:'{% if holidays.availableRoomsToolTipText %}{{holidays.availableRoomsToolTipText}}{% endif %}', listClass: 'square yellow', position: 'top left'" data-dojo-type="tui.widget.customeraccount.Tooltips" href="javascript:void(0)" class="tooltip rooms-left">Only {{rooms.3}} room(s) left</a>
+					{% endifnotequal %}
+					{% endifequal %}
+				  </span>
+				{% endfor %}
+                {% else %}
+                <span><i class="caret minus"></i></span>
+                {% endif %}
+            </p>
+        </div>
+
+
+        <div class="category-line reviews">
+            <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Reviews{% endifequal %}</span></div>
+            <p class="b calcHt">
+                {% if holiday.tripadvisorData.ratingBar %}
+                <img src="{{holiday.tripadvisorData.ratingBar}}" title="Tripadvisor Rating" alt="Tripadvisor Rating">
+                {% if holiday.tripadvisorData.reviewsCount %}<span class="ta-reviews"><a href="#">{{holiday.tripadvisorData.reviewsCount}}</a> TripAdvisor Reviews</span>{% endif %}
+                {% endif %}
+            </p>
+        </div>
+
+        <div class="category-line comments">
+            <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Your comments{% endifequal %}</span></div>
+            <div class="data-inner {% if holiday.notes %}{% else %}no-comment{% endif %} b calcHt">
+
+                <a class="add-comment customer-comments ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %} href="javascript:void(0)" id="custNewComment_{{holiday.wishlistEntryId}}" name="{{holiday.wishlistEntryId}}">{% if holiday.notes %}<i class="bubble"></i>View/edit comment{% else %}Add a comment {% endif %}</a>
+
+                <p class="hide" id="_custNewComment_{{holiday.wishlistEntryId}}" name="_{{holiday.wishlistEntryId}}">{% if holiday.notes %}{{holiday.notes}}{% endif %}</p>
+
+            </div>
+        </div>
+
+    </div>
+</li>
+<li class="facilities openx">
+
+<div class="comparison-data">
+
+<!-- package faclities starts-->
+{% if hotelAndVilla %}
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}No. of pools{% endifequal %}</span></div>
+    <p class="b">
+        {% if holiday.accomViewData.poolsBarsAndRestaurants.noOfPools.0 %}
+        {{holiday.accomViewData.poolsBarsAndRestaurants.noOfPools.0}}
+        {% else %}
+        <i class="caret minus"></i>
+        {% endif %}
+    </p>
+</div>
+<div class="category-line restaurant">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}No. of restaurants{% endifequal %}</span></div>
+    <p class="b">
+        {% if holiday.accomViewData.poolsBarsAndRestaurants.noOfRestaurants.0 %}
+        {{holiday.accomViewData.poolsBarsAndRestaurants.noOfRestaurants.0}}
+        {% else %}
+        <i class="caret minus"></i>
+        {% endif %}
+    </p>
+</div>
+<div class="category-line bars">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}No. of bars{% endifequal %}</span></div>
+    <p class="b">
+        {% if holiday.accomViewData.poolsBarsAndRestaurants.noOfBars.0 %}
+        {{holiday.accomViewData.poolsBarsAndRestaurants.noOfBars.0}}
+        {% else %}
+        <i class="caret minus"></i>
+        {% endif %}
+    </p>
+</div>
+<div class="category-line wifi">
+    <div class="category-title b">{% ifequal forloop.counter 1 %}Free wi-fi{% endifequal %}</span></div>
+    <p class="b">
+        {% if holiday.accomViewData.holidayFacilities.STO7 %}
+        <i class="caret tick"></i>
+        {% else %}
+        <i class="caret minus"></i>
+        {% endif %}
+    </p>
+</div>
+<div class="category-line dining">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}A la carte dining{% endifequal %}</span></div>
+    <p class="b">
+        {% if holiday.accomViewData.holidayFacilities.LST1 %}
+        <i class="caret tick"></i>
+        {% else %}
+        <i class="caret minus"></i>
+        {% endif %}
+    </p>
+</div>
+<div class="category-line activities">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Daytime activities{% endifequal %}</span></div>
+    <p class="b">
+        {% if holiday.accomViewData.holidayFacilities.STS3 %}
+        <i class="caret tick"></i>
+        {% else %}
+        <i class="caret minus"></i>
+        {% endif %}
+    </p>
+</div>
+<div class="category-line kidsclub">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Kid's club{% endifequal %}</span></div>
+    <p class="b">
+        {% if holiday.accomViewData.holidayFacilities.ST22 %}
+        <i class="caret tick"></i>
+        {% else %}
+        <i class="caret minus"></i>
+        {% endif %}
+    </p>
+</div>
+<div class="category-line watersports">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Watersports{% endifequal %}</span></div>
+    <p class="b">
+        {% if holiday.accomViewData.holidayFacilities.ST26 %}
+        <i class="caret tick"></i>
+        {% else %}
+        <i class="caret minus"></i>
+        {% endif %}
+    </p>
+</div>
+<div class="category-line entertainment">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Evening entertainment{% endifequal %}</span></div>
+    <p class="b">
+        {% if holiday.accomViewData.holidayFacilities.ST8 %}
+        <i class="caret tick"></i>
+        {% else %}
+        <i class="caret minus"></i>
+        {% endif %}
+    </p>
+</div>
+<div class="category-line gym">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Gym{% endifequal %}</span></div>
+    <p class="b">
+        {% if holiday.accomViewData.holidayFacilities.ST14 %}
+        <i class="caret tick"></i>
+        {% else %}
+        <i class="caret minus"></i>
+        {% endif %}
+    </p>
+</div>
+<div class="category-line spa">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Spa{% endifequal %}</span></div>
+    <p class="b">
+        {% if holiday.accomViewData.holidayFacilities.ST37 %}
+        <i class="caret tick"></i>
+        {% else %}
+        <i class="caret minus"></i>
+        {% endif %}
+    </p>
+</div>
+<!-- package faclities ends -->
+
+
+<!-- villa facilites starts -->
+
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}En suite bathrooms{% endifequal %}</span></div>
+    {% if holiday.accomViewData.villaFacilities.STV012 %}
+    <p class="b">{{holiday.accomViewData.villaFacilities.STV012}}</p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Separate bathrooms{% endifequal %}</span></div>
+    {% if holiday.accomViewData.villaFacilities.STV011 %}
+    <p class="b">{{holiday.accomViewData.villaFacilities.STV011}}</p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Swimming pool{% endifequal %}</span></div>
+    {% if holiday.accomViewData.villaFacilities.STP8 %}
+    <p class="b">{{holiday.accomViewData.villaFacilities.STP8}}</p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Free Wi-Fi{% endifequal %}</span></div>
+    {% if holiday.accomViewData.villaFacilities.STO7 %}
+    <p class="b"><i class="caret tick"></i></p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Microwave{% endifequal %}</span></div>
+    {% if holiday.accomViewData.villaFacilities.STK007 %}
+    <p class="b"><i class="caret tick"></i></p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Fridge-freezer{% endifequal %}</span></div>
+    {% if holiday.accomViewData.villaFacilities.STK003 %}
+    <p class="b"><i class="caret tick"></i></p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Dishwasher{% endifequal %}</span></div>
+    {% if holiday.accomViewData.villaFacilities.STK002 %}
+    <p class="b"><i class="caret tick"></i></p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Washing machine{% endifequal %}</span></div>
+    {% if holiday.accomViewData.villaFacilities.STK012 %}
+    <p class="b"><i class="caret tick"></i></p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+
+
+
+<!-- Villa facilities ends -->
+
+
+<!-- package size starts -->
+
+<div class="category-line rooms">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Rooms{% endifequal %}</span></div>
+    <p class="b">{% if holiday.accomViewData.hotelRoomsAndFloors.noOfrooms.0 %}{{holiday.accomViewData.hotelRoomsAndFloors.noOfrooms.0}}{% endif %}</p>
+</div>
+<div class="category-line floors">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Floors{% endifequal %}</span></div>
+    <p class="b">{% if holiday.accomViewData.hotelRoomsAndFloors.noOfFloors.0 %}{{holiday.accomViewData.hotelRoomsAndFloors.noOfFloors.0}}{% endif %}</p>
+</div>
+<!-- package size ends -->
+
+<!-- villa size starts -->
+
+
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Sleeps up to{% endifequal %}</span></div>
+    {% if holiday.accomViewData.sizeInformation.sleepsUpTo.0 %}
+    <p class="b">{{holiday.accomViewData.sizeInformation.sleepsUpTo.0}}</p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Double bedrooms{% endifequal %}</span></div>
+    {% if holiday.accomViewData.villaFacilities.STV008 %}
+    <p class="b">{{holiday.accomViewData.villaFacilities.STV008}}</p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Twin bedrooms{% endifequal %}</span></div>
+    {% if holiday.accomViewData.villaFacilities.STV009 %}
+    <p class="b">{{holiday.accomViewData.villaFacilities.STV009}}</p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Single rooms{% endifequal %}</span></div>
+    {% if holiday.accomViewData.villaFacilities.STV010 %}
+    <p class="b">{{holiday.accomViewData.villaFacilities.STV010}}</p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+{% else %}
+
+<!-- Villa size ends -->
+
+{% if onlyVilla %}
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}En suite bathrooms{% endifequal %}</span></div>
+    {% if holiday.accomViewData.villaFacilities.STV012 %}
+    <p class="b">{{holiday.accomViewData.villaFacilities.STV012}}</p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Separate bathrooms{% endifequal %}</span></div>
+    {% if holiday.accomViewData.villaFacilities.STV011 %}
+    <p class="b">{{holiday.accomViewData.villaFacilities.STV011}}</p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Swimming pool{% endifequal %}</span></div>
+    {% if holiday.accomViewData.villaFacilities.STP8 %}
+    <p class="b">{{holiday.accomViewData.villaFacilities.STP8}}</p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Free Wi-Fi{% endifequal %}</span></div>
+    {% if holiday.accomViewData.villaFacilities.STO7 %}
+    <p class="b"><i class="caret tick"></i></p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Microwave{% endifequal %}</span></div>
+    {% if holiday.accomViewData.villaFacilities.STK007 %}
+    <p class="b"><i class="caret tick"></i></p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Fridge-freezer{% endifequal %}</span></div>
+    {% if holiday.accomViewData.villaFacilities.STK003 %}
+    <p class="b"><i class="caret tick"></i></p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Dishwasher{% endifequal %}</span></div>
+    {% if holiday.accomViewData.villaFacilities.STK002 %}
+    <p class="b"><i class="caret tick"></i></p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Washing machine{% endifequal %}</span></div>
+    {% if holiday.accomViewData.villaFacilities.STK012 %}
+    <p class="b"><i class="caret tick"></i></p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Sleeps up to{% endifequal %}</span></div>
+    {% if holiday.accomViewData.sizeInformation.sleepsUpTo.0 %}
+    <p class="b">{{holiday.accomViewData.sizeInformation.sleepsUpTo.0}}</p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Double bedrooms{% endifequal %}</span></div>
+    {% if holiday.accomViewData.villaFacilities.STV008 %}
+    <p class="b">{{holiday.accomViewData.villaFacilities.STV008}}</p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Twin bedrooms{% endifequal %}</span></div>
+    {% if holiday.accomViewData.villaFacilities.STV009 %}
+    <p class="b">{{holiday.accomViewData.villaFacilities.STV009}}</p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Single rooms{% endifequal %}</span></div>
+    {% if holiday.accomViewData.villaFacilities.STV010 %}
+    <p class="b">{{holiday.accomViewData.villaFacilities.STV010}}</p>
+    {% else %}
+    <p class="b"><i class="caret minus"></i></p>
+    {% endif %}
+</div>
+{% endif %}
+
+
+{% if onlyHotel %}
+<div class="category-line pools">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}No. of pools{% endifequal %}</span></div>
+    <p class="b">
+        {% if holiday.accomViewData.poolsBarsAndRestaurants.noOfPools.0 %}
+        {{holiday.accomViewData.poolsBarsAndRestaurants.noOfPools.0}}
+        {% else %}
+        <i class="caret minus"></i>
+        {% endif %}
+    </p>
+</div>
+<div class="category-line restaurant">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}No. of restaurants{% endifequal %}</span></div>
+    <p class="b">
+        {% if holiday.accomViewData.poolsBarsAndRestaurants.noOfRestaurants.0 %}
+        {{holiday.accomViewData.poolsBarsAndRestaurants.noOfRestaurants.0}}
+        {% else %}
+        <i class="caret minus"></i>
+        {% endif %}
+    </p>
+</div>
+<div class="category-line bars">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}No. of bars{% endifequal %}</span></div>
+    <p class="b">
+        {% if holiday.accomViewData.poolsBarsAndRestaurants.noOfBars.0 %}
+        {{holiday.accomViewData.poolsBarsAndRestaurants.noOfBars.0}}
+        {% else %}
+        <i class="caret minus"></i>
+        {% endif %}
+    </p>
+</div>
+<div class="category-line wifi">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Free wi-fi{% endifequal %}</span></div>
+    <p class="b">
+        {% if holiday.accomViewData.holidayFacilities.STO7 %}
+        <i class="caret tick"></i>
+        {% else %}
+        <i class="caret minus"></i>
+        {% endif %}
+    </p>
+</div>
+<div class="category-line dining">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}A la carte dining{% endifequal %}</span></div>
+    <p class="b">
+        {% if holiday.accomViewData.holidayFacilities.LST1 %}
+        <i class="caret tick"></i>
+        {% else %}
+        <i class="caret minus"></i>
+        {% endif %}
+    </p>
+</div>
+<div class="category-line activities">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Daytime activities{% endifequal %}</span></div>
+    <p class="b">
+        {% if holiday.accomViewData.holidayFacilities.STS3 %}
+        <i class="caret tick"></i>
+        {% else %}
+        <i class="caret minus"></i>
+        {% endif %}
+    </p>
+</div>
+<div class="category-line kidsclub">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Kid's club{% endifequal %}</span></div>
+    <p class="b">
+        {% if holiday.accomViewData.holidayFacilities.ST22 %}
+        <i class="caret tick"></i>
+        {% else %}
+        <i class="caret minus"></i>
+        {% endif %}
+    </p>
+</div>
+<div class="category-line watersports">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Watersports{% endifequal %}</span></div>
+    <p class="b">
+        {% if holiday.accomViewData.holidayFacilities.ST26 %}
+        <i class="caret tick"></i>
+        {% else %}
+        <i class="caret minus"></i>
+        {% endif %}
+    </p>
+</div>
+<div class="category-line entertainment">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Evening entertainment{% endifequal %}</span></div>
+    <p class="b">
+        {% if holiday.accomViewData.holidayFacilities.ST8 %}
+        <i class="caret tick"></i>
+        {% else %}
+        <i class="caret minus"></i>
+        {% endif %}
+    </p>
+</div>
+<div class="category-line gym">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Gym{% endifequal %}</span></div>
+    <p class="b">
+        {% if holiday.accomViewData.holidayFacilities.ST14 %}
+        <i class="caret tick"></i>
+        {% else %}
+        <i class="caret minus"></i>
+        {% endif %}
+    </p>
+</div>
+<div class="category-line spa">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Spa{% endifequal %}</span></div>
+    <p class="b">
+        {% if holiday.accomViewData.holidayFacilities.ST37 %}
+        <i class="caret tick"></i>
+        {% else %}
+        <i class="caret minus"></i>
+        {% endif %}
+    </p>
+</div>
+<div class="category-line rooms">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Rooms{% endifequal %}</span></div>
+    <p class="b">{% if holiday.accomViewData.hotelRoomsAndFloors.noOfrooms.0 %}{{holiday.accomViewData.hotelRoomsAndFloors.noOfrooms.0}}{% endif %}</p>
+</div>
+<div class="category-line floors">
+    <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Floors{% endifequal %}</span></div>
+    <p class="b">{% if holiday.accomViewData.hotelRoomsAndFloors.noOfFloors.0 %}{{holiday.accomViewData.hotelRoomsAndFloors.noOfFloors.0}}{% endif %}</p>
+</div>
+{% endif %}
+{% endif %}
+</div>
+
+</li>
+<li class="weather openx">
+    <div class="comparison-data">
+        <div class="category-line temperature">
+            <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Average temp.{% endifequal %}</span></div>
+            <p class="b">{% if holiday.accomViewData.averageTemperature %}{% if holiday.departureMonth %}{{holiday.departureMonth}}{% endif %}  {{holiday.accomViewData.averageTemperature}}c{% else %}<i class="caret minus"></i>{% endif %}</p>
+        </div>
+        <div class="category-line rainfall">
+            <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Average rainfall{% endifequal %}</span></div>
+            <p class="b">{% if holiday.accomViewData.averageRainfall %}{% if holiday.departureMonth %}{{holiday.departureMonth}}{% endif %}  {{holiday.accomViewData.averageRainfall}}mm rain{% else %}<i class="caret minus"></i>{% endif %}</p>
+        </div>
+        <div class="category-line location">
+            <div class="category-title b"><span>{% ifequal forloop.counter 1 %}Location{% endifequal %}</span></div>
+            {% if holiday.accomViewData.locationInformation.locationInformation %}
+            <ul class="square calcHt">
+                {% for location in holiday.accomViewData.locationInformation.locationInformation %}
+                <li>{{location}}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <i class="caret minus"></i>
+            {% endif %}
+        </div>
+    </div>
+</li>
+</ul>
+<div class="book-now b">
+    <a class="button cta blue ensLinkTrack"  {% if componentUid %}data-componentid="{{componentUid}}"{% endif %}  href="{{tuiWebrootPath}}/book/dflightoptions?entry={{holiday.wishlistEntryId}}">Book now</a>
+    <a class="removeAnchor cta remove ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %} id="remove_{{holiday.wishlistEntryId}}" name="remove_{{holiday.accomViewData.accomName}}" href="javascript:void(0);">Remove</a>
+</div>
+
+
+{% if swapFlag %}
+<div class="swap b">
+    <a class="swapAnchor ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %} href="javascript:void(0);" id="{{holiday.wishlistEntryId}}" name="{{holiday.accomViewData.accomName}}" >Swap with another shortlisted holiday</a>
+</div>
+{% endif %}
+</li>
+{% endifnotequal %}
+{% endfor %}
+
+{% if emptyRange %}
+{% for i in noOfEmptyHolidays %}
+<li class="hol3 b empty">
+    <div class="pinnedit">
+        <div>
+            <h3>You can compare up to 3 holidays</h3>
+            <a href="javascript:void(0);" style="margin-top:15px;" id="" name="" class="swapAnchorEmpty button cta blue ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %}>Add holiday</a>
+        </div>
+    </div>
+</li>
+{% endfor %}
+{% endif %}
+
+</ul>
+</div>
+<span class="ghost"></span>
+</div>
+<div data-dojo-type="tui.widget.customeraccount.CustomerShortListedAddComment" data-dojo-props="maxLength:{% if holidays.0.truncate %}{{holidays.0.truncate}}{% else %}0{% endif %}, saveNoteURL: '{{tuiWebrootPath}}/viewShortlist/addComment', deleteNoteURL: '{{tuiWebrootPath}}/viewShortlist/deleteComment'"></div>
+<div class="modal hide" id="customer-Comment">
+    <div class="window auto-height">
+        <div class="title">
+            Your comment <span class="close">y</span>
+        </div>
+        <div class="modal-content sand-bg">
+            <div class="add-comment c" id="shortlist">
+                <form  class="commentform" id="custCommentForm" action="{{tuiWebrootPath}}/viewShortlist/addComment">
+                    <textarea id="comment" maxlength="{% if holidays.0.truncate %}{{holidays.0.truncate}}{% endif %}"></textarea>
+                    <p class="used-chars"><span id="textCharCount">0</span> of {% if holidays.0.truncate %}{{holidays.0.truncate}}{% endif %} characters used</p>
+                    <div class="btn-container">
+							<span id="deleteCMT"  style="display: none;">
+								<a id="deleteCMT" class="delete deleteCMT ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %}>Delete comment</a>
+                                <a id="comment-btn" class="button blue comment-btn ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %} >Save comment</a>
+							</span>
+                        <a id="deleteCMT__Disabled" class="delete deleteCMT__Disabled ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %} ></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% ifequal holidays null %}
+<div class="heading-with-controls c">
+    <h1>Compare saved holidays</h1>
+</div>
+<div class="columns">
+    <div>No holidays selected</div>
+</div>
+{% endifequal %}
+	

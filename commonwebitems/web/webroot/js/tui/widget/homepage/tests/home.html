@@ -1,0 +1,651 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7 ]>
+<html lang="en" class="ie6"> <![endif]-->
+<!--[if IE 7 ]>
+<html lang="en" class="ie7"> <![endif]-->
+<!--[if IE 8 ]>
+<html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9 ]>
+<html lang="en" class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class=""> <!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage Tests</title>
+
+    <link href="/css/main.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <script>
+        var domainName,
+            tuiWebrootPath = '/destinations',
+            tuiSiteName = 'thomson',
+            ensLinkTrack = function(){};
+    </script>
+    <script type="text/javascript" src="/js/tui/config/TuiConfigTest.js"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <div class="beta">
+                <p>Welcome to our brand new website.</p>
+                <p class="tell-us">
+                    <a href="https://www.tuisurveys.co.uk/se.ashx?s=705E3F6F32F1F661" target="_blank" class="ensLinkTrack" data-componentId="beta_site_banner">Tell us what you think</a>
+                    or <a href="http://www.firstchoice.co.uk/beta/contact-us/send-us-an-email/report-a-problem/" target="_blank" class="ensLinkTrack" data-componentId="beta_site_banner">Report a problem</a>
+                </p>
+            </div>
+            <div id="utils">
+                <ul>
+                    <li><a data-componentid="WF_COM_088-2" class="ensLinkTrack" title="Statement on Cookies" href="http://www.thomson.co.uk/editorial/legal/statement-on-cookies.html">Statement on Cookies</a></li>
+                    <li><a data-componentid="WF_COM_088-2" class="ensLinkTrack" title="Travel alerts" href="http://www.thomson.co.uk/editorial/alerts/thomsonfly-travel-alert.html">Travel alerts</a></li>
+                    <li><a data-componentid="WF_COM_088-2" class="ensLinkTrack" title="API login" href="http://eapi.thomson.co.uk/">API login</a></li>
+                    <li><a data-componentid="WF_COM_088-2" class="ensLinkTrack" title="API login" href="http://www.thomson.co.uk/managemybooking/">Manage my booking</a></li>
+                </ul>
+            </div>
+            <div id="logo">
+                <a href="http://www.thomson.co.uk" class="ensLinkTrack" data-componentid="WF_COM_088-3">Thomson Holidays</a>
+                <img src="http://digital.thomson.co.uk/logo-print.png" alt="Thomson Holidays" class="print-only">
+            </div>
+            <div id="nav">
+                <ul>
+                    <li><a data-componentid="WF_COM_088-4" class="ensLinkTrack" href="http://www.thomson.co.uk/holidays.html">Holidays</a></li>
+                    <li><a data-componentid="WF_COM_088-4" class="ensLinkTrack" href="http://www.thomson.co.uk/cruise.html">Cruises</a></li>
+                    <li><a data-componentid="WF_COM_088-4" class="ensLinkTrack" href="http://flights.thomson.co.uk/en/index.html">Flights</a></li>
+                    <li><a data-componentid="WF_COM_088-4" class="ensLinkTrack" href="http://www.thomson.co.uk/hotels.html">Hotels</a></li>
+                    <li><a data-componentid="WF_COM_088-4" class="ensLinkTrack" href="/destinations/holiday-destinations.html">Destinations</a></li>
+                    <li><a data-componentid="WF_COM_088-4" class="ensLinkTrack" href="http://www.thomson.co.uk/holiday-extras.html">Extras</a></li>
+                </ul>
+            </div>
+            <div id="quick-search">
+                <form action="http://www.thomson.co.uk/gsa/gsa.html" method="get">
+                    <input type="search" autosave="" name="q" class="textfield" placeholder="Search for anything...">
+                    <button class="search-btn" type="submit"><img width="11" height="11" alt="Search" src="/images/icon-magnifier.png"></button>
+                    <input type="hidden" value="default_collection" name="site">
+                    <input type="hidden" value="production_frontend" name="client">
+                    <input type="hidden" value="production_frontend" name="proxystylesheet">
+                    <input type="hidden" value="xml_no_dtd" name="output">
+                    <input type="hidden" value="Go" name="submit">
+                </form>
+            </div>
+            <script type="text/javascript">
+                dojoConfig.addModuleName("tui/search/controller/SearchController", "tui/mvc/Klass", "tui/utils/DetectFeature");
+            </script>
+            <span class="hide" data-klass-id="searchConfig" data-dojo-type="tui.mvc.Klass" data-dojo-props="PAGE: 0"></span>
+            <div class="search controller loading" data-klass-id="searchController" data-dojo-type="tui.mvc.Klass" data-dojo-props='jsonData:null,locationData:null, pageId:"${pageId}"'>
+                <form class="search-form" method="get" action="/packages"></form>
+                <div class="col from">
+                    <label for="where-from">Where from?</label>
+                    <input type="text" data-klass-id="airportMultiFieldList" data-dojo-type="tui.mvc.Klass" data-dojo-props="maxTextboxes: 7, duration:300" class="textfield multifield where-from" placeholder="Any UK Airport" tabindex="0" id="where-from"/>
+                    <p><a href="javascript:void(0);" id="airport-guide" data-klass-id="airportGuide" data-dojo-type="tui.mvc.Klass" data-dojo-props="fromLimit: 7"  class="related airport airport-guide" tabindex="-1">Airport List <span class="load"></span></a></p>
+                </div>
+                <div class="col to">
+                    <label for="where-to">Where to? <span>(Destination, Hotel or Collections)</span></label>
+                    <input type="text" data-klass-id="destinationMultiFieldList" data-dojo-type="tui.mvc.Klass" data-dojo-props=" duration:300" class="textfield multifield where-to" placeholder="Anywhere" tabindex="0" id="where-to"/>
+                    <p><a href="javascript:void(0);" class="related destination destination-guide" data-klass-id="destinationGuide" data-dojo-type="tui.mvc.Klass" data-dojo-props="flexibleDays: 3, pageContext: 'null'" tabindex="-1">Destination List <span class="load"></span></a></p>
+                </div>
+                <div class="col date">
+                    <label for="when">When?</label>
+                    <div class="when" tabindex="0" id="when" data-klass-id="searchDatePicker" data-dojo-type="tui.mvc.Klass" data-dojo-props="seasonLength: 18">Select a date</div>
+                    <p>
+                        <label class="related give-take"><span data-klass-id="flexibleView" data-dojo-type="tui.mvc.Klass"><input type="checkbox" class="flexible" tabindex="0" /></span>I'm flexible</label>
+                        <span class="flexible-tooltip" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="text: 'We\'ll search for holidays 3 days before and after your selected date.', floatWhere: 'position-right-center'">?</span>
+                    </p>
+                </div>
+                <div class="col pax">
+                    <div class="rooms">
+                        <div class="labels">
+                            <label for="totalAdults">Adults</label>
+                            <label for="totalChildren">Children <span>(0-17)</span></label>
+                        </div>
+                        <div class="item">
+                            <span class="acol">
+                                <select id="totalAdults" name="totalAdults" class="dropdown totalAdults" tabindex="0" data-klass-id="adultSelectionOption" data-dojo-type="tui.mvc.Klass">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2" selected>2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                </select>
+                            </span>
+                            <span class="ccol">
+                                <select id="totalChildren" name="totalChildren" class="dropdown totalChildren" tabindex="0" data-klass-id="childSelectOption" data-dojo-type="tui.mvc.Klass">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="search-col">
+                        <a href="javascript:void(0);" data-klass-id="submitButton" data-dojo-type="tui.mvc.Klass" class="button search-submit ensLinkTrack" tabindex="0">Search</a>
+                    </div>
+                </div>
+            </div>
+            <div class="search-summary closed" data-klass-id="searchSummary" data-dojo-type="tui.mvc.Klass">
+                <div class="col first">
+                    <label for="where-from-summary">Where from?</label>
+                    <p class="where-from-summary print-hide" id="where-from-summary"></p>
+                    <p class="hide print-only where-from-summary-print"></p>
+                </div>
+                <div class="col">
+                    <label for="where-to-summary">Where to?</label>
+                    <p class="where-to-summary print-hide" id="where-to-summary"></p>
+                    <p class="hide print-only where-to-summary-print"></p>
+                </div>
+                <div class="col">
+                    <label for="when-summary">When?</label>
+                    <p class="when-summary" id="when-summary"></p>
+                </div>
+                <div class="col last">
+                    <div class="rooms">
+                        <div class="labels">
+                            <label for="total-adults">Adults</label>
+                            <label for="total-seniors" class="seniors">Seniors (65+)</label>
+                            <label for="total-children">Children (0-17)</label>
+                        </div>
+                        <div class="item">
+                            <span class="acol-summary total-adults" id="total-adults"></span>
+                            <span class="scol-summary total-seniors seniors" id="total-seniors"></span>
+                            <span class="ccol-summary total-children" id="total-children"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col no-margin">
+                    <input type="submit" class="button search-edit" value="Edit search" tabindex="-1">
+                </div>
+            </div>
+        </div>
+        <div id="content">
+            <div class="grid-nogutter-full">
+                <div class="grid-block grid-block-hero">
+                    <div class="grid-component-media">
+                        <a href="javascript:void(0);">
+                            <img class="hero-image" src="/images/hero-image-th-home.jpg" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-nogutter-quarter">
+                <div class="grid-block grid-block-dark">
+                    <div class="grid-component">
+                        <h3 class="editorial-title">Why Book With Thomson?</h3>
+                        <ul class="list list-links">
+                            <li class="list-item"><span><i class="arrow-main arrow-inline arrow-sm arrow-right-bg"></i>Holidays to suit every budget</span></li>
+                            <li class="list-item"><span><i class="arrow-main arrow-inline arrow-sm arrow-right-bg"></i>ATOL protected</span></li>
+                            <li class="list-item"><span><i class="arrow-main arrow-inline arrow-sm arrow-right-bg"></i>100% secure payments online</span></li>
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                    <i class="arrow-main arrow-inline arrow-sm arrow-right-bg"></i>Hand-picked Holidays
+                                </span></a>
+                            </li>
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                    <i class="arrow-main arrow-inline arrow-sm arrow-right-bg"></i>Committed to sustainable tourism
+                                </span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-nogutter-quarter">
+                <div class="grid-block">
+                    <div class="grid-component-media promo-prod sen">
+                        <h3 class="promo-prod-badge">Sensatori</h3>
+                        <img class="promo-prod-image" src="/images/promo-img-sensatori.jpg" />
+                        <p class="promo-prod-desc"><a href="#">5-star hotels designed to fuel the senses</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-nogutter-quarter">
+                <div class="grid-block">
+                    <div class="grid-component-media promo-prod fam">
+                        <h3 class="promo-prod-badge">Family Resorts</h3>
+                        <img class="promo-prod-image" src="/images/promo-img-fam-resorts.jpg" />
+                        <p class="promo-prod-desc"><a href="#">Thomson Family Resorts - 4T and 5T hotels for families</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-nogutter-quarter">
+                <div class="grid-block grid-block-noborder">
+                    <div class="grid-component-media promo-prod gld">
+                        <a href="#">
+                            <h3 class="promo-prod-badge">Gold</h3>
+                            <img class="promo-prod-image" src="/images/promo-img-gold.jpg" />
+                            <p class="promo-prod-desc"><a href="#">Classic hotels designed for adults, with great entertainment</a></p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-nogutter-half">
+                <div class="grid-block">
+                    <div class="grid-component-media promo">
+                        <h3 class="promo-link"><a href="#">Thailand</a><i class="arrow-main arrow-inline arrow-right-link"></i></h3>
+                        <img src="/images/thailand-promo-img.jpg" />
+                    </div>
+                </div>
+            </div>
+            <div class="grid-nogutter-quarter">
+                <div class="grid-block grid-block-grey">
+                    <script>
+                        dojoConfig.addModuleName('tui/widget/search/QuickSearch');
+                    </script>
+                    <div class="grid-component">
+                        <h3 class="block-title">Find your perfect Holiday Destination</h3>
+                        <div class="quick-search quick-search-mini">
+                            <div class="form-quick-search">
+                                <label class="label-quick-search" for="home-quick-search">Quick Search</label>
+                                <input id="home-quick-search" class="textfield-quick-search" type="text" placeholder="Enter a destination" data-dojo-type="tui.widget.search.QuickSearch" />
+                            </div>
+                            <p class="search-dest-blurb">Not sure where to go on Holiday? <br/> <strong>Need some inspiration?</strong></p>
+                            <a href="javascript:void(0);" class="button medium btn-branded">Browse Destinations</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-nogutter-quarter">
+                <div class="grid-block grid-block-light grid-block-noborder">
+                    <div class="grid-component">
+                        <h3 class="list-title">Already booked?</h3>
+                        <ul class="list-links list-links-icons">
+                            <li class="list-item">
+                                <a href="#"><i class="icon icon-18 icon-text-top icon-manage-booking"></i> Manage my booking</a>
+                            </li>
+                            <li class="list-item">
+                                <a href="#"><i class="icon icon-18 icon-text-top icon-pay-balance"></i> Pay my balance</a>
+                            </li>
+                            <li class="list-item">
+                                <a href="#"><i class="icon icon-18 icon-text-top icon-book-excursions"></i> Book excursions</a>
+                            </li>
+                            <li class="list-item">
+                                <a href="#"><i class="icon icon-18 icon-text-top icon-register-api"></i> Register your API details</a>
+                            </li>
+                            <li class="list-item">
+                                <a href="#"><i class="icon icon-18 icon-text-top icon-select-seat"></i> Select your seat</a>
+                            </li>
+                            <li class="list-item">
+                                <a href="#"><i class="icon icon-18 icon-text-top icon-airport-parking"></i> Airport parking</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-nogutter-quarter">
+                <div class="grid-block grid-block-light grid-block-noborder">
+                    <div class="grid-component">
+                        <h3 class="list-title">Browse by collection</h3>
+                        <ul class="list list-links">
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                    <i class="arrow-main arrow-inline arrow-sm arrow-right-link-dark"></i>Sensatori
+                                </span></a>
+                            </li>
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                    <i class="arrow-main arrow-inline arrow-sm arrow-right-link-dark"></i>Family Resorts
+                                </span></a>
+                            </li>
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                    <i class="arrow-main arrow-inline arrow-sm arrow-right-link-dark"></i>Gold
+                                </span></a>
+                            </li>
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                    <i class="arrow-main arrow-inline arrow-sm arrow-right-link-dark"></i>Small &amp; Friendly
+                                </span></a>
+                            </li>
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                    <i class="arrow-main arrow-inline arrow-sm arrow-right-link-dark"></i>Couples
+                                </span></a>
+                            </li>
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                    <i class="arrow-main arrow-inline arrow-sm arrow-right-link-dark"></i>Platinum
+                                </span></a>
+                            </li>
+                        </ul>
+                        <h4 class="list-more-link">
+                            <a href="#">More holiday types <i class="arrow-main arrow-med arrow-inline arrow-right-link-dark"></i></a>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-nogutter-quarter">
+                <div class="grid-block grid-block-light">
+                    <div class="grid-component">
+                        <h3 class="list-title">Browse by holiday type</h3>
+                        <ul class="list list-links list-half home-list-half">
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                    <i class="arrow-main arrow-inline arrow-sm arrow-right-link-dark"></i>Sensatori
+                                </span></a>
+                            </li>
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                    <i class="arrow-main arrow-inline arrow-sm arrow-right-link-dark"></i>Family Resorts
+                                </span></a>
+                            </li>
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                    <i class="arrow-main arrow-inline arrow-sm arrow-right-link-dark"></i>Gold
+                                </span></a>
+                            </li>
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                    <i class="arrow-main arrow-inline arrow-sm arrow-right-link-dark"></i>Small &amp; Friendly
+                                </span></a>
+                            </li>
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                    <i class="arrow-main arrow-inline arrow-sm arrow-right-link-dark"></i>Couples
+                                </span></a>
+                            </li>
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                    <i class="arrow-main arrow-inline arrow-sm arrow-right-link-dark"></i>Platinum
+                                </span></a>
+                            </li>
+                        </ul>
+                        <h4 class="list-more-link">
+                            <a href="#">More holiday types <i class="arrow-main arrow-med arrow-inline arrow-right-link-dark"></i></a>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-nogutter-quarter">
+                <div class="grid-block">
+                    <div class="grid-component">
+                        <h3 class="list-title">Top 5 Resorts</h3>
+                        <ol class="list list-links">
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                <i class="arrow-main arrow-inline arrow-sm arrow-right-link"></i>Sensatori
+                            </span></a>
+                            </li>
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                <i class="arrow-main arrow-inline arrow-sm arrow-right-link"></i>Family Resorts
+                            </span></a>
+                            </li>
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                <i class="arrow-main arrow-inline arrow-sm arrow-right-link"></i>Gold
+                            </span></a>
+                            </li>
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                <i class="arrow-main arrow-inline arrow-sm arrow-right-link"></i>Small &amp; Friendly
+                            </span></a>
+                            </li>
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                <i class="arrow-main arrow-inline arrow-sm arrow-right-link"></i>Couples
+                            </span></a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-nogutter-quarter">
+                <div class="grid-block">
+                    <div class="grid-component">
+                        <h3 class="list-title">Top 5 Hotels</h3>
+                        <ol class="list list-links">
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                <i class="arrow-main arrow-inline arrow-sm arrow-right-link"></i>Sensatori
+                            </span></a>
+                            </li>
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                <i class="arrow-main arrow-inline arrow-sm arrow-right-link"></i>Family Resorts
+                            </span></a>
+                            </li>
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                <i class="arrow-main arrow-inline arrow-sm arrow-right-link"></i>Gold
+                            </span></a>
+                            </li>
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                <i class="arrow-main arrow-inline arrow-sm arrow-right-link"></i>Small &amp; Friendly
+                            </span></a>
+                            </li>
+                            <li class="list-item">
+                                <a href="javascript:void(0);"><span>
+                                <i class="arrow-main arrow-inline arrow-sm arrow-right-link"></i>Couples
+                            </span></a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-nogutter-quarter">
+                <div class="grid-block grid-block-highlight grid-block-noborder">
+                    <div class="grid-component">
+                        <h3 class="editorial-title">We're different</h3>
+                        <h4 class="editorial-subtitle">Only the best reviewed hotels</h4>
+                        <p class="editorial-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consequatur dolorum magni molestias neque provident quis.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-nogutter-quarter">
+                <div class="grid-block grid-block-highlight">
+                    <div class="grid-component">
+                        <h3 class="editorial-title">We're Thomson</h3>
+                        <h4 class="editorial-subtitle">You're completely protected</h4>
+                        <p class="editorial-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consequatur dolorum magni molestias neque provident quis.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-nogutter-half">
+                <div class="grid-block grid-block-noborder">
+                    <div class="grid-component-media promo">
+                        <a href="#">
+                            <h3 class="promo-link"><a href="#">Explore our deals</a><i class="arrow-main arrow-inline arrow-right-link"></i></h3>
+                            <img src="/images/explore-deals-img.jpg" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!--<script>-->
+                <!--dojoConfig.addModuleName("tui/widget/expand/FilterExpandable");-->
+            <!--</script>-->
+            <!--<div class="expandable" data-dojo-type="tui.widget.expand.FilterExpandable">-->
+                <!--<div class="item">-->
+                    <!--<p><a href="javascript:void(0);" class="item-toggle">General</a></p>-->
+                    <!--<div class="item-content">-->
+                        <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque pretium orci sed mattis. Donec erat metus, facilisis non purus id, tempor luctus lorem. Aliquam ac ullamcorper tellus. Maecenas in erat et odio dapibus consequat. Proin ut vehicula dolor. In pulvinar condimentum enim, in adipiscing quam pretium nec. Morbi sem dui, aliquet volutpat turpis sit amet, vehicula dignissim nibh. Quisque adipiscing turpis in justo condimentum, vel luctus urna congue. Integer libero arcu, vestibulum vitae risus ac, ullamcorper hendrerit purus. Vivamus vitae ornare libero, tincidunt viverra felis. Ut quis nunc porttitor, pellentesque leo at, aliquam nisl.</p>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="item">-->
+                    <!--<p><a href="javascript:void(0);" class="item-toggle">Second Item</a></p>-->
+                    <!--<div class="item-content">-->
+                        <!--<p>Nam molestie lectus nunc, eget scelerisque elit bibendum sed. Integer adipiscing lacinia elementum. Curabitur sodales sapien mauris, nec euismod magna hendrerit sed. Aenean consequat lacus hendrerit tortor commodo luctus quis quis nisl. Maecenas pulvinar turpis vel orci convallis accumsan. Praesent commodo neque vitae neque laoreet, in rhoncus metus molestie. Donec at tortor ac nibh congue laoreet vitae sed justo. Vestibulum bibendum auctor neque non ornare. Pellentesque tempus turpis in iaculis dignissim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia, tortor et vestibulum porta, orci felis placerat est, sed iaculis nulla odio eu dolor. Proin massa dolor, molestie suscipit purus quis, dictum tempor lacus.</p>-->
+                        <!--<p>Morbi arcu felis, congue sit amet sapien quis, mattis semper est. Curabitur ultrices libero metus, volutpat tempor lorem tincidunt nec. In tortor augue, feugiat vitae metus id, lacinia congue mauris. Aenean vehicula molestie vehicula. Morbi id tortor sed ante vulputate tempus ac id metus. Maecenas aliquam tempus leo. Vivamus ante erat, feugiat ut rhoncus a, fermentum in purus. Proin risus augue, iaculis et nulla at, hendrerit cursus arcu. Ut suscipit felis id tortor porta malesuada. Sed ultricies adipiscing metus quis porttitor. Donec eu elit quis mi pretium hendrerit.</p>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="item">-->
+                    <!--<p><a href="javascript:void(0);" class="item-toggle">Third Item</a></p>-->
+                    <!--<div class="item-content">-->
+                        <!--<p>Ut at rhoncus nisi, id pretium neque. Sed a nulla facilisis velit tempor tempor sed a nisi. Nullam sapien leo, feugiat nec lectus eu, molestie dapibus velit. In ut purus lobortis, blandit leo ut, tristique erat. Morbi bibendum nisi vitae vestibulum facilisis. Integer tristique mauris a porttitor pharetra. Donec non lacus in quam posuere imperdiet.</p>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div id="inner-footer">
+            <ul id="footer-utils">
+                <li>
+                    <h3>Holiday extras</h3>
+                    <ul>
+                        <li><a data-componentid="WF_COM_200-2" class="ensLinkTrack" href="http://excursions.firstchoice.co.uk/">Excursions</a></li>
+                        <li><a data-componentid="WF_COM_200-2" class="ensLinkTrack" target="_blank" href="http://www.carhiremarket.com/firstchoice/">Car hire</a></li>
+                        <li><a data-componentid="WF_COM_200-2" class="ensLinkTrack" href="http://www.firstchoice.co.uk/information/holiday-extras/before-you-go/foreign-exchange/">Foreign Exchange</a></li>
+
+                        <li><a data-componentid="WF_COM_200-2" class="ensLinkTrack" target="_blank" href="http://www.holidayextras.co.uk/firstchoice/hotels-and-parking.html">Airport parking</a></li>
+                        <li><a data-componentid="WF_COM_200-2" class="ensLinkTrack" href="http://www.firstchoice.co.uk/information/holiday-extras/before-you-go/foreign-exchange/travel-money-card/">Money Card</a></li>
+                        <li><a data-componentid="WF_COM_200-2" class="ensLinkTrack" href="http://www.firstchoiceins.co.uk/travel/default.aspx">Travel insurance</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <h3>Find a local store</h3>
+                    <p><a data-componentid="WF_COM_200-2" class="ensLinkTrack" href="www.thomson.co.uk/shopfinder/shop-finder.html/">Shop Finder</a></p>
+                </li>
+                <li id="safe-hands">
+                    <h3>You're in safe hands</h3>
+                    <p>We're part of TUI Travel PLC, one of the world's leading travel groups - and we're in great financial shape.</p>
+                    <p>Precious time. Guaranteed.</p>
+                    <p class="authority">
+                        <a data-componentid="WF_COM_200-2" target="_blank" href="http://abta.com/go-travel/before-you-travel/find-a-member" class="abta ensLinkTrack">ABTA</a>
+                        <a data-componentid="WF_COM_200-2" target="_blank" href="www.caa.co.uk/application.aspx?catid=490&amp;pagetype=65&amp;appid=2&amp;mode=detailnosummary&amp;atolnumber=2524" class="atol ensLinkTrack">ATOL</a>
+                    </p>
+                </li>
+                <li id="questions">
+                    <h3>Have a question?</h3>
+                    <form method="get" action="http://www.firstchoice.co.uk/gsa/search">
+                        <div class="formrow">
+                            <textarea placeholder="e.g. Where do I print my e-tickets?" class="textfield" name="q"></textarea>
+                            <input type="hidden" value="firstchoice_collection" name="site">
+                            <input type="hidden" value="fc-hugo-main" name="client">
+                            <input type="hidden" value="fc-hugo-main" name="proxystylesheet">
+                            <input type="hidden" value="xml_no_dtd" name="output">
+                            <input type="hidden" value="Go" name="submit">
+                        </div>
+                        <div class="floater">
+                            <input type="submit" class="button fr mt4" value="Search">
+                            <p class="help fl"><a data-componentid="WF_COM_200-2" class="ensLinkTrack" href="http://www.firstchoice.co.uk/help">Help</a></p>
+                            <p class="contact-us fl"><a data-componentid="WF_COM_200-2" class="ensLinkTrack" href="http://www.thomson.co.uk/editorial/legal/contact-us.html">Contact us</a></p>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+            <script type="text/javascript">
+                dojoConfig.addModuleName("tui/widget/Tabs");
+            </script>
+            <div id="footer-seo">
+                <div lang="en" data-dojo-type="tui.widget.Tabs" class="tabs-container">
+                    <ul class="tabs">
+                        <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="#holidaytypes">Holiday Types</a><span class="arrow"></span></li>
+                        <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="#longhaul">Mid/Long haul</a><span class="arrow"></span></li>
+                        <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="#shorthaul">Short haul</a><span class="arrow"></span></li>
+                        <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="#allinclusive">All inclusive</a><span class="arrow"></span></li>
+                    </ul>
+                    <div class="menu" id="holidaytypes">
+                        <ul>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/deals/summer-2013-deals.html/">Summer Holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/deals/winter-2013-deals.html/">Winter Holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.firstchoice.co.uk/sun-holidays/holiday-villages/">Holiday Villages</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/all-inclusive-holidays.html/">All Inclusive Holidays</a></li>
+                        </ul>
+                        <ul>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/family-holidays.html/">Family Holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/editorial/features/sunshine-holidays.html/">Sun Holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/">Cheap Holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/late-deals/late-deals.html/">Last minute Holidays</a></li>
+                        </ul>
+                        <ul>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/editorial/features/beach-holidays.html/">Beach Escapes</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.firstchoice.co.uk">Package Holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/late-deals/late-deals.html/">Late deals</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/luxury-holidays.html/">Luxury holidays</a></li>
+                        </ul>
+                    </div>
+                    <div class="menu" id="longhaul">
+                        <ul>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/africa/egypt/holidays-egypt.html/">Egypt holidays (mid haul)</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/indian-ocean/india/goa/holidays-goa.html/">Goa holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/indian-ocean/maldives/holidays-maldives.html/">Maldives holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/africa/kenya/holidays-kenya.html/">Kenya holidays</a></li>
+                        </ul>
+                        <ul>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/caribbean/dominican-republic/holidays-dominican-republic.html/">Dominican Republic holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/africa/cape-verde/cape-verde-islands/holidays-cape-verde-islands.html/">Cape Verde Islands holidays (mid haul)</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.firstchoice.co.uk/holidays/jamaica-holidays/">Jamaica holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/the-americas/united-states-of-america/florida/holidays-florida.html/">Florida holidays</a></li>
+                        </ul>
+                        <ul>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/caribbean/aruba-island/aruba/holidays-aruba.html/">Aruba holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/caribbean/cuba/holidays-cuba.html">Cuba holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/caribbean/mexico/holidays-mexico.html/">Mexico holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/caribbean/caribbean.html/">Caribbean holidays</a></li>
+                        </ul>
+                    </div>
+                    <div class="menu" id="shorthaul">
+                        <ul>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/africa/tunisia/holidays-tunisia.html/">Tunisia holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/europe/cyprus/holidays-cyprus.html/">Cyprus holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/europe/malta/holidays-malta.html/">Malta holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/africa/morocco/holidays-morocco.html/">Morocco holidays</a></li>
+                        </ul>
+                        <ul>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/europe/bulgaria/holidays-bulgaria.html/">Bulgaria holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/europe/spain/holidays-spain.html/">Spain holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/europe/italy/holidays-italy.html/">Italy holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/europe/turkey/holidays-turkey.html/">Turkey holidays</a></li>
+                        </ul>
+                        <ul>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/europe/greece/holidays-greece.html/">Greece holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/europe/greece/crete/holidays-crete.html/">Crete holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.firstchoice.co.uk/holidays/rhodes-holidays/">Rhodes holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.firstchoice.co.uk/holidays/corfu-holidays/">Corfu holidays</a></li>
+                        </ul>
+                    </div>
+                    <div class="menu" id="allinclusive">
+                        <ul>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/europe/spain/tenerife/holidays-tenerife.html/">Tenerife holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/africa/egypt/egypt-red-sea/sharm-el-sheikh/luxury-holidays-sharm-el-sheikh.html/">Sharm el Sheikh holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/europe/spain/ibiza/holidays-ibiza.html/">Ibiza holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.firstchoice.co.uk/holidays/costa-del-sol-holidays/">Costa Del Sol holidays</a></li>
+                        </ul>
+                        <ul>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.firstchoice.co.uk/holidays/zante-holidays/">Zante holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/europe/spain/gran-canaria/holidays-gran-canaria.html/">Gran Canaria holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.firstchoice.co.uk/destinations/">Kefalonia holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/europe/spain/costa-blanca/benidorm/holidays-benidorm.html/">Benidorm holidays</a></li>
+                        </ul>
+                        <ul>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/europe/spain/lanzarote/holidays-lanzarote.html/">Lanzarote holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/europe/spain/majorca/holidays-majorca.html/">Majorca holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/editorial/features/canary-islands-holidays.html/">Canary islands holidays</a></li>
+                            <li><a data-componentid="WF_COM_200-3" class="ensLinkTrack" href="http://www.thomson.co.uk/destinations/europe/portugal/algarve/holidays-algarve.html/">Algarve holidays</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer id="footer">
+        <ul>
+            <li>&copy; 2013 <a data-componentid="WF_COM_200-4" class="ensLinkTrack" href="http://www.tuitravelplc.com/">TUI Travel plc</a></li>
+            <li><a data-componentid="WF_COM_200-4" class="ensLinkTrack" href="http://www.thomson.co.uk/editorial/legal/website-terms-and-conditions.html/">Terms &amp; Conditions</a></li>
+            <li><a data-componentid="WF_COM_200-4" class="ensLinkTrack" href="http://www.firstchoice.co.uk/our-policies/accessibility/">Accessibility</a></li>
+            <li><a data-componentid="WF_COM_200-4" class="ensLinkTrack" href="http://www.thomson.co.uk/editorial/legal/privacy-policy.html/">Privacy Policy</a></li>
+            <li><a data-componentid="WF_COM_200-4" class="ensLinkTrack" href="http://www.thomson.co.uk/editorial/legal/statement-on-cookies.html/">Statement on Cookies</a></li>
+            <li><a data-componentid="WF_COM_200-4" class="ensLinkTrack" href="http://www.thomson.co.uk/editorial/legal/credit-card-payments.html/">Credit Card Fees</a></li>
+        </ul>
+        <p class="disclaimer"><small>Many of the flights and flight-inclusive holidays on this website are financially protected by the ATOL scheme. But ATOL protection does not apply to all holiday and travel services listed on this website. Please ask us to confirm what protection may apply to your booking. If you do not receive an ATOL Certificate then the booking will not be ATOL protected. If you do receive an ATOL Certificate but all the parts of your trip are not listed on it, those parts will not be ATOL protected. Please see our booking conditions for information or for more information about financial protection and the ATOL Certificate go to:&nbsp;<a href="http://www.atol.org.uk/ATOLCertificate">www.atol.org.uk/ATOLCertificate</a></small></p>
+        <!-- all components rendered -->
+    </footer>
+    <script type="text/javascript" src="/js/underscore/underscore-min.js"></script>
+    <script type="text/javascript" src="/js/dojo/dojo.js"></script>
+    <script type="text/javascript">
+        dojoConfig.init();
+    </script>
+</body>
+</html>

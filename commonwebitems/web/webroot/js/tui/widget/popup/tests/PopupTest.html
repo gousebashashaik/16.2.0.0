@@ -1,0 +1,324 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>Popup tests</title>
+
+    <script src="/js/underscore/underscore-min.js"></script>
+    <!-- required: dojo.js -->
+    <script type="text/javascript" src="/js/dojo/dojo.js"></script>
+
+    <!-- functions to help test -->
+    <script type="text/javascript" src="/js/dijit/tests/helpers.js"></script>
+
+    <script type="text/javascript">
+        dojo.require("dojo.DeferredList");
+        dojo.require("dojo.window");
+        dojo.require("dijit.robotx");
+
+
+        dojo.ready(function () {
+            doh.robot.initRobot('Popup.html');
+			var popup;
+            var metaKey = {ctrl:true};
+            doh.register("popup tests", [{
+                    name:"popup should be displayed",
+                    timeout:6900,
+                    runTest:function () {
+                        var d = new doh.Deferred();
+                        popup = dijit.byId("testPopup");
+                        doh.robot.mouseMoveAt(popup.domNode, 500);
+                        doh.robot.mouseClick({left:true}, 500);
+                        doh.robot.sequence(d.getTestCallback(function () {
+                            try {
+                                doh.is(true, dojo.style(popup.popupDomNode, "display") == 'block');
+                            } catch (e) {
+                                d.errback(e);
+                            }
+                        }), 900);
+                        return d;
+                    }
+                },{
+                	name:"popup should be closed",
+                    timeout:6900,
+                    runTest:function () {
+                        var d = new doh.Deferred();
+                        popup = dijit.byId("testPopup");
+                        doh.robot.mouseMoveAt(dojo.byId("closeLink"), 500);
+                        doh.robot.mouseClick({left:true}, 500);
+                        doh.robot.sequence(d.getTestCallback(function () {
+                            try {
+                                doh.is(true, dojo.style(popup.popupDomNode, "display") == 'none');
+                            } catch (e) {
+                                d.errback(e);
+                            }
+                        }), 900);
+                        return d;
+                    }
+                },{
+                	name:"popup should be open with a modal",
+                    timeout:6900,
+                    runTest:function () {
+                        var d = new doh.Deferred();
+                        popup = dijit.byId("testPopup");
+                        popup.modal = true;
+                        doh.robot.mouseMoveAt(popup.domNode, 500);
+                        doh.robot.mouseClick({left:true}, 500);
+                        doh.robot.sequence(d.getTestCallback(function () {
+                            try {
+                                doh.is(true, dojo.style(popup.popupDomNode, "display") === 'block');
+                                doh.is(true, dojo.style(popup.modalDomNode, "display") === 'block');
+                            } catch (e) {
+                                d.errback(e);
+                            }
+                        }), 900);
+                        return d;
+                    }
+                },{
+                	name:"popup should be closed aswell as modal",
+                    timeout:6900,
+                    runTest:function () {
+                        var d = new doh.Deferred();
+                        popup = dijit.byId("testPopup");
+                        doh.robot.mouseMoveAt(dojo.byId("popupTitle"), 500);
+                        doh.robot.mouseClick({left:true}, 500);
+                        doh.robot.sequence(d.getTestCallback(function () {
+                            try {
+                                doh.is(true, dojo.style(popup.popupDomNode, "display") === 'none');
+                                doh.is(true, dojo.style(popup.modalDomNode, "display") === 'none');
+                            } catch (e) {
+                                d.errback(e);
+                            }
+                        }), 900);
+                        return d;
+                    }
+                },{
+                	name:"popup should be open with a modal",
+                    timeout:6900,
+                    runTest:function () {
+                        var d = new doh.Deferred();
+                        popup = dijit.byId("testPopup");
+                        popup.modal = true;
+                        doh.robot.mouseMoveAt(popup.domNode, 500);
+                        doh.robot.mouseClick({left:true}, 500);
+                        doh.robot.sequence(d.getTestCallback(function () {
+                            try {
+                                doh.is(true, dojo.style(popup.popupDomNode, "display") === 'block');
+                                doh.is(true, dojo.style(popup.modalDomNode, "display") === 'block');
+                            } catch (e) {
+                                d.errback(e);
+                            }
+                        }), 900);
+                        return d;
+                    }
+                },{
+                	name:"popup should be close with a modal, when close button is selected",
+                    timeout:6900,
+                    runTest:function () {
+                        var d = new doh.Deferred();
+                        popup = dijit.byId("testPopup");
+                        doh.robot.mouseMoveAt(dojo.byId("closeLink"), 500);
+                        doh.robot.mouseClick({left:true}, 500);
+                        doh.robot.sequence(d.getTestCallback(function () {
+                            try {
+                                doh.is(true, dojo.style(popup.popupDomNode, "display") === 'none');
+                                doh.is(true, dojo.style(popup.modalDomNode, "display") === 'none');
+                            } catch (e) {
+                                d.errback(e);
+                            }
+                        }), 900);
+                        return d;
+                    }
+                },{
+                	name:"tooltip should appear on mouse cursor over, bottom left by default",
+                    timeout:6900,
+                    runTest:function () {
+                        var d = new doh.Deferred();
+                        popup = dijit.byId("couplesText");
+                        doh.robot.mouseMoveAt(popup.domNode, 500);
+                        doh.robot.sequence(d.getTestCallback(function () {
+                            try {
+                               	doh.is(true, dojo.style(popup.popupDomNode, "display") === 'block');
+                            } catch (e) {
+                                d.errback(e);
+                            }
+                        }), 900);
+                        return d;
+                    }
+                },{
+                	name:"tooltip should appear on mouse cursor rollerover, bottom center",
+                    timeout:6900,
+                    runTest:function () {
+                        var d = new doh.Deferred();
+                        doh.robot.mouseMoveAt(dojo.byId("popupTitle"), 500);
+                        popup = dijit.byId("couplesText");
+                        popup.floatWhere = "position-bottom-center";
+                        doh.robot.mouseMoveAt(popup.domNode, 500);
+                        doh.robot.sequence(d.getTestCallback(function () {
+                            try {
+                               	doh.is(true, dojo.style(popup.popupDomNode, "display") === 'block');
+                            } catch (e) {
+                                d.errback(e);
+                            }
+                        }), 900);
+                        return d;
+                    }
+                },{
+                	name:"tooltip should appear on mouse cursor rollerover, top center",
+                    timeout:6900,
+                    runTest:function () {
+                        var d = new doh.Deferred();
+                        doh.robot.mouseMoveAt(dojo.byId("popupTitle"), 500);
+                        popup = dijit.byId("couplesText");
+                        popup.floatWhere = "position-top-center";
+                        doh.robot.mouseMoveAt(popup.domNode, 500);
+                        doh.robot.sequence(d.getTestCallback(function () {
+                            try {
+                               	doh.is(true, dojo.style(popup.popupDomNode, "display") === 'block');
+                            } catch (e) {
+                                d.errback(e);
+                            }
+                        }), 900);
+                        return d;
+                    }
+                },{
+                	name:"tooltip should appear on mouse cursor rollerover, top left",
+                    timeout:6900,
+                    runTest:function () {
+                        var d = new doh.Deferred();
+                        doh.robot.mouseMoveAt(dojo.byId("popupTitle"), 500);
+                        popup = dijit.byId("couplesText");
+                        popup.floatWhere = "position-top-left";
+                        doh.robot.mouseMoveAt(popup.domNode, 500);
+                        doh.robot.sequence(d.getTestCallback(function () {
+                            try {
+                               	doh.is(true, dojo.style(popup.popupDomNode, "display") === 'block');
+                            } catch (e) {
+                                d.errback(e);
+                            }
+                        }), 900);
+                        return d;
+                    }
+                },{
+                	name:"tooltip should appear on mouse cursor rollerover, top right",
+                    timeout:6900,
+                    runTest:function () {
+                        var d = new doh.Deferred();
+                        doh.robot.mouseMoveAt(dojo.byId("popupTitle"), 500);
+                        popup = dijit.byId("couplesText");
+                        popup.floatWhere = "position-top-right";
+                        doh.robot.mouseMoveAt(popup.domNode, 500);
+                        doh.robot.sequence(d.getTestCallback(function () {
+                            try {
+                               	doh.is(true, dojo.style(popup.popupDomNode, "display") === 'block');
+                            } catch (e) {
+                                d.errback(e);
+                            }
+                        }), 900);
+                        return d;
+                    }
+                },{
+                	name:"tooltip should appear on mouse cursor rollerover, bottom right",
+                    timeout:6900,
+                    runTest:function () {
+                        var d = new doh.Deferred();
+                        doh.robot.mouseMoveAt(dojo.byId("popupTitle"), 500);
+                        popup = dijit.byId("couplesText");
+                        popup.floatWhere = "position-bottom-right";
+                        doh.robot.mouseMoveAt(popup.domNode, 500);
+                        doh.robot.sequence(d.getTestCallback(function () {
+                            try {
+                               	doh.is(true, dojo.style(popup.popupDomNode, "display") === 'block');
+                            } catch (e) {
+                                d.errback(e);
+                            }
+                        }), 900);
+                        return d;
+                    }
+                }	/*,{
+                    name:"click modal",
+                    timeout:6900,
+                    runTest:function () {
+                        var d = new doh.Deferred();
+                        popup = dijit.byId("termsLink");
+                        doh.robot.mouseMoveAt(popup.domNode, 500);
+                        doh.robot.sequence(d.getTestCallback(function () {
+                        try {
+                        	 doh.is(true, dojo.style(popup.popupDomNode, "display") == 'block');
+                         } catch (e) {
+                            d.errback(e);
+                        }
+                     }), 900);
+                     return d;
+                    }
+                },
+                
+                {
+                    name:"should open up a tool tip",
+                    timeout:6900,
+                    runTest:function () {
+                        var d = new doh.Deferred();
+                        //doh.robot.mouseClick({left:true}, 500);
+                        popup = dijit.byId("couplesText");
+                        doh.robot.mouseMoveAt(popup.domNode, 500);
+                       // 
+                        doh.robot.sequence(d.getTestCallback(function () {
+                        try {
+                        	 doh.is(true, dojo.style(popup.popupDomNode, "display") == 'block');
+                         } catch (e) {
+                            d.errback(e);
+                        }
+                     }), 900);
+                     return d;
+                    }
+                },
+                {
+                    name:"should be able to create a simple closable popup by extending the basic popup",
+                    timeout:6900,
+                    runTest:function () {
+                        var d = new doh.Deferred();
+                        doh.robot.mouseMoveAt(100, 800, 500);
+
+                        doh.robot.mouseMoveAt(dojo.byId("testPopup"), 500);
+                        doh.robot.mouseClick({left:true}, 500);
+
+                        doh.robot.sequence(d.getTestCallback(function () {
+                            var closablePopup = dojo.byId("closablePopup");
+                            try {
+                                doh.is(true, dojo.style(closablePopup, "display") == 'block');
+                            } catch (e) {
+                                d.errback(e);
+                            }
+                        }), 900);
+
+                        return d;
+                    }
+                },
+
+                {
+                    name : "should be able to close the previously opened popup",
+                    timeout:6900,
+                    runTest:function() {
+                        var d = new doh.Deferred();
+                        doh.robot.mouseMoveAt(dojo.byId("closablePopup"), 500);
+                        doh.robot.mouseClick({left:true}, 500);
+                        doh.robot.sequence(d.getTestCallback(function() {
+                            var closablePopup = dojo.byId("closablePopup");
+                            try {
+                                doh.is(true, dojo.style(closablePopup, "display") == 'none');
+                            } catch (e) {
+                                d.errback(e);
+                            }
+                        }), 900);
+                        return d;
+                    }
+                }*/
+            ]);
+
+            doh.run();
+        });
+
+
+    </script>
+</head>
+</html>

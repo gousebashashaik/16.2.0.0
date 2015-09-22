@@ -1,0 +1,62 @@
+<div class="prebook-modal-window infant-section {{genericContent.classNam|default:\' \'}}">
+	<a href="javascript:void(0);" class="close abs fr">Close</a>
+	<h2 class="fl {% if classActFlag %}{% else %}infant-overlay{% endif %}">{{headingContent|default:" "}}</h2>
+<div class="clear"></div>
+<div class="prebook-overlaycontent">
+{% for infantOptions in infantSelectOptionData.extraFacilityViewData %}
+<div class="infant-equipment-extras {% if classActFlag %}{% else %} infHeight {% endif %} ">
+
+			<div class="imageHolder {% if classActFlag %}{% else %} disNone {% endif %}">
+				<img width="87px" height="87px" src="{{infantOptions.contentValue.imageUrl|default:\'\'}}">
+			</div>
+				<div class="infant-equipment-extra-description ${io.code}">
+					<h3 class="description-header">{{infantOptions.contentValue.displayName|default:""}}</h3>
+					<div class="description-subsection">
+						<h5 class="sub-section-desc">{{infantOptions.contentValue.strapLine|safe|default:""}}</h5>
+						<div class="priceSection">
+							<p class="total-cost-price">
+								<span class="price-package">{{infantOptions.currencyAppendedPerPersonPrice}}</span>
+									 {% if classActFlag %}
+									<span class="perclass">
+									per class,</span>
+										<span class="perclass">
+									per person</span>
+									{% else %}
+									<span class="pricepernight">each</span>
+						      <p class="perperson-total-cost">
+							<span class="perpersonprice-package">{{infantOptions.currencyAppendedPricePerNight}} per night</span>
+							</p>
+									{% endif %}
+							</p>
+
+						</div>
+						<div class="select-infant-equipment custom-dropdown dropdown fl">
+							<select name="selectDropdownLabel" data-dojo-type="tui.widget.form.SelectOption" class="dropdown"
+									data-dojo-attach-point="{{infantOptions.code}}SelectionBox">
+								{% for qty in infantOptions.quantityArray %}
+								<option	{% ifequal infantOptions.selectedQuantity qty %} selected {% endifequal %} >
+						 		 {{qty}}
+								</option>
+								{% endfor %}
+							</select>
+						</div>
+					</div>
+				</div>
+</div>
+
+{% endfor %}
+
+<div class="clear"></div>
+		<div class="overlay-total-cost-section">
+			<div class="overlay-totalpriceSection">
+				<p class="totalCostText">Total Cost</p>
+				<p class="total-cost-price"><label id="totalpricelabel" data-dojo-attach-point="totalInfantPrice">{{infantOptions.currencyAppendedPrice}}</label>
+					<span class="disBlock">
+						<button id="infant-add-button" data-dojo-attach-point= "infantAddButton" class="button cancel {{genericContent.buttonClasNam|default:\'\']}} mt5px ml10px" >Add</button>
+					</span>
+				</p>
+			</div>
+		</div>
+
+		</div>
+</div>

@@ -1,0 +1,52 @@
+{% for latechkout in lcdData %}
+<div class="latecheckout-room-modal-window sectional-padding">
+  <a href="javascript:void(0);" class="close abs fr close_toppadding">close</a>
+
+  <h2 class="roomcheckout-header">Add late checkout rooms</h2>
+  <h5 class="roomcheckout-subheader">Please note, you may need to
+    move to different rooms for your late check-out</h5>
+
+  <div class="cb"></div>
+
+	  <div class="latecheckout-priceSection" data-dojo-attach-point="lcdDiv">
+	    <div class="latecheckout-roomupdate">
+	      <div class="latecheckout-selectrooms"> Late checkout rooms</div>
+	      <div class="selectMeal custom-dropdown dropdown fl">
+
+	        <select id="{{latechkout.code}}" class="ml10px custom-dropdown dropdown " name="noofrooms"
+	                data-dojo-type="tui.widget.form.SelectOption" data-dojo-attach-point="SelectionBox"
+	                data-dojo-props="jsonData: jsonData">
+	          {% for qty in quantityArrayLCD %}
+	          <option value={{qty}}
+	          {% ifequal latechkout.selectedQuantity qty %} selected {% endifequal %} >
+	          {{qty}}
+	          </option>
+	          {% endfor %}
+	        </select>
+	      </div>
+
+	    </div>
+	    <div class="latecheckout-priceUpdate">
+	      <p class="latecheckout-price">
+	        {{latechkout.currencyAppendedPerPersonPrice}}
+	      </p>
+	      <p class="latecheckout-perroom">per room</p>
+	    </div>
+	  </div>
+	  <div class="dashed-border mt15px"></div>
+	  <div class="clear"></div>
+	  <div class="mt15px totalamtsection">
+	    <label class="fl latecheckout-totalamt">Total Cost</label>
+
+	    <label id="totalprice" class="latecheckout-totalprice fr" data-dojo-attach-point="totalCalculatedPrice">{{latechkout.currencyAppendedPerPersonPrice}}</label>
+
+	  </div>
+	  <div class="clear"></div>
+	  <div class="pb12px"></div>
+	  <div class="latecheckout-overlaybuttons">
+	    <button class="fr button cancel okbutton" data-dojo-attach-point="lcdOkButton">OK</button>
+	    <a href="javascript:void(0);" class="fl cancel cancelbutton">CANCEL</a>
+	  </div>
+
+</div>
+{% endfor %}

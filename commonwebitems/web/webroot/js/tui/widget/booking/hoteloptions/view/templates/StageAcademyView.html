@@ -1,0 +1,97 @@
+<div class="hotel-option-modal-window stage-academy-overlay">
+
+	<h2 class="stageacademy-overlay">{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.stage_academy_displayName|default:" "}}
+	<a href="javascript:void(0);" class="close abs fr">close</a>
+	</h2>
+	<div class="clear"></div>
+	<div class="stageAcademy-details">
+		<div class="left-details">
+			<div class="stageacademy-img">
+				<img src="{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.stage_academy_StrapLine_medium|default:' '}}" />
+			</div>
+			<div class="stageacademy-description">
+				<p>{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.stage_academy_StrapLine|default:" "|safe}}</p>
+			</div>
+		</div>
+		<div class="right-details">
+			<div class="duration-details">
+				{% if stageOptionsData.extrasToPassengerMapping %}
+					<div class="selecting-section">
+						 {% for stageAcademy in stageOptionsData.extrasToPassengerMapping %}
+							{% if stageAcademy.passenger.age > 4 && stageAcademy.passenger.age < 17 %}
+								<div class="child-details" data-dojo-attach-point="stageDiv{{stageAcademy.passenger.identifier}}">
+									<label class="age disBlock textBold">Child
+										{{forloop.counter}} ({{stageAcademy.passenger.age}} yrs)</label>
+									{%if stageAcademy.passenger.isSwimSelected  == true %}
+                                     			<div class="bookflow-info-section pax-name">A child cannot select both swim and stage activities at the same time.</div>
+                                    {% else %}
+										<div class="package-selection-section">
+											{% ifnotequal stageOptionsData.extrasToPassengerMapping.length 0 %}
+													{% ifequal stageOptionsData.extrasToPassengerMapping.length 1 %}
+														{% for extras in stageAcademy.extras %}
+															<input type="radio" id="stage{{extras.code}}{{stageAcademy.passenger.identifier}}1"
+																name="stage{{stageAcademy.passenger.identifier}}" value={{extras.childPrice}}
+																{%if extras.selected %}
+																	checked
+																{% endif %}/>
+															<label for="stage{{extras.code}}{{stageAcademy.passenger.identifier}}1"><span
+																for="stage{{extras.code}}{{stageAcademy.passenger.identifier}}1" class="pl20px mt10px">{{extras.description}}</span></label>
+															<span class="fr price-package">{{extras.currencyAppendedPrice}}</span>
+															<div class="clear"></div>
+														{% endfor %}
+													{% else %}
+														<input type="radio" id="stageNone{{extras.code}}{{stageAcademy.passenger.identifier}}{{forloop.counter}}"
+															name="stage{{stageAcademy.passenger.identifier}}" value="0" checked/>
+														<label class="disBlock" for="stageNone{{extras.code}}{{stageAcademy.passenger.identifier}}{{forloop.counter}}"><span
+															for="stageNone{{extras.code}}{{stageAcademy.passenger.identifier}}{{forloop.counter}}" class="pl20px mt10px">None</span></label>
+														<div class="clear"></div>
+														{% for extras in stageAcademy.extras %}
+															<input type="radio"
+																id="stage{{extras.code}}{{stageAcademy.passenger.identifier}}{{forloop.counter}}"
+																name="stage{{stageAcademy.passenger.identifier}}"
+																value={{extras.childPrice}}
+																{%if extras.selected %}
+																	checked
+																{% endif %}/>
+															<label for="stage{{extras.code}}{{stageAcademy.passenger.identifier}}{{forloop.counter}}"><span
+																for="stage{{extras.code}}{{stageAcademy.passenger.identifier}}{{forloop.counter}}" class="pl20px mt10px">{{extras.description}}</span></label>
+															<span class="fr price-package">{{extras.currencyAppendedPrice}}</span>
+															<div class="clear"></div>
+														{% endfor %}
+													{% endifequal %}
+												<div class="border-divider"></div>
+											{% endifnotequal %}
+										</div>
+									{% endif %}
+								</div>
+							{% endif %}
+						{% endfor %}
+						<div class="clear"></div>
+						<div class="final-calculation">
+							<h5 class="total-cost">Total cost</h5>
+							<p class="fr">
+							<span class="price-package fr" data-dojo-attach-point="totalCalculatedPrice" ></span><span class="currency-indicator"></span> <span
+									class="price-package"></span>
+							</p>
+						</div>
+						<div class="clear"></div>
+						<div class="price-information-section">
+						 <div id="error-mgs" class="fl error-notation disNone"></div>
+							<a href="javascript:void(0);" data-dojo-attach-point= "addButton" class="button selected fr">Add</a>
+						</div>
+					</div>
+				{% endif %}
+			</div>
+			<div class="clear"></div>
+			<div class="points-glance">
+				<h6>At a glance</h6>
+				{% for usp in jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.stage_academy_usp %}
+                         <ul>
+                               <li>{{usp|default:" "}}</li>
+
+                         </ul>
+                  {% endfor %}
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,105 @@
+<div class="clear travelling-passenger-section">
+    <div class="clear"></div>
+	{% for insPasViewDataObj in insViewObject.insPasViewData %}
+	<ul class="requiredPassengers">
+		<li id="tooltip_id" class="clear {% if insPasViewDataObj.child or insPasViewDataObj.infant %}label-no-bottom{% endif %}">
+			<input type="checkbox" class="fl passengerCB {% if insPasViewDataObj.child %} child {% else %} {% if insPasViewDataObj.infant %} infant {% else %} adult {% endif %}{% endif %}"
+				data-dojo-attach-point="checkboxId{{insPasViewDataObj.id}}"
+				id="checkboxId{{insPasViewDataObj.id}}"
+				{% if insPasViewDataObj.infant %}
+				    disabled
+				{% endif %}
+				{% if insPasViewDataObj.selected %}
+			    	checked
+				{% endif %}
+				value="{{insPasViewDataObj.name}}">
+			</input>
+			<label name="passengerName" for="checkboxId{{insPasViewDataObj.id}}" class="{% if insPasViewDataObj.child or insPasViewDataObj.infant %}fl{% endif %}"><span></span>
+			 		{{insPasViewDataObj.name|default:""}}
+			</label>
+			<div class="infant-count custom-dropdown dropdown dropdown {% if insPasViewDataObj.child or insPasViewDataObj.infant %}fl{% endif %}">
+				{% if insPasViewDataObj.child %}
+				<textarea class="disNone"
+					data-dojo-attach-point="label{{insPasViewDataObj.id}}"
+					data-dojo-type="dijit.form.Textarea">Child</textarea>
+				<label name="passengerName" class="child" data-label-value="CHILD" id="label{{insPasViewDataObj.id}}">aged 2-17  <strong class="child-price-text">({{indiviualInsurance.frmChdPrice }})</strong></label>
+				{% else %}
+				   {% if insPasViewDataObj.infant %}
+					<textarea class="disNone"
+						data-dojo-attach-point="label{{insPasViewDataObj.id}}"
+						data-dojo-type="dijit.form.Textarea">Infant</textarea>
+					<label name="passengerName" class="infant right" data-label-value="INFANT" id="label{{insPasViewDataObj.id}}"><span class="fl infant-age-range">aged 0-1</span> <span class="fl infant-free-text">{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_FreeInfanText|safe|default:" "}}</span> <div class="clear"></div> </label>
+				   {% else %}
+					<select
+						name="selectDropdownLabel" required="true"
+						data-dojo-type="tui.widget.booking.insuranceB.PassengerAgeProfileSelect" class="dropdown" data-check-input="checkboxId{{insPasViewDataObj.id}}" data-msg-div="select-div-{{insPasViewDataObj.id}}"
+						data-dojo-attach-point="selectDropdown{{insPasViewDataObj.id}}">
+						{% for ageProfileObj in insPasViewDataObj.ageProfile %}
+						<option
+							{{ageProfileObj.selected}}
+               			 	value="{{ageProfileObj.ageCode}}">
+							{{ageProfileObj.tweakedProfile}}</option>
+						{% endfor %}
+				    </select>
+				   {% endif %}
+				{% endif %}
+			</div>
+			<div class="clear"></div>
+			</li>
+	</ul>
+	{% ifequal forloop.counter 1 %}
+	 <div id="impInfoCheckbox_Error77" class="error-notation-insurance min-passenger hide">Please Select at least one Passenger</div>
+	{% endifequal %}
+	<div class="disNone error-notation-insurance max-age-error select-div-{{insPasViewDataObj.id}}">{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_PaxAbove85Info|safe|default:" "}}</div>
+	{% endfor %}
+	<div id="impInfoCheckbox_Error" class="error-notation disNone"></div>
+</div>
+<div class="clear terms-n-condition-section">
+<p> <strong>Terms and Conditions</strong></p>
+<p> {{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_EligibilityText|safe|default:" "}} </p>
+<p> {{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_terms_and_conditions2|safe|default:" "}} </p>
+<p> {{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_terms_and_conditions3|safe|default:" "}} </p>
+</div>
+<div class="clear health-declaration-section">
+<p> <strong>Health Declaration</strong></p>
+<p> {{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Health_Declaration1|safe|default:" "}} </p>
+<p> {{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Health_Declaration2|safe|default:" "}} </p>
+<p> {{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Health_Declaration3|safe|default:" "}} </p>
+<p> {{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_terms_and_conditions4|safe|default:" "}} </p>
+</div>
+<div class="clear agreement-box">
+<input type="checkbox" data-dojo-attach-point="confirmationCheck" id="confirmationCheckid" class="confirmationCheck fl"></input>
+             <label name="passengerName" class="agreement-label" for="confirmationCheckid">
+ <span></span><strong>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Confirm_Agree|safe|default:" "}}</strong></label>
+ <div id="impInfoCheckbox_Error22" class="error-notation disNone">{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_PleaseConfirmValidationMsg|safe|default:"Please confirm that you have checked the terms and conditions"}}</div>
+</div>
+<div class="clear add-button-section">
+    <div class="simple-add-section clear">
+        <button class="button jumbo fr cta analytics-insur-add" data-dojo-attach-point="addBtn" data-excess-waiver="false">
+        		Add
+        </button>
+        <div class="fr total-price">
+           <span class="fl price" data-dojo-attach-point="insuranceOnlyPrice"><strong class="insuranceOnlyPrice">{{totalPrice}}</strong></span>
+           <span class="fl"><strong>TOTAL</strong></span>
+        </div>
+        <span class="fr total-text">{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_InsuranceOnly|safe|default:" "}}</span>
+    </div>
+    <div class="button-separator clear"></div>
+	<div class="dashed-border mt20px mb10px {% ifequal excessWaiverFlag true %} disNone  {% endifequal %}"></div>
+
+    <div class="excess-excess-waiver-section clear {% ifequal excessWaiverFlag true %} disNone  {% endifequal %}">
+        <button class="button jumbo fr cta analytics-insur-add" data-dojo-attach-point="addExcessWaiverBtn" data-excess-waiver="true">
+        		Add
+        </button>
+        <div class="fr total-price">
+           <span class="fl price" data-dojo-attach-point="insuranceWithExcessWaiverPrice"><strong class="insuranceWithExcessWaiverPrice">{{totalPriceWithEw}}</strong></span>
+           <span class="fl"><strong>TOTAL</strong></span>
+        </div>
+        <span class="fr total-text">{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_InsuranceAndExcessOnly|safe|default:" "}}</span>
+         <span class="fl total-text add-excess-waiver-text">{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_IndividualIntro1|safe|default:" "}}</span>
+    </div>
+
+</div>
+<div class="clear conclusion-section">
+<p> {{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_disclaimer|safe|default:" "}}</p>
+</div><div class="clear"></div>

@@ -1,0 +1,8 @@
+<div class="tooltip {{ floatWhere }}">
+	<p class="uppercase">{{ month }}</p>
+	<p class="small">{{ temperature }}</p>
+	{% if rainfall %}
+		<p class="small rainfall">{{ rainfall }}</p>
+	{% endif %}
+	<span class="arrow"></span>
+</div>

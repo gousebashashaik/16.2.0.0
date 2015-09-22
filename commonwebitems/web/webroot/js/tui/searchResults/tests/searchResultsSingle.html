@@ -1,0 +1,389 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7 ]>
+<html lang="en" class="ie6" id="firstchoice"> <![endif]-->
+<!--[if IE 7 ]>
+<html lang="en" class="ie7" id="firstchoice"> <![endif]-->
+<!--[if IE 8 ]>
+<html lang="en" class="ie8" id="firstchoice"> <![endif]-->
+<!--[if IE 9 ]>
+<html lang="en" class="ie9" id="firstchoice"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="" id="firstchoice"> <!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <title>Single Search Result Tests</title>
+
+    <link href="/css/main.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script type="text/javascript" src="/js/tui/config/TuiConfigTest.js"></script>
+    <style>
+        .noResults {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<script type="text/javascript">
+    //dojoConfig.addModuleName('tui/searchResults/view/DateAvailabilitySlider', 'tui/searchResults/view/Tooltips', 'tui/widget/FilterPanelModule');
+    dojoConfig.addModuleName("tui/searchPanel/controller/SearchPanelController", "tui/searchResults/controller/SearchResultsController");
+</script>
+
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <!-- Search Panel -->
+            <div class="search hide" data-dojo-type="tui.searchPanel.controller.SearchPanelController" data-dojo-props="PERSISTED_SEARCH_PERIOD: 30, MAX_ADULTS_NUMBER: 9, INFANT_AGE: 1, FLEXIBLE_DAYS: 7">
+                <form  class="search-form" method="post" action="/js/tui/searchResults/tests/searchResults.html">
+                    <input type="hidden" value="" name="searchCriteria"/>
+                </form>
+                <div class="col from">
+                    <label class="icon" for="where-from">Where from?</label>
+                    <input type="text" data-dojo-type="tui.searchPanel.view.AirportMultiFieldList" data-dojo-props="maxTextboxes:6, duration:500, controller:'tui.searchPanel.controller.SearchPanelController'" class="textfield multifield where-from" placeholder="Any UK Airport" tabindex="0" id="where-from"/>
+                    <p><a href="#" id="airport-guide" data-dojo-type="tui.searchPanel.view.AirportGuide" data-dojo-props="fromLimit:6, controller:'tui.searchPanel.controller.SearchPanelController'"  class="related airport airport-guide" tabindex="-1">Airport List <span class="load"></span></a>
+                    </p>
+                </div>
+                <div class="col to">
+                    <label for="where-to">Where to? <span>(Destination, Hotel or Type)</span></label>
+                    <input type="text" data-dojo-type="tui.searchPanel.view.DestinationMultiFieldList" data-dojo-props="duration:500, controller:'tui.searchPanel.controller.SearchPanelController'" class="textfield multifield where-to" placeholder="Anywhere" tabindex="0" id="where-to"/>
+                    <p><a href="#" data-dojo-type="tui.searchPanel.view.DestinationGuide" data-dojo-props="controller:'tui.searchPanel.controller.SearchPanelController'" class="related destination destination-guide" tabindex="-1">Destination List <span class="load"></span></a></p>
+                </div>
+                <div class="col">
+                    <label for="when">When?</label>
+                    <div class="when" tabindex="0" id="when" data-dojo-type="tui.searchPanel.view.SearchDatePicker" data-dojo-props="seasonLength:18, controller:'tui.searchPanel.controller.SearchPanelController'">Select a date</div>
+                    <p><label class="related give-take"><input type="checkbox" class="flexible" checked="checked" data-dojo-type="tui.searchPanel.view.FlexibleView" data-dojo-props="controller:'tui.searchPanel.controller.SearchPanelController'"/>I'm
+                        flexible</label><span class="flexible-tooltip" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="text: 'We ll search for holidays 7 days before and after your selected date.', floatWhere: 'position-top-right'">?</span></p>
+                </div>
+                <div class="col">
+                    <div class="rooms">
+                        <div class="labels">
+                            <label for="totalAdults" class="icon">Adults</label>
+                            <label for="totalSeniors" class="icon">Seniors <span>(65+)</span></label>
+                            <label for="totalChildren" class="icon">Children <span>(0-17)</span></label>
+                        </div>
+                        <div class="item">
+                            <span class="acol">
+                                <select id="totalAdults" name="totalAdults" data-dojo-type="tui.searchPanel.view.AdultsSelectOption" data-dojo-props="controller:'tui.searchPanel.controller.SearchPanelController'" class="dropdown totalAdults" tabindex="-1">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2" selected>2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                </select>
+                            </span>
+                            <span class="scol">
+                                <select id="totalSeniors" name="totalSeniors" data-dojo-type="tui.searchPanel.view.SeniorsSelectOption" data-dojo-props="controller:'tui.searchPanel.controller.SearchPanelController'" class="dropdown totalSeniors" tabindex="-1">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                </select>
+                            </span>
+                            <span class="ccol">
+                                <select id="totalChildren" name="totalChildren" data-dojo-type="tui.searchPanel.view.ChildSelectOption" data-dojo-props="controller:'tui.searchPanel.controller.SearchPanelController'" class="dropdown totalChildren" tabindex="-1">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="search-col no-margin">
+                        <input type="submit"  data-dojo-type="tui.searchPanel.view.SubmitButton" data-dojo-props="formSelector:'.search-form', controller:'tui.searchPanel.controller.SearchPanelController'"  class="button search-submit" value="Search" tabindex="0"/>
+                    </div>
+                </div>
+                <div class="guide-container" style="height:0;"></div>
+            </div>
+            <!-- Search Summary Panel -->
+            <div class="search-summary hide" data-dojo-type="tui.searchPanel.view.SearchSummary" data-dojo-props="controller:'tui.searchPanel.controller.SearchPanelController'">
+                <div class="col">
+                    <label class="icon" for="where-from-summary">Where from?</label>
+                    <p class="where-from-summary" id="where-from-summary"></p>
+                </div>
+                <div class="col">
+                    <label for="where-to-summary">Where to?</label>
+                    <p class="where-to-summary" id="where-to-summary"></p>
+                </div>
+                <div class="col">
+                    <label for="when-summary">When?</label>
+                    <p class="when-summary" id="when-summary"></p>
+                </div>
+                <div class="col">
+                    <div class="rooms">
+                        <div class="labels">
+                            <label for="total-adults" class="icon">Adults</label>
+                            <label for="total-seniors" class="icon">Seniors (65+)</label>
+                            <label for="total-children" class="icon">Children (0-17)</label>
+                        </div>
+                        <div class="item">
+                            <span class="acol-summary total-adults" id="total-adults"></span>
+                            <span class="scol-summary total-seniors" id="total-seniors"></span>
+                            <span class="ccol-summary total-children" id="total-children"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col no-margin">
+                    <input type="submit" class="button search-edit" value="Edit search">
+                </div>
+            </div>
+        </div>
+        <div id="content">
+            <div class="top" >
+                <div class="search-results single">
+                    <!-- Single Accommodation result details & Filter Panel -->
+                    <div class="span-quarter">
+                        <!-- Single Accommodation result details -->
+                        <div class="single-accommodation-details">
+                            <div class="product">
+                                <div class="image-container">
+                                    <span class="diff"></span>
+                                    <img alt="Holiday Village Menorca" src="/images/temp-holiday-result-images/12.jpg" />
+                                </div>
+                                <h1>Holiday Village Menorca</h1>
+                                <p class="rating t4">Rating: 4</p>
+                                <p class="where">in Menorca, Calan Bosch</p>
+                                <p class="trip-advisor tripadvisor">
+                                    TripAdvisor - <span class="ta-review-count">78 reviews</span>
+                                    <span class="ta-rating">4/5</span>
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Filter Panel -->
+                        <div class="filter" data-dojo-type="tui.searchResults.view.SearchFilterPanel" data-dojo-props="controller: 'tui.searchResults.controller.SearchResultsController'">
+                            <div class="mask-interactivity"></div>
+                            <div class="item">
+                                <h3>
+                                    <a href="#" class="item-toggle">
+                                        <span class="title">General Options</span>
+                                        <span class="selection">0</span>
+                                    </a>
+                                </h3>
+
+                                <div class="item-content">
+                                    <h4>Price display</h4>
+                                    <ul class="price-toggle">
+                                        <li class="total">&pound; TOTAL</li>
+                                        <li class="perperson active">&pound; PER PERSON</li>
+                                    </ul>
+
+                                    <h4>Budget (total party)</h4>
+
+                                    <div id="budgetSlider" class="slider">
+                                        <div class="track">
+                                            <div class="elapse"></div>
+                                            <div class="handle"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <h3>
+                                    <a href="#" class="item-toggle">
+                                        <span class="title">Flight Options</span>
+                                        <span class="selection">0</span>
+                                    </a>
+                                </h3>
+
+                                <div class="item-content">
+
+                                    <h4>Departure time (going out)</h4>
+                                    <ul class="checks">
+                                        <li>
+                                            <input type="checkbox" id="check66o" value="flightout:M" class="check"/>
+                                            <label for="check66o">Morning - 06:00 - 11:59</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="check7o" value="flightout:A" class="check"/>
+                                            <label for="check7o">Afternon - 12:00 - 17:59</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="check8o" value="flightout:E" class="check"/>
+                                            <label for="check8o">Evening - 18:00 - 20:59</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="check18o" value="flightout:N" class="check"/>
+                                            <label for="check18o">Night - 21:00 - 05:59</label>
+                                        </li>
+                                    </ul>
+
+                                    <h4>Departure time (coming back)</h4>
+                                    <ul class="checks">
+                                        <li>
+                                            <input type="checkbox" id="check66" value="flightreturn:M" class="check"/>
+                                            <label for="check66">Morning - 06:00 - 11:59</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="check7" value="flightreturn:A" class="check"/>
+                                            <label for="check7">Afternon - 12:00 - 17:59</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="check8" value="flightreturn:E" class="check"/>
+                                            <label for="check8">Evening - 18:00 - 20:59</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="check18" value="flightreturn:N" class="check"/>
+                                            <label for="check18">Night - 21:00 - 05:59</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <p><a href="#" class="clear-filter">Clear all filters</a></p>
+                        </div>
+                    </div>
+                    <!-- Holiday Duration Selection & Shortlist -->
+                    <div class="span-three-quarter no-bottom-margin">
+                        <!-- Shortlist -->
+                        <div class="shortlisted" data-dojo-props="floatWhere:'position-top-center', text:'You can save any Package Holiday to your shortlist. Then you will be able to Lorem Ipsum.'" data-dojo-type="tui.searchResults.view.Tooltips">
+                            <a href="#" id="shortlist" class="">
+                                <span class="icon"><i></i></span>
+                                <span class="count">0</span>
+                                <span class="text">holidays saved</span>
+                            </a>
+                        </div>
+                        <div class="duration-selection">
+                            <!-- Holiday Duration Selection -->
+                            <h2 class="step-1"><span class="steps">1</span> Select duration for your holiday</h2>
+                            <div id="duration-tab" class="tabs-container" data-dojo-type="tui.searchResults.view.HolidayDurationView" data-dojo-props="controller: 'tui.searchResults.controller.SearchResultsController'">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Adjust Departure Dates -->
+                    <div class="span-three-quarter">
+                        <div class="refine-dates">
+                            <!-- Adjust Departure Dates -->
+                            <h2><span class="steps">2</span> What dates can you depart?</h2>
+                            <div class="slidey-calendar">
+	                            <div id="dateAvailabilitySlider" class="slider" data-dojo-type="tui.searchResults.view.DateAvailabilitySlider" data-dojo-props="controller: 'tui.searchResults.controller.SearchResultsController'">
+                                    <div class="months month-1" style="display:none">
+                                        <span>&nbsp;</span>
+                                        <div class="month-separator"></div>
+                                    </div>
+                                    <div class="months month-2">&nbsp;</div>
+                                    <div class="track">
+                                        <div class="elapse"></div>
+                                        <div class="handle left"><span></span></div>
+                                        <div class="handle right"><span></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Search Results count -->
+                    <div class="span-three-quarter">
+                        <div class="flights-summary">
+                            <h2 class="hide"><span class="steps">3</span> Flights <em>from</em> London Gatwick <em>on</em> Thursday 8 August 2013</h2>
+                            <h2><span class="steps">3</span> Flights <em>for</em> 7 nights holidays</h2>
+                            <ul class="button-group">
+                                <li class="label">Group by</li>
+                                <li class="btn first active"><a href="#"><span class="airport">Airport</span></a></li>
+                                <li class="btn last"><a href="#"><span class="date">Date</span></a></li>
+                            </ul>
+                        </div>
+                        <div class="mask-interactivity"></div>
+                        <div class="result-view flights">
+                            <div class="item open">
+                                <h3>Flying <em>from</em> London Gatwick <i>&gt;</i></h3>
+                                <div class="item-content">
+                                    <div class="flight-details">
+                                        <ul>
+                                            <li class="itinerary"><span class="itinerary-dates">Thu 8 Aug 2013</span><span class="itinerary-departure-time">11:30</span><span class="itinerary-arrival-time"><i>&gt;</i> 15:30</span></li>
+                                            <li class="itinerary"><span class="itinerary-dates">Thu 15 Aug 2013</span><span class="itinerary-departure-time">23:40</span><span class="itinerary-arrival-time"><i>&gt;</i> 02:30</span><span class="itinerary-day-overlap">+1 day</span></li>
+                                            <li class="dreamliner"><span lang="en" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="title: '787 Dreamliner flights', list: '&lt;li&gt;Up to 34 inch seat pitch in economy and 38 inches in Premium.&lt;/li&gt;&lt;li&gt;30% bigger windows &ndash; horizon views wherever you sit.&lt;/li&gt;&lt;li&gt;Even at it\'s lowest point the cabin is 6 foot high &ndash; a real sense of space.&lt;/li&gt;&lt;li&gt;Altered cabin pressure &ndash; leave the flight fresher&lt;/li&gt;&lt;li&gt;60% less noise than standard planes during take-off and landing&lt;/li&gt;;&lt;li&gt;NEW From November 2014 complimentary drinks will be served in Economy Club on all Thomson Airways long haul flights&lt;/li&gt;', width: 'jumbo'" class="info-block loaded" title="787 Dreamliner flights">787 Dreamliner flight <span class="question">?</span></span></li>
+                                        </ul>
+                                    </div>
+                                    <div class="more-details">
+                                        <div class="divider price-box">
+                                            <p class="price"><span>£</span><span class="price-value">440</span></p>
+                                            <span lang="en" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: 'Per person price = total party price divided by number of adults &amp;amp; children (excluding infants and any free kids)'" class="info-block float price-info">
+                                                Total Price <span class="question">?</span>
+                                            </span>
+                                            <span class="discount highlight">Includes £120 discount</span>
+                                        </div>
+                                        <div class="divider">
+                                            <ul>
+                                                <li class="offer">Free child place</li>
+                                                <li class="room">1 bedroom apartment</li>
+                                                <li class="info"><span lang="en" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: 'Limited availability'" class="info-block highlight loaded">Only 5 rooms left <span lang="en" class="question">?</span></span></li>
+                                                <li class="board">All inclusive</li>
+                                            </ul>
+                                        </div>
+                                        <div class="divider no-border">
+                                            <ul>
+                                                <li class="deposit"><span class="highlight">Deposit £300pp</span></li>
+                                            </ul>
+                                            <div class="cta-buttons">
+                                                <a data-id="045545" class="button shortlist" href="#"><i></i><span class="text">Save</span></a>
+                                                <a class="button cta jumbo" href="/holiday/accommodation/overview/Calan-Bosch/Holiday-Village-Menorca-045545">Continue</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item-content last">
+                                    <div class="flight-details">
+                                        <ul>
+                                            <li class="itinerary"><span class="itinerary-dates">Thu 8 Aug 2013</span><span class="itinerary-departure-time">11:30</span><span class="itinerary-arrival-time"><i>&gt;</i> 15:30</span></li>
+                                            <li class="itinerary"><span class="itinerary-dates">Thu 15 Aug 2013</span><span class="itinerary-departure-time">23:40</span><span class="itinerary-arrival-time"><i>&gt;</i> 02:30</span><span class="itinerary-day-overlap">+1 day</span></li>
+                                            <li class="dreamliner"><span lang="en" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="title: '787 Dreamliner flights', list: '&lt;li&gt;Up to 34 inch seat pitch in economy and 38 inches in Premium.&lt;/li&gt;&lt;li&gt;30% bigger windows &ndash; horizon views wherever you sit.&lt;/li&gt;&lt;li&gt;Even at it\'s lowest point the cabin is 6 foot high &ndash; a real sense of space.&lt;/li&gt;&lt;li&gt;Altered cabin pressure &ndash; leave the flight fresher&lt;/li&gt;&lt;li&gt;60% less noise than standard planes during take-off and landing&lt;/li&gt;&lt;li&gt;Even at it\'s lowest point the cabin is 6 foot high &ndash; a real sense of space.&lt;/li&gt;&lt;li&gt;Altered cabin pressure &ndash; leave the flight fresher&lt;/li&gt;&lt;li&gt;60% less noise than standard planes during take-off and landing&lt;/li&gt;;&lt;li&gt;NEW From November 2014 complimentary drinks will be served in Economy Club on all Thomson Airways long haul flights&lt;/li&gt;', width: 'jumbo'" class="info-block loaded" title="787 Dreamliner flights">787 Dreamliner flight <span class="question">?</span></span></li>
+                                        </ul>
+                                    </div>
+                                    <div class="more-details">
+                                        <div class="divider price-box">
+                                            <p class="price"><span>£</span><span class="price-value">440</span></p>
+                                            <span lang="en" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: 'Per person price = total party price divided by number of adults &amp;amp; children (excluding infants and any free kids)'" class="info-block float price-info">
+                                                Total Price <span class="question">?</span>
+                                            </span>
+                                        </div>
+                                        <div class="divider">
+                                            <ul>
+                                                <li class="offer">Free child place</li>
+                                                <li class="room">1 bedroom apartment</li>
+                                                <li class="info"><span lang="en" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: 'Limited availability'" class="info-block highlight loaded">Only 5 rooms left <span lang="en" class="question">?</span></span></li>
+                                                <li class="board">All inclusive</li>
+                                            </ul>
+                                        </div>
+                                        <div class="divider no-border">
+                                            <ul>
+                                                <li class="deposit"><span class="highlight">Deposit £300pp</span></li>
+                                            </ul>
+                                            <div class="cta-buttons">
+                                                <a data-id="045545" class="button shortlist" href="#"><i></i><span class="text">Save</span></a>
+                                                <a class="button cta jumbo" href="/holiday/accommodation/overview/Calan-Bosch/Holiday-Village-Menorca-045545">Continue</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer id="footer"></footer>
+    <script type="text/javascript" src="/js/underscore/underscore-min.js"></script>
+    <script type="text/javascript" src="/js/dojo/dojo.js"></script>
+    <script type="text/javascript">
+        dojoConfig.init();
+    </script>
+</body>
+</html>

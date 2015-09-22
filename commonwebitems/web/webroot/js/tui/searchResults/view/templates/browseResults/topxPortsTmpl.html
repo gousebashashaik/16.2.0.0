@@ -1,0 +1,43 @@
+<div class="top-x title-left">
+	<h2 style="min-height:85px;">
+		<span class="top">Top {{jsonData.topXData.visibleItemCount}}</span>
+		<span class="location">{{jsonData.topXData.topPlaceName}}</span>
+		{% if jsonData.topXData.cruiseAreaName %}
+		<span class="for"> For<br />{{jsonData.topXData.cruiseAreaName}} </span>
+		{% endif %}
+		<a href="{{jsonData.topXData.viewAllLinkUrl}}" class="view-all-link position-bot ensLinkTrack has-icon-right">
+			{{jsonData.topXData.viewAllLinkName}}<i class="icon arrow-main product-arrow-sm product-arrow-left arrow-right-bg">&#9658;</i>
+		</a>
+	</h2>
+	<div class="product-list">
+		<div class="viewport">
+			<ul class="plist">
+			 {% for option in jsonData.topXData.topPlacesViewData %}
+				<li>
+					<div class="product xs topBtmlayout">
+						<div class="image-container">
+							<span style="" class="diff-label "></span>
+							<span style="" class="count"> {{forloop.counter}}</span>
+							<span class="corner-top"></span>
+							<a class="ensLinkTrack" href="{{option.redirectUrl}}">
+								{% if option.imageUrl %}
+									<img width="145" height="83" alt="{{option.title}}" src="{{option.imageUrl}}">
+								{% else %}
+									<img width="145" height="83" alt="{{option.title}}" size="small" src="{{cdnDomain}}/images/cruise/default-small.png">
+								{% endif %}
+							</a>
+						</div>
+						<h3>
+							<a class="uc ensLinkTrack" href="{{option.redirectUrl}}">{{option.title}}</a>
+						</h3>
+						<p class="country-name">{{option.countryName}}</p>
+						<p class="area-name">{{option.cruiseAreaName}}</p>
+					</div>
+				</li>
+	         {% endfor %}
+
+
+			</ul>
+		</div>
+	</div>
+</div>

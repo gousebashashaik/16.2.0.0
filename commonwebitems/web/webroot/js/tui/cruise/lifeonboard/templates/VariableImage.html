@@ -1,0 +1,18 @@
+{% if carousel %}
+        <div class="product-list media-gallery slideshow">
+            <div class="viewport">
+                <ul class="plist">
+                    {% for image in galleryImages %}
+                        <li style="z-index: 0; opacity: 1;"><img alt="image" src="{{image.mainSrc}}" /></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <p class="load">Loading</p>
+        </div>
+        <div class="transparent magnifier" >
+            <a class="mediaPopup" href="javascript:void(0);"><span class="viewlarge uc"></span></a>
+        </div>
+
+{% else %}
+    <img src="{{imageUrl}}" alt="" title="" width="{{width}}" height="{{height}}"/>
+{% endif %}

@@ -1,0 +1,23 @@
+<!-- BrowseSearch POC List : -->
+<li class="span-quarter poc-list padBottomZero browseSearch">
+    <div class="divBox">
+		<a href="javascript:void(0);" >	
+			<img title="title" src="{{holiday.image}}" size="medium"  width="236" height="120"/>
+		</a>
+		<div class="contentBox">
+			<h2 class="title"><a href="{{holiday.portDetails.pocRedirectUrl}}" >{{holiday.portDetails.portName}}</a></h2>
+			<span class="sub-title">{{holiday.portDetails.portCountry}}</span>				
+			<p class="desc">{{holiday.portDetails.portDesc}}</p>
+		</div>
+		<div class="link-list">
+			<span class="uc list-title">Top Excursions</span>
+			<ul class="square-with-arrow">
+			{% for excursion in holiday.portDetails.excursions %}
+			<li><a href="{{excursion.excursionUrl}}">{{excursion.excursionName}}</a></li>    
+			{% endfor %}
+			</ul>
+		</div>
+	</div>
+</li>
+
+<!--{{ holiday.index |divisibleby:"3" }}-->

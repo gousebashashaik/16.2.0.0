@@ -1,0 +1,98 @@
+			{% for accomData in accomAry %}
+				{% if accomData.endecaResultFlag %} 
+				<li>
+					<div 
+					class=" product 
+					 {% if accomData.productRanges %}{% ifnotequal accomData.productRanges.0.code '' %} {{accomData.productRanges.0.code|lower|safe}} special {% endifnotequal %} {% endif%}
+					">
+						<div class="image-container">
+							<span data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="floatWhere:'position-top-center', text:'{% if accomData.productRanges.0.featureCodesAndValues.strapline %}{{accomData.productRanges.0.featureCodesAndValues.strapline.0|safe}} {% endif %}'" class="diff-label {% ifequal accomData.productRanges.0.code|lower 'smr' %}cou-sensimar{% else %}{{accomData.productRanges.0.code|lower|safe}}{% endifequal %}"></span>
+							{% comment %} {{ accomData.BOOKFLOW_URL }} {% endcomment %}
+							<a href="{{accomData.book_link}}" class="ensLinkTrack" 
+							enslinktrackattached ="true"
+							data-componentId="{{compUid}}" 
+							baynote_bnrank='{{accomData.baynote_bnrank}}' 
+							baynote_req='{{accomData.baynote_req}}' 
+							baynote_guide='{{accomData.baynote_guide}}' 
+							baynote_pid='{{accomData.baynote_pid}}' 
+							>
+									 {% ifnotequal accomData.FEATURED_IMAGE '' %} 
+										<img src="{{ cdnDomain }}/images/b.gif" 
+										data-dojo-type="tui.widget.LazyLoadImage" 
+										data-dojo-props="source:'{{ accomData.FEATURED_IMAGE }}'" width="232" height="130" />
+									 {% endifnotequal %}
+										
+									
+								    {% ifequal accomData.FEATURED_IMAGE '' %} 
+										<img src="{{ cdnDomain }}/images/b.gif" 
+										data-dojo-type="tui.widget.LazyLoadImage" 
+										data-dojo-props="source:'{{ cdnDomain }}/images/{{ siteName }}/default-small.png'" width="232" height="130" />
+									{% endifequal %}
+									
+							</a>
+
+						</div>
+						
+						<h4><a href="{{ accomData.DEEPLINK_URL }}" class="ensLinkTrack" 
+							enslinktrackattached ="true"
+							data-componentId="{{compUid}}" 
+							baynote_bnrank='{{accomData.baynote_bnrank}}' 
+							baynote_req='{{accomData.baynote_req}}' 
+							baynote_guide='{{accomData.baynote_guide}}' 
+							baynote_pid='{{accomData.baynote_pid}}' 
+						>{{accomData.NAME}}</a></h4>
+						{% if accomData.featureCodesAndValues.tRating %}
+							{% ifnotequal accomData.featureCodesAndValues.tRating '' %}
+								<p class="rating rating-block  t{{accomData.featureCodesAndValues.tRating.0|safe|cut:" " }}  ">
+								Rating: {{accomData.featureCodesAndValues.tRating.0|safe }}
+								</p>
+							{% endifnotequal %}
+						{% endif %}
+						
+						<p class="location-info">
+						{% ifequal accomData.RESORT '' %}
+							in {{accomData.COUNTRY|safe}}
+						{% endifequal %}
+						
+						{% ifnotequal accomData.RESORT '' %}
+							in {{accomData.RESORT|safe}}{% ifnotequal accomData.COUNTRY '' %}, {{accomData.COUNTRY|safe}}
+							{% endifnotequal %}
+						{% endifnotequal %}
+						</p>
+					
+					
+					<div>
+						{% comment %}
+						<fmt:parseDate value="${accomData.departureDate}" type="DATE" pattern="dd-MM-yyyy" 
+						var="depDate"/>
+						<fmt:formatDate value="${depDate}" type="date" pattern=" EEE dd MMM yyyy"></fmt:formatDate>
+						{% endcomment %}
+						{{accomData.departureDate|safe}}, {{accomData.duration|safe}} nights
+					</div>
+					
+					<div class="airport">{{accomData.departurePoint|safe}}</div>	
+					<div style="margin-bottom:8px;"> {{accomData.recBoardBasis|safe}} </div>
+					
+				<div class="boxout floater">
+					{% ifnotequal accomData.boardBasis '' %}
+					<p class="price left">
+						<strong>&pound;{{accomData.boardBasis.0.price|safe}} </strong>
+						per person
+					</p>
+					{% endifnotequal %}
+					
+					{% comment %} {{ accomData.BOOKFLOW_URL }} {% endcomment %}
+					<a href="{{accomData.book_link}}" class="button right ensLinkTrack" 
+					enslinktrackattached ="true"
+					data-componentId="{{compUid}}" 
+					baynote_bnrank='{{accomData.baynote_bnrank}}' 
+					baynote_req='{{accomData.baynote_req}}' 
+					baynote_guide='{{accomData.baynote_guide}}' 
+					baynote_pid='{{accomData.baynote_pid}}' 
+					>View details</a>
+	
+				</div>
+					</div>
+				</li>
+				{% endif %}
+			{% endfor %}

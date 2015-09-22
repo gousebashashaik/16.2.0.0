@@ -1,0 +1,115 @@
+<div>
+<div class="bookflow-info-section pax-name">{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Information_Section|default:" "}}</div>
+<div class="sub-title">
+{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_AddressLookUp_Label|default:" "}}
+</div>
+
+{% for passengerData in jsonData.packageViewData.passenger %}
+
+	{% ifequal passengerData.type  "ADULT" %}
+		<div class="sub-section">
+			<div class="passenger-title">
+				<span class="passenger-name">{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Adult_Label|default:" "}} {{passengerData.passengerCount|default:" "}}</span>
+				{% ifequal passengerData.identifier 1  %}
+					<span class="passenger-description"><input type="hidden"
+							value="" />{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Lead_Label|default:" "}}
+							 <span class="question-lead" data-dojo-type="tui.widget.popup.Tooltips"
+                data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Lead_Pax_ToolTips|default:\' \'}}'"></span>
+							</span>
+				{% endifequal %}
+			</div>
+			<div data-dojo-type="tui.widget.booking.passengers.view.PassengerDetailsView"
+						data-dojo-attach-point="passengerDetailsView{{forloop.counter0}}"
+						data-dojo-props="type:'ADULT', index:{{forloop.counter0}},
+						jsonData: jsonData,
+						passengerObj: jsonData.packageViewData.passenger[{{forloop.counter0}}],
+						Schedule: {% ifequal inboundFlag true %} jsonData.packageViewData.flightViewData[0].inboundSectors[0].schedule  {% else %} jsonData.packageViewData.flightViewData[0].outboundSectors[0].schedule {% endifequal %},
+						insSelectionDataList : jsonData.passengerInsuranceViewData.insSelectionData,
+						passengerDetailsFormBean : passengerDetailsFormBean,infantNotYetBornData:jsonData.infantNotYetBornViewData,
+						paxInfoFormBean: passengerDetailsFormBean !== '' ? passengerDetailsFormBean.paxInfoFormBean[{{forloop.counter0}}] : passengerDetailsFormBean,
+						errorBean: errors !== '' ? errors : errors">
+			</div>
+		</div>
+
+	{% endifequal %}
+	{% ifequal passengerData.type  "SENIOR" %}
+		<div class="sub-section">
+			<div class="passenger-title">
+				<span class="passenger-name">{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Adult_Label|default:" "}} {{passengerData.passengerCount|default:" "}}</span>
+				{% ifequal passengerData.identifier 1  %}
+					<span class="passenger-description"><input type="hidden"
+						value="" />{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Lead_Label|default:" "}}
+						<span class="question-lead" data-dojo-type="tui.widget.popup.Tooltips"
+                data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Lead_Pax_ToolTips|default:\' \'}}'"></span>
+						</span>
+				{% endifequal %}
+			</div>
+			<div data-dojo-type="tui.widget.booking.passengers.view.PassengerDetailsView"
+							data-dojo-attach-point="passengerDetailsView{{forloop.counter0}}"
+							data-dojo-props="type:'ADULT', index:{{forloop.counter0}},
+							jsonData: jsonData,
+							passengerObj: jsonData.packageViewData.passenger[{{forloop.counter0}}],
+							Schedule: {% ifequal inboundFlag true %} jsonData.packageViewData.flightViewData[0].inboundSectors[0].schedule  {% else %} jsonData.packageViewData.flightViewData[0].outboundSectors[0].schedule  {% endifequal %},
+							insSelectionDataList : jsonData.passengerInsuranceViewData.insSelectionData,
+							passengerDetailsFormBean : passengerDetailsFormBean,infantNotYetBornData:jsonData.infantNotYetBornViewData,
+							paxInfoFormBean: passengerDetailsFormBean !== '' ? passengerDetailsFormBean.paxInfoFormBean[{{forloop.counter0}}] : passengerDetailsFormBean,
+							errorBean: errors !== '' ? errors : errors">
+
+			</div>
+		</div>
+	{% endifequal %}
+
+
+	{% ifequal passengerData.type "CHILD"  %}
+		<div class="sub-section">
+			<div class="passenger-title">
+				<span class="passenger-name">{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Child_Label|default:" "}} {{passengerData.passengerCount|default:" "}}</span>
+
+				<span
+				class="passenger-description childAge">(Age {{passengerData.age}})</span>
+			</div>
+			<div data-dojo-type="tui.widget.booking.passengers.view.PassengerDetailsView"
+				data-dojo-attach-point="passengerDetailsView{{forloop.counter0}}"
+				data-dojo-props="type:'CHILD', index:{{forloop.counter0}},
+				        jsonData: jsonData,
+				        passengerObj: jsonData.packageViewData.passenger[{{forloop.counter0}}],
+						passengerDetailsFormBean : passengerDetailsFormBean,infantNotYetBornData:jsonData.infantNotYetBornViewData,
+						Schedule: {% ifequal inboundFlag true %} jsonData.packageViewData.flightViewData[0].inboundSectors[0].schedule  {% else %} jsonData.packageViewData.flightViewData[0].outboundSectors[0].schedule {% endifequal %},
+						insChildSelectionData : jsonData.passengerInsuranceViewData.insChildSelectionData,
+						paxInfoFormBean: passengerDetailsFormBean !== '' ? passengerDetailsFormBean.paxInfoFormBean[{{forloop.counter0}}] : passengerDetailsFormBean,
+						errorBean: errors !== '' ? errors : errors">
+
+			</div>
+		</div>
+	{% endifequal %}
+
+	{% ifequal passengerData.type "INFANT"  %}
+		<div class="sub-section">
+			<div class="passenger-title">
+					<span class="passenger-name">{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Infant_Label|default:" "}} {{passengerData.passengerCount|default:" "}}</span>
+
+				<span
+					class="passenger-description childAge">(Age 0-2)</span>
+			</div>
+			<div data-dojo-type="tui.widget.booking.passengers.view.PassengerDetailsView"
+				data-dojo-attach-point="passengerDetailsView{{forloop.counter0}}"
+				 data-dojo-props="type:'INFANT', index:{{forloop.counter0}},
+				        jsonData: jsonData,
+				        passengerObj: jsonData.packageViewData.passenger[{{forloop.counter0}}],
+				 		Schedule: {% ifequal inboundFlag true %} jsonData.packageViewData.flightViewData[0].inboundSectors[0].schedule  {% else %} jsonData.packageViewData.flightViewData[0].outboundSectors[0].schedule {% endifequal %},
+				 		passengerDetailsFormBean : passengerDetailsFormBean,infantNotYetBornData:jsonData.infantNotYetBornViewData,
+						paxInfoFormBean: passengerDetailsFormBean !== '' ? passengerDetailsFormBean.paxInfoFormBean[{{forloop.counter0}}] : passengerDetailsFormBean,
+						errorBean: errors !== '' ? errors : errors">
+
+			</div>
+		</div>
+	{% endifequal %}
+	<div class="shadow-seperator">&nbsp;</div>
+{% endfor %}
+
+
+<div class="clear"></div>
+
+
+
+</div>

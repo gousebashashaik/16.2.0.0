@@ -1,0 +1,115 @@
+<div class="inflightmeal-modal-window meals">
+  <a href="javascript:void(0);" class="close abs fr">close</a>
+
+  <h2>Your Free in-flight meals</h2>
+
+  <h5>Your flight includes tasty inflight meals. If you've got
+    specific dietary needs you can choose from the options below at no extra
+    charge.</h5>
+
+  <div class="pb10px"></div>
+  <div class="clear"></div>
+
+  {% for passengers in inflightMealData.packageViewData.passenger %}
+
+      {% ifequal passengers.type 'ADULT' %}
+  <div class="noofpassengers" id="Adult {{passengers.identifier}}">
+            <div class="paxNumber">{{passengers.passengerLabel}}</div>
+            <div class="selectMeal custom-dropdown dropdown fl" id="Adult">
+              <select name="selectDropdownLabel"
+                      data-dojo-type="tui.widget.form.SelectOption" class="dropdown"
+                      value="STMS" id="{{passengers.identifier}}"
+                      data-dojo-attach-point="{{passengers.identifier}}SelectionBox">
+                {% for option in inflightMealData.extraFacilityViewDataContainer.mealOptions.extraFacilityViewData %}
+                    {% ifnotequal option.code 'CFM' %}
+                        <option value="{{option.code}}"
+                        {% ifequal passengers.selectedMealOption.code option.code %}
+                            selected
+                        {% endifequal %} >
+                        {{option.description}}
+                        </option>
+                    {% endifnotequal %}
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="pb10px"></div>
+      {% endifequal %}
+
+
+         {% ifequal passengers.type 'SENIOR' %}
+          <div class="noofpassengers" id="Adult {{passengers.identifier}}">
+            <div class="paxNumber">{{passengers.passengerLabel}}</div>
+    <div class="selectMeal custom-dropdown dropdown fl" id="Adult">
+      <select name="selectDropdownLabel"
+              data-dojo-type="tui.widget.form.SelectOption" class="dropdown"
+              value="STMS" id="{{passengers.identifier}}"
+              data-dojo-attach-point="{{passengers.identifier}}SelectionBox">
+        {% for option in inflightMealData.extraFacilityViewDataContainer.mealOptions.extraFacilityViewData %}
+        {% ifnotequal option.code 'CFM' %}
+        <option value="{{option.code}}"
+        {% ifequal passengers.selectedMealOption.code option.code %}
+                            selected
+                        {% endifequal %} >
+        {{option.description}}
+        </option>
+        {% endifnotequal %}
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  <div class="pb10px"></div>
+  {% endifequal %}
+
+
+  {% ifequal passengers.type 'CHILD' %}
+
+        {% if passengers.childMealAvailable%}
+
+  <div class="noofpassengers" id="Child {{passengers.identifier}}">
+
+    <div class="paxNumber">
+       {{passengers.passengerLabel}} ({{passengers.age}} yrs)
+    </div>
+      <div class="selectMeal custom-dropdown dropdown fl" id="Child">
+          {% if passengers.childAgeFlag  %}
+          <select name="selectDropdownLabel"
+                  data-dojo-type="tui.widget.form.SelectOption" class="dropdown"
+                  id="{{passengers.identifier}}" data-dojo-attach-point="{{passengers.identifier}}SelectionBox">
+             {% for option in inflightMealData.extraFacilityViewDataContainer.mealOptions.extraFacilityViewData %}
+            	{% ifnotequal option.code 'CFM' %}
+                    <option value="{{option.code}}"
+                       {% ifequal passengers.selectedMealOption.code option.code %}
+                            selected
+                        {% endifequal %}  >
+                           {{option.description}}
+                    </option>
+                {% endifnotequal %}
+            {% endfor %}
+          </select>
+            <span class="info-icon"></span>
+            <span class="info-text">An adult inflight meal must be selected for children of this age</span>
+          {% else %}
+           <div data-dojo-attach-point ="{{passengers.identifier}}|childDiv" id="{{passengers.identifier}}|{{passengers.selectedMealOption.code}}"> Children's inflight meal</div>
+          {% endif %}
+      </div>
+
+  </div>
+  {% else %}
+
+  {% endif %}
+  {% endifequal %}
+  {% endfor %}
+
+  <div class="clear"></div>
+  <div class="bb2px"></div>
+  <div class="button-section">
+    <div class="fl">
+      <a href="javascript:void(0);" class="button cancel">Cancel</a>
+    </div>
+    <div class="fr">
+      <button class="button cancel selected" data-dojo-attach-point="okButton">Ok</button>
+    </div>
+  </div>
+
+</div>

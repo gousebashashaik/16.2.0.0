@@ -1,0 +1,107 @@
+
+<div class="modal hide" id="GotoCreateAccount">
+	<div class="window">
+		<div class="title">
+			Create an account
+			<span class="close" id="GotoCreateAccountClose">y</span>
+		</div>
+		<div class="modal-content">
+			<div id="content">
+				<div class="content-width" id="CAcreateAccountOverlayForm">
+					<div class="signin-page" id="customer-form">								
+						<form id="CreateAccountpopupform"  method="post" autocomplete="off" action="{{tuiWebrootPath}}/manageMyAccount/createAccountOverlay" >			
+							<div id="firstnameDiv" class="row c" data-dojo-props='stringWithHypenSpace:"true",maximumLength:15, maxLengthMessage:"First name should not contain more than",mandatory:"true",promptMessage:"We need your first name",invalidMessage:"This isn&rsquo;t a valid first name. Re-enter your first name."' data-dojo-type="tui.widget.customeraccount.TextBox">
+								<label for="firstName" class="two-lines">First name <br /><span class="hint">As per passport</span></label>
+								<input tabindex="1" type="text" name="firstName"  id="popupfirstName"  value="" />	
+								<span style="display:none;" id="popupfirstNameError_1" class="message"></span>							  
+								<i style="display:none;"  id="popupfirstNameError_2" class="caret erase red"></i>
+								<i style="display:none;" id="popupfirstNameError_3" class="caret tick green"></i>
+							</div>
+							<div id="surnameDiv" class="row c" data-dojo-props='stringWithHypenSpace:"true", maximumLength:15, maxLengthMessage:"Surname should not contain more than",mandatory:"true",promptMessage:"We need your surname",invalidMessage:"This isn&rsquo;t a valid surname. Re-enter your surname."' data-dojo-type="tui.widget.customeraccount.TextBox">
+								<label for="lastName">Surname</label>																
+								<input tabindex="2" type="text" name="lastName"  id="popuplastName" value="" />
+								 <span style="display:none;" id="popuplastNameError_1" class="message"></span>
+								 
+								 <i style="display:none;"  id="popuplastNameError_2" class="caret erase red"></i>
+								<i style="display:none;" id="popuplastNameError_3" class="caret tick green"></i>
+							</div>		
+							<div id="emailDiv" class="row c" data-dojo-props='RefId:"popupreEnterEmail",maximumLength:64, maxLengthMessage:"Email address should not contain more than",mandatory:"true", notMatching:"Your email addresses do not match. Please try again.", promptMessage:"We need your email address",invalidMessage:"This isn&#39;t a valid email address. Re-enter your email address."' data-dojo-type="tui.widget.customeraccount.EmailAddress">
+								<label for="email">Email address</label>
+								<input tabindex="3" type="text" name="email" id="popupemail" value="" />
+								 <span style="display:none;" id="popupemailError_1" class="message"></span>
+								 <i style="display:none;"  id="popupemailError_2" class="caret erase red"></i>
+								 <i style="display:none;" id="popupemailError_3" class="caret tick green"></i>
+							</div>
+							<div id="reEnterEmailDiv" class="row c" data-dojo-props='RefId:"popupemail",mandatory:"true",promptMessage:"We need your email address",notMatching:"Your email addresses do not match. Please try again.",invalidMessage:"This isn&#39;t a valid email address. Re-enter your email address."' data-dojo-type="tui.widget.customeraccount.ReCheckEmailAddress">
+								<label for="reEnterEmail" class="two-lines">Re-enter email <span>address</span></label>
+								<input tabindex="4" type="text" name="reEnterEmail" id="popupreEnterEmail" value="" />
+								 <span style="display:none;" id="popupreEnterEmailError_1" class="message"></span>  									
+								 <i style="display:none;"  id="popupreEnterEmailError_2" class="caret erase red"></i>
+								 <i style="display:none;" id="popupreEnterEmailError_3" class="caret tick green"></i>					
+							</div>
+							<!--div class="row no-label">
+								<p class="alert high-level generic row-content">
+									<i class="caret warning"></i>
+									This email address, first name, and surname is already registered for an account.
+									<a href="#" class="block">Sign in to your account</a>
+								</p>
+							</div-->
+							<div id="passwordDiv" class="row c pwd" data-dojo-props='RefId:"popupcheckPwd",minimumLength:6,indicatorId:"popuppwd-strength",mandatory:"true",minimumCharactersMessage:"Your password is too short . Please try again",promptMessage:"We need your password"' data-dojo-type="tui.widget.customeraccount.Password">
+								<label for="popuppassword" class="two-lines">Password<span class="hint">at least 6 characters</span></label>
+								<div class="pwd-container">
+									<input tabindex="5" style="font-family: Arial !important;" type="password" name="pwd" id="popuppwd" value="" />
+									<div id="popuppwd-strength" class="pwd-strength"><span></span></div>
+								</div>
+								<i style="display:none;"  id="popuppwdError_2" class="caret erase red"></i>
+								 <i style="display:none;" id="popuppwdError_3" class="caret tick green"></i>
+								 <span style="display:none;" id="popuppwdError_1" class="message"><form:errors path="pwd" cssClass="error" /></span>
+								 <div class="tip-container" >
+									<a href="javascript:void(0)" tabindex="6" data-dojo-type="tui.widget.customeraccount.Tooltips" data-dojo-props="eventType:'mouseover,focusin',floatWhere:'position-bottom-center',topClass:'top',listClass:'list',posClass:'center',text:'<p>How do I create a strong password?</p><ul class=\'square yellow\' ><li>Make it at least 6 characters long</li><li>Don\'t include your user name, real name, or company name</li><li>Be sure it\'s different from previous passwords</li><li>Include a mix of uppercase and lowercase letters</li><li>Use symbols and numbers in the middle of the password</li><li>Don\'t write a complete word</li></ul>'">
+										<i class="caret info blue" style="margin-left:-10px"></i>
+									</a>
+								</div>									 	    
+							</div>
+							<div id="reEnterpasswordDiv" class="row c pwd" data-dojo-props='minimumLength:6,RefId:"popuppwd",mandatory:"true",promptMessage:"You need to re-enter your password" ,notMatching:"Your passwords do not match. Please try again."' data-dojo-type="tui.widget.customeraccount.CheckPassword">
+								<label for="checkPwd" class="two-lines">Re-enter <span>password</span></label>
+								<div class="pwd-container">
+								<input tabindex="7" type="password" name="checkPwd" id="popupcheckPwd" value="" class="reCheckPwd" />
+								</div>
+								<i style="display:none;"  id="popupcheckPwdError_2" class="caret erase red"></i>
+								<i style="display:none;" id="popupcheckPwdError_3" class="caret tick green"></i>	
+								<span style="display:none;" id="popupcheckPwdError_1" class="message"></span>
+							</div>
+							<input style="display:none;"  type="text" name="countryCode" id="countryCode" value="" />
+							<input style="display:none;" type="text" name="spambots" id="spambots"  value=""/>							
+						    <script language="JavaScript" src="http://j.maxmind.com/app/geoip.js"></script>
+							<script type="text/javascript">
+							var code = geoip_country_code();
+							document.getElementById("countryCode").value = code;
+							</script> 
+							<div class="row c button-align">
+								<input tabindex="8" type="submit" class="button cta-grey ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %} id="create-account_btn" value="Create account" />
+							</div>
+						</form>
+						<p class="terms-conditions">
+								By creating an account, you'll be accepting <a onclick="window.open('{{tuiWebrootPath}}/customer-account/accountCreationPolicy', '_blank', 'toolbar=yes, scrollbars=yes, resizable=yes, top=40, left=90, width=1100, height=800')"  class="ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %}>TUI's terms &amp; conditions</a> and 
+								<a onclick="window.open('{{tuiWebrootPath}}/customer-account/privacyPolicies', '_blank', 'toolbar=yes, scrollbars=yes, resizable=yes, top=40, left=90, width=1100, height=800')"  class="ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %}>its privacy and data protection policy</a>.
+								
+							</p>
+						
+					</div>
+					
+				</div>
+				
+				
+				<div class="content-width hide" id="CAcreateAccountOverlaySuccess">	
+						<h1>Account successfully created!</h1>
+						<div class="created">	
+							<p>Great - you've got an account with us now.</p>
+							<p>Click on the link in the email we've sent you to get it up and running.</p>								
+						</div>
+				</div>
+					
+					
+			</div>
+		</div>
+	</div>
+</div>

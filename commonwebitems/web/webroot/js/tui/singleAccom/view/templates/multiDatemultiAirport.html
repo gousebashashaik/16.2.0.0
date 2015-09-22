@@ -1,0 +1,79 @@
+<div class="flights-summary">
+    {% with groups.byAirports.0.members.0 as holiday%}
+    <h2>Flights <em>for</em> {% ifnotequal holiday.duration 1 %}{{holiday.duration}} nights{% else %}Day Trip{% endifnotequal %} holidays</h2>
+    {% endwith %}
+    <div class="toggle-group" data-dojo-type="tui.singleAccom.view.AirportDateToggle" data-dojo-props="currentView: 'airport'">
+        <label class="toggle-label left js-view-airport active" for="view-mode-airport" data-label="airport" data-target="date"><span class="airport"></span>Airport</label>
+        <div class="toggle-slide airport" data-value="airport">
+            <input type="radio" name="view-mode" id="view-mode-airport" value="airport" checked />
+            <input type="radio" name="view-mode" value="date" id="view-mode-date" />
+            <a class="toggle-button off" href="javascript:void(0);"><i class="icon icon-handle sprite-img-grp-1">||</i></a>
+        </div>
+        <label class="toggle-label right js-view-date" for="view-mode-date" data-label="date" data-target="airport"><span class="date"></span>Date</label>
+    </div>
+</div>
+<div class="mask-interactivity"></div>
+<div class="result-view flights result-view">
+    <span id="byAirportsResults">
+        {% for group in groups.byAirports %}
+        <div class="item airport-group plist {{priceView}}" data-dojo-type="tui.singleAccom.view.FlightGroup">
+            <h3 class="large-heading">{{group.members.length}} Flight{{group.members.length|pluralize}} <em>from</em> <span class="title">{{ group.name }}</span> <i>&gt;</i>
+	            <span class="sub-heading">{% if group.dateRange.firstDate %}{{group.dateRange.firstDate}} &ndash; {% endif %}{{group.dateRange.lastDate}}</span>
+	            <span class="prices-from">
+		            <span class="label">Prices from</span>
+					<span class="price-info pp-price"><span>{{currency}}</span>{{group.lowPrices.perPerson|floatformat:"0"}}<span>pp</span></span>
+					<span class="price-info total-price"><span>{{currency}}</span>{{group.lowPrices.totalParty|floatformat:"0"}}</span>
+	            </span>
+            </h3>
+            {% for holiday in group.members %}
+            <div class="item-content {% if forloop.last %} last {% endif %}">
+                {% include flightDetailsTmpl %}
+                <div class="cta-buttons info-section last fr">
+            		<a href="{{holiday.accommodation.url}}&finPos={{holiday.index}}&bb={% for altBoard in holiday.alternateBoard %}{% if altBoard.defaultBoardBasis %}{{altBoard.boardbasisCode}}{% endif %}{% endfor %}&price=pp" class="button cta jumbo url ensLinkTrack" data-componentId="{{componentId}}">{{moredetails}}</a>
+            	{% if saveButtonDisplay %}
+            		{%if not shortlistEnabled %}
+            	<a style="visibility: hidden;"href="javascript:void(0);" class="button shortlist alignfront" data-package-id="{{holiday.packageId}}" data-id="{{holiday.accommodation.code}}"><i></i><span class="text">{{shortlist}}</span></a>
+        	{% else %}
+        	<a href="javascript:void(0);" class="button shortlist alignfront" data-package-id="{{holiday.packageId}}" data-id="{{holiday.accommodation.code}}"><i></i><span class="text">{{shortlist}}</span></a>
+        	{% endif%}
+        	{% endif%}
+        		</div>
+            </div>
+            <span class="mask mask-top"></span>
+            <span class="mask mask-bottom"></span>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </span>
+    <span id="byDatesResults" class="hide">
+        {% for group in groups.byDates %}
+        <div class="item date-group plist {{priceView}}" data-dojo-type="tui.singleAccom.view.FlightGroup">
+            <h3 class="large-heading">{{group.members.length}} Flight{{group.members.length|pluralize}} <em>on</em> <span class="title">{{ group.name }}</span> <i>&gt;</i>
+	            <span class="sub-heading">{{group.airportList|safe}}</span>
+	            <span class="prices-from">
+		            <span class="label">Prices from</span>
+					<span class="price-info pp-price"><span>{{currency}}</span>{{group.lowPrices.perPerson|floatformat:"0"}}<span>pp</span></span>
+					<span class="price-info total-price"><span>{{currency}}</span>{{group.lowPrices.totalParty|floatformat:"0"}}</span>
+	            </span>
+            </h3>
+            {% for holiday in group.members %}
+            <div class="item-content {% if forloop.last %} last {% endif %}">
+                {% include flightDetailsTmpl %}
+                <div class="cta-buttons info-section last fr">
+            		<a href="{{holiday.accommodation.url}}&finPos={{holiday.finPos}}&bb={% for altBoard in holiday.alternateBoard %}{% if altBoard.defaultBoardBasis %}{{altBoard.boardbasisCode}}{% endif %}{% endfor %}" class="button cta jumbo url ensLinkTrack" data-componentId="{{componentId}}">{{moredetails}}</a>
+            		{% if saveButtonDisplay %}
+					{%if not shortlistEnabled %}
+            	<a style="visibility: hidden;"href="javascript:void(0);" class="button shortlist alignfront" data-package-id="{{holiday.packageId}}" data-id="{{holiday.accommodation.code}}"><i></i><span class="text">{{shortlist}}</span></a>
+        	{% else %}
+        	<a href="javascript:void(0);" class="button shortlist alignfront" data-package-id="{{holiday.packageId}}" data-id="{{holiday.accommodation.code}}"><i></i><span class="text">{{shortlist}}</span></a>
+        	{% endif%}
+        	{% endif%}
+        		</div>
+            </div>
+            <span class="mask mask-top"></span>
+            <span class="mask mask-bottom"></span>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </span>
+</div>

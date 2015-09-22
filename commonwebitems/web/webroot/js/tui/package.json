@@ -1,0 +1,15 @@
+{
+    "name":         "TUI",
+    "version":      "0.0.1",
+    "directories":  {
+        "lib": "."
+    },
+    "main":         "Tui",
+    "bugs":         "https://10.174.0.37/",
+    "dependencies": {
+        "dojo":  "~1.7.3",
+        "dijit": "~1.7.3",
+        "dojox": "~1.7.3"
+    },
+    "dojoBuild":    "../tui.profile.js"
+}

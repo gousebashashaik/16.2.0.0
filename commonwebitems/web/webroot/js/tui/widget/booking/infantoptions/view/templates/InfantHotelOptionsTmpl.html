@@ -1,0 +1,142 @@
+<div>
+ {% if obj1.available or obj2.available %}
+<div class="bookflow" data-dojo-type="tui.widget.expand.Expandable" data-dojo-props="transitionType: 'WipeInOut'">
+<div class="item open">
+	<h3 class="item-toggle">{{heading}}<i></i></h3>
+	<div class="item-content selectedSection hotelOptions">
+	{% if obj1.available %}
+	<div class="room-type-description">
+		<div class="infant-section-img">
+			<img src="{{imageSRC1|default:\' \'}}"
+				width="235px" height="130px" />
+		</div>
+		 {% for infantOptions in obj1.extraFacilityViewData %}
+			{% if forloop.first %}
+				<div class="infant-section-description infantOptions ">
+					<h3 class="infant-section-headingText ">{{strapLine1|default:" "|safe}}</h3>
+					<h5 class="infant-section-infoText">{{intro1|default:" "|safe}}</h5>
+				</div>
+
+				<div class="infant-section-button-placement" align="center">
+					<p class="fromText">
+						from <span class="priceText">{{	infantOptions.currencyAppendedPerPersonPrice }} </span>
+					</p>
+					<p class="perprice">{{infantOptions.currencyAppendedPricePerNight }}&nbsp;{{staticContentPer|default:" "}}</p>
+
+					{% if infantFlag %}
+						 <button class="button jumbo selected select-seat" value="disable" disabled> <span class="button-selected"></span>added</button>
+					{% else %}
+					<button class="button mt10px" data-dojo-attach-point="infantOptionsButton">{{buttonText|default:" "}}</button>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="clear"></div>
+	 {% if infantFlag %}
+		<div class="prebook-feedback-section">
+
+
+				 {% for infant in obj1.extraFacilityViewData %}
+				  {% if infant.selected %}
+     				<div class="prebook-confirmation">
+						<h5 class="prebook-qty">{{ infant.description }} x {{infant.selectedQuantity }}</h5>
+						<h4 class="price-prebook-qty"><label>{{ infant.currencyAppendedPrice }}</label>
+							<a href="javascript:void(0);" class="prebook-removeqty" id="{{infant.code}}|{{infant.description}}" name="{{obj1.extraFacilityCategoryCode}}">remove x</a>
+						</h4>
+					</div>
+					 <div class="clear"></div>
+				  {% endif %}
+			  {% endfor %}
+
+
+			<a href="javascript:void(0);" class="prebook-changeqty" data-dojo-attach-point="infantChangeButton">Change quantities</a>
+		</div>
+		 {% endif %}
+
+		<div class="cb"></div>
+		<div class="infant-removed">
+		<div class="prebook-removed disNone">
+				<h5 class="prebook-qty" id="prebook-mgs"></h5>
+			<h4 class="closeLink fr">
+					<a href="javascript:void(0);" onLoad=" fade('prebook-removed','10');">close x</a></h4>
+		</div>
+	</div>
+<div class="clear"></div>
+{% endif %}
+ {% if obj2.available %}
+ <div class="activities-section"></div>
+	<div class="room-type-description">
+            <div class="infant-section-img">
+             <img  src="{{imageSRC2|default:\' \'}}"
+                width="235px" height="130px" />
+            </div>
+            <div class="infant-section-description crecheOptions">
+              <h3 class="infant-section-headingText">{{strapLine2|default:" "|safe}}</h3>
+              <h5 class="infant-section-infoText">{{intro2|default:" "|safe}}</h5>
+            </div>
+            <div class="infant-section-button-placement" align="center">
+              <p class="fromText">
+                {% for crecheVar in obj2.extrasToPassengerMapping %}
+                  {% if forloop.first %}
+                    {% for creche in crecheVar.extras %}
+                      {% if forloop.first %}
+                        from <span class="currency-indicator"></span><span
+                          class="priceText">{{creche.currencyAppendedPrice}}</span>
+                       {% endif %}
+                    {% endfor %}
+                   {% endif %}
+               {% endfor %}
+
+              </p>
+            <p class="perprice">(per child, per session)</p>
+              {% if flagCreche %}
+                <button class="button jumbo selected select-seat" value="disable"
+                  disabled><span class="button-selected"></span>
+                  <span>added</span>
+                </button>
+              {% else %}
+                <button class="button mt10px" data-dojo-attach-point="crecheDetailsButton">{{buttonText}}</button>
+              {% endif %}
+		</div>
+            <div class="clear"></div>
+            {% if flagCreche %}
+              <div class="prebook-feedback-section">
+                {% for crecheOptions in obj2.extrasToPassengerMapping %}
+                  {% for crecheExtras in crecheOptions.extras%}
+                    {% if crecheExtras.selected %}
+                      <div class="prebook-confirmation">
+                        <h5 class="prebook-qty">{{ crecheExtras.description }} | Child
+                          {{forloop.parentloop.counter}}</h5>
+                        <h4 class="price-prebook-qty">
+                          <label>{{ crecheExtras.currencyAppendedPrice }}</label> <a
+                            class="creche-removeqty" id="{{crecheExtras.code}}|{{crecheExtras.description}}"
+                            name="{{crecheOptions.passenger.identifier}}|{{obj2.extraFacilityCategoryCode}}">remove x</a>
+                        </h4>
+
+                      </div>
+                      <div class="clear"></div>
+                      <div class="clear"></div>
+                    {% endif %}
+                  {% endfor %}
+                {% endfor %}
+                <a href="javascript:void(0);" class="prebook-changeqty" data-dojo-attach-point="crecheChangeButton">Change quantities</a>
+              </div>
+             {% endif %}
+            <div class="cb"></div>
+            <div class="infant-removed">
+            <div class="creche-removed disNone">
+              <h5 class="prebook-qty" id="creche-mgs"></h5>
+              <h4 class="closeLink fr">
+                <a>close x</a></h4>
+            </div>
+  		</div>
+  		</div>
+  {% endif %}
+  </div>
+ </div>
+<div class="clear"></div>
+
+</div>
+  {% endif %}
+</div>
+

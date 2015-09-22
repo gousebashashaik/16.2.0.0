@@ -1,0 +1,20 @@
+{% if booking %}
+{% for bookings in booking %}	
+<li class="c {% if bookings.soldOut %}{% ifequal bookings.soldOut 'true' %}no-longer{% endifequal %}{% endif %}">
+	<div class="booking-img">
+		{% if bookings.baseImageUrl %}
+		<img alt="" src="{{ bookings.baseImageUrl }}">
+		{% endif %}
+	</div>
+	<div class="booked-holiday b">
+		<h3>{% if bookings.accommodationName %}<a href="{% if bookings.encryptedUrl %}{{ bookings.encryptedUrl }}{% endif %}">{{ bookings.accommodationName }}</a>{% endif %}</h3>
+		<p class="where">
+			in {% if bookings.resortName %}{{ bookings.resortName }}{% endif %}, {% if bookings.destinationName %}{{ bookings.destinationName }}{% endif %}
+		</p>
+		<p class="leaving">Leaving on {% if bookings.departuredate %}{{ bookings.departuredate }}{% endif %}</p>
+		{% if bookings.encryptedUrl %}<a href="{{ bookings.encryptedUrl }}" class="button cta blue">More details</a>{% endif %}
+		{% if bookings.soldOut %}{% ifequal bookings.soldOut "true" %}<span>This hotel is no longer on sale</span>{% endifequal %}{% endif %}
+	</div>
+</li>
+{% endfor %}
+{% endif %}

@@ -1,0 +1,250 @@
+<div class="modal-window controller popup-with-scroll loading">
+   <div class="wrapper poc-overlay">
+	   <div class="poc-slide content" style="background:none;">
+	   	  <div class="poc-tabs-list" >
+		<div id="tab1" class="tab-content" style="margin-bottom:24px;">
+			{% if jsonData.locationData.galleryImages.0 %}
+				<div class="content-row span-two-third poc-carosel">
+					 <div class="product-list media-gallery slideshow">
+					<div class="viewport">
+						<ul class="plist">
+							<li style="z-index: 0; opacity: 1;"><img alt="image"  width="519" height="200"  src="{{jsonData.locationData.galleryImages.0.mainSrc}}" /></li>
+						</ul>
+					</div>
+					<p class="load">Loading</p>
+					</div>
+			   </div>
+			{% else %}
+				<img src="{{cdnDomain}}/images/cruise/default-large.png" size="medium" width="519" height="200"/>
+			{% endif %}
+		   <div class="content-row">
+		   <h2 class="title">{{jsonData.locationData.locationName}}{% if jsonData.locationData.parentLocationName %}, {{jsonData.locationData.parentLocationName}}  {% endif %} </h2>
+			{% if jsonData.locationData.locationDesc %}
+			<p>{{jsonData.locationData.locationDesc|safe}}</p>
+		   {% endif %}
+		 </div>
+		  {% if not bookMode %}
+		 <div class="content-row">
+			<div class="floater things-more-detail-btn">
+  			   <a lang="en" class="button cta jumbo right" href="{{jsonData.locationData.locationUrl}}">More Details</a>
+			</div>
+		  </div>
+		{% if jsonData.locationData.excursion and jsonData.locationData.excursion.0 %}
+		
+		  {% if jsonData.locationData.excursion.0.excursionName %}
+		  <div class="content-row" >
+		<div class="top-thingstodo" style="margin-top:12px;">
+		<h2>Top Things to do in {{jsonData.locationData.locationName}} {% if jsonData.locationData.viewAllShoreExcursionUrl %}
+		<a data-componentid="" href="{{jsonData.locationData.viewAllShoreExcursionUrl}}" class="view-all ensLinkTrack has-icon-left"><i class="icon arrow-main product-arrow-sm product-arrow-left arrow-right-bg">&#8227;</i>View All Excursions</a>		
+		</h2>		
+		<div class="product-list">
+		<div class="viewport">
+			<ul class="plist">
+				{% if jsonData.locationData.excursion.0.excursionName %}
+				<li>
+				 <div class="product">
+					<div class="image-container">
+					{% if jsonData.locationData.excursion.0.smallImages and  jsonData.locationData.excursion.0.smallImages.0 %}
+						 <img src="{{jsonData.locationData.excursion.0.smallImages.0.mainSrc}}" size="small" height="92" width="155"/>
+						 {% else %}
+						<img src="{{cdnDomain}}/images/cruise/default-large.png" size="small" height="92" width="155"/>
+					{% endif %}
+					</div>
+					<h4><a href="#tab2" class="ensLinkTrack js-tab-trigger uc">{{jsonData.locationData.excursion.0.excursionName}}</a></h4>
+				 </div>
+				</li>
+				{% endif %}
+				{% if jsonData.locationData.excursion.1.excursionName %}
+				<li>
+				  <div class="product">
+					<div class="image-container">
+					{% if jsonData.locationData.excursion.1.smallImages and jsonData.locationData.excursion.1.smallImages.0 %}
+						<img src="{{jsonData.locationData.excursion.1.smallImages.0.mainSrc}}" size="small" height="92" width="155"/>
+						{% else %}
+						<img src="{{cdnDomain}}/images/cruise/default-large.png" size="small" height="92" width="155"/>
+					{% endif %}
+					</div>
+					<h4><a href="#tab3" class="ensLinkTrack js-tab-trigger uc">{{jsonData.locationData.excursion.1.excursionName}}</a></h4>
+				 </div>
+				</li>
+				{% endif %}
+				{% if jsonData.locationData.excursion.2.excursionName %}
+				<li>
+				  <div class="product">
+					<div class="image-container">
+					{% if jsonData.locationData.excursion.2.smallImages and jsonData.locationData.excursion.2.smallImages.0 %}
+						<img src="{{jsonData.locationData.excursion.2.smallImages.0.mainSrc}}" size="small" height="92" width="155"/>
+						{% else %}
+						<img src="{{cdnDomain}}/images/cruise/default-large.png" size="small" height="92" width="155"/>
+					{% endif %}
+					</div>
+					<h4><a href="#tab4" class="ensLinkTrack js-tab-trigger uc">{{jsonData.locationData.excursion.2.excursionName}}</a></h4>
+				 </div>
+				</li>
+				{% endif %}
+			</ul>
+		</div>
+		</div>
+		 {% endif %}
+		</div>
+		  </div>
+	  {% endif %}
+	  
+	  {% endif %}
+	  
+	  {% endif %}
+	   {% if jsonData.locationData.excursion.0.excursionName %}
+		<a class="close close-large position" href="javascript:void(0);">x</a>
+		{% else %}
+		<a class="close close-large position" style="right: 32px;" href="javascript:void(0);">x</a>
+		{% endif %}
+		  </div>
+		  <!-- 1st Pop up Ends -->
+		{% if jsonData.locationData.excursion.0.excursionName %}
+		<div id="tab2" class="tab-content" style="padding:32px;" >
+		  {% if jsonData.locationData.excursion.0.galleryImages.0 %}
+				<div class="content-row span-two-third poc-carosel">
+					 <div class="product-list media-gallery slideshow">
+					<div class="viewport">
+						<ul class="plist">
+							<li style="z-index: 0; opacity: 1;"><img alt="image"  width="519" height="200" src="{{jsonData.locationData.excursion.0.galleryImages.0.mainSrc}}" /></li>
+						</ul>
+					</div>
+					<p class="load">Loading</p>
+					</div>
+			   </div>
+			{% else %}
+				<img src="{{cdnDomain}}/images/cruise/default-large.png" size="medium" width="519" height="200"/>
+			{% endif %}
+		   <div class="content-row">
+		 <h2 class="title">{{jsonData.locationData.excursion.0.excursionName}}</h2>
+
+		 <p  class="uc sub-title">{{jsonData.locationData.locationName}} {% if jsonData.locationData.parentLocationName %}, {{jsonData.locationData.parentLocationName}} {% endif %}</p>
+
+
+		   {% if jsonData.locationData.excursion.0.description %}<p>{{jsonData.locationData.excursion.0.description|safe}}</p>{% endif %}
+		   {% if jsonData.locationData.excursion.0.suitability %}<span class="lighter-text">SUITABILITY: {{jsonData.locationData.excursion.0.suitability}}</span> <br/><br/>{% endif %}
+		</div>
+			<div class="content-row">
+
+			<div class="floater things-more-detail-btn">
+			<div class="left border-right" style="display:block;">
+				<span class="uc guide-price">Guide Prices:</span>
+				<p class="details">
+					<span class="category">Adult</span>
+					<span class="currency">&#163;</span>
+					<span class="price-value">{{jsonData.locationData.excursion.0.excursionPrice.price.adultPrice}} pp</span>
+				<br/>
+					<span class="category">{{jsonData.locationData.excursion.0.childAge}}</span>
+                    {% ifnotequal jsonData.locationData.excursion.0.excursionPrice.price.childPrice "N/A" %}<span class="currency">&pound;</span>{% endifnotequal %}
+                    <span class="price-value">{{jsonData.locationData.excursion.0.excursionPrice.price.childPrice}}{% ifnotequal jsonData.locationData.excursion.0.excursionPrice.price.childPrice "N/A" %} pp{% endifnotequal %}</span>
+				</p>
+			</div>
+			<a lang="en" class="button cta jumbo right" href="{{jsonData.locationData.excursion.0.excursionUrl}}">More Details</a>
+			</div>
+		  </div>
+		 <a href="#tab1" class="back-to-things ensLinkTrack has-icon-left js-tab-trigger uc active" >	<i  class="icon arrow-main product-arrow-sm product-arrow-left arrow-left-bg-overlay top">&#8227;</i>back to {{jsonData.locationData.locationName}}</a>
+		<a class="close close-large position" href="javascript:void(0);">x</a>
+		</div>
+		{% endif %}
+		<!-- 2nd Pop up Ends -->
+		{% if jsonData.locationData.excursion.1.excursionName %}
+		<div id="tab3" class="tab-content" style="padding:32px;" >
+			 {% if jsonData.locationData.excursion.1.galleryImages.0 %}
+				<div class="content-row span-two-third poc-carosel">
+						 <div class="product-list media-gallery slideshow">
+						<div class="viewport">
+							<ul class="plist">
+								<li style="z-index: 0; opacity: 1;"><img alt="image" width="519" height="200"  src="{{jsonData.locationData.excursion.1.galleryImages.0.mainSrc}}" /></li>
+							</ul>
+						</div>
+						<p class="load">Loading</p>
+						</div>
+				   </div>
+			{% else %}
+				<img src="{{cdnDomain}}/images/cruise/default-large.png" size="medium" width="519" height="200"/>
+			{% endif %}
+		   <div class="content-row">
+		 <h2 class="title">{{jsonData.locationData.excursion.1.excursionName}}</h2><p  class="uc sub-title">{{jsonData.locationData.locationName}}{% if jsonData.locationData.parentLocationName %}, {{jsonData.locationData.parentLocationName}}{% endif %}</p>
+		   {% if jsonData.locationData.excursion.1.description %}<p>{{jsonData.locationData.excursion.1.description|safe}}</p>{% endif %}
+		   {% if jsonData.locationData.excursion.1.suitability %}<span class="lighter-text">SUITABILITY: {{jsonData.locationData.excursion.1.suitability}}</span> <br/><br/>{% endif %}
+		  </div>
+			<div class="content-row">
+
+			<div class="floater things-more-detail-btn">
+			<div class="left border-right" style="display:block;">
+				<span class="uppercase guide-price">Guide Prices:</span>
+				<p class="details">
+					<span class="category">Adult</span>
+					<span class="currency">&pound;</span>
+					<span class="price-value">{{jsonData.locationData.excursion.1.excursionPrice.price.adultPrice}} pp</span>
+				<br/>
+					<span class="category">{{jsonData.locationData.excursion.1.childAge}}</span>
+                    {% ifnotequal jsonData.locationData.excursion.1.excursionPrice.price.childPrice "N/A" %}<span class="currency">&pound;</span>{% endifnotequal %}
+                    <span class="price-value">{{jsonData.locationData.excursion.1.excursionPrice.price.childPrice}}{% ifnotequal jsonData.locationData.excursion.1.excursionPrice.price.childPrice "N/A" %} pp{% endifnotequal %}</span>
+				</p>
+			</div>
+			<a lang="en" class="button cta jumbo right" href="{{jsonData.locationData.excursion.1.excursionUrl}}">More Details</a>
+		</div>
+
+		  </div>
+			<a href="#tab1" class="back-to-things ensLinkTrack has-icon-left js-tab-trigger uc active" >	<i class="icon arrow-main product-arrow-sm product-arrow-left arrow-left-bg-overlay top">&#8227;</i>back to {{jsonData.locationData.locationName}}</a>
+		<a class="close close-large position" href="javascript:void(0);">x</a>
+		</div>
+		<!-- 3rd Pop up Ends -->
+		{% endif %}
+		{% if jsonData.locationData.excursion.2.excursionName %}
+		<div id="tab4" class="tab-content" style="padding:32px;" >
+		  {% if jsonData.locationData.excursion.2.galleryImages.0 %}
+			<div class="content-row span-two-third poc-carosel">
+					 <div class="product-list media-gallery slideshow">
+					<div class="viewport">
+						<ul class="plist">
+							<li style="z-index: 0; opacity: 1;"><img alt="image" width="519" height="200" src="{{jsonData.locationData.excursion.2.galleryImages.0.mainSrc}}" /></li>
+						</ul>
+					</div>
+					<p class="load">Loading</p>
+					</div>
+			   </div>
+			 {% else %}
+				<img src="{{cdnDomain}}/images/cruise/default-large.png" size="medium" width="519" height="200"/>
+			{% endif %}
+		   <div class="content-row">
+		   <h2 class="title">{{jsonData.locationData.excursion.2.excursionName}}</h2><p  class="uc sub-title">{{jsonData.locationData.locationName}}{% if jsonData.locationData.parentLocationName %}, {{jsonData.locationData.parentLocationName}}{% endif %}</p>
+		   {% if jsonData.locationData.excursion.2.description %}<p>{{jsonData.locationData.excursion.2.description|safe}}</p>{% endif %}
+			{% if jsonData.locationData.excursion.2.suitability %}<span class="lighter-text">SUITABILITY: {{jsonData.locationData.excursion.2.suitability}}</span> <br/><br/>{% endif %}
+			</div>
+			<div class="content-row">
+			<div class="floater things-more-detail-btn">
+			<div class="left border-right" style="display:block;">
+				<span class="uppercase guide-price">Guide Prices:</span>
+				<p class="details">
+					<span class="category">Adult</span>
+					<span class="currency">&pound;</span>
+					<span class="price-value">{{jsonData.locationData.excursion.2.excursionPrice.price.adultPrice}} pp</span>
+				<br/>
+					<span class="category">{{jsonData.locationData.excursion.2.childAge}}</span>
+                    {% ifnotequal jsonData.locationData.excursion.2.excursionPrice.price.childPrice "N/A" %}<span class="currency">&pound;</span>{% endifnotequal %}
+					<span class="price-value">{{jsonData.locationData.excursion.2.excursionPrice.price.childPrice}}{% ifnotequal jsonData.locationData.excursion.2.excursionPrice.price.childPrice "N/A" %} pp{% endifnotequal %}</span>
+				</p>
+			</div>
+			<a lang="en" class="button cta jumbo right" href="{{jsonData.locationData.excursion.2.excursionUrl}}">More Details</a>
+		</div>
+
+		  </div>
+		  <a href="#tab1" class="back-to-things ensLinkTrack has-icon-left js-tab-trigger uc active" >
+			<i class="icon arrow-main product-arrow-sm product-arrow-left arrow-left-bg-overlay top">&#8227;</i>
+			back to {{jsonData.locationData.locationName}}</a>
+		 <a class="close close-large position"  href="javascript:void(0);">x</a>
+		 </div>
+		 {% endif %}
+		<!-- 4th Pop up Ends -->
+
+		  </div>
+
+	   </div>
+   </div>
+	<div class="loading-overlay"></div>
+
+</div>
+

@@ -1,0 +1,95 @@
+{% ifequal templateview "map" %}
+<div class="mapped">
+	<ul class="menu" data-dojo-attach-point="markercatergories">
+		{% for catergories in mapcatergories %}
+			<li><a href="#{{catergories.type}}" class="{{catergories.active}}"><span>Top 10 places </span>{{catergories.name}} &rsaquo;</a></li>
+		{% endfor %}
+	</ul>
+	<div class="map-viewport" style="width:998px">
+		<div class="slide-panel left" data-dojo-type="tui.widget.maps.MapSidePanel">
+			<div data-dojo-type="tui.widget.maps.MapTab">
+				<div id="mapplaces">
+					<div class="scroller" data-dojo-type="tui.widget.maps.MapScrollPanel">
+						<ul class="result-list" id="t">
+						{% for location in selectedLocations %}
+							<li class="marker_{{location.id}}">
+								<img src="http://placehold.it/105x80" alt="Img alt text" />
+								<div class="copy">
+									<span class="count">{{forloop.counter}}</span>
+									<h5><a href="{{location.url}}">{{location.featureCodesAndValues.name}}</a></h5>
+									<span class="destination">xxxxx, xxxxx</span>
+									{% if location.featureCodesAndValues.introduction%}
+										<p>{{location.featureCodesAndValues.introduction|truncatewords:16}}</p>
+									{% endif %}
+								</div>
+							</li>
+						{% endfor %}
+						</ul>
+					</div>	
+				</div>
+				{% ifequal mapFilter true %}
+				<div id="mapfilters">
+					<div class="scroller" data-dojo-type="tui.widget.maps.MapScrollPanel">
+						<h5 class="filters-heading">Show on map</h5>
+							<ul class="filters-list">
+								{% for flitertype in mapFilterTypes %}
+								<li>
+									<label for="{{flitertype.type}}" class="airport" data-dojo-type="tui.widget.maps.MapSwitchButton">
+										<span class="icons"></span>
+										<span class="label-text">{{flitertype.name}}</span>
+										<div class="switch">
+											<span class="text"><span class="on">on</span><span class="round-bit"></span><span class="off">off</span></span>
+											<input id="{{flitertype.type}}" type="checkbox" value="{{flitertype.type}}"></input>
+										</div>
+									</label>
+								</li>
+								{% endfor %}
+								<!--
+								<li>
+									<label for="airport" class="airport disabled">
+										<span class="icons"></span>
+										<span class="label-text">Airport </span>
+										<div class="switch">
+											<span class="text"><span class="on">on</span><span class="round-bit"></span><span class="off">off</span></span>
+											<input id="airport" type="checkbox"></input>
+										</div>
+									</label>
+								</li>-->
+							</ul>
+					</div>	
+				</div>
+				{% endifequal %}
+				<div class="map-tabs">
+					<ul>
+						<li><a href="#mapplaces" class="places-tab"><span></span>Places</a></li>
+						{% ifequal mapFilter true %}
+						<li><a href="#mapfilters" class="filters-tab"><span></span>Filter</a></li>
+						{% endifequal %}
+					</ul>
+				</div>	
+			</div>
+		</div>
+		<div data-dojo-attach-point="mapNode" style="height: 422px; width: 998px"></div>
+	</div>
+</div>
+{% endifequal %}
+
+{% ifequal templateview "markerlist" %}
+		<ul class="result-list">
+		{% for location in selectedLocations %}
+			<li class="marker_{{location.id}}">
+				<img src="http://placehold.it/105x80" alt="Img alt text" />
+				<div class="copy">
+					<span class="count">{{forloop.counter}}</span>
+					<h5><a href="#">{{location.name}}</a></h5>
+					<span class="destination">xxxxx, xxxxxx</span>
+					<p>xxxxxxxxxxxxxx</p>
+				</div>
+			</li>
+		{% endfor %}
+		</ul>
+{% endifequal %}
+
+{% ifequal templateview "popup-content" %}
+<div>dfgfdg</div>
+{% endifequal %}

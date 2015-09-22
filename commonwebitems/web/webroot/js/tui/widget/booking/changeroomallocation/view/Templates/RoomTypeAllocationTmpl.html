@@ -1,0 +1,63 @@
+<div class="room_row dashed-border fl">
+				<div class="room_container fl">
+				<span class="room_no fl bold">Room 1</span>
+				<span class="close_mark fl">
+							<a class="close_row">Remove Room</a>
+				</span>
+				</div>
+	<span class="noOfppl">
+	<span class="left_section fl">
+		<span class="adlt_Section fl width81">
+				 <span class="selectAge custom-dropdown dropdown fl" >
+                     <select name="Option" data-dojo-type="tui.widget.booking.changeroomallocation.view.AdultSelectOption" class="dropdown adultCount">
+                         {% for count in adultsCount %}
+                         <option value="{{count}}"
+                         {% ifequal count "0" %}
+                         selected="selected"
+                         {% endifequal %}>
+                         {{count}}
+                         </option>
+                         {% endfor %}
+                     	</select>
+                 </span>
+		</span>
+		
+					{% ifnotequal jsonData.packageViewData.paxViewData.noOfChildren 0 %}
+					<span class="child_Section fl width81">
+						<span class="select_field fl">
+							 <select name="Option" data-dojo-type="tui.widget.booking.changeroomallocation.view.ChildSelectOption" class="dropdown childCount">
+                                 {% for count in childsCount %}
+                            		<option value="{{count}}"
+									{% ifequal count "0" %}
+									selected="selected"
+
+									{% endifequal %}>
+											{{count}}
+									</option>
+									{% endfor %}
+                        		</select>
+							 </span>
+					</span>
+					{% else %}
+					{% ifnotequal jsonData.packageViewData.paxViewData.noOfInfants 0 %}
+					<span class="child_Section fl width81 ">
+						<span class="select_field fl">
+							 <select name="Option" data-dojo-type="tui.widget.booking.changeroomallocation.view.ChildSelectOption" class="dropdown childCount">
+                                 {% for count in childsCount %}
+                                 <option value="{{count}}"
+                                  {% ifequal count "-" %}
+                                 selected="selected"
+                                 {% endifequal %}>
+                                 {{count}}
+                                 </option>
+                                 {% endfor %}
+                             </select>
+							 </span>
+					</span>
+					{% endifnotequal %}
+
+					{% endifnotequal %}
+				</span>
+				<div class="right_section children_age "></div>
+
+</div>

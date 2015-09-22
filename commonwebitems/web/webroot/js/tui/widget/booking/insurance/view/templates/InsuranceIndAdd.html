@@ -1,0 +1,81 @@
+<div class="bookflow" >
+<h2 class="fs28px">{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.ind_ins_info_one_displayName|default:" "}}</h2>
+<div class="insurance-logo">
+<span></span>
+<div class="incDescription">
+<p class="companyName">{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Text1|default:" "}}</p>
+<p class="companyDec">{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Text2|default:" "}}</p>
+</div>
+<div class="clear"></div>
+</div>
+
+    <div class="InsuranceDesc">
+      {{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.ind_ins_info_one_Intro|default:" "}}
+    </div>
+  <div data-dojo-type="tui.widget.expand.Expandable" data-dojo-props="transitionType: 'WipeInOut'">
+    <div class="item open ins">
+      <h3>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Pax_Insure_Title|default:" "}}</h3>
+      <div class="item-content search-results updating" id="insuracecontent">
+      <p>Who requires travel insurance ?</p>
+      <div class="sectionDiv fl">
+        {% for insPasViewDataObj in insViewObject.insPasViewData %}
+        <ul class="requiredPassengers">
+          <li id="tooltip_id" ><input type="checkbox" class="passengerCB"
+          data-dojo-attach-point="checkboxId{{insPasViewDataObj.id}}" id="checkboxId{{insPasViewDataObj.id}}"
+                    {% if insPasViewDataObj.selected %}checked{% endif %} value="{{insPasViewDataObj.name}}"></input>
+            <label name="passengerName"  for="checkboxId{{insPasViewDataObj.id}}"><span ></span>{{insPasViewDataObj.name|default:" "}} {% if insPasViewDataObj.child %}({{insPasViewDataObj.age}}){% endif %}</label>
+            <div class="infant-count custom-dropdown dropdown dropdown">
+            {% if insPasViewDataObj.child %}
+
+           <textarea class="disNone" data-dojo-attach-point="label{{insPasViewDataObj.id}}"
+           data-dojo-type="dijit.form.Textarea">Child</textarea>
+           {% ifequal jsonData.packageType "FO" %}
+            <label name="passengerName">Age 2-15</label>
+            {% else %}
+            <label name="passengerName">Age 2-17</label>
+            {% endifequal %}
+       {% else %}
+        <select name="selectDropdownLabel" required="true" data-dojo-type="tui.widget.form.SelectOption"
+                      class="dropdown" data-dojo-attach-point="selectDropdown{{insPasViewDataObj.id}}">
+                {% for ageProfileObj in insPasViewDataObj.ageProfile %}
+                <option {{ageProfileObj.selected}}
+                    value="{{ageProfileObj.ageCode}}">
+                  {{ageProfileObj.ageRange}}
+                </option>
+                {% endfor %}
+              </select>
+               {% endif %}
+            </div>
+ <div id="impInfoCheckbox_Error34" class="error-notation-insurance disNone"></div>
+           </li>
+
+        </ul>
+
+        {% endfor %}
+        <div id="impInfoCheckbox_Error" class="error-notation disNone"></div>
+        <div class="clear"></div>
+        <div id="eligibility">
+        	<p class="heading">Eligibility</p>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Eligibility|safe|default:" "}}
+        </div>
+        <div id="healthAndDeclaration">
+        	<p class="heading">Health Declaration</p>
+        	<ul><li>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Health_Declaration1|safe|default:" "}}</li></ul>
+        	{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Health_Declaration2|safe|default:" "}}
+        	<ul class="note"><li>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Health_Declaration3|safe|default:" "}}</li></ul>
+        </div>
+        <div class="button-cont">
+
+          <button id="insuranceIndAddbtn" class="button-brand button selected jumbo fr transfer-select loaded getQuote fr"
+                  data-dojo-attach-point="insuranceIndAddgq">
+            Get a quote
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+<div class="clear"></div>
+<button  id="CancelGetQ1"  data-dojo-attach-point="cancelBtn"  class="button jumbo fr transfer-select cancelBtn loaded mt20px " >Cancel</button>
+</div>
+

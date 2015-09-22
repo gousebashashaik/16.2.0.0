@@ -1,0 +1,137 @@
+<div tabindex="0" class="guide airport {{expandableProp}} overlay-height">
+    <span class="arrow"></span>
+    <div class="wrapper cruise-wraper">
+	<div class="details-box">
+        <div class="title-bar">
+            <h3 class="airportGuideTitle airports-heading">{{airportGuideTitle}} <span class="from-limit">(select up to {{fromLimit}})</span>
+            </h3>
+        </div>
+        <div class="col col-first">
+            <ul>
+                {% for airport in airportList %}
+                <li><label for="recommended-{{airport.id}}" class="{% ifnotequal airport.children.length 0 %} parent-airport {% endifnotequal %} {% if not airport.available %}disabled {% endif %}
+                    {% for from in searchPanelModel.from.data %}
+                        {% ifequal from.id airport.id %}selected {% endifequal %}
+                    {% endfor %}" >
+                    <input type="checkbox"
+                           data-airportmodel-id="{{airport.id}}"
+                           data-airportmodel-name="{{airport.name}}"
+                           data-airportmodel-type="{{airport.type}}"
+                           data-airportmodel-groups="Airport"
+                           name="{{airport.name}}"
+                           id="{{airport.id}}"
+                           value="{{airport.id}}"
+                           class="{{airport.id}}"
+                           {% for from in searchPanelModel.from.data %}
+                              {% ifequal from.id airport.id %}checked=checked {% endifequal %}
+                           {% endfor %}
+                    />
+                    {{airport.name}}<span class="checkbox check-box"></span></label>
+                </li>
+
+                {% ifnotequal airport.children.length 0 %}<ul class="child-grp">
+               {% for airport in airport.children %}
+              <li class="child-airport"><label for="{{airport.id}}" class="{% if not airport.available %}disabled {% endif %}
+                    {% for from in searchPanelModel.from.data %}
+                        {% if from.children.length > 0 %}
+                            {% for child in from.children %}
+                                {% ifequal child airport.id %}selected {% endifequal %}
+                            {% endfor %}
+                        {% else %}
+                            {% ifequal from.id airport.id %}selected {% endifequal %}
+                        {% endif %}
+                    {% endfor %}" >
+                  <input type="checkbox"
+                         data-airportmodel-id="{{airport.id}}"
+                         data-airportmodel-name="{{airport.name}}"
+                         data-airportmodel-groups="{{airport.group}}"
+                         data-airportmodel-type="{{airport.type}}"
+                         name="{{airport.id}}"
+                         id="{{airport.id}}"
+                         value="{{airport.id}}"
+                         class="{{airport.id}}"
+                  {% for from in searchPanelModel.from.data %}
+                      {% if from.children.length > 0 %}
+                        {% for child in from.children %}
+                            {% ifequal child airport.id %}
+                      checked=checked
+                            {% endifequal %}
+                        {% endfor %}
+                      {% else %}
+                        {% ifequal from.id airport.id %}
+                      checked=checked
+                        {% endifequal %}
+                      {% endif %}
+                  {% endfor %}
+                  />
+                  {{airport.name|upper}}<span class="checkbox"></span></label>
+              </li>
+              {% endfor %}
+              </ul>{% endifnotequal%}
+              {% if airport.children.length > 0 %}
+              {% with forloop.counter|add:airport.children.length as outterCounter %}
+            {% if outterCounter|divisibleby:columnLength %}
+            {% if not forloop.last %}
+          </ul>
+        </div>
+        <div class="col"  >
+          <ul>
+            {% endif %}
+            {% endif %}
+            {% endwith %}
+            {% else %}
+            {% with forloop.counter|add:"4" as outterCounter %}
+            {% if outterCounter|divisibleby:columnLength %}
+            {% if not forloop.last %}
+          </ul>
+        </div>
+        <div class="col"  >
+          <ul>
+            {% endif %}
+            {% endif %}
+            {% endwith %}
+            {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="list-two  {% if not pocs.length == '0'%}no-margin no-border {% endif %}">
+		{% if pocs.length > 0 %}
+            <div class="title-bar">
+                <h3 class="port-position">{{searchMessaging.ukports}}</h3>
+            </div>
+            <div class="col col-first" >
+                <ul>
+                    {% for poc in pocs %}
+                    <li><label for="recommended-{{poc.id}}" class="{% if not poc.available %}disabled {% endif %}" >
+                        <input type="checkbox"
+                               data-airportmodel-id="{{poc.id}}"
+                               data-airportmodel-name="{{poc.name}}"
+                               data-airportmodel-type="{{poc.type}}"
+                               data-airportmodel-groups="POC"
+                               name="{{poc.name}}"
+                               id="{{poc.id}}"
+                               value="{{poc.id}}"
+                               class="{{poc.id}}"
+                                />
+                        {{poc.name}}<span class="checkbox check-box"></span></label>
+                    </li>
+                    {% if forloop.counter|divisibleby:columnLength %}
+                    {% if not forloop.last %}
+                </ul>
+            </div>
+            <div class="col">
+                <ul>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>{% endif %}
+        </div>
+
+        <a class="close close-list" href="javascript:void();">
+			<span class="hide-list">Hide list</span>
+		</a>
+    </div>
+	</div>
+
+</div>

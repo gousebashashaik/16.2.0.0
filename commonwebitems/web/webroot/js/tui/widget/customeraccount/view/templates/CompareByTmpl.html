@@ -1,0 +1,35 @@
+
+<div class="heading-with-controls cb" data-dojo-type="tui.widget.customeraccount.scrollControls">
+	<h1 class="wishCountSpan" id="wishCountSpan">You've got shortlisted holidays</h1>							
+								
+	<div id="controls">
+		{% ifequal holidays.login "null" %}
+					{% endifequal %}
+		{% ifnotequal holidays.login "null" %}
+		<a id="compareXLoggedin" data-dojo-type="tui.widget.customeraccount.CollectSavedHolidaysList" data-dojo-props="successUrl:'{{tuiWebrootPath}}/content/compareViewPage'" href="javascript:void(0)" class="button blue nodesktop" style="display:none;">Compare <span id="compareCount">0</span> of <span>3</span></a>
+		<a id="compareXLoggedout" href="javascript:void(0)" class="button blue nodesktop" data-dojo-props="eventType:'click',floatWhere:'position-bottom-left',topClass:'top',text:'You need to add a holiday first.', listClass: 'square yellow', position: 'top left'" 
+			data-dojo-type="tui.widget.customeraccount.Tooltips">Compare <span>0</span> of <span>3</span></a>
+		<a id="compareXLoggedout2" class="button blue nodesktop disabled" href="javascript:void(0)" style="display:none;">Compare <span id="compareCountOff">0</span> of <span>3</span></a>
+		{% endifnotequal %}
+		<div class="select blue sort-menu">
+			<span class="text" id="caSortBy">Sort by</span>
+			<span class="arrow"><span></span></span> 
+			<select name="custom-select-options" id="custom-select-options">
+			<option value="defaultSort" class="active">Our Recommended<i class="caret tick blue"></i></option>
+			<option value="departureDate" class="active">Departure date<i class="caret tick blue"></i></option>
+			<option value="priceAsc">Price - low to high <i class="caret tick blue"></i></option>
+			<option value="priceDesc">Price - high to low <i class="caret tick blue"></i></option>
+			<option value="tripAdvisorRatingDesc">TripAdvisor rating<i class="caret tick blue"></i></option>
+			{% if FCTHoptionsDisplayFlag %}	
+			{% ifequal FCTHoptionsDisplayFlag  2 %}				
+			<option value="thBrand">Thomson holidays<i class="caret tick blue"></i></option>  	
+			<option value="fcBrand">First Choice holidays<i class="caret tick blue"></i></option>
+			{% endifequal %}
+			{% endif %}
+			<option value="discount">Discount - high to low<i class="caret tick blue"></i></option>
+			<option value="hotelName">A-Z<i class="caret tick blue"></i></option>
+		</select>
+		</div>
+	</div>							
+</div>
+<div class="spaceBlocker nodesktop" style="height:0;"></div>

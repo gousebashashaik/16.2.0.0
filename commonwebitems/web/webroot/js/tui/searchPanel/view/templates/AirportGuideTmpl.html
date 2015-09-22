@@ -1,0 +1,128 @@
+<div class="guide airport {{expandableProp}}" tabindex="0">
+    <span class="arrow"></span>
+	<div class="wrapper">
+        <div class="title-bar">
+	        {% ifequal widgetController.searchApi "searchPanel" %}
+            <h3 class="airportGuideTitle airports-heading">{{searchMessaging.airportGuide.title}} <span class="from-limit">(up to {{fromLimit}})</span>
+                <span class="status">
+                    <span class="airport-guide-count">{{searchPanelModel.from.selectedSize}}</span> {{searchMessaging.airports}} {{searchMessaging.selected}}
+                </span>
+                <a href="javascript:void(0);" analytics-id="300ab" analytics-text="" class="empty-airport-model{% ifequal searchPanelModel.from.selectedSize 0 %} inactive{% endifequal %}">{{searchMessaging.unselect}}</a>
+            </h3>
+
+            <h4 class="airport-guide-title">{{airportGuideTitle}}</h4>
+
+	        {% endifequal %}
+	        {% ifequal widgetController.searchApi "getPrice" %}
+	        <h3>{{searchMessaging.airportGuide.title}} {{fromLimit}} {{searchMessaging.airports}}</h3>
+	        <ul class="status-info list list-inline">
+                <li class="status-count"><span class="airport-guide-count">{{searchPanelModel.from.selectedSize}}</span> {{searchMessaging.airports}} {{searchMessaging.selected}}</li>
+		        <li class="status-remove"><a href="#" analytics-id="364" analytics-text="airportDeselectAll" class="empty-airport-model{% ifequal searchPanelModel.from.selectedSize 0 %} inactive{% endifequal %}">{{searchMessaging.unselect}}</a></li>
+            </ul>
+	        {% endifequal %}
+        </div>
+    <!--{{airport.group}}-->
+       <div class="col first" {% ifequal widgetController.searchApi "getPrice" %}analytics-id="364ab"{% else %}analytics-id="300ab"{% endifequal %} analytics-text="airportSelection">
+          <ul>
+            {% for airport in airportList %}
+              <li><label for="{{airport.id}}" class="{% ifnotequal airport.children.length 0 %} parent-airport {% endifnotequal %}{% if not airport.available %}disabled {% endif %}
+                    {% for from in searchPanelModel.from.data %}
+                        {% if from.children.length > 0 %}
+                            {% for child in from.children %}
+                                {% ifequal child airport.id %}selected {% endifequal %}
+                            {% endfor %}
+                        {% else %}
+                            {% ifequal from.id airport.id %}selected {% endifequal %}
+                        {% endif %}
+                    {% endfor %}" >
+                  <input type="checkbox"
+                         data-airportmodel-id="{{airport.id}}"
+                         data-airportmodel-name="{{airport.name}}"
+                         data-airportmodel-groups="{{airport.group}}"
+                         name="{{airport.id}}"
+                         id="{{airport.id}}"
+                         value="{{airport.id}}"
+                         class="{{airport.id}}"
+                  {% for from in searchPanelModel.from.data %}
+                      {% if from.children.length > 0 %}
+                        {% for child in from.children %}
+                            {% ifequal child airport.id %}
+                      checked=checked
+                            {% endifequal %}
+                        {% endfor %}
+                      {% else %}
+                        {% ifequal from.id airport.id %}
+                      checked=checked
+                        {% endifequal %}
+                      {% endif %}
+                  {% endfor %}
+                  />
+                  {{airport.name|upper}}<span class="checkbox"></span></label>
+              </li>
+               {% ifnotequal airport.children.length 0 %}<ul class="child-grp">
+               {% for airport in airport.children %}
+              <li class="child-airport"><label for="{{airport.id}}" class="{% if not airport.available %}disabled {% endif %}
+                    {% for from in searchPanelModel.from.data %}
+                        {% if from.children.length > 0 %}
+                            {% for child in from.children %}
+                                {% ifequal child airport.id %}selected {% endifequal %}
+                            {% endfor %}
+                        {% else %}
+                            {% ifequal from.id airport.id %}selected {% endifequal %}
+                        {% endif %}
+                    {% endfor %}" >
+                  <input type="checkbox"
+                         data-airportmodel-id="{{airport.id}}"
+                         data-airportmodel-name="{{airport.name}}"
+                         data-airportmodel-groups="{{airport.group}}"
+                         name="{{airport.id}}"
+                         id="{{airport.id}}"
+                         value="{{airport.id}}"
+                         class="{{airport.id}}"
+                  {% for from in searchPanelModel.from.data %}
+                      {% if from.children.length > 0 %}
+                        {% for child in from.children %}
+                            {% ifequal child airport.id %}
+                      checked=checked
+                            {% endifequal %}
+                        {% endfor %}
+                      {% else %}
+                        {% ifequal from.id airport.id %}
+                      checked=checked
+                        {% endifequal %}
+                      {% endif %}
+                  {% endfor %}
+                  />
+                  {{airport.name|upper}}<span class="checkbox"></span></label>
+              </li>
+              {% endfor %}
+              </ul>{% endifnotequal%}
+              {% if airport.children.length > 0 %}
+              {% with forloop.counter|add:airport.children.length as outterCounter %}
+            {% if outterCounter|divisibleby:columnLength %}
+            {% if not forloop.last %}
+          </ul>
+        </div>
+        <div class="col" {% ifequal widgetController.searchApi "getPrice" %}analytics-id="364ab"{% else %}analytics-id="300ab"{% endifequal %} analytics-text="airportSelection">
+          <ul>
+            {% endif %}
+            {% endif %}
+            {% endwith %}
+            {% else %}
+            {% with forloop.counter|add:"4" as outterCounter %}
+            {% if outterCounter|divisibleby:columnLength %}
+            {% if not forloop.last %}
+          </ul>
+        </div>
+        <div class="col" {% ifequal widgetController.searchApi "getPrice" %}analytics-id="364ab"{% else %}analytics-id="300ab"{% endifequal %} analytics-text="airportSelection">
+          <ul>
+            {% endif %}
+            {% endif %}
+            {% endwith %}
+            {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+		<a href="javascript:void(0);" class="close close-large sprite-img-grp-1">{{searchMessaging.close}} <i class="icon icon-arrow"></i></a>
+    </div>
+</div>

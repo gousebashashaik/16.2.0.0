@@ -1,0 +1,68 @@
+{% ifequal templateview "arrivaldatepicker" %}
+<div class="calendar">
+	<ul class="dateyear">
+		<li class="prev"><a href="#" title="Previous" class="date-prev">&larr;</a></li>
+		<li class="current-monthyear">
+			<select data-dojo-type="tui.widget.datepicker.ReturnDateSelectOption" class="dropdown">
+                {% for month in monthsAndYears %}
+                <option value="{{month.value}}" {% ifequal monthAndYearTxt month.label %} selected="selected"{% endifequal %}>{{month.label}}</option>
+                {% endfor %}
+            </select>
+		</li>
+		<li class="next"><a href="#" title="Next" class="date-next">&rarr;</a></li>
+	</ul>
+	<table class="datepickertable">
+		<thead>
+			<tr class="weekdays">
+				{% for day in days %}
+					<th>{{day}}</th>
+				{% endfor %}
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				{% for predate in predates %}
+					<td class="premonth">&nbsp;</td>
+				{% endfor %}
+				{% for monthdate in monthdates %}
+					<td class="datepicker-day"><a href="#">{{monthdate.date}}</a></td>
+					{% if monthdate.newrow %}
+						</tr><tr>
+					{% endif %}
+				{% endfor %}
+				{% for enddate in enddates %}
+					<td class="premonth">&nbsp;</td>
+				{% endfor %}
+			</tr>
+		</tbody>
+	</table>
+</div>
+{% endifequal %}
+
+{% ifequal templateview "arrivaldatepickercells" %}
+<table class="datepickertable">
+    <thead>
+    <tr class="weekdays">
+        {% for day in days %}
+        <th>{{day}}</th>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        {% for predate in predates %}
+        <td class="premonth">&nbsp;</td>
+        {% endfor %}
+        {% for monthdate in monthdates %}
+        <td class="datepicker-day"><a href="#">{{monthdate.date}}</a></td>
+        {% if monthdate.newrow %}
+    </tr><tr>
+        {% endif %}
+        {% endfor %}
+        {% for enddate in enddates %}
+        <td class="premonth">&nbsp;</td>
+        {% endfor %}
+    </tr>
+    </tbody>
+</table>
+{% endifequal %}

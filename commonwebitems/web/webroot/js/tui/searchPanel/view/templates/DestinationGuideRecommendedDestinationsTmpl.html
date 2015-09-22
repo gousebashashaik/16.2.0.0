@@ -1,0 +1,65 @@
+<div class="default-destinations" id="{{id}}-destinations">
+    <!--p class="fc-recommend">{{searchMessaging.destinationGuide.subtitle}}</p-->
+	<!-- Countries list-->
+	<!--TODO: change groups to loop once final changes are decided on (BAU)-->
+	<h4 class="group-title">{{suggestions.0.name}}</h4>
+	<div class="col">
+        <div class="group dg">
+            <ul>
+                {% for destination in suggestions.0.children %}
+                <li><label for="recommended-{{destination.id}}" class="{% if not destination.available %} disabled{% else %}{% for to in searchPanelModel.to.data %}{% ifequal to.id destination.id %} selected{% endifequal %}{% endfor %}{% endif %}">
+                    <input type="checkbox"
+                           data-destination-id="{{destination.id}}"
+                           data-destination-name="{{destination.name}}"
+                           data-destination-type="{% if destination.type %}{{destination.type}}{% endif %}"
+                           data-destination-multiselect="{{destination.multiSelect}}"
+                           name="{{destination.id}}"
+                           id="recommended-{{destination.id}}"
+                           value="{{destination.id}}"
+                           class="{{destination.id}}"
+		                {% for to in searchPanelModel.to.data %}
+		                    {% ifequal to.id destination.id %}
+		                   checked=checked
+		                    {% endifequal %}
+		                {% endfor %}
+	                >
+                    {{destination.name}}<span class="checkbox"></span></label>
+                </li>
+	            {% if forloop.counter|divisibleby:columnLength %}
+	            {% if not forloop.last %}
+	            </ul></div></div><div class="col"><div class="group dg"><ul>
+	            {% endif %}
+	            {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+	<!-- Collections list-->
+	<div class="col last">
+		<h4 class="group-title">{{suggestions.1.name}}</h4>
+		<div class="group dg">
+			<ul>
+				{% for destination in suggestions.1.children %}
+				<li><label for="recommended-{{destination.id}}" class="{% if not destination.available %} disabled{% else %}{% for to in searchPanelModel.to.data %}{% ifequal to.id destination.id %} selected{% endifequal %}{% endfor %}{% endif %}">
+					<input type="checkbox"
+					       data-destination-id="{{destination.id}}"
+					       data-destination-name="{{destination.name}}"
+					       data-destination-type="{% if destination.type %}{{destination.type}}{% endif %}"
+                           data-destination-multiselect="{{destination.multiSelect}}"
+					       name="{{destination.id}}"
+					       id="collection-{{destination.id}}"
+					       value="{{destination.id}}"
+					       class="{{destination.id}}"
+					{% for to in searchPanelModel.to.data %}
+					{% ifequal to.id destination.id %}
+					checked=checked
+					{% endifequal %}
+					{% endfor %}
+					>
+					{% ifequal siteName 'thomson' %}{% ifequal destination.name|lower 'sensimar' %}COUPLES/SENSIMAR{% else %}{{destination.name}}{% endifequal %}{% else %}{{destination.name}}{% endifequal %}<span class="checkbox"></span></label>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+</div>

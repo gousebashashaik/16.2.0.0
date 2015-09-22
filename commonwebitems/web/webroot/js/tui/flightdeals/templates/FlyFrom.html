@@ -1,0 +1,44 @@
+<div>
+	<h3>PLEASE SELECT ONE OR MORE AIRPORTS</h3>
+	<span class="anyAirport">
+	<span data-dojo-type="dijit.form.CheckBox" class="anyAirport" id="anyAirport" value="anyAirport"> </span>
+	<label for="anyAirport" class="labelHover">ANY AIRPORT</label>
+	</span>
+	<div class="horizantal-line"></div>
+	<div class="col">
+		<ul>
+ 			{% for airport in ukairportList %} 
+		 		<li>
+		 	 		{% ifequal airport.cFlag true%}
+             			<span class="grpHeading">
+             			<span data-dojo-type="dijit.form.CheckBox" class="{{ airport.group[0].id}}" id="{{ airport.countryName }}" value="anyUk"></span>
+             			<label for="{{ airport.countryName }}" class="labelHover">{{ airport.countryName }}(ANY)</label>
+             			</span>
+             		{% endifequal %}
+             			<span class="childCountry">
+			 				<input data-dojo-type="dijit.form.CheckBox"
+	                         data-airportmodel-id="{{airport.id}}"
+	                         data-airportmodel-name="{{airport.name}}"
+	                         data-airportmodel-groups="{{airport.group}}"
+	                         data-airportmodel-countryCode="{{airport.countryCode}}"
+	                         name="{{ airport.group[0].id}}"
+	                         id="{{airport.id}}"
+	                         value="{{airport.id}}"
+	                         class="{{airport.id}} labelHover {{ airport.group[0].id }}" 
+	                         {% if not airport.available %} disabled {% endif %}  />
+	                         <label for="{{airport.id}}" class=" "> {{airport.name}} ({{airport.id}})</label>
+                         </span>
+		 		</li>   
+		 	   		{% ifequal airport.nextCol true %}
+           			 {% if not forloop.last   %}
+          </ul>
+       </div>
+       	<div class="col">
+          <ul>
+           			 {% endif %} 
+               		{% endifequal %}         
+        	{% endfor %}
+          </ul>
+       	</div>
+</div>
+

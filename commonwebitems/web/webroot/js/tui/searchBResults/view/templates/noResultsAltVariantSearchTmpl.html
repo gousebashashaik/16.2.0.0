@@ -1,0 +1,143 @@
+
+{% ifequal widenType "WHEREFROM" %}
+   <li class="from">
+    <div class="title">
+        <p>Change<br> <span>Departure <br/>Airport/Port</span></p>
+    </div>
+    <div class="details">
+        <div class="from-to">
+            <span class="from uc"><span class="heighlight">Any UK<br/>Airport/Port</span></span>
+            <span class="to">{{to|safe}}</span>
+        </div>
+        <div class="date">
+            <span class="day">{{date}}</span>
+            {% if flexible %}
+            <span class="flex"><span class="">+/- {{flexibleMonths}} month</span></span>
+            {% endif %}
+        </div>
+        <div class="duration">
+            <span class="cruise">{{duration}} cruise</span>
+            <span class="stay">No stay</span>
+        </div>
+        <!--<div class="price-details">
+            <span class="uppercase right20">&nbsp;</span>
+            <p class="price">
+                <span class="currency">&nbsp;<span class="value">&nbsp;</span></span>
+                <span class="pricepp"><sup>&nbsp;</sup></span>
+            </p>
+        </div>-->
+        <div class="cta-container">
+            <a href="{{url}}" class="button cta jumbo">Search</a>
+        </div>
+    </div>
+</li>
+{% endifequal %}
+
+{% ifequal widenType "WHERETO" %}
+   <li class="where">
+    <div class="title">
+        <p>Change<br> <span>Cruise<br/>Destination</span></p>
+    </div>
+    <div class="details">
+        <div class="from-to">
+            <span class="from padLeft ">{{from|safe}}</span>
+            <span class="to uc"><span class="heighlight">Any Cruise Destination</span></span>
+        </div>
+        <div class="date">
+            <span class="day">{{date}}</span>
+            {% if flexible %}
+            <span class="flex"><span class="">+/- {{flexibleMonths}} month</span></span>
+            {% endif %}
+        </div>
+        <div class="duration">
+            <span class="cruise">{{duration}} cruise</span>
+            <span class="stay">No stay</span>
+        </div>
+        <div class="cta-container">
+            <a href="{{url}}" class="button cta jumbo">Search</a>
+        </div>
+    </div>
+</li>
+{% endifequal %}
+
+{% ifequal widenType "WHEN" %}
+   <li class="when">
+    <div class="title">
+        <p>Change<br> <span>Departure <br/>Date</span></p>
+    </div>
+    <div class="details">
+        <div class="from-to">
+            <span class="from padLeft ">{{from|safe}}</span>
+            <span class="to">{{to|safe}}</span>
+        </div>
+        <div class="date uc">
+            <span class="day"><span class="heighlight">{{date}}</span></span>
+            {% if flexible %}
+            <span class="flex"><span class="heighlight">+/- {{flexibleMonths}} month</span></span>
+            {% endif %}
+        </div>
+        <div class="duration">
+            <span class="cruise">{{duration}} cruise</span>
+            <span class="stay">No stay</span>
+        </div>
+        <div class="cta-container">
+            <a href="{{url}}" class="button cta jumbo">Search</a>
+        </div>
+    </div>
+</li>
+{% endifequal %}
+
+{% ifequal widenType "DURATION" %}
+   <li class="duration">
+    <div class="title">
+        <p>Change<br> <span>Cruise <br/>Duration</span></p>
+    </div>
+    <div class="details">
+        <div class="from-to">
+            <span class="from padLeft ">{{from|safe}}</span>
+            <span class="to">{{to|safe}}</span>
+        </div>
+        <div class="date">
+            <span class="day">{{date}}</span>
+            {% if flexible %}
+            <span class="flex"><span class="">+/- {{flexibleMonths}} month</span></span>
+            {% endif %}
+        </div>
+        <div class="duration">
+            <span class="cruise uc"><b>{{duration}} cruise</b></span>
+            <span class="stay">No stay</span>
+        </div>
+        <div class="cta-container">
+            <a href="{{url}}" class="button cta jumbo">Search</a>
+        </div>
+    </div>
+</li>
+{% endifequal %}
+
+{% ifequal widenType "STAYDURATION" %}
+   <li class="from duration">
+    <div class="title">
+        <p>Change<br> <span>Stay <br/>Duration</span></p>
+    </div>
+    <div class="details">
+        <div class="from-to">
+            <span class="from padLeft ">{{from|safe}}</span>
+            <span class="to">{{to|safe}}</span>
+        </div>
+        <div class="date">
+            <span class="day">{{date}}</span>
+            {% if flexible %}
+            <span class="flex"><span class="">+/- {{flexibleMonths}} month</span></span>
+            {% endif %}
+        </div>
+        <div class="duration">
+            <span class="cruise"><b>{{duration}} cruise</b></span>
+            <span class="stay">No stay</span>
+        </div>
+        <div class="cta-container">
+            <a href="{{url}}" class="button cta jumbo">Search</a>
+        </div>
+
+    </div>
+</li>
+{% endifequal %}

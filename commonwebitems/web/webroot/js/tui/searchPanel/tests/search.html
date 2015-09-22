@@ -1,0 +1,232 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7 ]>
+<html lang="en" class="ie6" id="firstchoice"> <![endif]-->
+<!--[if IE 7 ]>
+<html lang="en" class="ie7" id="firstchoice"> <![endif]-->
+<!--[if IE 8 ]>
+<html lang="en" class="ie8" id="firstchoice"> <![endif]-->
+<!--[if IE 9 ]>
+<html lang="en" class="ie9" id="firstchoice"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="" id="firstchoice"> <!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <title>Search Tests</title>
+
+
+    <link href="/css/main.css" rel="stylesheet" type="text/css">
+
+    <script src="/js/underscore/underscore-min.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script type="text/javascript" src="/js/tui/config/TuiConfigTest.js"></script>
+    <style>
+    </style>
+
+</head>
+<script type="text/javascript">
+	dojoConfig.addModuleName("tui/search/controller/SearchController", "tui/mvc/Klass");
+</script>
+
+<body>
+<div id="wrapper">
+    <div id="header">
+	    <script>dojoConfig.addModuleName('tui/widget/MultiLinkAnchor');</script>
+	    <div class="beta">
+		    <p>Welcome to our brand new website.</p>
+		    <p class="tell-us">
+			    <a href="https://www.tuisurveys.co.uk/se.ashx?s=705E3F6F32F1F661" target="_blank" class="ensLinkTrack" data-componentId="beta_site_banner">Tell us what you think</a> or <a href="http://www.firstchoice.co.uk/beta/contact-us/send-us-an-email/report-a-problem/" target="_blank" class="ensLinkTrack" data-componentId="beta_site_banner">Report a problem</a>
+		    </p>
+		    <a data-dojo-type="tui.widget.popup.DynamicPopup" data-dojo-props="widgetId:'tellUsWhatYouThink',modal:true,scrollable:true" href="#" class="button">Switch to main site</a>
+	    </div>
+	    <div class="message-window" style="display:none" id="tellUsWhatYouThink">
+		    <a href="#" class="close ensLinkTrack" data-componentId="beta_site_banner"> <span class="text">Close</span></a>
+		    <div class="message-content small-pop beta-pop">
+			    <h3>Before you go...</h3>
+			    <p>We'd love to know what you made of the new site:</p>
+			    <ul>
+				    <li><a href="http://www.firstchoice.co.uk/" data-dojo-type="tui.widget.MultiLinkAnchor" data-dojo-props="newWindowLink:'https://www.tuisurveys.co.uk/se.ashx?s=705E3F6F32F1F661'" class="ensLinkTrack" data-componentId="beta_site_banner">Tell us what you think</a></li>
+				    <li><a href="http://www.firstchoice.co.uk/?customer=switch" class="ensLinkTrack" data-componentId="beta_site_banner">Switch to our main site</a></li>
+			    </ul>
+		    </div>
+	    </div>
+	    <script>
+		    dojoConfig.addModuleName("tui/widget/CookieNotifier");
+	    </script>
+	    <div class="content" data-dojo-type="tui.widget.CookieNotifier" data-dojo-props="timeout:10" style="display:none"><div class="cookie">
+		    <p style="text-align:left">
+			    Please read our terms of use - By clicking OK or continuing to use our website, you consent to our use of cookies and our
+			    <a href="http://www.firstchoice.co.uk/our-policies/terms-of-use" data-dojo-type="tui.widget.popup.DynamicPopup" data-dojo-props="widgetId:'termsAndConditions', modal:true, scrollable:true" class="ensLinkTrack" data-componentId="Cookie_legislation">Website Terms and Conditions</a>,
+			    <a href="http://www.firstchoice.co.uk/our-policies/privacy-policy" data-dojo-type="tui.widget.popup.DynamicPopup" data-dojo-props="widgetId:'privacyPolicy',modal:true, scrollable:true" class="ensLinkTrack" data-componentId="Cookie_legislation">Privacy Policy</a> and
+			    <a href="http://www.firstchoice.co.uk/our-policies/statement-on-cookies" data-dojo-type="tui.widget.popup.DynamicPopup" data-dojo-props="widgetId:'statementCookies', modal:true, scrollable:true" class="ensLinkTrack" data-componentId="Cookie_legislation">Statement on Cookies</a>. Please leave our website if you don't agree.
+		    </p>
+		    <a class="button ensLinkTrack" href="javascript:void(0)" data-componentId="Cookie_legislation">OK</a>
+	    </div>
+	    </div><div id="utils">
+	    <ul>
+		    <li><a href="http://www.firstchoice.co.uk/our-policies/statement-on-cookies/" title="Statement on Cookies" class="ensLinkTrack" data-componentId="WF_COM_088-2">Statement on Cookies</a></li>
+		    <li><a href="https://eapi.thomson.co.uk/eborders/login.jsp" title="API login" class="ensLinkTrack" data-componentId="WF_COM_088-2">API login</a></li>
+	    </ul>
+    </div>
+	    <script>var domainName;dojoConfig.addModuleName('tui/widget/popup/DynamicPopup','tui/widget/CookieNotifier');</script>
+	    <div id="logo">
+		    <a data-componentid="global_header_logo_para_comp" class="ensLinkTrack" href="http://www.firstchoice.co.uk">First Choice</a>
+		    <img class="print-only" alt="First Choice" src="/holiday/images/logo-first-choice-print.gif" />
+	    </div>
+	    <div id="nav">
+		    <ul>
+			    <li><a href="http://www.firstchoice.co.uk/sun-holidays/" class="ensLinkTrack" data-componentId="global_header_nav">Holidays</a></li>
+			    <li class="active"><a href="http://www.firstchoice.co.uk/holiday/destinations" class="ensLinkTrack" data-componentId="global_header_nav">Destinations</a></li>
+			    <li><a href="http://www.firstchoice.co.uk/last-minute-deals/" class="ensLinkTrack" data-componentId="global_header_nav">Deals</a></li>
+		    </ul>
+	    </div>
+	    <div id="quick-search">
+		    <form method="get" action="http://www.firstchoice.co.uk/gsa/search">
+			    <input type="search" placeholder="Search on website..." class="textfield" name="q" autosave/>
+			    <button type="submit" class="search-btn"><img src="/holiday/images/icon-magnifier.png" width="11" height="11" alt="Search"/></button>
+			    <input type="hidden" name="site" value="firstchoice_collection"/>
+			    <input type="hidden" name="client" value="fc-hugo-main"/>
+			    <input type="hidden" name="proxystylesheet" value="fc-hugo-main"/>
+			    <input type="hidden" name="output" value="xml_no_dtd"/>
+			    <input type="hidden" name="submit" value="Go"/>
+		    </form>
+	    </div>
+		<span class="hide" data-klass-id="searchConfig" data-dojo-type="tui.mvc.Klass" data-dojo-props="PAGE: 0"></span>
+
+	    <div class="search controller loading" data-klass-id="searchController" data-dojo-type="tui.mvc.Klass" data-dojo-props="jsonData:null,locationData:null">
+        	<form  class="search-form" method="post" action="/js/tui/searchResults/tests/searchResults.html"></form>
+            <div class="col from">
+                <label class="icon" for="where-from">Where from?</label>
+                <input type="text" data-klass-id="airportMultiFieldList" data-dojo-type="tui.mvc.Klass" data-dojo-props="maxTextboxes:6, duration:500" class="textfield multifield where-from" placeholder="Any UK Airport" tabindex="0" id="where-from"/>
+                <p><a href="#"  id="airport-guide" data-klass-id="airportGuide" data-dojo-type="tui.mvc.Klass" data-dojo-props="fromLimit:6"  class="related airport airport-guide" tabindex="-1">Airport List <span class="load"></span></a></p>
+            </div>
+            <div class="col to">
+                <label for="where-to">Where to? <span>(Destination, Hotel or Type)</span></label>
+                <input type="text" data-klass-id="destinationMultiFieldList" data-dojo-type="tui.mvc.Klass" data-dojo-props="duration:500" class="textfield multifield where-to" placeholder="Anywhere" tabindex="0" id="where-to"/>
+                <p><a href="#" data-klass-id="destinationGuide" data-dojo-type="tui.mvc.Klass"  class="related destination destination-guide" tabindex="-1">Destination List <span class="load"></span></a></p>
+            </div>
+            <div class="col">
+                <label for="when">When?</label>
+                <div class="when" tabindex="0" id="when" data-klass-id="searchDatePicker" data-dojo-type="tui.mvc.Klass" data-dojo-props="seasonLength:18">Select a date</div>
+                <p>
+					<label class="related give-take"><span data-klass-id="flexibleView" data-dojo-type="tui.mvc.Klass"><input type="checkbox" class="flexible" checked="checked" /></span>I'm flexible</label>
+					<span class="flexible-tooltip" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="text: 'We\'ll search for holidays 7 days before and after your selected date.', floatWhere: 'position-right-center'">?</span>
+				</p>
+            </div>
+            <div class="col">
+                <div class="rooms">
+                    <div class="labels">
+                        <label for="totalAdults" class="icon">Adults</label>
+                        <label for="totalSeniors" class="icon">Seniors <span>(65+)</span></label>
+                        <label for="totalChildren" class="icon">Children <span>(0-17)</span></label>
+                    </div>
+                    <div class="item">
+                            <span class="acol">
+                                <select id="totalAdults" name="totalAdults" data-klass-id="adultSelectionOption" data-dojo-type="tui.mvc.Klass"  class="dropdown totalAdults" tabindex="-1">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2" selected>2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                </select>
+                            </span>
+                            <span class="scol">
+                                <select id="totalSeniors" name="totalSeniors" data-klass-id="seniorsSelectOption" data-dojo-type="tui.mvc.Klass"  class="dropdown totalSeniors" tabindex="-1">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                </select>
+                            </span>
+                            <span class="ccol">
+                                <select id="totalChildren" name="totalChildren" data-klass-id="childSelectOption" data-dojo-type="tui.mvc.Klass"   class="dropdown totalChildren" tabindex="-1">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                </select>
+                            </span>
+                    </div>
+                </div>
+                <div class="search-col">
+	                <a href="#" data-klass-id="submitButton" data-dojo-type="tui.mvc.Klass" class="button search-submit" tabindex="0">Search</a>
+                </div>
+            </div>
+        </div>
+	    <div class="search-summary closed" data-klass-id="searchSummary" data-dojo-type="tui.mvc.Klass">
+		    <div class="col">
+			    <label class="icon" for="where-from-summary">Where from?</label>
+			    <p class="where-from-summary" id="where-from-summary"></p>
+		    </div>
+		    <div class="col">
+			    <label for="where-to-summary">Where to?</label>
+			    <p class="where-to-summary" id="where-to-summary"></p>
+		    </div>
+		    <div class="col">
+			    <label for="when-summary">When?</label>
+			    <p class="when-summary" id="when-summary"></p>
+		    </div>
+		    <div class="col">
+			    <div class="rooms">
+				    <div class="labels">
+					    <label for="total-adults" class="icon">Adults</label>
+					    <label for="total-seniors" class="icon">Seniors (65+)</label>
+					    <label for="total-children" class="icon">Children (0-17)</label>
+				    </div>
+				    <div class="item">
+					    <span class="acol-summary total-adults" id="total-adults"></span>
+					    <span class="scol-summary total-seniors" id="total-seniors"></span>
+					    <span class="ccol-summary total-children" id="total-children"></span>
+				    </div>
+			    </div>
+		    </div>
+		    <div class="col no-margin">
+			    <input type="submit" class="button search-edit" value="Edit search">
+		    </div>
+	    </div>
+    </div>
+
+    <img src="/images/home-mockup.jpg" alt="home page"/>
+</div>
+<footer id="footer">
+</footer>
+<script type="text/javascript" src="/js/underscore/underscore-min.js"></script>
+<script type="text/javascript" src="/js/dojo/dojo.js"></script>
+<script type="text/javascript">
+    dojoConfig.init();
+    //document.getElementsByTagName('html')[0].className = [HTMLClass].join("");
+    require(["dojo"], function (dojo) {
+        dojo.ready(function () {
+            dojo.subscribe("tui:channel=validSearchModel", function () {
+                if (!!window.location.pathname.match(/search\.html$/)) {
+                    setTimeout(function () {
+                        location.pathname = '/js/tui/searchResults/tests/searchResults.html';
+                    }, 600);
+                }
+            });
+        })
+    })
+
+</script>
+</body>
+
+
+</html>

@@ -1,0 +1,78 @@
+<div class="channels-modal-window dpnOverlay">
+	<div id="DPNoverlay" class="web_dialog">
+		<div class="web_dialog_title">
+			{{ jsonData.dataProtectionViewData.dataProtectionMap.dpndpn_displayName|default:" " }} <a class="close abs fr close_toppadding">close</a>
+		</div>
+
+		<div class="we_dialog_description">
+			{{ jsonData.dataProtectionViewData.dataProtectionMap.dpndpn_Intro|default:" " }}
+			<div class="clear"></div>
+			<div class="communication fl">
+ 				<span class="Trailored sectionTitle font9pt fl">
+ 					{{ jsonData.dataProtectionViewData.dataProtectionMap.dpndpn_extra_detail_1|default:" " }}
+ 				</span>
+
+			</div>
+		</div>
+
+			<!-- <div class="commAccept fl disNone paddlef">
+				<input class="checkBoxRef" type="checkbox" name="chkTuiMarketingAllowed"
+					id="chkTuiMarketingAllowed" value="false"
+					onClick="updateFormElementFromCheckBox(this)" checked="checked"> <label
+					for="tuiTravelAcpt"><span></span></label>
+
+				</div> -->
+			<div class="commAccept fl paddlef">
+				<input class="checkBoxRef" type="checkbox" name="communicateByEmail"
+					id="communicate_selection_email" {% if jsonData.communicationPreferencesViewData.byEmail %} checked {% endif %} /> <label
+					for="communicate_selection_email"><span></span></label>
+				<span class="commAcceptDesc">
+					{{jsonData.dataProtectionViewData.dataProtectionMap.dpndpn_extra_detail_2|default:"I don’t want to receive emails or SMS with details of offers, goods and services, new products, or events and competitions." }} </span></span>
+				</div>
+			<div class="commAccept fl paddlef">
+				<input class="checkBoxRef" type="checkbox" name="communicateByPhone"
+					id="communicate_selection_phone" {% if jsonData.communicationPreferencesViewData.byPhone %} checked {% endif %}/> <label
+					for="communicate_selection_phone"><span></span></label>
+				<span class="commAcceptDesc">
+					{{ jsonData.dataProtectionViewData.dataProtectionMap.dpndpn_extra_detail_3|default:"I don't want to be contacted by telephone with details of offers, goods and services, new products, or events and competitions." }}</span>
+			</div>
+			<div class="commAccept fl paddlef">
+				<input class="checkBoxRef" type="checkbox" name="communicateByPost"
+					id="communicate_selection_post"  {% if jsonData.communicationPreferencesViewData.byPost %} checked {% endif %}/> <label
+					for="communicate_selection_post"><span></span></label>
+				<span class="commAcceptDesc">
+					{{ jsonData.dataProtectionViewData.dataProtectionMap.dpndpn_extra_detail_4|default:"I don't want to receive information by post of offers, goods and services, new products, or events and competitions."}}</span>
+			</div>
+
+		<div class="communicationAcceptance fl paddlef">
+			<div class="sectionTitle font9pt hide">
+					{{ jsonData.dataProtectionViewData.dataProtectionMap.dpncsc_displayName|default:" " }}
+			</div>
+
+			<div class="commAccept fl hide">
+				<input class="checkBoxRef" type="checkbox" name="chkThirdPartyMarketingAllowed"
+					id="travelAcpt"  {% if jsonData.communicationPreferencesViewData.thirdPartySharing %} checked {% endif %}/> <label
+					for="travelAcpt"><span></span></label>
+				<span class="commAcceptDesc">
+					{{ jsonData.dataProtectionViewData.dataProtectionMap.dpncsc_extra_detail_1|default:" " }}
+				</span>
+			</div>
+
+			<div class="clear"></div>
+			<div class="border-divider"></div>
+
+		</div>
+
+
+		<div class="button-section paddlef">
+			<div class="fl">
+				<a class="cancel" >CANCEL</a>
+
+			</div>
+			<div class="fr rightSection">
+				<a class="okbutton selected">OK</a>
+			</div>
+		</div>
+	</div>
+
+</div>

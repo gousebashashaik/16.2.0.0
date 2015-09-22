@@ -1,0 +1,149 @@
+<!-- Cruise result (Stay & Cruise Hotel result)-->
+<li class="search-listing" >
+    <div class="image-with-content for-hotel">
+        {% for sailing in holiday.sailings %}
+        <div class="details">
+            <div class="media-comp">
+				<a href="{{holiday.accommodation.url}}&finPos={{holiday.finPos}}" class="ensLinkTrack">
+					<img src="{{holiday.accommodation.imageUrl}}" size="medium" width="273" height="162"/>
+				</a>
+                <!-- Product Identifier in Image Box-->
+
+                <div class="specials">
+                    {% if holiday.accommodation.differentiatedProduct %}
+					<span data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text:'{{holiday.accommodation.featureCodesAndValues.strapline[0]}}'"><span class="diff-label diff-label-block {{holiday.accommodation.differentiatedCode|lower}}"></span></span>
+                    {% endif %}
+                </div>
+				<div class="right-corner popup-icons">
+
+					<div class="js-img-data-req photo icon show-link gallery"  data-accomodation="{{holiday.accommodation.name|safe}}" data-product-id="{{holiday.accommodation.code}}">
+						<span style="color: #73afdc; text-indent: 0; ">
+						Gallery
+						</span>
+					</div>
+
+						<!-- <div class="js-img-data-req video icon" style="cursor: pointer;float: left;height: auto;text-indent: 0;width: 42px;  z-index: 1998;background:url('../images/cruise/mediaComponentSprite.png')  no-repeat scroll 13px -30px;"><span style="color: #73afdc;display: block;font-size: 8.5px;margin-left: 12px;padding: 29px 0 0;text-transform: uppercase;">Video</span></div> -->
+				</div>
+            </div>
+
+            <div class="listings">
+                <h2><a href="{{holiday.accommodation.url}}&finPos={{holiday.finPos}}" class="ensLinkTrack">{{holiday.accommodation.name}}</a></h2>
+                {% if holiday.accommodation.ratings.officialRating %}
+               	 	<p class="rating rating-inline rating-md t{{holiday.accommodation.ratings.officialRating|lower|cut:' '}}{% if holiday.accommodation.differentiatedProduct %} {{holiday.accommodation.differentiatedCode|lower}}{% endif %}"></p>
+                	<span class="loc-name"> | {% if holiday.accommodation.locationMap %}in {% for loc in holiday.accommodation.locationMap %}{{loc|safe}}{% if not forloop.last %},&nbsp;{% endif %}{% endfor %}{% endif %}</span>
+                {% else %}
+                	<p class="rating rating-inline rating-md rating-spacer"></p>
+                	<span class="loc-name"> | {% if holiday.accommodation.locationMap %}in {% for loc in holiday.accommodation.locationMap %}{{loc|safe}}{% if not forloop.last %},&nbsp;{% endif %}{% endfor %}{% endif %}</span>
+                {% endif %}
+
+                <ul class="square">
+                    {% for usp in holiday.accommodation.featureCodesAndValues.usps%}
+                    <li>{{usp|striptags}}</li>
+                    {%endfor%}
+                </ul>
+                {% ifnotequal holiday.accommodation.ratings.tripAdvisorRating 0 %}
+                    <p class="trip-advisor tripadvisor {% if holiday.accommodation.ratings.tripAdvisorRating  %}{{holiday.accommodation.ratings.tripAdvisorRatingKlass}}{% endif %}">TripAdvisor - <span class="ta-review-count">{{holiday.accommodation.tripAdvisorReviewCount}} reviews</span><span class="ta-rating">{{holiday.accommodation.ratings.tripAdvisorRating|floatformat}}/5</span></p>
+                {% endifnotequal %}
+            </div>
+
+            <div class="stay-option">
+                <div class="stay-image">
+                    <img src="{{holiday.itineraries.image}}" size="medium" width="129" height="70"/>
+                    <span class="left-corner"></span>
+                </div>
+                <div class="stay-content">
+                    <h3 class="capitalize title">{{holiday.itineraries.name}}</h3>
+                    {% for sailing in holiday.sailings %}
+                    <span class="name">{{sailing.shipName.name|title:""}}</span>
+
+                    {% if sailing.differentiatedProduct.differentiatedProduct %}
+                    <!-- Product Identifier in Image Box-->
+                    <span class="diff-label diff-label-block {{sailing.differentiatedProduct.code|lower}}"></span>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="details-box">
+            <div class="listwithIcon">
+                <div class="item-list">
+                    <ul class="item">
+                        <li class="listing-calander-icon"><i></i> <span class="name">Departs {{sailing.durationInfo.departureDate|default:""}}</span></li>
+                        {% if sailing.cruiseNStay.available %}
+                        <li class="listing-cruise-stay-icon"><i></i> <span class="name">{{sailing.durationInfo.stayDuration|default:""}}-nights {{sailing.cruiseNStay.name|default:""}} stay <span class="light-color">then</span></span></li>
+                        {% endif %}
+						<li class="listing-cruise-icon"><i></i><span class="name">{{sailing.durationInfo.cruiseDuration|default:""}}-night cruise </span> </li>
+						 <!-- 			{% for offer in sailing.offers %}
+                                     <li class="listing-free-child-icon"><span class="name">{{offer.description}}</span></li>
+                                    {% endfor %} -->
+                    </ul>
+                </div>
+                <div class="item-list">
+                    <ul class="item">
+                        {% if holiday.accommodation.rooms.length > 0 %}
+                            {% for room in holiday.accommodation.rooms %}
+                                <li class="listing-in-cabin-icon"><i></i>{% if room.roomCount %}{{room.roomCount}}x {% endif %}{{room.roomType|lower|safe}}
+                                </li>
+								{% if room.availability %}
+                                     <li class="error-line">
+                                        <!--<span class="available indicator"></span>-->
+                                        Only {{room.sellingout}} room{{room.sellingout|pluralize}} left
+                                        <span class="question information" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{holiday.accommodation.limitedAvailabilityTooltip}}'"></span>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+						 {% if holiday.boardBasis.available %}
+
+                            <li class="listing-board-icon"><i></i><span class="name">{{holiday.boardBasis.name|default:""}} hotel stay{% if sailing.boardBasis.showTooltip %} <span class="question search-tooltip"  data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{holiday.boardBasis.tooltip}}'"></span>{% endif %}</span></li>
+
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <div class="priceDetails">
+                    <div class="floater accom-price price-box">
+                        <div class="all-details">
+                            <p class="price">
+                                <span class="currency size-color">&pound;</span>
+								<span class="price-value pp-price">{{sailing.price.perPerson|floatformat:"0"}}
+									<span class="info-text uc" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{messages.perPersonTooltip}}'">Per Person <span class="question pp-tooltip"></span></span>
+								</span>
+								 <span class="price-value total-price">{{sailing.price.total|floatformat:"0"}}
+									<span class="info-text uc">Total Price</span><!--with-from-->
+								</span>
+							</p>
+							 <p lang="en" class="question-info-text size-and-margin">
+							 {% ifnotequal sailing.price.discountPP "0.0" %}
+								{% if sailing.price.discountPP < 0 %}
+								Includes &pound;{% if tracs %}{{ sailing.price.discountPP|floatformat:"0"|slice:"1:" }}{% else %}{{ sailing.price.discountPP|floatformat:"0"}}{% endif %}pp discount
+								{% else %}
+								Includes &pound;{{ sailing.price.discountPP|floatformat:"0" }}pp discount
+								{% endif %}
+							  {% endifnotequal %}
+							</p>
+                        </div>
+						{% if sailing.price.lowDepositExists %}
+						 <!--  <div class="pay-deposit total-deposit">Pay only &pound; sailing.price.depositAmount|floatformat:"0" low deposit today</div>-->
+						   <div class="pay-deposit pp-deposit">Pay only &pound;{{sailing.price.depositAmountPP|floatformat:"0"}}pp low deposit today</div>
+						{% endif %}
+						{% if sailing.price.depositExists %}
+						  <!--  <div class="pay-deposit total-deposit">Pay only &pound;sailing.price.depositAmount|floatformat:"0" deposit today</div>-->
+						   <div class="pay-deposit pp-deposit">Pay only &pound;{{sailing.price.depositAmountPP|floatformat:"0"}}pp deposit today</div>
+						{% endif %}
+                    </div>
+                </div>
+
+                <div class="link-box">
+                    <div class="cta-buttons">
+                        <a  class="button cta jumbo ensLinkTrack" href="{{holiday.accommodation.url}}&finPos={{holiday.finPos}}">Continue</a>
+                        <!--<a class="button shortlist" href="javascript:void(0);"><i></i><span class="text"> Shortlist</span></a>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor%}
+    </div>
+</li>

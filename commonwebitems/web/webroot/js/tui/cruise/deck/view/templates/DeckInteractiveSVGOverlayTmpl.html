@@ -1,0 +1,52 @@
+ <div class="span modal-window  popup-with-scroll controller loading popup-content">
+   <div class="wrapper exursion-overlay">
+   <div class="content svg-content-overlay"  >
+  	<div class="media-componet">
+        <div class="span-two-third galAndText">
+         {% if jsonData.galleryImages.0  %}
+            <div class="product-list slideshow" >
+                <div class="viewport">
+                    <ul class="plist">
+                        <li style="z-index: 0; opacity: 1;">
+                             <img  src="{{jsonData.galleryImages.0.mainSrc}}" size="medium" width="360" height="200"/>
+                        </li>
+                    </ul>
+                    <a href="#" class="play-video ensLinkTrack">Play Video</a>
+                   <p class="load"></p>
+                </div>
+                <p class="load">Loading</p>
+			</div>
+			{% else %}
+			     <img src="{{cdnDomain}}/images/cruise/default-large.png" size="medium" width="360" height="200"/>
+            {% endif %}
+		</div>
+           <div class="span-half media-description">
+              <h3>{{jsonData.roomName}}</h3>
+               <p>{{jsonData.description}}</p>
+               {% if jsonData.premierServicesExist  %}
+                <div class="expand-type filter" data-dojo-type="tui.widget.expand.cruise.CruiseExpandable" data-dojo-props="">
+				<div class="item">
+					<h3 class="item-toggle name">
+						<a href="javascript:void(0);" class="ensLinkTrack expand-name"><span></span>
+						<span>Premier Service Included</span> <i class="icon icon-arrow-bottom">&#8227;</i></a>
+					</h3>
+					 <div class="item-content overlay" id="">
+					 <div class="item-content-wrap">
+					 <p>This cabin comes with Premier Service extras included:</p>
+					 <ul class="square">
+						{% for srvcs in jsonData.premiereServices %}
+							<li class="" style="font-size: 10.5px;">{{srvcs}}</li>
+						{% endfor %}
+                        </ul>
+					 </div>
+					 </div>
+					</div>
+				</div>
+               {% endif %}
+           </div>
+        <a class="close close-large position" href="javascript:void(0);">x</a>
+	</div>
+	</div>
+	<div class="loading-overlay"></div>
+	</div>
+</div>

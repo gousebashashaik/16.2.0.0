@@ -1,0 +1,89 @@
+<div class="flights-options-display-section">
+	{% if errorMsg %}
+	<div class="error-section">{{errorMsg}}</div>
+	{% else %}
+		{% for flightData in model.flightViewData %}
+			{% ifequal forloop.counter0 0 %}
+				<div class="overlay-flights-section">
+					<div class="outbound-section">
+						<p class="overlay-outbound">GOING OUT </p>
+						<p>{{flightData.flightViewData.outboundSectors.0.schedule.departureDate}}</p>
+					</div>
+					<div class="inbound-section">
+						<p class="overlay-inbound">COMING BACK</p>
+						<p>{{flightData.flightViewData.inboundSectors.0.schedule.departureDate}}</p>
+					</div>
+				</div>
+				<div class="clear"></div>
+			{% endifequal %}
+			{% ifequal forloop.counter0 0 %}
+					<div class="alternate-flights-overflow">
+			{% endifequal %}
+			<div class="alternate-flights-section" >
+				{% ifequal forloop.counter0 0 %}
+					<div class="flight-options-section highlighted-div dashed-border">
+				{% else %}
+					<div class="flight-options-section dashed-border">
+				{% endifequal %}
+					<div class="selection-section textLeft pl20px">
+						{% for outboundData in flightData.flightViewData.outboundSectors %}
+						<span class="to">{{outboundData.schedule.depTime}}</span>
+						<span class="arrTime">{{outboundData.schedule.arrTime}}</span>
+						{% ifnotequal  outboundData.schedule.flightOffsetDays 0 %}
+							 <span class="addedDay">+1 Day</span>
+							 <span lang="en" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="floatWhere:'position-top-center', text: 'Your flight arrives the next day'" class=""><span class="question-book"></span></span>
+						{% endifnotequal %}
+
+						<!-- <span
+							class="disBlock">{{outboundData.schedule.timeOfFlight}}</span> -->
+
+							<div class="logo{{outboundData.carrierCode}}"><span class="logo-text">Other Carrier</span></div>
+
+							{% ifequal outboundData.eqmtDescription "DREAMLINEAR787" %}
+
+								 <div class="dreamlinear-logo"></div>
+
+							{% endifequal %}
+
+						{% endfor %}
+					</div>
+					<div class="selection-section middle">
+						{% for inboundData in flightData.flightViewData.inboundSectors %}
+						<span class="to">{{inboundData.schedule.depTime}}</span><span class="arrTime">{{inboundData.schedule.arrTime}}</span>
+
+						{% ifnotequal  inboundData.schedule.flightOffsetDays 0 %}
+							 <span class="addedDay">+1 Day</span>
+							 <span lang="en" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="floatWhere:'position-top-center', text: 'Your flight arrives the next day'" class=""><span class="question-book"></span></span>
+						{% endifnotequal %}
+
+						<!-- <span
+							class="disBlock">{{inboundData.schedule.timeOfFlight}}</span> -->
+							 <div class="logo{{inboundData.carrierCode}}"><span class="logo-text">Other Carrier</span></div>
+
+						{% ifequal inboundData.eqmtDescription "DREAMLINEAR787" %}
+								 <div class="dreamlinear-logo"></div>
+						{% endifequal %}
+
+						{% endfor %}
+					</div>
+					<div class="selection-section last">
+					{% ifequal flightData.selected true %}
+						<button class="button jumbo mt10px selected" ></button>
+					{% else %}
+						<p class="textCenter"><b>{{flightData.currencyAppendedRoundUpTotalCost|default:" "}}</b></p>
+						<p class="textCenter">{{flightData.currencyAppendedPricePerPerson}}</p>
+						<button class="button jumbo mt10px" value = {{flightData.id}}></button>
+					{% endifequal %}
+					</div>
+				</div>
+				<div class="clear"></div>
+		{% endfor %}
+	</div>
+	{% endif%}
+</div>
+
+
+
+
+
+

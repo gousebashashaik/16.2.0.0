@@ -1,0 +1,16 @@
+<div>
+	<h2 class="underline fs28px mt20px">{{sectionTitle}}</h2>
+     
+     {% if thirrdPartyFlight %}
+      <p class="inflight-desc-text">{{jsonData.flightOptionsStaticContentViewData.flightContentMap.ThirdParty_SpecialAssistance}}</p>
+     
+     {% else %}
+    
+     <div class="parentClass">
+     <p class='colorGray'>{{sectionContent1|default:" "}}</p>
+     <p class='inflight-desc-text'>{{sectionContent2}}</p>
+     <p class='colorGray'>{{sectionContent3}}</p>
+      </div>
+       
+     {% endif %}
+</div>

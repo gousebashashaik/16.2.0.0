@@ -1,0 +1,218 @@
+<div class="popup media-popup dreamlinerpopup">
+	<div class="floater">
+		<a href="javascript:void(0)" class="close right">Close</a>
+	</div>
+	<div class='bg-load'>
+	<div class="container">
+	    <ul class="tabs">
+			
+              {% for row in jsonData %}					         
+					        {% ifequal forloop.counter0  "0" %}
+					        <li><a id="firsttab" class="activetab" href="#first">
+					                {{row.uspName}} 
+					         </a></li>
+					        {% endifequal %}
+					        {% ifequal forloop.counter0  "1" %}
+					       <li><a id="secondtab" class="carouseltabs" href="#second">
+					                {{row.uspName}} 
+					         </a></li>
+					        {% endifequal %}
+					        {% ifequal forloop.counter0  "2" %}
+					        <li><a id="thirdtab" class="carouseltabs" href="#third">
+					                {{row.uspName}} 
+					         </a></li>
+					        {% endifequal %}
+					         {% ifequal forloop.counter0  "3" %}
+					        <li><a id="fourthtab" class="carouseltabs" href="#fourth">
+					                {{row.uspName}} 
+					         </a></li>
+					        {% endifequal %}
+					         {% ifequal forloop.counter0  "4" %}
+					        <li><a id="fifthtab" class="carouseltabs" href="#fifth">
+					                {{row.uspName}} 
+					         </a></li>
+					        {% endifequal %}							
+			 {% endfor %}
+			
+		</ul>
+		
+	    <div id="first" >
+			<div class="large-carousel">
+			 <div class="viewport">
+			 	<a class="prev-large" href="javascript:void(0)" style="display: block;">
+					<span class="arrow"></span>
+			    </a>
+				<a class="next-large" href="javascript:void(0)" style="display: block;">
+					<span class="arrow"></span>
+				</a>
+				
+				
+			   <div class="dreamDesc">
+					{% for row in jsonData %}					         
+					        {% if forloop.first %}
+					                {{row.uspDesc}} 
+					        {% endif %}					
+					{% endfor %}		    
+			    </div>
+			  
+			    <ul class="product-list">
+			      {% for galleryImage in jsonData[0].galleryImages %}
+			    
+	     		 <li style="position:absolute; z-index: 0; opacity: 1;" {% if galleryImage.description %} data-location-name="{{galleryImage.description}}" {% endif %}>
+	     		 	<img {% if galleryImage.description %} alt="{{galleryImage.description}}" {% endif %} src="{{galleryImage.mainSrc}}">
+	     		 	
+	     		 </li>
+	     		
+	    		  {% endfor %}
+	    		</ul>
+	    		<p id="media-popup-caption"  class="media-popup-caption" style="display:none;"></p>
+			 </div>
+			</div>
+	    	<div>&nbsp;</div>
+		</div>
+		<div id="second" style="display:none;">
+			<div class="large-carousel1">
+						 <div class="viewport1">
+						 	<a class="prev-large1" href="javascript:void(0)" style="display: block;">
+								<span class="arrow1"></span>
+						    </a>
+							<a class="next-large1" href="javascript:void(0)" style="display: block;">
+								<span class="arrow1"></span>
+							</a>
+							
+							<div class="dreamDesc">
+							{% for row in jsonData %}					         
+					        {% ifequal forloop.counter0  "1" %}
+					                {{row.uspDesc}} 
+					        {% endifequal %}					
+							{% endfor %}
+						    
+						    </div>
+						    <ul class="product-list1">
+						      {% for galleryImage in jsonData[1].galleryImages %}
+						    
+				     		 <li style="position:absolute; z-index: 0; opacity: 1;" {% if galleryImage.description %} data-location-name1="{{galleryImage.description}}" {% endif %}>
+				     		 	<img {% if galleryImage.description %} alt="{{galleryImage.description}}" {% endif %} src="{{galleryImage.mainSrc}}">
+				     		 	
+				     		 </li>
+				     		
+				    		  {% endfor %}
+				    		</ul>
+				    		<p id="media-popup-caption1"  class="media-popup-caption" style="display:none;"></p>
+						 </div>
+				</div>
+				<div>&nbsp;</div>
+
+       </div>
+		<div id="third" style="display:none;">
+			<div class="large-carousel2">
+						 <div class="viewport2">
+						 	<a class="prev-large2" href="javascript:void(0)" style="display: block;">
+								<span class="arrow2"></span>
+						    </a>
+							<a class="next-large2" href="javascript:void(0)" style="display: block;">
+								<span class="arrow2"></span>
+							</a>
+							
+							<div class="dreamDesc">
+							{% for row in jsonData %}					         
+					        {% ifequal forloop.counter0  "2" %}
+					                {{row.uspDesc}} 
+					        {% endifequal %}					
+							{% endfor %}
+						    
+						    </div>
+			    
+			    
+						    <ul class="product-list2">
+						      {% for galleryImage in jsonData[2].galleryImages %}
+						    
+				     		 <li style="position:absolute; z-index: 0; opacity: 1;" {% if galleryImage.description %} data-location-name2="{{galleryImage.description}}" {% endif %}>
+				     		 	<img {% if galleryImage.description %} alt="{{galleryImage.description}}" {% endif %} src="{{galleryImage.mainSrc}}">
+				     		 	
+				     		 </li>
+				     		
+				    		  {% endfor %}
+				    		</ul>
+				    		<p id="media-popup-caption2"  class="media-popup-caption" style="display:none;"></p>
+						 </div>
+				</div>
+				<div>&nbsp;</div>
+		
+		
+		</div>
+		<div id="fourth" style="display:none;">
+		
+			<div class="large-carousel3">
+						 <div class="viewport3">
+						 	<a class="prev-large3" href="javascript:void(0)" style="display: block;">
+								<span class="arrow3"></span>
+						    </a>
+							<a class="next-large3" href="javascript:void(0)" style="display: block;">
+								<span class="arrow3"></span>
+							</a>
+							
+							<div class="dreamDesc">
+							{% for row in jsonData %}					         
+					        {% ifequal forloop.counter0  "3" %}
+					                {{row.uspDesc}} 
+					        {% endifequal %}					
+							{% endfor %}
+						    </div>
+			    
+			    
+						    <ul class="product-list3">
+						      {% for galleryImage in jsonData[3].galleryImages %}
+						    
+				     		 <li style="position:absolute; z-index: 0; opacity: 1;" {% if galleryImage.description %} data-location-name3="{{galleryImage.description}}" {% endif %}>
+				     		 	<img {% if galleryImage.description %} alt="{{galleryImage.description}}" {% endif %} src="{{galleryImage.mainSrc}}">
+				     		 	
+				     		 </li>
+				     		
+				    		  {% endfor %}
+				    		</ul>
+				    		<p id="media-popup-caption3"  class="media-popup-caption" style="display:none;"></p>
+						 </div>
+				</div>
+				<div>&nbsp;</div>
+		
+		</div>
+		<div id="fifth" style="display:none;">
+			<div class="large-carousel4">
+						 <div class="viewport4">
+						 	<a class="prev-large4" href="javascript:void(0)" style="display: block;">
+								<span class="arrow4"></span>
+						    </a>
+							<a class="next-large4" href="javascript:void(0)" style="display: block;">
+								<span class="arrow4"></span>
+							</a>
+							
+							<div class="dreamDesc">
+								{% for row in jsonData %}					         
+					        {% ifequal forloop.counter0  "4" %}
+					                {{row.uspDesc}} 
+					        {% endifequal %}					
+							{% endfor %}						    
+							 </div>
+			    
+						    <ul class="product-list4">
+						      {% for galleryImage in jsonData[4].galleryImages %}
+						    
+				     		 <li style="position:absolute; z-index: 0; opacity: 1;" {% if galleryImage.description %} data-location-name4="{{galleryImage.description}}" {% endif %}>
+				     		 	<img {% if galleryImage.description %} alt="{{galleryImage.description}}" {% endif %} src="{{galleryImage.mainSrc}}">
+				     		 	
+				     		 </li>
+				     		
+				    		  {% endfor %}
+				    		</ul>
+				    		<p id="media-popup-caption4"  class="media-popup-caption" style="display:none;"></p>
+						 </div>
+				</div>
+				<div>&nbsp;</div>
+		
+		</div>
+	</div>
+	</div>
+	<p class="load">Loading</p>
+	
+</div>

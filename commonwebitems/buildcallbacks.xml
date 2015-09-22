@@ -1,0 +1,208 @@
+<?xml version="1.0"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2011 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+
+  
+-->
+<!--
+ All hybris buildcallbacks.xml macrodefinitions:
+ 
+ Build/Documentation
+ 
+	 before/after ant macro "clean"
+		 <macrodef name="commonwebitems_before_clean"/>
+		 <macrodef name="commonwebitems_after_clean"/>
+	 
+	 before/after ant macro "build"
+		 <macrodef name="commonwebitems_before_build"/>
+		 <macrodef name="commonwebitems_after_build"/>
+		 
+	 before/after ant macro "compile_core" - the core module of the extension
+		 <macrodef name="commonwebitems_before_compile_core">
+		 <macrodef name="commonwebitems_after_compile_core">
+	 
+	 before/after ant macro "compile_web" - the web module of the extension
+		 <macrodef name="commonwebitems_before_compile_web" />
+		 <macrodef name="commonwebitems_after_compile_web" />
+	 
+	 before/after ant macro "compile_hmc" - the hmc module of the extension
+		 <macrodef name="commonwebitems_before_compile_hmc" />
+		 <macrodef name="commonwebitems_after_compile_hmc" />
+ 
+ Preparing extension
+ 
+	 will be called in the beginning of the ant call and only once (also when using multiple 
+	 ant targets e.g. ant build yunittest)	
+		 <macrodef name="commonwebitems_only_once_prepare"/>
+ 
+ Creating ear module/production
+ 
+	 before/after ant macro "ear"
+		 <macrodef name="commonwebitems_before_ear"/>
+		 <macrodef name="commonwebitems_after_ear"/>
+
+	 before/after ant macro "production" - for hybris server only
+		 <macrodef name="commonwebitems_before_production" />
+		 <macrodef name="commonwebitems_after_production" />
+ 
+ JUnit Test
+ 
+	 before/after ant macro "yunitinit" 
+		 <macrodef name="commonwebitems_before_yunitinit" />
+		 <macrodef name="commonwebitems_after_yunitinit" />
+	 
+	 before/after ant macro "yunit"
+		 <macrodef name="commonwebitems_before_yunit" />
+		 <macrodef name="commonwebitems_after_yunit" /> 
+		 
+ Distribution package
+ 
+ 	 before/after ant macro "dist" - internal target; only for use when platform is available in source code
+		 <macrodef name="commonwebitems_after_dist"/>
+		 <macrodef name="commonwebitems_before_dist"/>
+	 
+	 before/after ant macro "dist_copy" - internal target; only for use when platform is available in source code
+		 <macrodef name="commonwebitems_before_dist_copy"/>
+		 <macrodef name="commonwebitems_after_dist_copy"/>
+ 
+-->
+
+<project name="commonwebitems_buildcallbacks">
+
+	<macrodef name="commonwebitems_after_build">
+
+		<sequential>
+			<if>
+				<equals arg1="${instrument}" arg2="all" />
+				<then>
+					<echo message="Instrumenting complete Code..." />
+					<java fork="true" failonerror="yes" dir="${ext.commonwebitems.path}/classes" classname="com.sensei.strace.TraceLoggingClassFolderTransformer">
+						<classpath>
+							<fileset dir="${ext.commonwebitems.path}/lib">
+								<include name="*.jar" />
+							</fileset>
+						
+							<pathelement path="${ext.commonwebitems.path}/classes" />
+							<pathelement path="${ext.thweb.path}/classes" />
+							<pathelement path="${ext.tuiweb.path}/classes" />
+							<pathelement path="${ext.travel.path}/classes" />
+							<pathelement path="${ext.mainstreamtravel.path}/classes" />
+							<pathelement path="${HYBRIS_BIN_DIR}/platform/ext/core/lib/commons-lang-2.4.jar" />
+							<pathelement path="${HYBRIS_BIN_DIR}/platform/ext/core/lib/spring-core-3.0.5.RELEASE.jar" />
+
+							<pathelement path="${ext.core.path}/classes" />
+							<pathelement path="${HYBRIS_BIN_DIR}/platform/ext/validation/lib/javassist-3.13.GA.jar" />
+							<pathelement path="${HYBRIS_BIN_DIR}/platform" />
+							<pathelement path="${HYBRIS_BIN_DIR}/platform/tomcat-6/lib/servlet-api.jar" />
+							<pathelement path="${HYBRIS_BIN_DIR}/platform/ext/servicelayer/classes" />
+							<pathelement path="${HYBRIS_BIN_DIR}/ext-portaltech/Pheonix/tuiweb/lib/org.springframework.web.servlet-3.0.5.RELEASE.jar" />
+						</classpath>
+
+						<arg line="${ext.thweb.path}/web/webroot/WEB-INF/classes,${ext.tuiweb.path}/web/webroot/WEB-INF/classes,${ext.commonwebitems.path}/classes,${ext.mainstreamtravel.path}/classes" />
+
+					</java>
+				</then>
+			</if>
+
+		</sequential>
+
+
+	</macrodef>
+
+
+	<macrodef name="commonwebitems_before_clean">
+		<sequential>
+			<echo message="commonwebitems_before_clean.............cleaning the common js folders in common web." />
+			<var name="minified.dir" value="${ext.commonwebitems.path}/web/webroot/js/minified" />
+			<delete dir="${minified.dir}" />
+		</sequential>
+	</macrodef>
+
+
+
+	<macrodef name="commonwebitems_after_clean">
+		<sequential>
+
+			<condition property="buildnumber.set" else="false">
+				<isset property="buildnumber" />
+			</condition>
+
+			<var name="buildnumber1" value="${buildnumber}" />
+			<if>
+				<equals arg1="${buildnumber.set}" arg2="false" />
+				<then>
+					<var name="buildnumber1" value="12345" />
+				</then>
+			</if>
+
+			<var name="dojo.dir" value="${ext.commonwebitems.path}/web/webroot/js" />
+			<tstamp>
+				<format property="date-time" pattern="yyyy-MM-dd" />
+			</tstamp>
+			<var name="minified.dir" value="${ext.commonwebitems.path}/web/webroot/js/minified/${buildnumber1}" />
+			<condition property="is-windows">
+				<os family="windows" />
+			</condition>
+
+			<echo message="Update build version number in Dojo configuration files for desktop." />
+			<replaceregexp match="var buildVersion = '.+';" replace="var buildVersion = '${buildnumber1}';" file="${ext.commonwebitems.path}/web/webroot/js/tui.profile.js" />
+			<replaceregexp match="var buildVersion = '.+';" replace="var buildVersion = '${buildnumber1}';" file="${ext.commonwebitems.path}/web/webroot/js/tui/config/TuiConfigProd.js" />
+
+
+			<if>
+				<not>
+					<equals arg1="${mode}" arg2="dev" />
+				</not>
+				<then>
+					<echo message="starting JS minification." />
+					<if>
+						<equals arg1="${is-windows}" arg2="true" />
+						<then>
+							<echo message="minifying JS on a windows environment..." />
+							<exec dir="${dojo.dir}/util/buildscripts" executable="cmd">
+								<arg value="/c build.bat profile=../../tui.profile.js -r" />
+							</exec>
+						</then>
+
+						<else>
+							<chmod dir="${dojo.dir}/util/buildscripts" perm="u+rx" includes="*.sh" />
+							<echo message="minifying JS on a unix/linux environment..." />
+							<exec dir="${dojo.dir}/util/buildscripts" executable="${dojo.dir}/util/buildscripts/build.sh">
+								<arg value="--profile ../../tui.profile.js -r" />
+							</exec>
+						</else>
+					</if>
+				</then>
+				<else>
+					<echo message="" />
+					<echo message="Skipping JS minification as mode is set dev.........." />
+					<echo message="" />
+				</else>
+			</if>
+
+		</sequential>
+	</macrodef>
+
+
+	<!-- 
+	    Called whenever 'ant ear' is used. this callback can be used to modify the content of the ear file
+	
+	     ${ear.path}: 			path to ear
+	 -->
+	<macrodef name="commonwebitems_before_ear">
+		<sequential>
+
+			<!-- you can do anything before the EAR file is being packed -->
+
+		</sequential>
+	</macrodef>
+
+</project>

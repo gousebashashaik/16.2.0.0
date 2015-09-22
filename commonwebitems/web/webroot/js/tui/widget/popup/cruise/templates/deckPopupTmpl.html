@@ -1,0 +1,46 @@
+<div class="modal-window controller show-details" id="">
+    <div class="wrapper">
+        <h2 class="underline">{{deckData.deckNo}}</h2>
+        <div class="row">
+            <div style="float:left;width:60%;padding-right: 5%;"><p class="intro">{{deckData.description}}</p></div>
+            <div style="float:left;width:35%;">
+                <div class="label" style="float: left;font-size: 10.5px;padding-top: 5px;text-align: left;padding-right: 20px;">
+                    <label for="get-totalAdults">Select Deck</label>
+                </div>
+                <div class="item">
+               <span class="acol">
+                   <select id="totalAdults" name="totalAdults" class="dropdown totalAdults" tabindex="0" data-klass-id="" data-dojo-type="tui.mvc.Klass">
+                       <option value="1">DECK 6 | Promenade</option>
+                       <option value="2">DECK 6 | Promenade</option>
+                       <option value="3">DECK 6 | Promenade</option>
+                   </select>
+               </span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <img src="{{deckData.deckImageSVG.mainSrc}}" width="" height=""/> Image Goes Here
+        </div>
+        <div class="row">
+            Scroll bar
+        </div>
+        <div class="row">
+            Scroll bar
+        </div>
+        <div class="row">
+            <div class="underline-gray" style="border-top:1px solid #ccc;"></div>
+        </div>
+        <div class="row">
+            <div class="clear"></div>
+            <h4>FACITILITES ON DECK{{deckData.deckNo}}</h4>
+
+            <ul>
+                {% for facility in deckData.facilities %}
+                    <li style=" float: left;padding-right: 10px;width: 24%;">{{facility}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <a class="close close-large" href="javascript:void(0);">x</a>
+    </div>
+    <div class="loading-overlay"></div>
+</div>

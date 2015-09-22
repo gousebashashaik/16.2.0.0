@@ -1,0 +1,21 @@
+<div id="alternateFlights">
+    {% if createMediator %}
+       <span class="hide" id="mediator" data-dojo-type="tui.summaryPanel.controller.AlternateFlightMediator" data-dojo-props="jsonData: null"></span>
+        <div id="altflight-overlay"
+             class="alternative-modal-window overlayPadding overlayWidth hide" >
+            <div class="clear"></div><br />
+            <h2 class="fs28px notransform header-section">Select your flights
+                <a href="javascript:void(0);" class="close abs fr">close</a>
+            </h2>
+            <div class="search-results updating">
+                <div class="mask-interactivity"></div>
+
+                <div id="duration-tab" class="tabs-container"
+                     data-dojo-type="tui.widget.booking.flightoptions.view.CruiseFlightOptionsView"
+                     data-dojo-props="maxDuration: 28,flightIndexVal:0, updateSummaryPanel:true" >
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    {% endif %}
+</div>

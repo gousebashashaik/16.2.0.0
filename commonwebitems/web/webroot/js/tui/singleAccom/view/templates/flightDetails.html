@@ -1,0 +1,91 @@
+<div class="flight-details">
+	<ul>
+		{% for outbound in holiday.itinerary.outbounds %}
+		<li class="itinerary">
+			<span class="itinerary-dates">{{outbound.schedule.departureDate}}</span>
+			<span class="itinerary-departure-time">{{outbound.schedule.departureTime}}</span>
+			<span class="itinerary-arrival-time"><i>&gt;</i>{{outbound.schedule.arrivalTime}}</span>
+            {% if outbound.schedule.overlapDay %}
+            <span class="itinerary-day-overlap">+1 day</span>
+            {% endif %}
+		</li>
+		{% endfor %}
+		{% for inbound in holiday.itinerary.inbounds %}
+		<li class="itinerary inbound">
+			<span class="itinerary-dates">{{inbound.schedule.departureDate}}</span>
+			<span class="itinerary-departure-time">{{inbound.schedule.departureTime}}</span>
+			<span class="itinerary-arrival-time"><i>&gt;</i>{{inbound.schedule.arrivalTime}}</span>
+            {% if inbound.schedule.overlapDay %}
+			<span class="itinerary-day-overlap">+1 day</span>
+            {% endif %}
+		</li>
+		{% endfor %}
+
+        {% if holiday.itinerary.dreamlinerLogo %}
+            <li class="dreamliner"><span class="info-block" lang="en" data-dojo-props="tooltipTitle: '{{messages.searchResults.dreamliner.title}}', listClass:'bullets' ,list: '{{messages.searchResults.dreamliner.features|safe}}', width: 'jumbo'" data-dojo-type="tui.searchResults.view.Tooltips">787 Dreamliner <span class="question">?</span></span></li>
+        {% endif %}
+
+	</ul>
+</div>
+<div class="more-details">
+	{% ifequal aboveUSP false %}
+		{% include uspDetailsTmpl %}
+    {% endifequal %}
+    <div class="price-cta cf">
+        <div class="info-section first fl">
+			{% ifequal aboveUSP false %}
+				{% if holiday.price.lowDepositExists %}
+					<p class="highlight deposit total-deposit">Pay only {{currency}}{{holiday.price.depositAmount|floatformat:"0"}} low deposit today</p>
+					<p class="highlight deposit pp-deposit">Pay only {{currency}}{{holiday.price.depositAmountPP|floatformat:"0"}}pp low deposit today</p>
+				{% endif %}
+
+				{% if holiday.price.depositExists %}
+					<p class="highlight deposit total-deposit">Pay only {{currency}}{{holiday.price.depositAmount|floatformat:"0"}} deposit today</p>
+					<p class="highlight deposit pp-deposit">Pay only {{currency}}{{holiday.price.depositAmountPP|floatformat:"0"}}pp deposit today</p>
+				{% endif %}
+			{% endifequal %}
+
+			<p class="price{%if not holiday.showDeposits %} no-meta{% endif %}">
+                <span class="currency">{{currency}}</span>
+                <span class="price-value pp-price">{{holiday.price.perPerson|floatformat:"0"}}</span>
+                <span class="info-block price-info pp-price product-info" lang="en" data-dojo-props="text: '{{messages.searchResults.perPersonTooltip}}'" data-dojo-type="tui.searchResults.view.Tooltips">Per Person <span class="question">?</span></span>
+                <span class="price-value total-price">{{holiday.price.totalParty|floatformat:"0"}}</span>
+                <span class="price-info total-price product-info" lang="en">Total Price</span>
+            </p>
+
+			{% if displayDiscount %}
+				{% if holiday.price.discountFlag %}
+					<p class="discount highlight total-discount">Includes {{currency}}{{holiday.price.discount|floatformat:"0"}} discount</p>
+				{% endif %}
+
+				{% if holiday.price.discountPPFlag  %}
+					<p class="discount highlight pp-discount">Includes {{currency}}{{holiday.price.discountPP|floatformat:"0"}}pp discount</p>
+				{% endif %}
+            {% endif %}
+
+			<!-- {% ifequal aboveUSP false %}
+				{% if holiday.offer %}
+					<ul>
+						<li class="offer {{holiday.offer.id|lower}}"><span>{{holiday.offer.description}}</span></li>
+					</ul>
+				{% endif %}
+			{% endifequal %} -->
+
+        </div>
+    </div>
+    {% ifequal aboveUSP true %}
+        {% include uspDetailsTmpl %}
+
+		{% ifequal aboveUSP true %}
+            {% if holiday.price.lowDepositExists %}
+				<p class="highlight deposit total-deposit" style="padding-top:12px;">Pay only {{currency}}{{holiday.price.depositAmount|floatformat:"0"}} low deposit today</p>
+				<p class="highlight deposit pp-deposit" style="padding-top:12px;">Pay only {{currency}}{{holiday.price.depositAmountPP|floatformat:"0"}}pp low deposit today</p>
+            {% endif %}
+
+			{% if holiday.price.depositExists %}
+				<p class="highlight deposit total-deposit" style="padding-top:12px;">Pay only {{currency}}{{holiday.price.depositAmount|floatformat:"0"}} deposit today</p>
+				<p class="highlight deposit pp-deposit" style="padding-top:12px;">Pay only {{currency}}{{holiday.price.depositAmountPP|floatformat:"0"}}pp deposit today</p>
+            {% endif %}
+		{% endifequal %}
+    {% endifequal %}
+</div>

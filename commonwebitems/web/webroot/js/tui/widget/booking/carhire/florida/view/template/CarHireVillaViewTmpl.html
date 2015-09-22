@@ -1,0 +1,198 @@
+<div>
+<div class="villa_maindiv">
+		<h2 class="header-case">{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.euro_car_info_five_displayName|default:" "}}
+
+		<div class="checkbox-cont fr">
+                <input type="checkbox" class="no-transfer" value="" name="dontneedcarhiretransfer" id="NOTF"
+                {% if checkBoxStatus %}
+      	  		checked="checked"
+      				{% endif %}
+                >
+                <label for="NOTF"><span></span></label>
+        <span> <span class="return_coach">I don't need car hire</span>
+        </span>
+      <span class="loaded " lang="en"
+            data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.extraContentMap.Car_DontNeedCar_ToolTip|default:\' \'}}'"
+            data-dojo-type="tui.widget.popup.Tooltips"></span>
+
+    </div>
+
+
+
+
+		</h2>
+
+
+
+              <div class="iDontNeedTransfer fl {% if checkBoxStatus %} {% else %} disNone {% endif %}">
+                <p class="fl">
+                    <span class="fl">
+                      <strong class="info">i</strong>
+                    </span>
+                  <span class="iDNTransferText fl ">just so you know , you won't be able to book a transfer when you arrive at your destinations airport.</span>
+                </p>
+
+              </div>
+		<div class="villa_details">
+			<div class="villadetail_desc">
+				{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.euro_car_info_five_Intro|default:" "|safe}}
+			</div>
+		</div>
+		<div class="villas_information">
+			<span class="villadetail_logo"><img src="../images/thomson/bookflow/europcar_img.png" /></span>
+			<div class="villadetailoffer_section">
+				<div>
+					<span class="villagroup_header">{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.EUROP_CAR_extra_detail_2|default:" "}}</span><br />
+					<span class="villagroup_desc">Europe's number 1 car hire firm</span>
+				</div>
+			</div>
+			<div class="carguide_deatils">
+				<span class="carguide_question">Have a question? </span><br />
+				<span class="carguide_link"><a href="http://www.thomson.co.uk/editorial/features/car-hire/car-hire-inclusive-packages-europe.html" target="_blank" class="car_moreDetails">Read our car hire guide </a> </span><span class="iconlink"></span>
+			</div>
+		</div>
+
+		<div class="villa_include">
+			<span class="villa_include_logo"><img src="../images/thomson/bookflow/vill_insu.png" /></span>
+			<div class="villa_include_details_1">
+				  <ul>
+        <li>Unlimited mileage</li>
+        <li>Includes local charges & taxes <span data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.extraContentMap.Car_LocalTaxesAndCharges_ToolTip|default:\' \'}}'" data-dojo-type="tui.widget.popup.Tooltips" class="questionMark loaded"></span></li>
+        <li>Collision Damage Waiver <span data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.extraContentMap.Car_CollisionDamage_ToolTip|default:\' \'}}'" data-dojo-type="tui.widget.popup.Tooltips" class="questionMark loaded"></span></li>
+        <li>FREE breakdown cover (24/7)</li>
+        <li>Theft waiver <span
+          data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.extraContentMap.Car_TheftWaiver_ToolTip|default:\' \'}}'"
+          data-dojo-type="tui.widget.popup.Tooltips"
+          class="questionMark loaded"></span></li>
+        <li>Local road maps provided</li>
+        <li>3rd party insurance cover</li>
+        </ul>
+			</div>
+		</div>
+		<div class="clear"></div>
+		{% for carHire in carHireModelObj %}
+		<div class="villacar_type">
+			 <div class="villacartype_childdiv" >
+				<!-- <div class="villacarhire_img" >
+					<img src="../images/thomson/bookflow/carhire_img.png" />
+				</div> -->
+				<div class="villacarhire_details" >
+					<span class="villacartype_name">{{carHire.description}}</span>
+					<!-- <span class="villacar_desc"><br />UK equivalent: Ford Focus</span><br />
+					<span class="villacar_desc"><img src="../images/thomson/bookflow/des.png" />	1 |</span><span class="villacar_desc"><img src="../images/thomson/bookflow/des.png" />	2 |</span>
+					<span class="villacar_desc"><img src="../images/thomson/bookflow/des.png" />	A/C |</span><span class="villacar_desc"><img src="../images/thomson/bookflow/des.png" />	Auto </span>
+				 --></div>
+			</div>
+			{% for carHireFacility in carHire.extraFacility %}
+			<div id="{{carHireFacility.cartypeInsurance}}" name="{{carHireFacility.code}}" class="villainsurance_details {% if carHireFacility.free %} default {% endif %}">
+				{% if carHireFacility.free %}
+                      {% if carHireFacility.selected %}
+                            <label><span class="textCenter section-divider-included">Included</span></label>
+                      {% else %}
+                      	<span class="rate_cls">{{carHireFacility.carCurrencyAppendedPrice}}</span>
+                           	<!-- <button id="{{carHireFacility.code}}|{{carHire.description}}" class="button jumbo unselect-seat seatingBtn" name="XX1" data-dojo-attach-point="seatButton">
+				          		<span class="rate_cls">{{carHireFacility.carCurrencyAppendedPrice}}</span>
+				          		<span class="withoutPrice"></span>
+				       		</button> -->
+							<!-- <span class="rate_small_cls">({{carHireFacility.carPerPersonPrice}} per day)</span> -->
+	<span class="rate_small_cls">({{carHireFacility.carPerPersonPrice}} per day)</span>
+ {% endif %}
+                      {% else %}
+                      {% if carHireFacility.selected %}
+                      		<span class="rate_cls"></span>
+							<span class="rate_small_cls"></span>
+                      {% else %}
+                            <span class="rate_cls">{{carHireFacility.carCurrencyAppendedPrice}}</span>
+							<span class="rate_small_cls">({{carHireFacility.carPerPersonPrice}} per day)</span>
+                      {% endif %}
+                      {% endif %}
+                      <button id="{{carHireFacility.code}}|{{carHire.description}}" {% if carHireFacility.selected %} disabled {% endif %} class="button jumbo sel_btn carhireSelect {% if carHireFacility.selected %} selected {% endif %}">
+					  </button>
+				</div>
+			{% endfor %}
+<div class="clear"></div>
+		</div>
+
+		{% endfor %}
+
+		<!-- <div class="bottom_container">
+         <div class="carHire_ins fl">
+             <a class="ins_Link" href="javascript:void(0);">Add additional hire cars</a>
+         </div>
+         <div class="carHire_viewAll fr">
+             <button class="button fr jumbo sel_btn carhireSelect" data-dojo-props="widgetId:'carHireViewInfoOverlay', modal: true, jsonData: jsonData" data-dojo-type="tui.widget.booking.carhire.florida.view.CarHireViewAllOverlay">
+                 View all available cars
+             </button>
+    	 </div>
+    </div> -->
+	</div>
+	<div class="clear"></div>
+	<br /><br />
+	{% if extraAvailabilityFlag %}
+	<br />
+	<div class="break_div">&nbsp;</div>
+	<div id="carhire_extramain">
+			<h2>What else do you need?</h2>
+			<div class="carhire_info">
+				<span class="info1">Remember,child car seats are compulsory for children under 6 years</span><br/>
+				<span class="info2">You can add below</span>
+			</div>
+			<div class="carhireextra_content">
+				<div class="carhireextra_img">
+					<img src="../images/thomson/bookflow/infant.png" />
+				</div>
+				<div class="carhireoption_desc">
+					<span class="desc_heading">Infant Seats</span><br />
+					<span class="desc_cond1">
+						Provided 9kgs to 18kgs (Usually 9months to 4 years).
+					</span><br />
+					<span class="desc_cond2">
+						Provided easy to follow fitting instructions.
+					</span>
+				</div>
+				<div class="carhireoption_value"><br />
+					<div class="money"><span class="pound_cls">&#163;</span>20 each<br/>
+						<span class="money_per">(&#163;2.86 per day)</span>
+					</div>
+					<div class="infant-count custom-dropdown dropdown loaded">
+						<select name="selectDropdownLabel" data-dojo-type="tui.widget.form.SelectOption" class="dropdown"
+								data-dojo-attach-point="SelectionBox">
+							<option> 0</option>
+							<option> 1</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="break_div">&nbsp;</div>
+			<div class="clear"></div>
+			<div class="carhireextra_content">
+				<div class="carhireextra_img">
+					<img src="../images/thomson/bookflow/navi.png" />
+				</div>
+				<div class="carhireoption_desc">
+					<span class="desc_heading">Satellite navigation unit</span><br />
+					<span class="desc_cond1">
+						Hire Satellite navigation unit so that you can always find
+					</span><br />
+					<span class="desc_cond2">
+						where you're going.
+					</span>
+				</div>
+				<div class="carhireoption_value"><br />
+					<div class="money"><span class="pound_cls">&#163;</span>20<br/>
+						<span class="money_per">(&#163;2.86 per day)</span>
+					</div>
+					<div class="sel_option">
+	 					<a href="javascript:void(0);" class="button selected">Add</a>
+					</div>
+				</div>
+				<div class="carHire_extraview">
+	                <button class="button fr jumbo sel_btn carhireSelect" data-dojo-props="widgetId:'carHireViewInfoOverlay', modal: true, jsonData: jsonData" data-dojo-type="tui.widget.booking.carhire.florida.view.CarHireViewAllOverlay">
+	                    Show all car hire extras
+	                </button>
+
+	            </div>
+			</div>
+		</div>
+		{% endif %}
+	</div>

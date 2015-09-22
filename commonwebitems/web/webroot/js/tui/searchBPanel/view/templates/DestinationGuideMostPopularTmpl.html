@@ -1,0 +1,33 @@
+<div class="popular" analytics-text="MostPop" analytics-id="300ab" analytics-instance="1" style="float:right;width:20.8%">
+     <h4 style="font-size:13px;">Most popular</h4>
+        <ul class="button-list">
+   {% if mostPopularDestinations %}
+            {% for destinationGroup in mostPopularDestinations %}
+            {% if not destinationGroup.multiple %}
+
+            <li class="most-popular-destination {% for destination in destinationGroup.locationDatas %}{% if not destination.available %} disabled {% endif %} {% for to in searchPanelModel.to.data%}{% ifequal to.id destination.id%} selected {% endifequal %}{% endfor %}{% endfor %}"><a href="" class="{% for destination in destinationGroup.locationDatas %}{{destination.id}}{% endfor %}" data-destination-id="{% for destination in destinationGroup.locationDatas %}{{destination.id}}{% endfor %}"
+                                                            data-destination-name="{% for destination in destinationGroup.locationDatas %}{{destination.name}}{% endfor %}"
+                                                            data-destination-type="{% for destination in destinationGroup.locationDatas %}{% if destination.type %}{{destination.type}}{% endif %}{% endfor %}"
+                                                            data-destination-multiselect="{% for destination in destinationGroup.locationDatas %}{{destination.multiSelect}}{% endfor %}"
+                                                            data-destination-fewdays="{% for destination in destinationGroup.locationDatas %}{{destination.fewDaysFlag}}{% endfor %}"
+                                                            data-destination-available="{% for destination in destinationGroup.locationDatas %}{{destination.available}}{% endfor %}"
+                                                            data-destination-multiple= "false">{% for destination in destinationGroup.locationDatas %}{{destination.name}}{% endfor %}</a></li>
+            {% endif %}
+            {% if destinationGroup.multiple %}
+            <li class="most-popular-destination {% if destinationGroup.disable %} disabled {% endif %} {% if destinationGroup.select %} selected {% endif %}">
+
+            <a href="" class="multiple {% for destination in destinationGroup.locationDatas %}{{destination.id}}{% if not forloop.last %}{{ ' ' }}{% endif %}{% endfor %}" data-destination-id="{% for destination in destinationGroup.locationDatas %}{{destination.id}}{% if not forloop.last %}{{ '&' }}{% endif %}{% endfor %}"
+                        data-destination-name="{% for destination in destinationGroup.locationDatas %}{{destination.name}}{% if not forloop.last %}{{ '&' }}{% endif %}{% endfor %}"
+                        data-destination-type="{% for destination in destinationGroup.locationDatas %}{% if destination.type %}{{destination.type}}{% endif %}{% if not forloop.last %}{{ '&' }}{% endif %}{% endfor %}"
+                        data-destination-multiselect="{% for destination in destinationGroup.locationDatas %}{{destination.multiSelect}}{% if not forloop.last %}{{ '&' }}{% endif %}{% endfor %}"
+                        data-destination-fewdays="{% for destination in destinationGroup.locationDatas %}{{destination.fewDaysFlag}}{% if not forloop.last %}{{ '&' }}{% endif %}{% endfor %}"
+                        data-destination-available="{% for destination in destinationGroup.locationDatas %}{{destination.available}}{% if not forloop.last %}{{ '&' }}{% endif %}{% endfor %}"
+                        data-destination-multiple= "true">{% for destination in destinationGroup.locationDatas %} {{destination.name}}{% if not forloop.last %} {{ " & " }} {% endif %} {% endfor %}</a>
+
+            </li>
+            {% endif %}
+            {% endfor %}
+	{% endif %}
+        </ul>
+</div>
+<div class="clear"></div>

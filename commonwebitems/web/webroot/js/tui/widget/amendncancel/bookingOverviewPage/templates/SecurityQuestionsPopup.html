@@ -1,0 +1,54 @@
+<div class="modal-window sec-modal">
+    <div class="wrapper">
+     <div class="ac-sec-overlay ac-popup">
+     	<div class="mask-interactivity"></div>
+        <div class="header">
+			{% if staticData.Retrieve_And_Search_Security_Questions_Heading %}
+            <h3>{{staticData.Retrieve_And_Search_Security_Questions_Heading}}</h3>
+			{% endif %}
+            <a href="javascript:void(0);" class="close abs">close</a>
+        </div>
+
+        <div class="error-message-section hide">
+            <p class="error-message-subText">{% if staticData.Retrieve_And_Search_Security_Questions_Validation_Failure_Msg %}{{staticData.Retrieve_And_Search_Security_Questions_Validation_Failure_Msg}}{% endif %}</p>
+        </div>
+		<div class="error-message-section miss-text hide">
+			<h3 class="error-message-text">{% if staticData.Retrieve_And_Search_Security_Questions_Err_Msg1 %}{{staticData.Retrieve_And_Search_Security_Questions_Err_Msg1}}{% endif %}</h3>
+			<h5 class="error-message-subText">{% if staticData.Retrieve_And_Search_Security_Questions_Err_Msg2 %}{{staticData.Retrieve_And_Search_Security_Questions_Err_Msg2}}{% endif %}</h5>
+		</div>
+        <div class="text-box">
+            <p>{% if staticData.Retrieve_And_Search_Security_Questions_Info %}{{staticData.Retrieve_And_Search_Security_Questions_Info}}{% endif %}<p>
+        </div>
+         <div data-dojo-type="dijit.form.Form" action="javascript:void(0);" id="securityQuestionsForm">
+            <div class="frow">
+                <label for="address">{% if staticData.Retrieve_And_Search_Security_Questions_Field_Label1 %}{{staticData.Retrieve_And_Search_Security_Questions_Field_Label1}}{% endif %}</label>
+
+                <input type="text" class="textfield addr" data-dojo-type="tui.widget.form.ValidationTextBox"
+                       name="leadPaxShortAddress"
+                       data-dojo-attach-point="passengerAddressBox"
+                       data-dojo-props="required:true, missingMessage:'{% if staticData.Retrieve_And_Search_Security_Questions_Field_Error_msg1 %}{{staticData.Retrieve_And_Search_Security_Questions_Field_Error_msg1}}{% endif %}', regExp:'^([a-zA-Z0-9]+[-,&\\/\\s*]*[a-zA-Z0-9 \\s*]*)+',maxLength: 20" />
+            </div>
+            <div class="frow">
+                <label for="phone">{% if staticData.Retrieve_And_Search_Security_Questions_Field_Label2 %}{{staticData.Retrieve_And_Search_Security_Questions_Field_Label2}}{% endif %}</label>
+
+                <input type="text" class="textfield tel"
+                       name="contactNumber"
+                       data-dojo-attach-point="telephoneTextBox"
+                       data-dojo-type="tui.widget.form.ValidationTextBox"
+                       data-dojo-props="required:true,
+				missingMessage:'{% if staticData.Retrieve_And_Search_Security_Questions_Field_Error_msg2 %}{{staticData.Retrieve_And_Search_Security_Questions_Field_Error_msg2}}{% endif %}',
+				invalidMessage:'{% if staticData.Retrieve_And_Search_Security_Questions_Field_Validation_Error_msg %}{{staticData.Retrieve_And_Search_Security_Questions_Field_Validation_Error_msg}}{% endif %}',
+				regExp : '^(0([4]{1}[0-3,5-9]{1}[0-9]{1}[0-9]{7}|[1-3,5-9]{1}[0-9]{1}[0-9]{8})|[1-9]{1}[0-9]{9})$',maxLength: 15"/>
+            </div>
+
+            <div class="frow btns">
+                <input type="submit" name="submitButton" class="button cta-grey" value="Submit" >
+                <a href="javascript:void(0);" class="cancel">Cancel</a>
+            </div>
+			<div class="clear"></div>
+        </div>
+		<div class="clear"></div>
+
+    </div>
+   </div>
+</div>

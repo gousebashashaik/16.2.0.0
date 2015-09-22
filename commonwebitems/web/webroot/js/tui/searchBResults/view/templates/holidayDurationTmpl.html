@@ -1,0 +1,41 @@
+{% ifequal templateView "initialize" %}
+<ul class=" pill-buttons cf">{% for tab in model.defaultDisplay %}
+    <li class="duration-standard {% ifequal tab model.activeDuration %} active {% endifequal %}" data-dojo-value="{{tab}}"><a href="javascript:void(0);" class="tab">{{tab}}</a></li>{% endfor %}
+    <div class="custom-dropdown" tabindex="0">
+        <a class="dropdown">
+            <span class="value">{{searchMessaging.moreOptions}}</span>
+            <span class="arrow"><span></span></span>
+        </a>
+        <div class="custom-durations">
+            {% if moreChoices %}<ul>
+            {% for choice in moreChoices %}<li class="preset" data-dojo-value="{{choice}}" tabindex="0">{{choice}}</li>{% endfor %}
+        </ul>{% endif %}
+            <div class="customize">
+                <p class="message">{{selectYourOwnMsg|safe}}</p>
+                <div class="custom-duration-input">
+                    <input maxlength="2" placeholder="{{searchMessaging.holidayDuration.placeholder}}" value="" type="text" tabindex="0" class="custom-duration-textfield">
+                    <a class="button" tabindex="0" href="javascript:void(0);">{{searchMessaging.search}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ul>
+{% endifequal %}
+{% ifequal templateView "newtab" %}
+<!-- <ul class=" pill-buttons cf"> -->
+    <li class="duration-standard b active {% ifequal value 1 %} day-trip {% endifequal %}" id="duration-custom" data-dojo-value="{{value}}"><a href="javascript:void(0);" class="tab">{% ifnotequal value 1 %}{{value}}{% else %}Day Trip{% endifnotequal %}</a></li>
+<!-- </ul> -->
+{% endifequal %}
+{% ifequal templateView "customize" %}
+<div class="customize">
+    <p class="message">{{selectYourOwnMsg|safe}}</p>
+    <div class="custom-duration-input">
+        <input maxlength="2" placeholder="{{searchMessaging.holidayDuration.placeholder}}" value="" type="text" tabindex="0" class="custom-duration-textfield">
+        <a class="button" tabindex="0" href="javascript:void(0);">{{searchMessaging.search}}</a>
+    </div>
+</div>
+{% endifequal %}
+{% ifequal templateView "error" %}
+<p class="message error"><i class="icon icon-med icon-warning sprite-img-grp-1">&nbsp;</i> {{message|safe}}</p>
+{% endifequal %}

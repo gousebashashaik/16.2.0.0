@@ -1,0 +1,29 @@
+ <div class="modal-window  popup-with-scroll controller loading">
+   <div class="wrapper exursion-overlay">
+  	<div class="excursion content">
+	   	{% if jsonData.galleryImages.0 %}
+        	<div class="row span-two-third exursion-carosel">
+				<div class="product-list media-gallery slideshow">
+				<div class="viewport">
+					<ul class="plist">
+						<li style="z-index: 0; opacity: 1;"><img alt="image" src="{{jsonData.galleryImages.0.mainSrc}}" width="519" height="200"/></li>
+					</ul>
+				</div>
+				<p class="load">Loading</p>
+				</div>
+	   		</div>
+            {% else %}
+				<img src="{{cdnDomain}}/images/cruise/default-large.png" size="medium" width="519" height="200"/>
+            {% endif %}
+	   	<div class="content-row">
+	   	 	{% if jsonData.name %}  <h2>{{jsonData.name}} </h2>{% endif %}
+			{% if bookMode %}  <h2 style="padding-top:6px;">{{jsonData.locationName }}{% if jsonData.parentLocationName %}, {{jsonData.parentLocationName}}{% endif %} </h2>{% endif %}
+			{% if bookMode %} {% if jsonData.locationDesc%}  <p>{{jsonData.locationDesc|safe}}</p>{% endif %}
+{% endif %}
+			{% if jsonData.description %}  <p>{{jsonData.description|safe}}</p>{% endif %}
+	 	</div>
+	 <a class="close close-large position" href="javascript:void(0);">x</a>
+	 </div>
+	</div>
+<div class="loading-overlay"></div>
+</div>

@@ -1,0 +1,70 @@
+	
+	
+	
+	<div class="row">
+		<div class="span" data-dojo-type="tui.widget.Tabs">
+			<ul class="tabs">
+				{% if topXholiday %}
+					<li><a href="#topholiday">Top 10 Holidays</a></li>
+				{% endif %}
+				{% if mapFilter %}
+					<li><a href="#youchoose">You choose</a></li>
+				{% endif %}
+			</ul>
+		</div>
+			<div class="span-quarter">
+					{% if topXholiday %}
+						<div class="map-filter boxout" id="topholiday">
+							<label for="topxdropdown">Show me:</label>
+							<select class="dropdown" id="topxdropdown" data-dojo-attach-point="topxdropdown">
+								{% for entity in mapEntityTypes %}
+									<option value="{{entity.type}}">{{entity.name}}</option>
+								{% endfor %}
+							</select>
+							<ul class="locationMarkerList">
+								
+							</ul>
+						</div>
+					{% endif %}
+					{% if mapFilter %}
+						<div class="map-filter boxout" id="youchoose">
+							<form action="#" method="post" class="filter" dojoType="tui.widget.FilterPanel">
+								<div class="item">
+									<h3>
+										<a href="#" class="item-toggle">
+											<span class="title">Show Filters</span>
+											<span class="selection">0</span>
+										</a>
+									</h3>
+									<div class="item-content">
+										<h4>Show Filters</h4>
+										<ul class="checks">			
+												{% for entity in mapEntityTypes %}
+												<li>
+													<input type="checkbox" id="{{entity.name}}" value="{{entity.type}}" class="check" />
+													<label for="check1">{{entity.name}} <span>[198]</span></label>
+												</li>
+												{% endfor %}
+										</ul>
+									</div>
+								</div>
+								<div class="item">
+									<h3>
+										<a href="#" class="item-toggle">
+											<span class="title">Show Results</span>
+											<span class="selection">0</span>
+										</a>
+									</h3>
+									<div class="item-content">
+										<h4>Show Results</h4>
+										<ul class="locationMarkerList">
+									
+										</ul>
+									</div>
+								</div>
+							</form>
+						</div>
+					{% endif %}
+				</div>
+	<div class="span span-three-quarter-map" data-dojo-attach-point="mapNode"></div>
+</div>

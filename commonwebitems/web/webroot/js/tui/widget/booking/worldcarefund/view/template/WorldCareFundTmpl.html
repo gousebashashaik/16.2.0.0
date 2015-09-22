@@ -1,0 +1,65 @@
+<div id="worldcarefund-container">
+  <div class="bookflow">
+
+    <div class="item open" id="worldcarefund">
+        {% if jsonData.extraFacilityViewDataContainer.donationOptions.extraFacilityViewData %}
+        <h3 class="item-toggle">
+	        {{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.world_care_displayName|default:" "}}
+       <!-- <i></i> -->
+        </h3>
+
+        <div class="item-content selectedSection">
+          <div class="wcf-section">
+            <div class="wcf-seat">
+              <ul class="square">
+              {% for description in jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.world_care_usp %}
+              <li>{{description|default:" "}}</li>
+              {% endfor %}
+              </ul>
+
+            </div>
+
+            <div class="wcf-desc">
+            	<span> {{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.world_care_StrapLine|default:" "}} </span>
+               		<p>{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.world_care_Intro|default:" "}}</p>
+				        <div id="whatsIncluded" class="donation-modal-window sectional-padding">
+                		<a href="javascript:void(0);" class="close abs fr">close</a>
+			                <p>Waiting for content from UX team.</p>
+              			</div>
+            </div>
+          </div>
+
+          <div class="fl">
+          	<div class="donation-wcf">
+            	{% for donationOptions in jsonData.extraFacilityViewDataContainer.donationOptions.extraFacilityViewData %}
+             		{% if forloop.first %}
+            			{% if donationOptions.selected %}
+            				<input data-dojo-attach-point="worldCareCheckbox" type="checkbox" id="{{donationOptions.code}}" checked="checked" />
+			            {% else %}
+            				<input type="checkbox" data-dojo-attach-point="worldCareCheckbox" id="{{donationOptions.code}}" />
+			            {% endif %}
+            		<label for="{{donationOptions.code}}"><span></span></label>
+					 <div class="wcf fr">
+							Yes, I'd love
+								to help by donating {{jsonData.extraFacilityViewDataContainer.donationOptions.currencyAppendedCategoryTotalPrice|default:" "}} to the
+								World Care fund to support sustainable tourism and
+								carbon reduction projects.
+								 <label>(Donations are {{donationOptions.currencyAppendedAdultPrice}} per adult
+									{% if donationOptions.currencyAppendedChildPrice %}
+									  , {{donationOptions.currencyAppendedChildPrice}} per child)
+									{% else %} )
+									{% endif %}
+								</label>
+
+					</div>
+				{% endif %}
+
+            {% endfor %}
+
+        </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>

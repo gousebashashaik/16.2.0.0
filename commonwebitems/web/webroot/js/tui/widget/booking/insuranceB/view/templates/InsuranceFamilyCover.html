@@ -1,0 +1,86 @@
+<div class="individual-box">
+  <div class="coverage" data-dojo-attach-point="coverageIndividual"  >
+    <div class="fl insurance-title" data-dojo-attach-point="insuranceTitleSection">
+      <span data-dojo-attach-point="familytitle" class="title">{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.ind_ins_info_one_displayName|default:" "}}</span>
+      <p class="desc">
+      {{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_singletrip|default:" "}}
+      </p>
+    </div>
+    <div class=" fr indCl insurace-price-details" data-dojo-attach-point="priceDetail">
+    <div class="pax-table" data-dojo-attach-point="paxTable">
+     <div class="pax-row">
+        <div class="pax-category pax-cell">
+           ADULT
+        </div>
+        <div class="pax-cell age-profile">
+           (aged 18-64)
+        </div>
+        <div class="pax-price pax-cell">
+          <strong> {{ adtPrice |default:" " }} </strong>
+        </div>
+     </div>
+     {% ifnotequal jsonData.packageViewData.paxViewData.noOfChildren 0 %}
+     <div class="pax-row">
+        <div class="pax-category pax-cell">
+           CHILD
+        </div>
+        <div class="pax-cell age-profile">
+           (aged 2-17)
+        </div>
+        <div class="pax-price pax-cell">
+           <strong> {{chdPrice |default:" "}} </strong>
+        </div>
+     </div>
+     {% endifnotequal %}
+     {% ifnotequal jsonData.packageViewData.paxViewData.noOfInfants 0 %}
+     <div class="pax-row">
+        <div class="pax-category pax-cell">
+           INFANT
+        </div>
+        <div class="pax-cell age-profile">
+          (aged 0-1)
+        </div>
+        <div class="pax-price pax-cell">
+           <strong>FREE</strong>
+        </div>
+     </div>
+     {% endifnotequal %}
+     <div class="pax-row">
+        <div class="pax-category pax-cell">
+          ADULT
+        </div>
+        <div class="pax-cell age-profile">
+         (aged 65+)
+        </div>
+        <div class="pax-price pax-cell">
+          from  <strong>{{ senPrice|default:" " }}</strong>
+        </div>
+     </div>
+     </div>
+      <div class="indClButton showDetailsBtn">
+        <button class="button jumbo fr analytics-ICSD" data-dojo-attach-point="showDetailsBtn" id="indShowDetailsBtn">
+        		Show Details
+        </button>
+        <button  class="button jumbo fr hide" data-dojo-attach-point="hideDetailsBtn">
+        	    Hide Details
+        </button>
+      </div>
+      </div>
+    <div class='fr addedInd disNone' data-dojo-attach-point='addedIndividualBtn' id="addedIndBtn">
+   				<button class='button fr jumbo selected select-seat'><span class='button-selected'></span><span>added</span></button>
+   			    <div class="clear"></div>
+   	</div>
+    <div class="clear"></div>
+  </div>
+  <div class="ins-border-bottom hide" data-dojo-attach-point='extraBorder'></div>
+  <div class="clear remove-link-section hide" data-dojo-attach-point='removeSection'>
+	<span class="check-mark prebook-qty fl"></span>
+	<span class="insurance-added-text"> {{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_remove_message|safe|default:" "}}</span>
+	<span class="remove-link fr"><a class="prebook-removeqty" href="javascript:void(0)">remove x</a></span>
+	<strong class="insured-price fr"></strong>
+
+   </div>
+  <div class="individual-expanded hide" data-dojo-attach-point="individualExpanded">
+    This is the place where all description goes
+  </div>
+</div>

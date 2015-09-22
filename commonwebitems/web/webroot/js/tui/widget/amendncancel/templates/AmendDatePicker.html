@@ -1,0 +1,120 @@
+{% ifequal templateview "datepicker" %}
+<div class="calendar calendar-ammend">
+	<ul class="dateyear">
+		<li class="prev cal-prev cal-nav-item"><a class="date-prev arrow-main arrow-left arrow-left-link arrow-lrg ir" title="Previous" href="javascript:void(0);">&larr;</a></li>
+		<li class="next cal-next cal-nav-item"><a class="date-next arrow-main arrow-right arrow-right-link arrow-lrg ir" title="Next" href="javascript:void(0);">&rarr;</a></li>
+	</ul>
+	<div class="month-indicator">
+	    <div class="cal-month-selector cal-nav-item calendar-position-up">{{monthAndYearTxt}}</div>
+    	<div id="nextCal" class="cal-month-selector cal-nav-item calendar-position-up">{{nextMonthAndYearTxt}}</div>
+    </div>
+    <span class="arrow-main arrow-top arrow-top-bg arrow-top-ammend"></span>
+	<table class="datepickertable cal1">
+		<thead>
+			<tr class="weekdays">
+				{% for day in days %}
+					<th class="text-center cal-cell cal-cell-head">{{day}}</th>
+				{% endfor %}
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				{% for predate in predates %}
+					<td class="premonth text-center cal-cell">&nbsp;</td>
+				{% endfor %}
+				{% for monthdate in monthdates %}
+					<td  class="datepicker-day text-center cal-cell month1"><a href="#">{{monthdate.date}}</a></td>
+					{% if monthdate.newrow %}
+						</tr><tr>
+					{% endif %}
+				{% endfor %}
+				{% for enddate in enddates %}
+					<td class="premonth text-center cal-cell">&nbsp;</td>
+				{% endfor %}
+			</tr>
+		</tbody>
+	</table>
+	<table class="datepickertable cal2">
+		<thead>
+			<tr class="weekdays">
+				{% for day in days %}
+					<th class="text-center cal-cell cal-cell-head">{{day}}</th>
+				{% endfor %}
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				{% for predate in predates2 %}
+					<td class="premonth text-center cal-cell">&nbsp;</td>
+				{% endfor %}
+				{% for monthdate in monthdates2 %}
+					<td  class="datepicker-day text-center cal-cell month2"><a href="#">{{monthdate.date}}</a></td>
+					{% if monthdate.newrow %}
+						</tr><tr>
+					{% endif %}
+				{% endfor %}
+				{% for enddate in enddates2 %}
+					<td class="premonth text-center cal-cell">&nbsp;</td>
+				{% endfor %}
+			</tr>
+		</tbody>
+	</table>
+</div>
+{% endifequal %}
+
+{% ifequal templateview "datepickercells" %}
+<div class="month-indicator">
+	    <div class="cal-month-selector cal-nav-item calendar-position-up">{{monthAndYearTxt}}</div>
+    	<div id="nextCal" class="cal-month-selector cal-nav-item calendar-position-up">{{nextMonthAndYearTxt}}</div>
+    </div>
+	<table class="datepickertable cal1">
+		<thead>
+			<tr class="weekdays">
+				{% for day in days %}
+					<th class="text-center cal-cell cal-cell-head">{{day}}</th>
+				{% endfor %}
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				{% for predate in predates %}
+					<td class="premonth text-center cal-cell">&nbsp;</td>
+				{% endfor %}
+				{% for monthdate in monthdates %}
+					<td  class="datepicker-day text-center cal-cell month1"><a href="#">{{monthdate.date}}</a></td>
+					{% if monthdate.newrow %}
+						</tr><tr>
+					{% endif %}
+				{% endfor %}
+				{% for enddate in enddates %}
+					<td class="premonth text-center cal-cell">&nbsp;</td>
+				{% endfor %}
+			</tr>
+		</tbody>
+	</table>
+	<table class="datepickertable cal2">
+		<thead>
+			<tr class="weekdays">
+				{% for day in days %}
+					<th class="text-center cal-cell cal-cell-head">{{day}}</th>
+				{% endfor %}
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				{% for predate in predates2 %}
+					<td class="premonth text-center cal-cell">&nbsp;</td>
+				{% endfor %}
+				{% for monthdate in monthdates2 %}
+					<td  class="datepicker-day text-center cal-cell month2"><a href="#">{{monthdate.date}}</a></td>
+					{% if monthdate.newrow %}
+						</tr><tr>
+					{% endif %}
+				{% endfor %}
+				{% for enddate in enddates2 %}
+					<td class="premonth text-center cal-cell">&nbsp;</td>
+				{% endfor %}
+			</tr>
+		</tbody>
+	</table>
+{% endifequal %}

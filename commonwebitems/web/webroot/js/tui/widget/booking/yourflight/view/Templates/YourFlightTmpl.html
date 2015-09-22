@@ -1,0 +1,414 @@
+<div class="tempClass">
+    <div class="item-content flights-details-section">
+        <div class="flights-section">
+
+            <div class="flight-details">
+                <div class="outbound dashedBorder">
+                    <h6>{{jsonData.flightOptionsStaticContentViewData.flightContentMap.Flight_OutBound_Label|default:" "}}</h6>
+                </div>
+                <div class="clear"></div>
+                {% for outboundVar in flightViewData.outboundSectors %}
+                <div class="hotel-flight mb15px overflowHidden">
+                    <div class="boarding-place fl">
+                        <h5 class="hotel-name">
+                            <p>{{outboundVar.departureAirport.name|default:" "}}&nbsp;({{outboundVar.departureAirport.code|default:" "}})</p>
+                        </h5>
+                    </div>
+
+                    <div class="place-name fl">
+                        <p>going to</p>
+                    </div>
+
+                    <div class="boarding-place fl">
+                        <h5 class="hotel-name">
+                            <p> {{outboundVar.arrivalAirport.name|default:" "}}&nbsp;({{outboundVar.arrivalAirport.code|default:" "}}) </p>
+                        </h5>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                {% if outboundVar.eqmtDescription %}
+                <div class="dreamliner">
+                <h6>
+                787 Dreamliner Flight
+                </h6>
+                </div>
+                {% endif %}
+                <div class="itinerary-dates">
+                    <h6>
+                        {{outboundVar.schedule.departureDate|default:" "}}
+                    </h6>
+                </div>
+                <div class="itinerary-time">
+                    <h6>
+                        {{outboundVar.schedule.depTime|default:" "}} <span
+                            class="itinerary-arrival-time">{{outboundVar.schedule.arrTime|default:" "}}</span> <!-- {{outboundVar.jnrDuration}} -->
+
+                        {% ifnotequal  outboundVar.schedule.flightOffsetDays 0 %}
+
+                        <span class="plusDayLeft">
+                            <span class="addedDay">+1 Day</span>
+                            <span data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.Alt_Plus1Day_ToolTip|default:\' \'}}'" data-dojo-type="tui.widget.popup.Tooltips" class="question-book loaded"></span>
+                        </span>
+
+                        {% else %}
+                        {% ifnotequal  flightViewData.inboundSectors[{{forloop.counter0}}].schedule.flightOffsetDays 0 %}
+                        <span class="plusDay">
+                            <span class="addedDay">&nbsp;</span>
+
+                        </span>
+                        {% endifnotequal %}
+                        {% endifnotequal %}
+                     <div class="clear"></div>
+                    </h6>
+                </div>
+               <div class="flightLogo">
+	               <div class="logo{{outboundVar.carrierCode|cut:' '|default:\' \'}}">
+	               		<span class="logo-text">Other Carrier</span>
+
+	               </div>
+	                    {% ifequal outboundVar.eqmtDescription "DREAMLINEAR787" %}
+                        <div class="dreamlinear-logo"></div>
+                		{% endifequal %}
+	             </div>
+
+	             {% if thirdPartyFlightSelectionFlag %}
+					 <div class="show-more-info">
+	                   <span> <a class="show-item-toggle"></a> </span>
+	                 </div>
+	             {% else %}
+                    <div></div>
+				 {% endif %}
+
+                {% endfor %}
+
+            </div>
+
+            <div class="flight-details">
+                <div class="hoteldetails dashedBorder">
+                    {% if jsonData.packageViewData.laplandDayTrip %}
+                    <h6>1 day trip </h6>
+                    {% else %}
+                    <h6>{{flightViewData.durationSummary|default:" "}} {{contentDisplay}}</h6>
+                    {% endif %}
+                </div>
+                <div class="clear"></div>
+                <div class="hotel-flight">
+
+
+                {% for accomViewData in listAccomViewData %}
+
+                    {% ifequal accomViewData.multiCentreData.length 0 %}
+                    <div class="hotel-desc">
+                   <a href="{{accomUrl|default:\' \'}}"
+				class="back-to-review"><span
+				class="{{accomViewData.productRanges.0.code|lower|default:\' \'}} rating">
+                  {% ifequal accomViewData.productRanges.0.code|lower 'smr' %}
+				  <span class="diff-label cou-sensimar" data-dojo-type="tui.widget.popup.Tooltips"
+							data-dojo-props="floatWhere:'position-top-center', text:'{{accomViewData.productRanges.0.featureCodesAndValues.strapline.0|default:\' \'}}'">
+					</span>
+				  {% else %}
+                  <span class="diff-label {% ifequal accomViewData.productRanges.0.code|lower 'fam' %} fam-life {% else %} {{accomViewData.productRanges.0.code|lower|default:\' \'}} {% endifequal %}" data-dojo-type="tui.widget.popup.Tooltips"
+							data-dojo-props="floatWhere:'position-top-center', text:'{{accomViewData.productRanges.0.featureCodesAndValues.strapline.0|default:\' \'}}'">
+					</span>
+				  {% endifequal %}
+
+					</span>
+                        <img src="{{accomViewData.accomImageUrl|default:\' \'}}" width="208" class="main-img {% if accomViewData.productRanges.0.code %} special {% endif %} ">
+                     </a>
+                        <h5 class="hotel-name">{{accomViewData.accomName|safe|default:" "}}</h5>
+                        <h6 class="hotel-location">
+                            <p class="text100">{{accomViewData.resortName|default:" "}}{% if accomViewData.resortName %}, {% endif %}</p>
+                            <p class="text100">{{accomViewData.destinationName|default:" "}}
+                            {% if accomViewData.emptyCountryName %}
+				           		{% else %}
+                            , {{accomViewData.countryName|default:" "}}
+                            {% endif %}
+                            </p>
+                        </h6>
+                    </div>
+
+                    {% else %}
+
+                    	<div class="hotel-desc">
+                        {% for multiCentreData in accomViewData.multiCentreData %}
+                        		<div class="multiCentreMainDiv">
+                        		<img src="{{multiCentreData.imageUrl|default:\' \'}}" width="50" class="multiCentreData-main-img special">
+                        		<h5 class="hotel-name">{{multiCentreData.name|default:" "|escape}}</h5>
+                        		 <h6 class="hotel-location">
+                            		<p>{{multiCentreData.location|default:" "}}</p>
+                        		</h6>
+
+
+
+                        	 {% if forloop.first %}
+                        		 <div class="multiCentreDesc">
+                        			<h6 class="hotel-location top">
+                            		<p>{{multiCentreData.duration|default:" "}} nights
+                            		 {{multiCentreData.name|default:" "|escape}}</p>
+                        			</h6>
+                        		</div>
+                        			{% else %}
+                        		<div class="multiCentreDesc">
+                        			<h6 class="hotel-location after">
+                            		<p>{{multiCentreData.duration|default:" "}} nights
+                            		{{multiCentreData.name|default:" "|escape}}</p>
+                        			</h6>
+                        		</div>
+                        		{% endif %}
+
+</div>
+
+                        		 {% endfor %}
+                        		 <div class="clear"></div>
+
+                    	</div>
+
+                    {% endifequal %}
+
+
+                {% endfor %}
+                </div>
+            </div>
+
+            <div class="flight-details last">
+                <div class="inbound dashedBorder">
+                    <h6>{{jsonData.flightOptionsStaticContentViewData.flightContentMap.Flight_Return_Label|default:" "}}</h6>
+                </div>
+                <div class="clear"></div>
+                {% for inboundVar in flightViewData.inboundSectors %}
+                <div class="hotel-flight mb15px overflowHidden">
+                    <div class="boarding-place fl">
+                        <h5 class="hotel-name">
+                            <p>{{inboundVar.departureAirport.name|default:" "}}&nbsp;({{inboundVar.departureAirport.code|default:" "}})</p>
+                        </h5>
+                    </div>
+
+                    <div class="place-name fl">
+                        <p>going to</p>
+                    </div>
+
+                    <div class="boarding-place fl">
+                        <h5 class="hotel-name">
+                            <p>{{inboundVar.arrivalAirport.name|default:" "}}&nbsp;({{inboundVar.arrivalAirport.code|default:" "}})</p>
+                        </h5>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                {% if inboundVar.eqmtDescription %}
+                <div class="dreamliner">
+                <h6>
+                787 Dreamliner Flight
+                </h6>
+                </div>
+                {% endif %}
+
+                <div class="itinerary-dates">
+                    <h6>
+                        {{inboundVar.schedule.departureDate|default:" "}}
+                    </h6>
+                </div>
+                <div class="itinerary-time">
+                    <h6>
+                        {{inboundVar.schedule.depTime|default:" "}} <span
+                            class="itinerary-arrival-time">{{inboundVar.schedule.arrTime|default:" "}}</span> <!--{{inboundVar.jnrDuration}} -->
+                        {% ifnotequal  inboundVar.schedule.flightOffsetDays 0 %}
+
+                        <span class="plusDay">
+                            <span class="addedDay">+1 Day</span>
+                            <span data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.Alt_Plus1Day_ToolTip|default:\' \'}}'" data-dojo-type="tui.widget.popup.Tooltips" class="question-book loaded"></span>
+                        </span>
+                        {% else %}
+
+
+                        {% ifnotequal  flightViewData.outboundSectors[{{forloop.counter0}}].schedule.flightOffsetDays 0 %}
+
+                        <span  class="plusDay">
+                            <span class="addedDay">&nbsp;</span>
+
+                        </span>
+
+                        {% endifnotequal %}
+
+                        {% endifnotequal %}
+
+ <div class="clear"></div>
+                    </h6>
+                </div>
+                 <div class="flightLogo">
+	                <div class="logo{{inboundVar.carrierCode|cut:' '|default:\' \'}}">
+	                	<span class="logo-text">Other Carrier</span>
+	                </div>
+
+		                {% ifequal inboundVar.eqmtDescription "DREAMLINEAR787" %}
+
+		                <div class="dreamlinear-logo"></div>
+		                {% endifequal %}
+		        </div>
+		        {% if thirdPartyFlightSelectionFlag %}
+					 <div class="show-more-info">
+	                   <span> <a class="show-item-toggle"></a> </span>
+	                 </div>
+	             {% else %}
+                    <div></div>
+				 {% endif %}
+
+                {% endfor %}
+
+
+
+
+            </div>
+
+            <div class="clear"></div>
+              <div class="clear"></div>
+
+		 <!--3PF messaging template - Start -->
+
+
+
+		<div class="threePFMessagecls" id="3pfmessaging" >
+
+
+			<div class ="border-top"></div>
+			<!-- 3PF single carrier - Start  -->
+			<!-- need to push even the headers to Static CSV to enable bussiness to change headers on fly -->
+			{% ifequal get3PFCarrierFlag "single_carrier" %}
+			<div class="single_carrier">
+		    	<div class="abt_flight">
+					<h5 >{{thirdPartyInboundInfo.introText1|safe}}</h5>
+					<p>{{thirdPartyInboundInfo.introText2|safe}}</p>
+					<p>{{thirdPartyInboundInfo.introText3|safe}}</p>
+		    	</div>
+		    	<div class="yourflight_info">
+					<div class="yourflight_content" >
+						<div class="outbound">
+		                    <h6>your {{thirdPartyInboundInfo.flightName|safe}} flight info</h6>
+		                </div>
+		                {% for outboundVar in flightViewData.outboundSectors %}
+						<p >
+							<strong >Check-in :</strong>
+							{{thirdPartyInboundInfo.checkIn|safe}}
+							{{thirdPartyInboundInfo.checkIn1|safe}}
+						</p>
+						<p>
+							<strong >Bag drop :</strong>
+							{{thirdPartyInboundInfo.bagDrop|safe}}
+						</p>
+						<p >
+							{{thirdPartyInboundInfo.bagDrop2|safe}} {{outboundVar.arrivalAirport.name|default:" "|safe}}
+							{{thirdPartyInboundInfo.bagDrop3|safe}}
+
+						</p>
+						{% endfor %}
+					</div>
+				</div>
+	    	  </div> <!-- 3PF single carrier - End  -->
+	    	{% endifequal %}
+
+	    	<!-- 3PF Mixed carrier - Start  -->
+			{% ifequal get3PFCarrierFlag "mixed_carrier" %}
+
+			<div class="mixedcarrier" >
+		    	<div class="abt_flight">
+					<h5 >About Your Flights</h5>
+
+					<p>{{thirdPartyInboundInfo.introText1|safe}}</p>
+					<p>{{thirdPartyInboundInfo.introText2|safe}}</p>
+					<p>{{thirdPartyInboundInfo.introText3|safe}}</p>
+		    	</div>
+
+				<div class="outbound_flight_content" >
+					<div class="outbound_flight_info" >
+						<div class="outbound">
+			                    <h6>{{jsonData.flightOptionsStaticContentViewData.flightContentMap.Flight_OutBound_Label|default:" "|safe}} FLIGHT</h6>
+			            </div>
+			            <div class="clear"></div>
+				    	{% for outboundVar in flightViewData.outboundSectors %}
+			                <div class="hotel-flight overflowHidden">
+			                    <div class="boarding-place fl">
+			                        <h5 class="hotel-name">
+			                            <p>{{outboundVar.departureAirport.name|default:" "|safe}}&nbsp;-&nbsp;{{outboundVar.arrivalAirport.name|default:" "|safe}}</p>
+			                        </h5>
+			                    </div>
+			                </div>
+			                <div class="clear"></div>
+				            <p>
+								<strong >Check-in :</strong>
+								{{thirdPartyInfo.checkIn|safe}}
+								{{thirdPartyInfo.checkIn1|safe}}
+							</p>
+							<div class="clear"></div>
+				            <p >
+								<strong >Bag-drop :</strong>
+								{{thirdPartyInfo.bagDrop|safe}}
+								{{thirdPartyInfo.bagDrop1|safe}}
+
+							</p>
+							<div class="clear"></div>
+							<p >
+								<strong >{% ifequal siteName "thomson" %}Thomson-rep {% endifequal %}{% ifequal siteName "firstchoice" %}First Choice-rep {% endifequal %}:</strong>
+								{{thirdPartyInfo.bagDrop2|safe}} {{outboundVar.arrivalAirport.name|default:" "|safe}}
+								{{thirdPartyInfo.bagDrop3|safe}}
+							</p>
+			            {% endfor %}
+			         </div>
+			    </div>
+
+				<div class="return_flight_content" >
+					<div class="return_flight_info" >
+						<div class="outbound">
+			                    <h6>{{jsonData.flightOptionsStaticContentViewData.flightContentMap.Flight_Return_Label|default:" "|safe}} FLIGHT</h6>
+			            </div>
+			            <div class="clear"></div>
+			            {% for inboundVar in flightViewData.inboundSectors %}
+							<div class="hotel-flight overflowHidden">
+			                    <div class="boarding-place fl">
+			                        <h5 class="hotel-name">
+			                            <p>{{inboundVar.departureAirport.name|default:" "|safe}}&nbsp;-&nbsp;{{inboundVar.arrivalAirport.name|default:" "|safe}}</p>
+			                        </h5>
+			                    </div>
+			                </div>
+			                <div class="clear"></div>
+				            <p >
+								<strong >{% ifequal siteName "thomson" %}Thomson-rep {% endifequal %}{% ifequal siteName "firstchoice" %}First Choice-rep {% endifequal %}:</strong>
+								{{thirdPartyInboundInfo.bagDrop2|safe}} {{inboundVar.departureAirport.name|default:" "|safe}}
+								{{thirdPartyInboundInfo.bagDrop3|safe}}
+							</p>
+							<div class="clear"></div>
+
+				            <p >
+								<strong >Check-in :</strong>
+								{{thirdPartyInboundInfo.checkIn|safe}}
+								{{thirdPartyInboundInfo.checkIn1|safe}}
+								{{thirdPartyInboundInfo.checkIn2|safe}}
+							</p>
+							<div class="clear"></div>
+				            <p >
+								<strong >Bag-drop :</strong>
+								{{thirdPartyInboundInfo.bagDrop|safe}}
+								{{thirdPartyInboundInfo.bagDrop1|safe}}
+							</p>
+			            {% endfor %}
+			         </div>
+			    </div>
+			</div>
+
+	    	 <!-- 3PF Mixed carrier - End  -->
+	    	{% endifequal %}
+			<!-- <div class="down-callus-info">
+	    		<p><span>Questions?</span> Call us during UK office hours on 0203 451 2688</p>
+	    	</div> -->
+			{% if thirdPartyFlightSelectionFlag %}
+				<div class="down-show-more-info">
+					<a class="show-item-toggle"></a>
+				</div>
+	        {% else %}
+				<div></div>
+			{% endif %}
+
+    	</div><!--3PF messaging template - End -->
+
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+
+<div class="copy">
+{% ifnotequal jsonData.packageViewData.availableAccommodationViewData.accomName null%}
+	<div class="hotel-name">{{jsonData.packageViewData.availableAccommodationViewData.accomName }}</div>
+{% endifnotequal %}
+{% ifnotequal jsonData.packageViewData.availableAccommodationViewData.tRating null%}	
+	<div class="fam rating t{{jsonData.packageViewData.availableAccommodationViewData.tRating }}"></div>
+{% endifnotequal %}	
+{% ifnotequal jsonData.packageViewData.availableAccommodationViewData.destinationName ""%}	
+	<div class="location">in {{jsonData.packageViewData.availableAccommodationViewData.destinationName }}, 
+{% endifnotequal %}	
+{% ifnotequal jsonData.packageViewData.availableAccommodationViewData.countryName ""%}	
+    {{jsonData.packageViewData.availableAccommodationViewData.countryName }}</div>
+{% endifnotequal %}
+</div>

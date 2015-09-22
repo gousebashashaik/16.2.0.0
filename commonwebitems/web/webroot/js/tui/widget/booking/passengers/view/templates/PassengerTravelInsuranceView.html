@@ -1,0 +1,34 @@
+<div class="sub-section">
+	<span class="age-lable">Age 18-64</span>
+		<div class="passenger-detail-form loaded" >
+			<div class="form-field">
+				<span>Passenger</span>
+					<div class="custom-dropdown dropdown title-dropdown loaded" >
+						<select name="" id="" placeholder="Select" class="dropdown"
+							data-dojo-type="tui.widget.form.SelectOption"
+							data-dojo-props="fixedWidth: true">
+							<option id="" value="">Select adult</option>
+							<option id="" value=""></option>
+							<option id="" value=""></option>
+						</select>
+					</div>
+			</div>
+			<div class="form-field">
+				<span>Date of birth</span>
+					<input
+						type="text" class="psgr-textfield"
+						data-dojo-type="tui.widget.form.ValidationTextBox"
+						data-dojo-props="required:true, maxLength : 10, placeholder:'{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_DOB_FormFeild|default:" "}}',
+								regExp : '^(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/](19|20)[0-9][0-9]$',
+								missingMessage:'Please enter a date of birth', invalidMessage:'The date of birth you entered is invalid'
+								"
+						/>
+					
+					<span class="question"
+						data-dojo-type="tui.widget.popup.Tooltips"
+							data-dojo-props="floatWhere:'position-right-center',
+						      text:'we require a date of birth to check the childs age on return'">i</span>
+
+			</div>
+		</div>
+</div>

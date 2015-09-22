@@ -1,0 +1,56 @@
+<div class="modal-window controller loading popup-with-scroll">
+   <div class="wrapper poc-overlay" >
+	   <div class="excursion content">
+	      <div class="poc-tabs-list" >
+  	  	<div id="tab1" class="tab-content" style=" display:block;">
+  	  	 {% if jsonData.galleryImages.0 %}
+        	<div class="content-row span-two-third poc-carosel">
+				<div class="product-list media-gallery slideshow">
+				<div class="viewport">
+					<ul class="plist">
+						<li style="z-index: 0; opacity: 1;"><img alt="image" src="{{jsonData.galleryImages.0.mainSrc}}" width="519" height="200"/></li>
+					</ul>
+				</div>
+				<p class="load">Loading</p>
+				</div>
+	   		</div>
+            {% else %}
+				<img src="{{cdnDomain}}/images/cruise/default-large.png" size="medium" width="519" height="200"/>
+            {% endif %}
+	       <div class="content-row">
+	       {% if jsonData.excursionName %}  <h2>{{jsonData.excursionName}}<br/><span class="sub-title2">{{jsonData.portName}}</span></h2>{% endif %}
+ 	       {% if jsonData.description %}  <p>{{jsonData.description}}</p>{% endif %}
+		   {% if jsonData.suitability.length > 0 %}<span class="lighter-text">SUITABILITY: {{ jsonData.suitability|join:" | " }}</span> <br/><br/>{% endif %}
+	       </div>
+	   <div class="content-row">
+		<div class="floater things-more-detail-btn">
+		<div class="left border-right" >
+			{% if jsonData.excursionPrice %}
+			<span class="uc guide-price">Guide Prices:</span>
+			<p class="details">
+				<span class="category">Adult</span>
+				<span class="currency">&pound;</span>
+				<span class="price-value">{{jsonData.excursionPrice.price.adultPrice}} pp</span>
+			<br/>
+				<span class="category">{{jsonData.childAge}}</span>
+                {% ifnotequal jsonData.excursionPrice.price.childPrice "N/A" %}<span class="currency">&pound;</span>{% endifnotequal %}
+                <span class="price-value">{{jsonData.excursionPrice.price.childPrice}}{% ifnotequal jsonData.excursionPrice.price.childPrice "N/A" %} pp{% endifnotequal %}</span>
+			</p>
+			{% endif %}
+		</div>
+		{% if not bookMode %}
+		<a lang="en" class="button cta jumbo right" href="{{jsonData.excursionUrl}}">More Details</a>
+		{% endif %}
+		</div>
+	  </div>
+	  {% if bookMode %}
+	   <p class="add-excursion" style="padding-top:12px;margin-bottom:0px;">You need to book your cruise before you can <a lang="en" href="{{jsonData.addExcursionUrl}}" target="_blank">add this excursion</a></p>
+	   {% endif %}
+	 </div>
+	 </div>
+	      <a class="close close-large position" href="javascript:void(0);">x</a>
+	   </div>
+   </div>
+   <div class="loading-overlay"></div>
+</div>
+

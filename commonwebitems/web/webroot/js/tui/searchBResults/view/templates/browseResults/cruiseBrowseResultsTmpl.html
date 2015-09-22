@@ -1,0 +1,50 @@
+<div class="span crName">
+	{% include regionNameTmpl %}
+</div>
+<span class="hide" id="mediator"></span>
+<div class="search-results updating">
+	<!-- Single Accommodation result details & Filter Panel -->
+	<div class="span-quarter cruise-Filter-container">
+		{% include filterResultsTmpl %}
+	</div>
+	
+	<!-- Search Results count & sorting -->
+	<div class="span-three-quarter results-container cruise-results-container">
+		{% if destinationsFlag %}
+		<div class="inline-header-view">
+		   <div class="listing">
+		      <div class="count-list">
+		      		{% include resultsCountTmpl %}
+		      </div>
+		      <div style="float:right;width:40%"><!-- 2 cruise shortlisted | VIEW --></div>
+		   </div>
+		   <div class="sorted">
+		      <label for="search-result-sortfilter" class="label">Sort by</label>
+		      <select class="dropdown" id="search-result-sortfilter" data-klass-id="sortResults" data-dojo-type="tui.mvc.Klass">
+		       	<option value="Recommended">Recommended</option>
+		        {% for option in sortOptions %} 
+		            <option value="{{option.key}}">{{option.value}}</option>
+		         {% endfor %}
+		      </select>
+		   </div>
+		</div> 
+		 {% endif %}
+		<div class="mask-interactivity"></div> 
+	  <!-- Search Results-->
+		 <div  class="span-two-third search-related result-view pp"  style="width:745px;padding-left: 0px;padding-top:24px;" id="searchResults"
+		 data-klass-id="cruiseSearchResultsComponent" data-dojo-type="tui.mvc.Klass" data-dojo-props='componentId:"compID", viewMode:"list"'>
+			<div class="product-list">
+				<div class="viewport list-viewport">
+		    		<div class="mask-interactivity"></div>
+		    		<ul class="plist results-full"> </ul>
+				</div>  
+	        	<div class="viewport gallery-viewport">
+		            <ul class="plist results-col results-col-odd"></ul>
+		            <ul class="plist results-col results-col-even"></ul>
+		        </div>  
+			</div>  
+		</div> 
+			<!-- End result-view -->
+	</div>
+	
+</div>

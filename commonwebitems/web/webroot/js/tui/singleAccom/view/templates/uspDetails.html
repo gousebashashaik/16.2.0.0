@@ -1,0 +1,42 @@
+ <div class="divider">
+ {% if holiday.offer %}
+            <ul>
+                <li class="offer {{holiday.offer.id|lower}}">{{holiday.offer.description}}</li>
+            </ul>
+        {% endif %}
+
+{% if holiday.accommodation.rooms.length > 0 %}
+
+            <ul class="hotel">
+			<li class="itinerary itinerary-airport bottom-border-dashed">
+					<span>{{ holiday.itinerary.departureAirport }}</span>
+				</li>
+				{% for room in holiday.accommodation.rooms %}
+				{% if holiday.accommodation.rooms.length > 0 %}
+                <li class="room bottom-border-dashed">
+                    <span class="room-name">{% if room.roomCount %}{{room.roomCount}}x {% endif %}{{room.roomType|lower|striptags}}</span>
+                    {% if room.availability %}<span class="info-block highlight" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{messages.searchResults.roomsTooltip}}'">Only {{room.sellingout}} room{{room.sellingout|pluralize}} left <span class="question">?</span></span>{% endif %}
+                </li>
+                {% endif %}
+            {% endfor %}
+		</ul>
+		 {% endif %}
+		 {% if holiday.accommodation.specialOfferPromotions > 0 %}
+		 <ul class="spcl-offers">
+		 {% for specialOffer in holiday.accommodation.specialOfferPromotions %}
+			<li class="spcl-offr">
+				<a href="{{holiday.accommodation.url}}#specialOfferContainer"> <span class="offr">{{specialOffer}} <span class="arrow">&#8227;</span></span></a>
+			</li>
+		 {% endfor %}
+		</ul>
+		{% endif %}
+		{% if holiday.accommodation.rooms.length > 0 %}
+            <ul class="hotel last">
+                <li class="board">{% for altBoard in holiday.alternateBoard %}{% if altBoard.defaultBoardBasis %}{{altBoard.name}}{% endif %}{% endfor %}
+                  {% ifnotequal holiday.alternateBoard.length "1" %}
+                    <span class="info-block" data-dojo-props="text:'{{messages.searchResults.boardTypes.otherAvailable|safe}}', postText:'{{messages.searchResults.boardTypes.otherOptions|safe}}', listClass: 'table-list', list: '{% for altBoard in holiday.alternateBoard %}<li class=\'tabular\'><span class=\'fl\'>{{altBoard.name}}</span> <span class=\'fr\'>{% if altBoard.defaultBoardBasis %}Selected{% else %}{{currency}}{{altBoard.priceDiffrence|floatFormat:'0'}}{% endif %}</span></li>{% endfor %}', width: 'large'" data-dojo-type="tui.searchResults.view.Tooltips">board types <span class="question">?</span></span>
+                  {% endifnotequal %}
+                </li>
+            </ul>
+	    {% endif %}
+    </div>

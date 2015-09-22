@@ -1,0 +1,32 @@
+<div class="travel-modal-window loaded"  >
+<h2>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Travelling|default:""}}</h2>
+<div class="abc" data-dojo-attach-point="clickedYes">
+		
+		<p>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Travelling_Generic|default:""}}</p>
+		<div class="forgotFormx">
+			<div class="form-field">
+				<ul>
+					<li><div class="fl"><button class="button cancel jumbo"data-dojo-attach-point="travelOnBooking">{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Yes|default:""}}</button></div>
+					<p class="fl buttontext">{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Travelling_Yes|default:""}}</p>
+					<div class="clear"></div>
+					</li>
+					<li class="border-new"></li>
+					<li><div class="fl"><button class="button jumbo" data-dojo-attach-point="notTravelling">{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.No|default:""}}</button></div>
+					<p class="fl buttontext">{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Travelling_No|default:""}}</p>
+					<div class="clear"></div>
+					</li>
+				</ul>
+			</div>
+			<div class="clear"></div>
+		</div>
+
+</div>
+<div class="forgotFormx disNone" data-dojo-attach-point="clickedNo" style="position:absolute;height:40px;background:#fff;top:21px;width:688px;">
+<div class="forgotForm"> 
+<p>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Travelling_Restriction|default:""}}<p>
+</div>
+ <button class="button close jumbo fr" >{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Ok|default:""}}</button>
+</div>
+</div>
+
+

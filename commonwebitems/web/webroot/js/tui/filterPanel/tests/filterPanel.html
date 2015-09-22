@@ -1,0 +1,205 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7 ]>
+<html lang="en" class="ie6" id="firstchoice"> <![endif]-->
+<!--[if IE 7 ]>
+<html lang="en" class="ie7" id="firstchoice"> <![endif]-->
+<!--[if IE 8 ]>
+<html lang="en" class="ie8" id="firstchoice"> <![endif]-->
+<!--[if IE 9 ]>
+<html lang="en" class="ie9" id="firstchoice"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="" id="firstchoice"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<title>Filter Panel Test Page</title>
+
+	<link href="/css/main.css" rel="stylesheet" type="text/css">
+
+	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script type="text/javascript" src="/js/tui/config/TuiConfigTest.js"></script>
+	<style>
+		.noResults {
+			display: none;
+		}
+	</style>
+
+</head>
+
+<script type="text/javascript">
+	dojoConfig.addModuleName("tui/search/controller/SearchController", "tui/searchResults/controller/SearchResultsController", "tui/mvc/Klass");
+</script>
+
+<span class="hide" data-klass-id="searchConfig" data-dojo-type="tui.mvc.Klass"
+      data-dojo-props="MAX_ADULTS_NUMBER:77"></span>
+
+<body>
+<div id="wrapper">
+	<div id="header">
+		<div class="search controller" data-klass-id="searchController" data-dojo-type="tui.mvc.Klass">
+			<form class="search-form" method="post" action="/js/tui/searchResults/tests/searchResults.html">
+				<input type="hidden" value="" name="searchCriteria"/>
+			</form>
+			<div class="col from">
+				<label class="icon" for="where-from">Where from?</label>
+				<input type="text" data-klass-id="airportMultiFieldList" data-dojo-type="tui.mvc.Klass"
+				       data-dojo-props="maxTextboxes:6, duration:500" class="textfield multifield where-from"
+				       placeholder="Any UK Airport" tabindex="0" id="where-from"/>
+
+				<p><a href="#" id="airport-guide" data-klass-id="airportGuide" data-dojo-type="tui.mvc.Klass"
+				      data-dojo-props="fromLimit:6" class="related airport airport-guide" tabindex="-1">Airport List <span
+						class="load"></span></a>
+				</p>
+			</div>
+			<div class="col to">
+				<label for="where-to">Where to? <span>(Destination, Hotel or Type)</span></label>
+				<input type="text" data-klass-id="destinationMultiFieldList" data-dojo-type="tui.mvc.Klass"
+				       data-dojo-props="duration:500" class="textfield multifield where-to" placeholder="Anywhere"
+				       tabindex="0" id="where-to"/>
+
+				<p><a href="#" data-klass-id="destinationGuide" data-dojo-type="tui.mvc.Klass"
+				      class="related destination destination-guide" tabindex="-1">Destination List <span
+						class="load"></span></a></p>
+			</div>
+			<div class="col">
+				<label for="when">When?</label>
+
+				<div class="when" tabindex="0" id="when" data-klass-id="searchDatePicker" data-dojo-type="tui.mvc.Klass"
+				     data-dojo-props="seasonLength:18">Select a date
+				</div>
+				<p><label class="related give-take"><input type="checkbox" class="flexible" checked="checked"
+				                                           data-klass-id="flexibleView" data-dojo-type="tui.mvc.Klass"/>I'm
+					flexible</label><span class="flexible-tooltip" data-klass-id="toolTips" data-dojo-type="tui.mvc.Klass"
+				                          data-dojo-props="text: 'We ll search for holidays 7 days before and after your selected date.', floatWhere: 'position-top-right'">?</span>
+				</p>
+			</div>
+			<div class="col">
+				<div class="rooms">
+					<div class="labels">
+						<label for="totalAdults" class="icon">Adults</label>
+						<label for="totalSeniors" class="icon">Seniors <span>(65+)</span></label>
+						<label for="totalChildren" class="icon">Children <span>(0-17)</span></label>
+					</div>
+					<div class="item">
+                            <span class="acol">
+                                <select id="totalAdults" name="totalAdults" data-klass-id="adultSelectionOption"
+                                        data-dojo-type="tui.mvc.Klass" class="dropdown totalAdults" tabindex="-1">
+	                                <option value="0">0</option>
+	                                <option value="1">1</option>
+	                                <option value="2" selected>2</option>
+	                                <option value="3">3</option>
+	                                <option value="4">4</option>
+	                                <option value="5">5</option>
+	                                <option value="6">6</option>
+	                                <option value="7">7</option>
+	                                <option value="8">8</option>
+	                                <option value="9">9</option>
+                                </select>
+                            </span>
+                            <span class="scol">
+                                <select id="totalSeniors" name="totalSeniors" data-klass-id="seniorsSelectOption"
+                                        data-dojo-type="tui.mvc.Klass" class="dropdown totalSeniors" tabindex="-1">
+	                                <option value="0">0</option>
+	                                <option value="1">1</option>
+	                                <option value="2">2</option>
+	                                <option value="3">3</option>
+	                                <option value="4">4</option>
+	                                <option value="5">5</option>
+	                                <option value="6">6</option>
+	                                <option value="7">7</option>
+	                                <option value="8">8</option>
+	                                <option value="9">9</option>
+                                </select>
+                            </span>
+                            <span class="ccol">
+                                <select id="totalChildren" name="totalChildren" data-klass-id="childSelectOption"
+                                        data-dojo-type="tui.mvc.Klass" class="dropdown totalChildren" tabindex="-1">
+	                                <option value="0">0</option>
+	                                <option value="1">1</option>
+	                                <option value="2">2</option>
+	                                <option value="3">3</option>
+	                                <option value="4">4</option>
+	                                <option value="5">5</option>
+	                                <option value="6">6</option>
+	                                <option value="7">7</option>
+	                                <option value="8">8</option>
+	                                <option value="9">9</option>
+                                </select>
+                            </span>
+					</div>
+				</div>
+				<div class="search-col no-margin">
+					<input type="submit" data-klass-id="submitButton" data-dojo-type="tui.mvc.Klass"
+					       data-dojo-props="formSelector:'.search-form'" class="button search-submit" value="Search"
+					       tabindex="0"/>
+				</div>
+			</div>
+		</div>
+		<!-- Search Summary Panel -->
+		<div class="search-summary hide" data-klass-id="searchSummary" data-dojo-type="tui.mvc.Klass">
+			<div class="col">
+				<label class="icon" for="where-from-summary">Where from?</label>
+
+				<p class="where-from-summary" id="where-from-summary"></p>
+			</div>
+			<div class="col">
+				<label for="where-to-summary">Where to?</label>
+
+				<p class="where-to-summary" id="where-to-summary"></p>
+			</div>
+			<div class="col">
+				<label for="when-summary">When?</label>
+
+				<p class="when-summary" id="when-summary"></p>
+			</div>
+			<div class="col">
+				<div class="rooms">
+					<div class="labels">
+						<label for="total-adults" class="icon">Adults</label>
+						<label for="total-seniors" class="icon">Seniors (65+)</label>
+						<label for="total-children" class="icon">Children (0-17)</label>
+					</div>
+					<div class="item">
+						<span class="acol-summary total-adults" id="total-adults"></span>
+						<span class="scol-summary total-seniors" id="total-seniors"></span>
+						<span class="ccol-summary total-children" id="total-children"></span>
+					</div>
+				</div>
+			</div>
+			<div class="col no-margin">
+				<input type="submit" class="button search-edit" value="Edit search">
+			</div>
+		</div>
+	</div>
+	<div id="content">
+		<div class=" controller" data-klass-id="searchResultsController" data-dojo-type="tui.mvc.Klass"
+		     data-dojo-props='jsonData:{"searchResult":{"durationSelection":{"defaultDisplay":[7,14],"moreChoices":[]},"availableDates":{"availableValues":["15-07-2013","16-07-2013","17-07-2013","18-07-2013","19-07-2013","20-07-2013","21-07-2013","22-07-2013","23-07-2013","24-07-2013","25-07-2013","26-07-2013","27-07-2013","28-07-2013","29-07-2013"],"maxValue":"29-07-2013","minValue":"15-07-2013"},"filterPanel":{"totalbudget":{"name":"Budgettotal","filters":[{"id":"BUDGETTOTAL","name":"BUDGETTOTAL","range":[637.0,2657.0],"steps":10,"values":[2657.0],"limit":[637.0,2657.0],"type":"slider"}]},"ppbudget":{"name":"BudgetPP","filters":[{"id":"BUDGETPP","name":"BUDGETPP","range":[637.0,2657.0],"steps":10,"values":[2657.0],"limit":[637.0,2657.0],"type":"slider"}]},"temperatureOptions":{"name":"temperature","filters":[{"id":"TEMPERATURE","name":"Temperature","range":[20,30],"steps":5,"values":[24.0,28.0],"type":"slider"}]},"rating":{"name":"Ratings","filters":[{"id":"TRIPADVISORRATING","name":"Minimum TripAdvisor Rating","range":[1,5],"steps":4,"values":[3.0],"limit":[3.0,5.0],"type":"slider"}]},"accommodationOptions":{"name":"Accommodations Options","filters":[{"name":"Best For","id":"BESTFOR","type":"checkbox","values":[{"noAccommodations":14,"id":"P00051","name":"Beach","selected":false},{"noAccommodations":9,"id":"P00052","name":"Families","selected":false},{"noAccommodations":15,"id":"P00053","name":"Spa and Relaxation","selected":false},{"noAccommodations":4,"id":"P00056","name":"Winning Awards","selected":false},{"noAccommodations":8,"id":"P00054","name":"Weddings","selected":false},{"noAccommodations":5,"id":"P00050","name":"Luxury","selected":false}]}]},"flightOption":{"name":"Flight Options","filters":[]}},"sortBy":{},"holidays":[{"accommodation":{"code":"009765","name":"Hotel Flamingo Oasis","imageUrl":"http://newmedia.thomson.co.uk/live/vol/0/05b04f3da1644c57a130227569812325da400645/232x130/web/EUROPE___MEDITERRANEAN_SPAIN_CON_ESP__COSTA_BLANCA_BENIDORM_RES_000349__FLAMINGO_OASIS.jpg","differentiatedProduct":false,"location":{"destination":{"code":"000347","name":"Costa Blanca"},"resort":{"code":"000349","name":"Benidorm"}},"ratings":{"officialRating":"4","tripAdvisorRating":"4"},"rooms":[{"roomType":"Twin room","roomCode":"BD173","sellingout":65,"availability":false,"price":{},"occupancy":{"adults":2,"children":0,"infant":0}}],"tripAdvisorReviewCount":0,"commercialPriority":0,"featureCodesAndValues":{"usps":["Close to the beach","Refurbished rooms","Evening entertainment"]},"url":"/holiday/bookaccommodation/overview/Benidorm/Hotel-Flamingo-Oasis-009765?productCode\u003d009765\u0026noOfAdults\u003d1\u0026noOfChildren\u003d0\u0026childrenAge\u003d\u0026duration\u003d0\u0026flexibleDays\u003d7\u0026airports[]\u003dLGW\u0026flexibility\u003dtrue\u0026noOfSeniors\u003d0\u0026when\u003d22-07-2013\u0026units[]\u003dESP:COUNTRY\u0026packageId\u003d9765"},"price":{"perPerson":"664.0","totalParty":"1328.0","discount":"102.0","depositAmount":"1328.0","lowDepositExists":false},"itinerary":{"departureDate":"16-07-2013","departureAirport":"London Gatwick","dreamlinerLogo":false,"outbounds":[{"departureAirport":"London Gatwick","departureAirportCode":"LGW","arrivalAirport":"Alicante","arrivalAirportCode":"ALC","dreamLinerIndicator":false,"haulType":"SH","schedule":{"departureDate":"16-07-2013","departureTime":"1750","departureDateTimeInMilli":1373929200000,"arrivalDate":"16-07-2013","arrivalTime":"2120","arrivalDateTimeInMilli":1373929200000,"overlapDay":false},"carrier":{}}],"inbounds":[{"departureAirport":"Alicante","departureAirportCode":"ALC","arrivalAirport":"London Gatwick","arrivalAirportCode":"LGW","dreamLinerIndicator":false,"haulType":"","schedule":{"departureDate":"23-07-2013","departureTime":"2225","departureDateTimeInMilli":1374534000000,"arrivalDate":"24-07-2013","arrivalTime":"0005","arrivalDateTimeInMilli":1374620400000,"overlapDay":true},"carrier":{}}]},"packageId":"9765","tracsUnitCode":"Q007662-QFF","coachTransfer":false,"duration":7,"productCode":"Q","subProductCode":"F","index":1},{"accommodation":{"code":"027942","name":"Holiday Village Costa del Sol","imageUrl":"http://newmedia.thomson.co.uk/live/vol/0/1be3458d46df81b0bd95c2b546757933a6030ea7/232x130/web/EUROPE___MEDITERRANEAN_SPAIN_CON_ESP__COSTA_DEL_SOL_DES_000365__BENALMADENA_POLYNESIA_HOTEL_ACC_033828_.jpg","differentiatedProduct":true,"differentiatedType":"Holiday Village","differentiatedCode":"FHV","location":{"destination":{"code":"000365","name":"Costa del Sol"},"resort":{"code":"000366","name":"Benalmadena"}},"ratings":{"officialRating":"4","tripAdvisorRating":"4"},"rooms":[{"roomType":"1-bedroom apartment","roomCode":"XB175","sellingout":38,"availability":false,"price":{},"occupancy":{"adults":2,"children":0,"infant":0}}],"tripAdvisorReviewCount":0,"commercialPriority":0,"featureCodesAndValues":{"usps":["Huge pool with pirate ship","Beach club with wave pool","Select apartments available"],"strapline":["The ultimate family holiday"]},"url":"/holiday/bookaccommodation/overview/Benalmadena/Holiday-Village-Costa-del-Sol-027942?productCode\u003d027942\u0026noOfAdults\u003d1\u0026noOfChildren\u003d0\u0026childrenAge\u003d\u0026duration\u003d0\u0026flexibleDays\u003d7\u0026airports[]\u003dLGW\u0026flexibility\u003dtrue\u0026noOfSeniors\u003d0\u0026when\u003d22-07-2013\u0026units[]\u003dESP:COUNTRY\u0026packageId\u003d27942"},"price":{"perPerson":"888.0","totalParty":"1776.0","discount":"134.0","depositAmount":"1776.0","lowDepositExists":false},"itinerary":{"departureDate":"18-07-2013","departureAirport":"London Gatwick","dreamlinerLogo":false,"outbounds":[{"departureAirport":"London Gatwick","departureAirportCode":"LGW","arrivalAirport":"Malaga Pablo Ruiz Picasso","arrivalAirportCode":"AGP","dreamLinerIndicator":false,"haulType":"SH","schedule":{"departureDate":"18-07-2013","departureTime":"0600","departureDateTimeInMilli":1374102000000,"arrivalDate":"18-07-2013","arrivalTime":"0950","arrivalDateTimeInMilli":1374102000000,"overlapDay":false},"carrier":{}}],"inbounds":[{"departureAirport":"Malaga Pablo Ruiz Picasso","departureAirportCode":"AGP","arrivalAirport":"London Gatwick","arrivalAirportCode":"LGW","dreamLinerIndicator":false,"haulType":"","schedule":{"departureDate":"25-07-2013","departureTime":"1055","departureDateTimeInMilli":1374706800000,"arrivalDate":"25-07-2013","arrivalTime":"1240","arrivalDateTimeInMilli":1374706800000,"overlapDay":false},"carrier":{}}]},"packageId":"27942","tracsUnitCode":"Q020233-Q33","coachTransfer":false,"duration":7,"productCode":"Q","subProductCode":"3","index":2},{"accommodation":{"code":"046925","name":"Holiday Village Majorca","imageUrl":"http://newmedia.thomson.co.uk/live/vol/0/3c51cdf842c3d6d8740919ba0fb59e6555b75ff7/232x130/web/EUROPE___MEDITERRANEAN_SPAIN_CON_ESP__MAJORCA_CALA_MILLOR_HOLIDAY_VILLAGE_MAJORCA.jpg","differentiatedProduct":true,"differentiatedType":"Holiday Village","differentiatedCode":"FHV","location":{"destination":{"code":"000122","name":"Majorca"},"resort":{"code":"000263","name":"Cala Millor"}},"ratings":{"officialRating":"4","tripAdvisorRating":"5"},"rooms":[{"roomType":"Twin room","roomCode":"AV175","sellingout":2,"availability":true,"price":{},"occupancy":{"adults":2,"children":0,"infant":0}}],"tripAdvisorReviewCount":0,"commercialPriority":0,"featureCodesAndValues":{"usps":["Swim-up rooms","6 pools","Themed restaurants"],"strapline":["The ultimate family holiday"]},"url":"/holiday/bookaccommodation/overview/Cala-Millor/Holiday-Village-Majorca-046925?productCode\u003d046925\u0026noOfAdults\u003d1\u0026noOfChildren\u003d0\u0026childrenAge\u003d\u0026duration\u003d0\u0026flexibleDays\u003d7\u0026airports[]\u003dLGW\u0026flexibility\u003dtrue\u0026noOfSeniors\u003d0\u0026when\u003d22-07-2013\u0026units[]\u003dESP:COUNTRY\u0026packageId\u003d46925"},"price":{"perPerson":"1190.0","totalParty":"2380.0","discount":"180.0","depositAmount":"2380.0","lowDepositExists":false},"itinerary":{"departureDate":"15-07-2013","departureAirport":"London Gatwick","dreamlinerLogo":false,"outbounds":[{"departureAirport":"London Gatwick","departureAirportCode":"LGW","arrivalAirport":"Palma de Mallorca","arrivalAirportCode":"PMI","dreamLinerIndicator":false,"haulType":"SH","schedule":{"departureDate":"15-07-2013","departureTime":"0605","departureDateTimeInMilli":1373842800000,"arrivalDate":"15-07-2013","arrivalTime":"0920","arrivalDateTimeInMilli":1373842800000,"overlapDay":false},"carrier":{}}],"inbounds":[{"departureAirport":"Palma de Mallorca","departureAirportCode":"PMI","arrivalAirport":"London Gatwick","arrivalAirportCode":"LGW","dreamLinerIndicator":false,"haulType":"","schedule":{"departureDate":"22-07-2013","departureTime":"1035","departureDateTimeInMilli":1374447600000,"arrivalDate":"22-07-2013","arrivalTime":"1200","arrivalDateTimeInMilli":1374447600000,"overlapDay":false},"carrier":{}}]},"packageId":"46925","tracsUnitCode":"Q026732-Q33","coachTransfer":false,"duration":7,"productCode":"Q","subProductCode":"3","index":3},{"accommodation":{"code":"006314","name":"Hotel Calypso","imageUrl":"http://newmedia.thomson.co.uk/live/vol/0/055989a77fcdee1b6601352c1b6641dd5577d446/232x130/web/EUROPE___MEDITERRANEAN_SPAIN_CON_ESP__COSTA_DORADA_DES_000372__SALOU_RES_000374__CALYPSO_HOTEL_ACC_006314_.jpg","differentiatedProduct":false,"location":{"destination":{"code":"000372","name":"Costa Dorada"},"resort":{"code":"000374","name":"Salou"}},"ratings":{"officialRating":"3","tripAdvisorRating":"3"},"rooms":[{"roomType":"Twin room","roomCode":"BC045","sellingout":74,"availability":false,"price":{},"occupancy":{"adults":2,"children":0,"infant":0}}],"tripAdvisorReviewCount":0,"commercialPriority":0,"featureCodesAndValues":{"usps":["Centrally located","Air-conditioning","Themed events"]},"url":"/holiday/bookaccommodation/overview/Salou/Hotel-Calypso-006314?productCode\u003d006314\u0026noOfAdults\u003d1\u0026noOfChildren\u003d0\u0026childrenAge\u003d\u0026duration\u003d0\u0026flexibleDays\u003d7\u0026airports[]\u003dLGW\u0026flexibility\u003dtrue\u0026noOfSeniors\u003d0\u0026when\u003d22-07-2013\u0026units[]\u003dESP:COUNTRY\u0026packageId\u003d6314"},"price":{"perPerson":"664.0","totalParty":"1328.0","discount":"102.0","depositAmount":"1328.0","lowDepositExists":false},"itinerary":{"departureDate":"16-07-2013","departureAirport":"London Gatwick","dreamlinerLogo":false,"outbounds":[{"departureAirport":"London Gatwick","departureAirportCode":"LGW","arrivalAirport":"Reus","arrivalAirportCode":"REU","dreamLinerIndicator":false,"haulType":"SH","schedule":{"departureDate":"16-07-2013","departureTime":"0600","departureDateTimeInMilli":1373929200000,"arrivalDate":"16-07-2013","arrivalTime":"0905","arrivalDateTimeInMilli":1373929200000,"overlapDay":false},"carrier":{}}],"inbounds":[{"departureAirport":"Reus","departureAirportCode":"REU","arrivalAirport":"London Gatwick","arrivalAirportCode":"LGW","dreamLinerIndicator":false,"haulType":"","schedule":{"departureDate":"23-07-2013","departureTime":"1005","departureDateTimeInMilli":1374534000000,"arrivalDate":"23-07-2013","arrivalTime":"1110","arrivalDateTimeInMilli":1374534000000,"overlapDay":false},"carrier":{}}]},"packageId":"6314","tracsUnitCode":"Q011935-QFF","coachTransfer":false,"duration":7,"productCode":"Q","subProductCode":"F","index":4},{"accommodation":{"code":"012816","name":"Hotel Barcelo Fuerteventura Thalasso Spa","imageUrl":"http://newmedia.thomson.co.uk/live/vol/0/1c7b20f94fd582390636b51fbd011dd7b26c72aa/232x130/web/EUROPE___MEDITERRANEAN_SPAIN_CON_ESP__FUERTEVENTURA_COSTA_CALETA_BARCELO_HOTEL_FUERTEVENTURA.jpg","differentiatedProduct":true,"differentiatedType":"Premier","differentiatedCode":"FPR","location":{"destination":{"code":"000312","name":"Fuerteventura"},"resort":{"code":"001253","name":"Costa Caleta"}},"ratings":{"officialRating":"4","tripAdvisorRating":"4 plus"},"rooms":[{"roomType":"Twin room","roomCode":"BD175","sellingout":81,"availability":false,"price":{},"occupancy":{"adults":2,"children":0,"infant":0}}],"tripAdvisorReviewCount":0,"commercialPriority":0,"featureCodesAndValues":{"usps":["Central location ","On the beach ","2 pools"],"strapline":["Stylish 4 and 5–star hotels"]},"url":"/holiday/bookaccommodation/overview/Costa-Caleta/Hotel-Barcelo-Fuerteventura-Thalasso-Spa-012816?productCode\u003d012816\u0026noOfAdults\u003d1\u0026noOfChildren\u003d0\u0026childrenAge\u003d\u0026duration\u003d0\u0026flexibleDays\u003d7\u0026airports[]\u003dLGW\u0026flexibility\u003dtrue\u0026noOfSeniors\u003d0\u0026when\u003d22-07-2013\u0026units[]\u003dESP:COUNTRY\u0026packageId\u003d12816"},"price":{"perPerson":"822.0","totalParty":"1644.0","discount":"124.0","depositAmount":"1644.0","lowDeposit":"100.0","lowDepositExists":true},"itinerary":{"departureDate":"17-07-2013","departureAirport":"London Gatwick","dreamlinerLogo":false,"outbounds":[{"departureAirport":"London Gatwick","departureAirportCode":"LGW","arrivalAirport":"Fuerteventura","arrivalAirportCode":"FUE","dreamLinerIndicator":false,"haulType":"SH","schedule":{"departureDate":"17-07-2013","departureTime":"0800","departureDateTimeInMilli":1374015600000,"arrivalDate":"17-07-2013","arrivalTime":"1220","arrivalDateTimeInMilli":1374015600000,"overlapDay":false},"carrier":{}}],"inbounds":[{"departureAirport":"Fuerteventura","departureAirportCode":"FUE","arrivalAirport":"London Gatwick","arrivalAirportCode":"LGW","dreamLinerIndicator":false,"haulType":"","schedule":{"departureDate":"24-07-2013","departureTime":"1325","departureDateTimeInMilli":1374620400000,"arrivalDate":"24-07-2013","arrivalTime":"1720","arrivalDateTimeInMilli":1374620400000,"overlapDay":false},"carrier":{}}]},"packageId":"12816","tracsUnitCode":"Q029600-QTT","coachTransfer":false,"duration":7,"productCode":"Q","subProductCode":"T","index":5},{"accommodation":{"code":"033745","name":"Viva Ca\u0027n Picafort","imageUrl":"http://newmedia.thomson.co.uk/live/vol/0/da949f3e52f9141e6c6529f0dd9b26104c40ec8f/232x130/web/EUROPE___MEDITERRANEAN_SPAIN_CON_ESP__MAJORCA_CA_N_PICAFORT_HOLIDAY_VILLAGE_VIVA__FC_.jpg","differentiatedProduct":true,"differentiatedType":"Premier Families","differentiatedCode":"FPF","location":{"destination":{"code":"000122","name":"Majorca"},"resort":{"code":"000272","name":"Ca\u0027n Picafort"}},"ratings":{"officialRating":"4","tripAdvisorRating":"4"},"rooms":[{"roomType":"1 bedroom apartment","roomCode":"XB175","sellingout":8,"availability":false,"price":{},"occupancy":{"adults":2,"children":0,"infant":0}}],"tripAdvisorReviewCount":0,"commercialPriority":0,"featureCodesAndValues":{"usps":["Select and Privilege rooms","A la carte dining","Splash park"],"strapline":["Stylish 4 and 5–star hotels"]},"url":"/holiday/bookaccommodation/overview/Can-Picafort/Viva-Can-Picafort-033745?productCode\u003d033745\u0026noOfAdults\u003d1\u0026noOfChildren\u003d0\u0026childrenAge\u003d\u0026duration\u003d0\u0026flexibleDays\u003d7\u0026airports[]\u003dLGW\u0026flexibility\u003dtrue\u0026noOfSeniors\u003d0\u0026when\u003d22-07-2013\u0026units[]\u003dESP:COUNTRY\u0026packageId\u003d33745"},"price":{"perPerson":"826.0","totalParty":"1652.0","discount":"126.0","depositAmount":"1652.0","lowDeposit":"100.0","lowDepositExists":true},"itinerary":{"departureDate":"16-07-2013","departureAirport":"London Gatwick","dreamlinerLogo":false,"outbounds":[{"departureAirport":"London Gatwick","departureAirportCode":"LGW","arrivalAirport":"Palma de Mallorca","arrivalAirportCode":"PMI","dreamLinerIndicator":false,"haulType":"SH","schedule":{"departureDate":"16-07-2013","departureTime":"1555","departureDateTimeInMilli":1373929200000,"arrivalDate":"16-07-2013","arrivalTime":"1910","arrivalDateTimeInMilli":1373929200000,"overlapDay":false},"carrier":{}}],"inbounds":[{"departureAirport":"Palma de Mallorca","departureAirportCode":"PMI","arrivalAirport":"London Gatwick","arrivalAirportCode":"LGW","dreamLinerIndicator":false,"haulType":"","schedule":{"departureDate":"23-07-2013","departureTime":"2010","departureDateTimeInMilli":1374534000000,"arrivalDate":"23-07-2013","arrivalTime":"2135","arrivalDateTimeInMilli":1374534000000,"overlapDay":false},"carrier":{}}]},"packageId":"33745","tracsUnitCode":"Q028481-QTT","coachTransfer":false,"duration":7,"productCode":"Q","subProductCode":"T","index":6},{"accommodation":{"code":"006955","name":"ClubHotel Riu Paraiso Lanzarote Resort","imageUrl":"http://newmedia.thomson.co.uk/live/vol/0/543a77ecb0c58acd01f3f762a8ab32d96f471ef3/232x130/web/EUROPE___MEDITERRANEAN_SPAIN_CON_ESP__LANZAROTE_DES_000329__PLAYA_DE_LOS_POCILLOS_CLUBHOTEL_RIU_PARAISO_LANZAROTE.jpg","differentiatedProduct":true,"differentiatedType":"Premier","differentiatedCode":"FPR","location":{"destination":{"code":"000329","name":"Lanzarote"},"resort":{"code":"000333","name":"Playa des los Pocillos"}},"ratings":{"officialRating":"4","tripAdvisorRating":"4"},"rooms":[{"roomType":"Twin room with pool view","roomCode":"BP141","sellingout":7,"availability":false,"price":{},"occupancy":{"adults":2,"children":0,"infant":0}}],"tripAdvisorReviewCount":0,"commercialPriority":0,"featureCodesAndValues":{"usps":["Next to the beach ","4 pools ","4 restaurants"],"strapline":["Stylish 4 and 5–star hotels"]},"url":"/holiday/bookaccommodation/overview/Playa-des-los-Pocillos/ClubHotel-Riu-Paraiso-Lanzarote-Resort-006955?productCode\u003d006955\u0026noOfAdults\u003d1\u0026noOfChildren\u003d0\u0026childrenAge\u003d\u0026duration\u003d0\u0026flexibleDays\u003d7\u0026airports[]\u003dLGW\u0026flexibility\u003dtrue\u0026noOfSeniors\u003d0\u0026when\u003d22-07-2013\u0026units[]\u003dESP:COUNTRY\u0026packageId\u003d6955"},"price":{"perPerson":"799.0","totalParty":"1598.0","discount":"110.0","depositAmount":"1598.0","lowDeposit":"100.0","lowDepositExists":true},"itinerary":{"departureDate":"18-07-2013","departureAirport":"London Gatwick","dreamlinerLogo":false,"outbounds":[{"departureAirport":"London Gatwick","departureAirportCode":"LGW","arrivalAirport":"Arrecife","arrivalAirportCode":"ACE","dreamLinerIndicator":false,"haulType":"SH","schedule":{"departureDate":"18-07-2013","departureTime":"1440","departureDateTimeInMilli":1374102000000,"arrivalDate":"18-07-2013","arrivalTime":"1850","arrivalDateTimeInMilli":1374102000000,"overlapDay":false},"carrier":{}}],"inbounds":[{"departureAirport":"Arrecife","departureAirportCode":"ACE","arrivalAirport":"London Gatwick","arrivalAirportCode":"LGW","dreamLinerIndicator":false,"haulType":"","schedule":{"departureDate":"25-07-2013","departureTime":"2005","departureDateTimeInMilli":1374706800000,"arrivalDate":"25-07-2013","arrivalTime":"2355","arrivalDateTimeInMilli":1374706800000,"overlapDay":false},"carrier":{}}]},"packageId":"6955","tracsUnitCode":"Q006506-QTT","coachTransfer":false,"duration":7,"productCode":"Q","subProductCode":"T","index":7},{"accommodation":{"code":"001986","name":"Hotel Platja d\u0027Or","imageUrl":"http://newmedia.thomson.co.uk/live/vol/0/115f7515696e0d815210aef1c5f74a27ff1ec361/232x130/web/EUROPE___MEDITERRANEAN_SPAIN_CON_ESP__MAJORCA_ALCUDIA_PLATJA_D_OR_HOTEL_ACC_001986_.jpg","differentiatedProduct":false,"location":{"destination":{"code":"000122","name":"Majorca"},"resort":{"code":"000260","name":"Alcudia"}},"ratings":{"officialRating":"3","tripAdvisorRating":"4"},"rooms":[{"roomType":"Twin room","roomCode":"BB141","sellingout":29,"availability":false,"price":{},"occupancy":{"adults":2,"children":0,"infant":0}}],"tripAdvisorReviewCount":0,"commercialPriority":0,"featureCodesAndValues":{"usps":["Exclusive to adults","Beachfront","Near bars and restaurants"]},"url":"/holiday/bookaccommodation/overview/Alcudia/Hotel-Platja-dOr-001986?productCode\u003d001986\u0026noOfAdults\u003d1\u0026noOfChildren\u003d0\u0026childrenAge\u003d\u0026duration\u003d0\u0026flexibleDays\u003d7\u0026airports[]\u003dLGW\u0026flexibility\u003dtrue\u0026noOfSeniors\u003d0\u0026when\u003d22-07-2013\u0026units[]\u003dESP:COUNTRY\u0026packageId\u003d1986"},"price":{"perPerson":"599.0","totalParty":"1198.0","discount":"92.0","depositAmount":"1198.0","lowDeposit":"100.0","lowDepositExists":true},"itinerary":{"departureDate":"16-07-2013","departureAirport":"London Gatwick","dreamlinerLogo":false,"outbounds":[{"departureAirport":"London Gatwick","departureAirportCode":"LGW","arrivalAirport":"Palma de Mallorca","arrivalAirportCode":"PMI","dreamLinerIndicator":false,"haulType":"SH","schedule":{"departureDate":"16-07-2013","departureTime":"1555","departureDateTimeInMilli":1373929200000,"arrivalDate":"16-07-2013","arrivalTime":"1910","arrivalDateTimeInMilli":1373929200000,"overlapDay":false},"carrier":{}}],"inbounds":[{"departureAirport":"Palma de Mallorca","departureAirportCode":"PMI","arrivalAirport":"London Gatwick","arrivalAirportCode":"LGW","dreamLinerIndicator":false,"haulType":"","schedule":{"departureDate":"23-07-2013","departureTime":"2010","departureDateTimeInMilli":1374534000000,"arrivalDate":"23-07-2013","arrivalTime":"2135","arrivalDateTimeInMilli":1374534000000,"overlapDay":false},"carrier":{}}]},"packageId":"1986","tracsUnitCode":"Q025434-QAA","coachTransfer":false,"duration":7,"productCode":"Q","subProductCode":"A","index":8},{"accommodation":{"code":"011537","name":"ClubHotel Riu Gran Canaria","imageUrl":"http://newmedia.thomson.co.uk/live/vol/0/0dd3146a5e2d19cbdc429891e91ec846cd137c11/232x130/web/EUROPE___MEDITERRANEAN_SPAIN_CON_ESP__GRAN_CANARIA_MELONERAS_RES_002569__CLUB_HOTEL_RIU_GRAN_CANARIA.jpg","differentiatedProduct":true,"differentiatedType":"Premier","differentiatedCode":"FPR","location":{"destination":{"code":"000318","name":"Gran Canaria"},"resort":{"code":"002569","name":"Meloneras"}},"ratings":{"officialRating":"4","tripAdvisorRating":"4 plus"},"rooms":[{"roomType":"Twin room","roomCode":"BC143","sellingout":20,"availability":false,"price":{},"occupancy":{"adults":2,"children":0,"infant":0}}],"tripAdvisorReviewCount":0,"commercialPriority":0,"featureCodesAndValues":{"usps":["3 pools","3 restaurants","Near the beach"],"strapline":["Stylish 4 and 5–star hotels"]},"url":"/holiday/bookaccommodation/overview/Meloneras/ClubHotel-Riu-Gran-Canaria-011537?productCode\u003d011537\u0026noOfAdults\u003d1\u0026noOfChildren\u003d0\u0026childrenAge\u003d\u0026duration\u003d0\u0026flexibleDays\u003d7\u0026airports[]\u003dLGW\u0026flexibility\u003dtrue\u0026noOfSeniors\u003d0\u0026when\u003d22-07-2013\u0026units[]\u003dESP:COUNTRY\u0026packageId\u003d11537"},"price":{"perPerson":"878.0","totalParty":"1756.0","discount":"134.0","depositAmount":"1756.0","lowDeposit":"100.0","lowDepositExists":true},"itinerary":{"departureDate":"20-07-2013","departureAirport":"London Gatwick","dreamlinerLogo":false,"outbounds":[{"departureAirport":"London Gatwick","departureAirportCode":"LGW","arrivalAirport":"Las Palmas","arrivalAirportCode":"LPA","dreamLinerIndicator":false,"haulType":"SH","schedule":{"departureDate":"20-07-2013","departureTime":"2010","departureDateTimeInMilli":1374274800000,"arrivalDate":"21-07-2013","arrivalTime":"0030","arrivalDateTimeInMilli":1374361200000,"overlapDay":true},"carrier":{}}],"inbounds":[{"departureAirport":"Las Palmas","departureAirportCode":"LPA","arrivalAirport":"London Gatwick","arrivalAirportCode":"LGW","dreamLinerIndicator":false,"haulType":"","schedule":{"departureDate":"28-07-2013","departureTime":"0130","departureDateTimeInMilli":1374966000000,"arrivalDate":"28-07-2013","arrivalTime":"0530","arrivalDateTimeInMilli":1374966000000,"overlapDay":false},"carrier":{}}]},"packageId":"11537","tracsUnitCode":"Q016698-QTT","coachTransfer":false,"duration":7,"productCode":"Q","subProductCode":"T","index":9},{"accommodation":{"code":"002735","name":"ClubHotel Riu Oliva Beach Resort","imageUrl":"http://newmedia.thomson.co.uk/live/vol/0/b8dc0434a91940c5145af6929c3411858adf3456/232x130/web/EUROPE___MEDITERRANEAN_SPAIN_CON_ESP__FUERTEVENTURA_CORRALEJO_RIU_OLIVA_BEACH_HOTEL.jpg","differentiatedProduct":true,"differentiatedType":"Premier","differentiatedCode":"FPR","location":{"destination":{"code":"000312","name":"Fuerteventura"},"resort":{"code":"000314","name":"Corralejo"}},"ratings":{"officialRating":"3","tripAdvisorRating":"4"},"rooms":[{"roomType":"Family room","roomCode":"FD045","sellingout":17,"availability":false,"price":{},"occupancy":{"adults":2,"children":0,"infant":0}}],"tripAdvisorReviewCount":0,"commercialPriority":0,"featureCodesAndValues":{"usps":["On the beach","Great pool scene","Activity and entertainment programmes"],"strapline":["Stylish 4 and 5–star hotels"]},"url":"/holiday/bookaccommodation/overview/Corralejo/ClubHotel-Riu-Oliva-Beach-Resort-002735?productCode\u003d002735\u0026noOfAdults\u003d1\u0026noOfChildren\u003d0\u0026childrenAge\u003d\u0026duration\u003d0\u0026flexibleDays\u003d7\u0026airports[]\u003dLGW\u0026flexibility\u003dtrue\u0026noOfSeniors\u003d0\u0026when\u003d22-07-2013\u0026units[]\u003dESP:COUNTRY\u0026packageId\u003d2735"},"price":{"perPerson":"810.0","totalParty":"1620.0","discount":"118.0","depositAmount":"1620.0","lowDeposit":"100.0","lowDepositExists":true},"itinerary":{"departureDate":"17-07-2013","departureAirport":"London Gatwick","dreamlinerLogo":false,"outbounds":[{"departureAirport":"London Gatwick","departureAirportCode":"LGW","arrivalAirport":"Fuerteventura","arrivalAirportCode":"FUE","dreamLinerIndicator":false,"haulType":"SH","schedule":{"departureDate":"17-07-2013","departureTime":"0800","departureDateTimeInMilli":1374015600000,"arrivalDate":"17-07-2013","arrivalTime":"1220","arrivalDateTimeInMilli":1374015600000,"overlapDay":false},"carrier":{}}],"inbounds":[{"departureAirport":"Fuerteventura","departureAirportCode":"FUE","arrivalAirport":"London Gatwick","arrivalAirportCode":"LGW","dreamLinerIndicator":false,"haulType":"","schedule":{"departureDate":"24-07-2013","departureTime":"1325","departureDateTimeInMilli":1374620400000,"arrivalDate":"24-07-2013","arrivalTime":"1720","arrivalDateTimeInMilli":1374620400000,"overlapDay":false},"carrier":{}}]},"packageId":"2735","tracsUnitCode":"Q030535-QTT","coachTransfer":false,"duration":7,"productCode":"Q","subProductCode":"T","index":10}],"endecaResultsCount":93,"prioritizedDuration":14},"userData":{"shortlistedPackages":[]},"searchRequest":{"airports":[],"units":[],"flexibility":false,"noOfAdults":0,"noOfSeniors":0,"noOfChildren":0,"childrenAge":[],"flexibleDays":0,"first":0,"last":0,"duration":0,"infantCount":0,"childCount":0,"roomAllocation":[],"destinationValues":[],"page":1,"offset":0,"count":1,"isBreadCrumbRequired":false,"tabbedResult":false}}'>
+			<div class="search-results updating"></div>
+			<div class="" data-klass-id="searchFilterPanel" data-dojo-type="tui.mvc.Klass">
+
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<footer id="footer"></footer>
+<script type="text/javascript" src="/js/underscore/underscore-min.js"></script>
+<script type="text/javascript" src="/js/dojo/dojo.js"></script>
+<script type="text/javascript">
+	dojoConfig.init();
+	require(["dojo"], function (dojo) {
+		dojo.ready(function () {
+			dojo.subscribe("tui/searchPanel/submit", function () {
+				setTimeout(function () {
+					location.reload();
+				}, 600);
+			});
+		})
+	})
+</script>
+</body>
+</html>
+
+

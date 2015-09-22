@@ -1,0 +1,8 @@
+<div class="tooltip {{ floatWhere }}{% if width %} {{ width }}{% endif %}">
+    {% if tooltipTitle %}<h4>{{ tooltipTitle|safe }}</h4>{% endif %}
+    {% if text %}<p class="text">{{ text|safe }}</p>{% endif %}
+    {% if list %}<ul{% if listClass %} class="{{listClass}}"{% endif %}>{{ list|safe }}</ul>{% endif %}
+    {% if postText %}<p class="post-text">{{ postText|safe }}</p>{% endif %}
+	{% if comment %}<p class="small">{{ comment|safe }}</p>{% endif %}
+    <span class="arrow"></span>
+</div>

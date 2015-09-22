@@ -1,0 +1,6 @@
+<div class="tooltip {{position}}" style="display:none; top:90px; left:15%; right:1%">
+    {% if text %}<p>{{ text|safe }}</p>{% endif %}
+    {% if list %}<ul{% if listClass %} class="{{listClass}}"{% endif %}>{{ list|safe }}</ul>{% endif %}
+    {% if comment %}<p class="small">{{ comment|safe }}</p>{% endif %}
+    <span class="arrow"></span>
+</div>

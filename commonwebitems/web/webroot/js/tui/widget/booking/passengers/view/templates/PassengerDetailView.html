@@ -1,0 +1,385 @@
+<div class="passenger-detail-form">
+	<input name="paxInfoFormBean[{{index}}].personType"  value="{{passengerObj.type}}" type="hidden" />
+	<input name="paxInfoFormBean[{{index}}].age"  data-dojo-attach-point="age" value="{{passengerObj.age}}" type="hidden" />
+	<input name="paxInfoFormBean[{{index}}].day" data-dojo-attach-point="day" value="{{paxInfoFormBean.day}}" type="hidden" />
+	<input name="paxInfoFormBean[{{index}}].month" data-dojo-attach-point="month" value="{{paxInfoFormBean.month}}" type="hidden" />
+	<input name="paxInfoFormBean[{{index}}].year" data-dojo-attach-point="year" value="{{paxInfoFormBean.year}}" type="hidden" />
+	<input name="paxInfoFormBean[{{index}}].infantNotYetBornFlag" data-dojo-attach-point="infantNotYetBornFlag" value="false" type="hidden" />
+	{% ifequal index  0  %}
+		{% if not falconFlag %}
+		{% if not flightsFlag %}
+		<input name="Country" data-dojo-attach-point="Country" value="GB" type="hidden" />
+		{% endif %}
+		{% endif %}
+	{% endifequal %}
+	<div class="form-field" data-dojo-attach-point= "selectBlock">
+		<span class="infantTitle">{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Titile_FormFeild|default:" "}}</span>
+		<div class="selectDropDown">
+		{% ifequal type  "ADULT" %}
+            <select
+                class="dropdown title-dropdown"
+                name = "paxInfoFormBean[{{index}}].title"
+                data-dojo-type="tui.widget.form.SelectOption"
+                data-dojo-attach-point="titleSelect"
+                data-dojo-props="required:true, message:'Please select a title'">
+                <option value="">Select</option>
+                <option value="MR" {% ifequal paxInfoFormBean.title  "MR" %} selected {% endifequal %}>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Title_Mr|default:" "}}</option>
+                <option value="MISS" {% ifequal paxInfoFormBean.title  "MISS" %} selected {% endifequal %}>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Title_Miss|default:" "}}</option>
+                <option value="MS" {% ifequal paxInfoFormBean.title  "MS" %} selected {% endifequal %}>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Title_Ms|default:" "}}</option>
+                <option value="MRS" {% ifequal paxInfoFormBean.title  "MRS" %} selected {% endifequal %}>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Title_Mrs|default:" "}}</option>
+				{% ifequal jsonData.packageViewData.multicomThirdPartyFlight  false %}
+                <option value="DR"{% ifequal paxInfoFormBean.title  "DR" %} selected {% endifequal %}>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Title_Dr|default:" "}}</option>
+                <option value="PROF" {% ifequal paxInfoFormBean.title  "PROF" %} selected {% endifequal %}>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Title_Prof|default:" "}}</option>
+                <option value="REV" {% ifequal paxInfoFormBean.title  "REV" %} selected {% endifequal %}>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Title_Rev|default:" "}}</option>
+				{% endifequal%}
+            </select>
+
+		{% else %}
+            <select
+                class="dropdown infantSelect "
+                name = "paxInfoFormBean[{{index}}].title"
+                data-dojo-type="tui.widget.form.SelectOption"
+                data-dojo-attach-point="titleSelect"
+                data-dojo-props="required:true, message:'Please select a title'">
+                <option value=""  >Select</option>
+                <option value="MSTR" {% ifequal paxInfoFormBean.title  "MSTR" %} selected {% endifequal %}>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Title_Master|default:" "}}</option>
+                <option value="MISS"{% ifequal paxInfoFormBean.title  "MISS" %} selected {% endifequal %}>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Title_Miss|default:" "}}</option>
+            </select>
+        {% endifequal%}
+        </div>
+
+
+				<div class="infant-select" style="display: None;" data-dojo-attach-point="infant{{index}}">
+                    <input type="checkbox"  name="infantNotYetBornFlag{{index}}" data-dojo-attach-point="infantNotBornCheckBox"
+                    {% if paxInfoFormBean.infantNotYetBornFlag === true %} checked {% endif %} >
+                    <label class="infant-label" for="infantNotYetBornFlag{{index}}"><span></span>Infant not born yet</label></div>
+
+		<div  style="display: None;" data-dojo-attach-point="titleSelectDiv">
+			<input 	value="&#935; " type="text" tabindex="-1" readonly="readonly" role="presentation">
+		</div>
+			<div class="genderDropDown">
+	    <select
+			class="dropdown"
+			name = "paxInfoFormBean[{{index}}].gender"
+			data-dojo-type="tui.widget.form.SelectOption"
+			data-dojo-attach-point="genderSelect"
+			data-dojo-props="required:true, message:'Please select a gender'">
+			<option value="">Gender</option>
+			<option value="MALE" {% ifequal paxInfoFormBean.gender  "MALE" %} selected {% endifequal %}>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Title_Male|default:" "}}</option>
+			<option value="FEMALE" {% ifequal paxInfoFormBean.gender  "FEMALE" %} selected {% endifequal %}>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Title_Female|default:" "}}</option>
+		</select>
+		</div>
+		<div  style="display: None;" data-dojo-attach-point="genderSelectDiv">
+			<input
+			value="&#935; " type="text" tabindex="-1" readonly="readonly" role="presentation">
+		</div>
+	</div>
+	<div data-dojo-attach-point="infantNotBornWarp">
+	<div class="form-field">
+		<span>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_FirstName_FormFeild|default:" "}}</span><input type="text" class="psgr-textfield firstName"
+			name = "paxInfoFormBean[{{index}}].firstName"
+			data-dojo-type="tui.widget.form.ValidationTextBox"
+			data-dojo-attach-point="firstNameBox"
+			data-dojo-props="regExp:'^\\s*[A-Za-z]+(-[A-Za-z]+)?( [A-Za-z]+)?\\s*$', maxLength : 15, required:true,
+			missingMessage:'Please enter a first name', invalidMessage:'Please enter correct first name',
+			ref : passengerDetailModel.firstName" />
+	</div>
+	<div class="form-field">
+		<span>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Surname_FormFeild|default:" "}}</span><input
+			type="text" class="psgr-textfield surnName"
+			name = "paxInfoFormBean[{{index}}].lastName"
+			data-dojo-type="tui.widget.form.ValidationTextBox"
+			data-dojo-attach-point="surnameBox"
+			data-dojo-props="maxLength : 15, regExp:'^\\s*[A-Za-z]+( [A-Za-z]+)?(-[A-Za-z]+)?\\s*$', required:true,
+			missingMessage:'Please enter a surname', invalidMessage:'Please enter correct surname',
+			ref : passengerDetailModel.lastName" />
+			<div class="tick-img" data-dojo-attach-point="tickImg"></div>
+		{% ifnotequal index  0  %}
+			<span class="surname-select"> <input type="checkbox"
+				name="paxInfoFormBean[{{index}}].checkBox" class="surname-checkBox"
+				data-dojo-attach-point="surnameCheckbox" {% ifequal passengerModel.checkBox.value 'on' %} checked {% endifequal %} disabled /> <label class="surname-label"
+				for="checkbox{{index}}"><span></span>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Surname_Label|default:" "}}</label>
+			</span>
+		{% endifnotequal %}
+	</div>
+	{% ifequal index  0  %}
+	{% if falconFlag %}
+	<div class="form-field countrySelect disNone">
+		<span >{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Country_FormFeild|default:" "}}</span>
+	<select  class="dropdown title-dropdown"
+                            name = "Country" data-dojo-attach-point="countryDropdown"
+                            data-dojo-type="tui.widget.form.SelectOption">
+
+						 <option value="IE" {% ifequal passengerDetailsFormBean.country  "IE" %} selected {% endifequal %}>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Country_ROI|default:" "}}</option>
+						 <option value="GB" {% ifequal passengerDetailsFormBean.country  "GB" %} selected {% endifequal %}>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Country_NI|default:" "}}</option>
+
+  </select>
+	</div>
+	{% endif %}
+	{% if flightsFlag %}
+ 	<div class="form-field countrySelect">
+		<span >{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Country_FormFeild|default:" "}}</span>
+	<select  class="dropdown title-dropdown"
+                            name = "Country" data-dojo-attach-point="countryDropdown"
+                            data-dojo-type="tui.widget.form.SelectOption">
+                 {% for  key , value in  jsonData.countryCodes.items %}
+                         {% if passengerDetailsFormBean.country %}
+                          <option value="{{key}}" {% ifequal passengerDetailsFormBean.country key %} selected {% endifequal %}>{{value}}</option>
+                         {% else %}
+                          <option value="{{key}}" {% ifequal key  "GB" %} selected {% endifequal %}>{{value}}</option>
+						 {% endif %}
+						 {% endfor %}
+   </select>
+	</div>
+	{% endif %}
+	<div class="form-field">
+		<span>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Address_FormFeild|default:" "}}</span>
+		<div class="form-group">
+			<input
+				name="paxInfoFormBean[{{index}}].leadPassenger"
+				value=true type="hidden" />
+			<input type="text"
+				class="psgr-textfield address"
+				name="houseNum"
+				data-dojo-type="tui.widget.form.ValidationTextBox"
+				data-dojo-attach-point="houseNumTextBox"
+				data-dojo-props="required:true,placeHolder: '{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_HouseNumber_FormFeild|default:" "}}', maxLength: 20,
+				missingMessage:'Please enter house number', invalidMessage:'Please enter valid house number',
+				ref : passengerDetailModel.houseNum, regExp:'^\\s*([a-zA-Z0-9]+[-,&\\/\\s*]*[a-zA-Z0-9 \\s*]*)+'" /><br>
+			<div id="form-address-wrap">
+				<input type="text"
+					class="psgr-textfield address"
+					name="address1"
+					data-dojo-type="tui.widget.form.ValidationTextBox"
+					data-dojo-attach-point="street1TextBox"
+					data-dojo-props="required:true,placeHolder: '{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Street1_FormFeild|default:" "}}', maxLength: 25,
+					missingMessage:'Please enter a street', invalidMessage:'Please enter correct street',
+					ref : passengerDetailModel.address1, regExp:'^\\s*([a-zA-Z0-9_#\/.,;:-]?[a-zA-Z0-9_ #\/.,;:-]*[a-zA-Z0-9_#\/.,;:-])\\s*$'" /><br>
+				<input type="text"
+					class="psgr-textfield address"
+					name="address2"
+					{% ifnotequal passengerDetailsFormBean  '' %}
+						value ="{{passengerDetailsFormBean.address2}}"
+					{% endifnotequal%}
+					data-dojo-type="tui.widget.form.ValidationTextBox"
+					data-dojo-attach-point="street2TextBox"
+					data-dojo-props="maxLength:25, placeHolder: '{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Street2_FormFeild|default:" "}}',
+					missingMessage:'', invalidMessage:'', ref : passengerDetailModel.address2, regExp:'^\\s*([a-zA-Z0-9_#\/.,;:-]?[a-zA-Z0-9_ #\/.,;:-]*[a-zA-Z0-9_#\/.,;:-])\\s*$'" /><br>
+				<input type="text"
+					class="psgr-textfield address"
+					name="town"
+					data-dojo-type="tui.widget.form.ValidationTextBox"
+					data-dojo-attach-point="townTextBox"
+					data-dojo-props="required:true,placeHolder: '{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Town_FormFeild|default:" "}}', maxLength: 25, missingMessage:'Please enter a town or city',
+					invalidMessage:'Please enter correct town or city', ref : passengerDetailModel.town, regExp:'^\\s*([a-zA-Z_\/.,-]?[a-zA-Z_ \/.,-]*[a-zA-Z_\/.,-])\\s*$'" />
+
+					{% if falconFlag %}
+					<span class="information tel-info" data-dojo-type="tui.widget.popup.Tooltips"
+				   data-dojo-props="floatWhere:'position-right-center', className:'information tel-info',
+				   text:'Dublin customers please add your area code. e.g. Dublin 25'"></span>
+					{% endif %}
+
+					<br>
+				<input type="text"
+					class="psgr-textfield address"
+					name="county"
+					data-dojo-type="tui.widget.form.ValidationTextBox"
+					data-dojo-attach-point="countyTextBox"
+					data-dojo-props="required:true,{% if falconFlag %}regExp:'^\\s*([a-zA-Z0-9]?[a-zA-Z0-9]*[a-zA-Z0-9])\\s*$' {% else %}  regExp:'^\\s*([a-zA-Z_\/.,;:-]?[a-zA-Z_ \/.,;:-]*[a-zA-Z_\/.,;:-])\\s*$' {% endif %} ,maxLength: 16,
+					placeHolder: '{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_County_FormFeild|default:" "}}',
+					missingMessage:'Please enter a county', invalidMessage:'Please enter correct county',
+					 ref : passengerDetailModel.county, " /><br>
+			</div>
+			<input type="text"
+				class="psgr-textfield small cb address"
+				name="postCode"
+				data-dojo-type="tui.widget.form.ValidationTextBox"
+				data-dojo-attach-point="postcodeTextBox"
+				data-dojo-props="{% if falconFlag %} required:false {% else %}  required:true, regExp:'^\\s*([A-Pa-pR-UWYZr-uwyz0-9][A-Ha-hK-Yk-y0-9][AEHMNPRTUVXYaehmnprtuvxy0-9]?[ABEHMNPRVWXYabehmnprvwxy0-9]?[ \\s]{0,1}[0-9][ABD-HJLN-UW-Zabd-hjln-uw-z]{2}|GIR 0AA)\\s*$'{% endif %}, maxLength: 8,
+
+					missingMessage:'Please enter a postcode', invalidMessage:'This doesn\'t appear to be a valid postcode',
+					placeHolder: '{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_PostCode_FormFeild|default:\' \'}}', ref : passengerDetailModel.postCode" />
+			<!--span class="button small fl" id="find-ad">{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_FindAddress_Button}}</span>
+			<div class="cb fr">
+				<a href="javascript:void(0);" data-dojo-attach-point="addressManually" class="ts fl mnulAdrs mr45px enterMyAddr">Enter my address manually</a>
+			</div-->
+		</div>
+	</div>
+
+	<div class="form-field">
+		<span>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Telephone_FormFeild|default:" "}}</span>
+		<div class="telephone-textBox">
+			<input class="psgr-textfield  telephone" type="text"
+				name="telephoneNum"
+				data-dojo-attach-point="telephoneTextBox"
+				data-dojo-type="tui.widget.form.ValidationTextBox"
+				data-dojo-props="required:true, maxLength: 15,
+				missingMessage:'Please enter a contact telephone number',
+				invalidMessage:'This doesn\'t appear to be a valid telephone number',
+				{% if falconFlag %} regExp : '^\\s*(0([1-9]{1}[0-4,6-9]{1}[0-9]{1}[0-9]{3,7})|0([1-9]{1}[5]{1}[0-2,4-9]{1}[0-9]{3,7})|[1-9]{1}[0-4,6-9]{1}[0-9]{1}[0-9]{3,7}|[1-9]{1}[5]{1}[0-2,4-9]{1}[0-9]{3,7})\\s*$',
+				{% else %} regExp : '^\\s*(0([4]{1}[0-3,5-9]{1}[0-9]{1}[0-9]{7}|[1-3,5-9]{1}[0-9]{1}[0-9]{8})|[1-9]{1}[0-9]{9})\\s*$', {% endif %}
+				ref : passengerDetailModel.telephoneNum" />
+		</div>
+
+				<span class="information tel-info" data-dojo-type="tui.widget.popup.Tooltips"
+				data-dojo-props="floatWhere:'position-right-center', className:'information tel-info',
+				text:'{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Telephone_ToolTip|default:\' \'}}'"></span>
+
+	</div>
+	<div class="form-field">
+		<span>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_Email_FormFeild|default:" "}}</span>
+		<input
+			type="text" class="psgr-textfield emails"
+			name="email"
+			data-dojo-attach-point="emailTextBox"
+			data-dojo-type="tui.widget.form.ValidationTextBox"
+			data-dojo-props="regExp : '^\\s*([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})\\s*$',
+			required:true, maxLength: 100,
+			missingMessage:'Please enter an email address', invalidMessage:'This doesn\'t appear to be a valid email address',
+			ref : passengerDetailModel.email" />
+	</div>
+	<div class="form-field">
+		<span>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_ConfirmEmail_FormFeild|default:" "}}</span><input
+			data-dojo-attach-point="emailConfirmationTextBox" type="text"
+			name="confirmationEmail"
+			class="psgr-textfield confireEmail"
+			data-dojo-type="tui.widget.form.ValidationTextBox"
+			data-dojo-props="regExp : '^\\s*([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})\\s*$',
+			required:true,maxLength: 100,
+			missingMessage:'Please re-enter the email address for confirmation', invalidMessage:'The email addresses you entered don\'t match',
+			ref : passengerDetailModel.confirmationEmail" />
+	</div>
+	<p style="display: None;" data-dojo-attach-point="detailsUpdatedMessage" class="detailsUpdatedMessage ">
+		{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Update_Post_Booking|default:""}}
+	</p>
+	<p class="channel-selection">
+		{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_ContactMessage1|default:" "}}. <a href="javascript:void(0);" data-dojo-attach-point="dpnOverlay" >Click here if there are channels</a> you don't want us to contact you by.
+	</p>
+	<div class="cb contactChannel">
+		<input name="newsletter1" type="checkbox" id="newsletter1"/>
+		<label for="newsletter1"><span for="newsletter1"></span></label>
+		<label for="newsletter1"><span></span>I would <b>not
+				like</b> to receive <b>emails</b> of offers, new products, events
+			and competations</label><br> <input name="newsletter2"
+			type="checkbox" id="newsletter2"> <labelz
+			for="newsletter2"><span></span>I would <b>not like</b>
+			to receive information <b>by post</b> of offers, new products,
+			events and competations</label><br> <input name="newsletter3"
+			type="checkbox" id="newsletter3"> <label
+			for="newsletter3"><span></span>I would <b>not like</b>
+			to be contacted <b>by telephone</b> withh details of offers,
+			new products, events and competations</label><br>
+		<p class="mt15px">
+			Please note that we may still need to contact you by any of
+			the methods stated about if we need to provide you with <b>important
+				information about your holiday</b>.
+		</p>
+	</div>
+	{% endifequal %}
+    {% if jsonData.passengerInsuranceViewData.passengerDataList or jsonData.passengerInsuranceViewData.familyInsPresent %}
+        {% ifequal type  "ADULT" %}
+            <div class="travel form-field {%if  jsonData.passengerInsuranceViewData.familyInsPresent %} {% else %} {% ifnotequal insSelectionDataList.length 0 %}{% else %}disNone{% endifnotequal %}{% endif %}" data-dojo-attach-point= "selectInsBlock">
+                <span>Travel insurance</span>
+                {%if  jsonData.passengerInsuranceViewData.familyInsPresent %}
+                    <span class="familyInsPre">Single trip family travel insurance</span>
+                {% else %}
+                 <select
+                            class="dropdown title-dropdown"
+                            name = "paxInfoFormBean[{{index}}].insurancePersonType"
+                            data-dojo-type="tui.widget.form.SelectOption"
+                            data-dojo-attach-point="insuranceSelect"
+                            data-dojo-props="required:true, message:'Please select which passenger requires travel insurance', type : 'INS'">
+                        <option value="">Not Required</option>
+                        {% for insSelectionData in insSelectionDataList %}
+                            <option value={{insSelectionData.value}}
+                                {% ifequal paxInfoFormBean.insurancePersonType  insSelectionData.value %} selected
+                                {% endifequal %}>{{insSelectionData.label}}
+                            </option>
+                        {% endfor %}
+                    </select>
+                     <span class="information"
+                           data-dojo-type="tui.widget.popup.Tooltips"
+                           data-dojo-props="floatWhere:'position-right-center',  className:'information insurance-tooltip',
+                            text:'Select the travel insurance cover to apply for this passenger.'+
+                            'Just to remind you that prior to departure all passengers must have a travel insurance'+
+                             'policy in place covering the duration of their travel.'+
+                              'You can add travel insurance by going back to the extras page.'"></span>
+                    <div  style="display: None;" data-dojo-attach-point="insSelectDiv">
+                        <input 	value="&#935; " type="text" tabindex="-1" readonly="readonly" role="presentation">
+                    </div>
+
+                </div>
+                <div class="form-field" data-dojo-attach-point="insDObBlock">
+                    <span>Date of birth </span>
+					<input type="text"
+					class="psgr-textfield"
+					name = "paxInfoFormBean[{{index}}].dob"
+                        data-dojo-type="tui.widget.form.ValidationTextBox"
+					data-dojo-props="required:true,maxLength: 10,placeHolder: '{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_DOB_FormFeild|default:" "}}',
+                                    regExp : '^(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/](19|20)[0-9][0-9]$',
+                                    missingMessage:'Please enter a date of birth', invalidMessage:'The date of birth you entered is invalid',
+                                    ref : passengerDetailModel.dob"
+                        data-dojo-attach-point="insDOBTextBox"/>
+
+                {% endif %}
+             </div>
+        {% endifequal%}
+
+        {% ifequal type  "CHILD" %}
+            <div class="travel  form-field {%if  jsonData.passengerInsuranceViewData.familyInsPresent %}{% else %} {% if insChildSelectionData.value %}{% else %}disNone{% endif %}{% endif %}" data-dojo-attach-point= "selectInsBlock">
+                <span>Travel insurance</span>
+                {%if  jsonData.passengerInsuranceViewData.familyInsPresent %}
+                    <span class="familyInsPre">Single trip family travel insurance</span>
+                {% else %}
+                {% if insChildSelectionData.value %}
+                <select
+                            class="dropdown title-dropdown"
+                            name = "paxInfoFormBean[{{index}}].insurancePersonType"
+                            data-dojo-type="tui.widget.form.SelectOption"
+                            data-dojo-attach-point="insuranceChildSelect"
+                            data-dojo-props="required:true, message:'Please select which passenger requires travel insurance', type : 'INS'">
+                        <option value="">Not Required</option>
+                        <option value={{insChildSelectionData.value}}
+                        {% ifequal paxInfoFormBean.insurancePersonType  insChildSelectionData.value %} selected
+                        {% endifequal %}>{{insChildSelectionData.label}}
+                        </option>
+                    </select>
+                     <span class="information"
+                           data-dojo-type="tui.widget.popup.Tooltips"
+                           data-dojo-props="floatWhere:'position-right-center', className:'information insurance-tooltip',
+                            text:'Select the travel insurance cover to apply for this passenger.'+
+                            'Just to remind you that prior to departure all passengers must have a travel insurance'+
+                             'policy in place covering the duration of their travel.'+
+                              'You can add travel insurance by going back to the extras page.'"></span>
+                    <div  style="display: None;" data-dojo-attach-point="childInsSelectDiv">
+                        <input 	value="&#935; " type="text" tabindex="-1" readonly="readonly" role="presentation">
+                    </div>
+                {% else %}
+
+                  {% endif %}
+                {% endif %}
+            </div>
+        {% endifequal %}
+    {% endif %}
+    {% ifnotequal type "ADULT" %}
+      <div class="form-field">
+            <span>Date of birth </span>
+
+					 <input type="text"
+					class="psgr-textfield dobText"
+					name = "paxInfoFormBean[{{index}}].dob"
+                data-dojo-type="tui.widget.form.ValidationTextBox"
+					data-dojo-attach-point="dobTextBox"
+					data-dojo-props="required:true,placeHolder: '{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Passenger_DOB_FormFeild|default:" "}}', maxLength: 10, missingMessage:'Please enter a date of birth',
+					invalidMessage:'The date of birth you entered is invalid', ref :passengerDetailModel.dob, regExp:'^(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/](19|20)[0-9][0-9]$'" /><br>
+
+
+
+    </div>
+          </div>
+
+	{% endifnotequal %}
+	<div style="display: None;" data-dojo-attach-point="infantNotBornMessage" class="bookflow-info-section infant-margin pax-name">
+		{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.InfantNotBorn_ToolTip|default:" "}}
+	</div>
+</div>

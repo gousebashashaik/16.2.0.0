@@ -1,0 +1,19 @@
+<div id="mainSummary" class="summaryPrebook-feedback-section">
+  <div class="prebook-confirmation">
+    <h5 class="prebook-qty">{{ summaryDescription|default:" " }} {% if addExcess %} with excess waiver  {% endif %}{{pax}}<!--{{pax}} {{summaryPaxComposition}}{{summaryPrice}}--></h5>
+
+    <h4 class="price-prebook-qty">
+      <label>{{summaryPrice|default:" "}}</label>
+      <p id="summaryRemove"><a class="prebook-removeqty" href="javascript:void(0)">remove x</a></p>
+    </h4>
+    <div class="clear"></div>
+     <div ><a id="change" href="javascript:void(0);">Change</a></div>
+  </div></div>
+<div id="coveredAllPassenger" class="disNone">
+<p class="fl pt16">
+			<span class="more-info-icon"></span> Passengers not covered by the
+			above insurance will require their own policy covering the duration
+			of their travel
+		</p>
+ 
+</div>

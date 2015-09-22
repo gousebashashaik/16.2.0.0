@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>AutoComplete tests</title>
+
+    <script src="/js/underscore/underscore-min.js"></script>
+    <!-- required: dojo.js -->
+    <script type="text/javascript" src="/js/dojo/dojo.js"></script>
+    <!-- functions to help test -->
+    <script type="text/javascript" src="/js/dijit/tests/helpers.js"></script>
+    
+    <script type="text/javascript">
+        dojo.require("dojo.DeferredList");
+        dojo.require("dojo.window");
+        dojo.require("dojo.query");
+        dojo.require("dojo.NodeList-manipulate");
+        dojo.require("dijit.robotx");
+
+        dojo.ready(function () {
+        	var autocomplete;
+        	var autocomplete1;
+            doh.robot.initRobot('Autocomplete.html');
+			doh.register("Autocomplete test", [{
+            	name: "autocomplete, should display on 3 or more chars",
+           		timeout: 6900,
+            	runTest: function () {
+                	var d = new doh.Deferred();
+                	autocomplete = dijit.byId("qs");
+                	doh.robot.mouseMoveAt(dojo.byId("qs"), 500);
+              		doh.robot.mouseClick({left:true}, 500);
+                	doh.robot.typeKeys("abc", 500, 300);
+              		doh.robot.sequence(d.getTestCallback(function() {
+            			try {
+            				doh.is(true, dojo.style(autocomplete.listElement, "display") == 'block');
+    						doh.is(true, autocomplete.listShowing === true);
+						} catch (e) {
+							d.errback(e);
+						}
+                    }), 900);
+					return d;
+                }
+             },{
+            	name: "autocomplete, should hide when chars being removed goes below 3",
+           		timeout: 6900,
+            	runTest: function () {
+                	var d = new doh.Deferred();
+                	autocomplete = dijit.byId("qs");
+                	doh.robot.mouseMoveAt(dojo.byId("qs"), 500);
+                	doh.robot.mouseClick({left:true}, 500);
+                	doh.robot.keyPress(dojo.keys.LEFT_ARROW, 500);
+                	doh.robot.keyPress(dojo.keys.BACKSPACE, 500);
+              		doh.robot.sequence(d.getTestCallback(function() {
+            			try {
+            				doh.is(true, dojo.style(autocomplete.listElement, "display") === 'none');
+    						doh.is(true, autocomplete.listShowing === false);
+						} catch (e) {
+							d.errback(e);
+						}
+                    }), 900);
+					return d;
+                }
+            },{
+            	name: "autocomplete, pressing the downkey should highlight items",
+           		timeout: 6900,
+            	runTest: function () {
+                	var d = new doh.Deferred();
+                	autocomplete = dijit.byId("qs");
+                	doh.robot.mouseMoveAt(dojo.byId("qs"), 500);
+                	doh.robot.mouseClick({left:true}, 500);
+                	doh.robot.typeKeys("abc", 500, 300);
+                	doh.robot.keyPress(dojo.keys.DOWN_ARROW, 500);
+                	doh.robot.keyPress(dojo.keys.DOWN_ARROW, 500);
+              		doh.robot.sequence(d.getTestCallback(function() {
+            			try {
+            				doh.is(true, dojo.style(autocomplete.listElement, "display") === 'block');
+    						doh.is(true, autocomplete.listShowing === true);
+    						doh.is(true, autocomplete.listIndex === 2);
+    						doh.is(true, dojo.hasClass(autocomplete.listItems[2], "active") === true);
+						} catch (e) {
+							d.errback(e);
+						}
+                    }), 900);
+					return d;
+                }
+            },{
+            	name: "autocomplete, pressing esc should hide list",
+           		timeout: 6900,
+            	runTest: function () {
+                	var d = new doh.Deferred();
+                	autocomplete = dijit.byId("qs");
+                	doh.robot.mouseMoveAt(dojo.byId("qs"), 500);
+                	doh.robot.keyPress(dojo.keys.ESCAPE, 500);
+              		doh.robot.sequence(d.getTestCallback(function() {
+            			try {
+            				doh.is(true, dojo.style(autocomplete.listElement, "display") === 'none');
+    						doh.is(true, autocomplete.listShowing === false);
+						} catch (e) {
+							d.errback(e);
+						}
+                    }), 900);
+					return d;
+                }
+            },{
+            	name: "autocomplete, on list show should highlight first element",
+           		timeout: 6900,
+            	runTest: function () {
+                	var d = new doh.Deferred();
+                	autocomplete = dijit.byId("qs");
+                	doh.robot.mouseMoveAt(dojo.byId("qs"), 500);
+                	doh.robot.mouseClick({left:true}, 500);
+                	doh.robot.keyPress(dojo.keys.BACKSPACE, 500);
+                	doh.robot.keyPress(dojo.keys.BACKSPACE, 500);
+                	doh.robot.keyPress(dojo.keys.BACKSPACE, 500);
+                	doh.robot.typeKeys("afirst highlight", 500, 300);
+              		doh.robot.sequence(d.getTestCallback(function() {
+            			try {
+            				doh.is(true, autocomplete.listIndex === 0);
+            				doh.is(true, dojo.hasClass(autocomplete.listItems[0], "active") === true);
+						} catch (e) {
+							d.errback(e);
+						}
+                    }), 900);
+					return d;
+                }
+            },{
+            	name: "autocomplete, should disable given list item",
+           		timeout: 6900,
+            	runTest: function () {
+                	var d = new doh.Deferred();
+                	autocomplete = dijit.byId("qs");
+                	autocomplete.disableItem(1);
+              		doh.robot.sequence(d.getTestCallback(function() {
+            			try {
+            				doh.is(true, dojo.hasClass(autocomplete.listItems[1], autocomplete.disableItemClass) === true);
+						} catch (e) {
+							d.errback(e);
+						}
+                    }), 900);
+					return d;
+                }
+            },{
+            	name: "autocomplete, on key down  disable list items should be ignored",
+           		timeout: 6900,
+            	runTest: function () {
+                	var d = new doh.Deferred();
+                	autocomplete = dijit.byId("qs");
+             		doh.robot.keyPress(dojo.keys.DOWN_ARROW, 500);
+              		doh.robot.sequence(d.getTestCallback(function() {
+            			try {
+            				doh.is(true, dojo.hasClass(autocomplete.listItems[1], autocomplete.disableItemClass) === true);
+            				doh.is(true, autocomplete.listIndex === 2);
+						} catch (e) {
+							d.errback(e);
+						}
+                    }), 900);
+					return d;
+                }
+            },{
+            	name: "autocomplete, on key enter selected item should be selected",
+           		timeout: 6900,
+            	runTest: function () {
+                	var d = new doh.Deferred();
+                	autocomplete = dijit.byId("qs");
+             		doh.robot.mouseClick({left:true}, 500);
+             		doh.robot.typeKeys("aenterkey", 500, 300);
+             		doh.robot.keyPress(dojo.keys.ENTER, 500);
+              		doh.robot.sequence(d.getTestCallback(function() {
+            			try {
+            				doh.is(true, autocomplete.getSelectedData().key === 'Hotel in Australia');
+						} catch (e) {
+							d.errback(e);
+						}
+                    }), 900);
+					return d;
+                }
+            }]);
+
+            doh.run();
+        });
+    </script>
+</head>
+</html>

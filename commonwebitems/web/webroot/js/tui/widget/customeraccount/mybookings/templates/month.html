@@ -1,0 +1,29 @@
+<table cellspacing="0" cellpadding="0" border="0" data-month-id="{{monthId}}">
+    <thead>
+    <tr>
+        <th>S</th>
+        <th>M</th>
+        <th>T</th>
+        <th>W</th>
+        <th>T</th>
+        <th>F</th>
+        <th>S</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for week in matrix %}
+        <tr>
+            {% for day in week %}
+                {% if day %}
+                    <td {% if day.active %} data-dojo-type="tui.widget.search.view.ActiveDate" class="avail" data-date-value="{{day.date}}" {% endif %}><i>{{day.value}}</i></td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                <!--<td class="avail" data-date-value="2 January 2013"><i>2</i></td>-->
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+

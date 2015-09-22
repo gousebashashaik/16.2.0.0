@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7 ]>
+<html lang="en" class="ie6" id="thomson"> <![endif]-->
+<!--[if IE 7 ]>
+<html lang="en" class="ie7" id="thomson"> <![endif]-->
+<!--[if IE 8 ]>
+<html lang="en" class="ie8" id="thomson"> <![endif]-->
+<!--[if IE 9 ]>
+<html lang="en" class="ie9" id="thomson"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="" id="thomson"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<title>Villa Availability</title>
+
+	<link href="/css/main.css" rel="stylesheet" type="text/css">
+
+	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script type="text/javascript" src="/js/tui/config/TuiConfigTest.js"></script>
+</head>
+
+<script type="text/javascript">
+	dojoConfig.addModuleName("tui/villaAvailability/view/VillaAvailability", "tui/widget/form/SelectOption");
+</script>
+
+<body>
+<div id="wrapper">
+	<div id="header">
+		<div class="search controller loading" >
+		</div>
+	</div>
+	<div id="content">
+		<div class="top">
+			<div class="span"><h1>Villa availability component</h1></div>
+		</div>
+		<div class="main">
+			<div class="span-two-third">
+				<h2 class="underline">Villa availability</h2>
+				<div class="js-villa-availability availability-component" data-dojo-type="tui.villaAvailability.view.VillaAvailability">
+					<div class="selectors js-search-params">
+						<form>
+							<span class="col villa-availability-title"><span class="label">Show prices for</span></span>
+							<span class="col col-date">
+								<select name="when" class="dropdown villa-availability-when" tabindex="-1">
+									<option value="08-2013">August 2013</option>
+									<option value="09-2013">September 2013</option>
+									<option value="10-2013">October 2013</option>
+									<option value="11-2013">November 2013</option>
+									<option value="12-2013">December 2013</option>
+									<option value="01-2014">January 2014</option>
+									<option value="02-2014">February 2014</option>
+									<option value="03-2014">March 2014</option>
+									<option value="04-2014">April 2014</option>
+									<option value="05-2014">May 2014</option>
+									<option value="06-2014">June 2014</option>
+									<option value="07-2014">July 2014</option>
+									<option value="08-2014">August 2014</option>
+								</select>
+							</span>
+							<span class="col col-adults">
+								<span class="label label-block label-uc">Adults <span class="label-lc">(age 16+)</span></span>
+								<select name="villa-availability-adult" class="dropdown villa-availability-adult" tabindex="-1">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+								</select>
+							</span>
+							<span class="col col-child">
+								<span class="label label-block label-uc">Children <span class="label-lc">(age 0-15)</span></span>
+								<select name="villa-availability-child" class="dropdown villa-availability-child" tabindex="-1">
+									<option value="0">0</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+								</select>
+							</span>
+						</form>
+					</div>
+					<span class="mask-interactivity">&nbsp;</span>
+				</div>
+			</div>
+		</div>
+		<div class="sidebar">
+
+		</div>
+		<div class="lower">
+
+		</div>
+	</div>
+</div>
+
+<footer id="footer"></footer>
+<script type="text/javascript" src="/js/underscore/underscore-min.js"></script>
+<script type="text/javascript" src="/js/dojo/dojo.js"></script>
+<script type="text/javascript">
+	dojoConfig.init();
+	require(["dojo"], function (dojo) {
+		dojo.ready(function () {
+
+		})
+	})
+</script>
+</body>
+</html>

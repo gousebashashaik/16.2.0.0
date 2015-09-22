@@ -1,0 +1,116 @@
+<div tabindex="0" class="guide destination expand-vertical open open-anim-done">
+    <span class="arrow"></span>
+    <div class="default-destinations" id="{{id}}-destinations">
+       <div class="wrapper cruise-wraper">
+           <div class="details-box">
+            <div class="title-bar">
+                <h3 class="reg-position">Cruise Regions</h3>
+            </div>
+            <div id="regions">
+            <div class="col reg-col">
+                <ul>
+                    {% for region in regions %}
+                    <li><label for="recommended-{{region.id}}" class="{% if not region.available %} disabled{% else %}{% for to in searchPanelModel.to.data %}{% ifequal to.id region.id %} selected{% endifequal %}{% endfor %}{% endif %}">
+                        <input type="checkbox"
+                               data-destination-id="{{region.id}}"
+                               data-destination-name="{{region.name}}"
+                               data-destination-type="{% if region.type %}{{region.type}}{% endif %}"
+                               name="{{region.name}}"
+                               id="collection-{{region.id}}"
+                               value="{{region.id}}"
+                               class="{{region.id}}"
+                               {% for to in searchPanelModel.to.data %}
+                                  {% ifequal to.id region.id %}
+                                     checked=checked
+                                  {% endifequal %}
+                               {% endfor %}
+                                />
+		                        <div class="tooltip-info" style="position:relative;display:inline-block;padding-right: 18px;">
+		                        {{region.name}}<p class="question" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{region.countries}}'"></p>
+		                        </div>
+		                        <span class="checkbox check-box"></span>
+	                        </label>
+                        </li>
+                    {% if forloop.counter|divisibleby:regionsColumnLength %}
+                    {% if not forloop.last %}
+                </ul>
+            </div>
+            <div class="col reg-col-width">
+                <ul>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            </div>
+            <div id="countries">
+            <div class="title-bar pad0 top-border" style=" padding-top: 9px;;border-top:1px solid #ccc;margin-top: 6px; ">
+                <h3 class="con-position">Top Countries</h3>
+            </div>
+            {% for country in countries %}
+            <div class="col con-col">
+                <ul>
+                    <li><label for="recommended-{{country.id}}" class="{% if not country.available %} disabled{% else %}{% for to in searchPanelModel.to.data %}{% ifequal to.id country.id %} selected{% endifequal %}{% endfor %}{% endif %}">
+                        <input type="checkbox"
+                               data-destination-id="{{country.id}}"
+                               data-destination-name="{{country.name}}"
+                               data-destination-type="{% if country.type %}{{country.type}}{% endif %}"
+                               name="{{country.name}}"
+                               id="collection-{{country.id}}"
+                               value="{{country.id}}"
+                               class="{{country.id}}"
+                               {% for to in searchPanelModel.to.data %}
+                                  {% ifequal to.id country.id %}
+                                     checked=checked
+                                  {% endifequal %}
+                               {% endfor %}
+                               />
+                        {{country.name}}<span class="checkbox check-box"></span></label>
+                    </li>
+
+                </ul>
+            </div>
+            {% endfor %}
+            </div>
+
+            <div class="list-two">
+                <div class="title-bar">
+                    <h3 class="iti-position">Itinerary | Country | Port of Call</h3>
+                </div>
+                <div class="quick-search">
+                    <div class="inputBox">
+                        <input lang="en" type="text" data-klass-Id="cruiseAutoComplete" data-dojo-type="tui.mvc.Klass" class="textfield textfield-search" placeholder="Type the first few letters of an Itinerary, port of call  or country name" />
+                    </div>
+                    <div class="destinationAutoCompleteErrorSpan">
+                        No matches found.
+                    </div>
+                </div>
+				<div class="col itinerary-list"><!--data-klass-Id="cruiseItineraryList" data-dojo-type="tui.mvc.Klass"-->
+					<ul>
+                        {% for selection in userSelections %}
+                        <li><label for="recommended-{{selection.id}}" class="selected">
+                            <input type="checkbox"
+                                   data-destination-id="{{selection.id}}"
+                                   data-destination-name="{{selection.name}}"
+                                   data-destination-type="{% if selection.type %}{{selection.type}}{% endif %}"
+                                   name="{{selection.name}}"
+                                   id="collection-{{selection.id}}"
+                                   value="{{selection.id}}"
+                                   class="{{selection.id}}"
+                                  checked=checked
+                            />
+                            {{selection.name}}<span class="checkbox check-box"></span></label>
+                        </li>
+                        {% endfor %}
+
+					</ul>
+				</div>
+            </div>
+		 <a class="close-list" href="javascript:void(0);"></a>
+        </div>
+	</div>
+    </div>
+
+   
+
+</div>

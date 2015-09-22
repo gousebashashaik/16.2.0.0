@@ -1,0 +1,563 @@
+
+<ul id="shortlistresultsAvailable">
+	{% for holiday in holidays %}
+	{% ifequal holiday.soldoutWishlistEntryId null %}
+	{% ifequal holiday.datePassedWishlistEntryId null %}
+	{% if holiday.wishlistEntryId %} 
+	<li id="accomodation_{{holiday.wishlistEntryId}}"> 
+		<div class="product special sen {% if holiday.accomViewData.differentiatedCode %}{{holiday.accomViewData.differentiatedCode}}{% endif %}">
+			<div class="compareHolidayHelpDiv_{{holiday.wishlistEntryId}} hide">{% if holiday.accomViewData.accomName %}{{holiday.accomViewData.accomName}}{% endif %}, {% if holiday.accomViewData.resortName %}{{holiday.accomViewData.resortName}}{% endif %} - {% if holiday.priceBreakdownViewData.3.price %}&pound;{{holiday.priceBreakdownViewData.3.price}}{% endif %}</div>
+			<div class="image-container">
+				{% if holiday.accomViewData.differentiatedType %}				
+				<span data-dojo-props="eventType:'mouseover',floatWhere:'position-top-center',topClass:'bottom',text:'{%if holiday.accomViewData.featureCodesAndValues.strapline.0%}{{holiday.accomViewData.featureCodesAndValues.strapline.0}}{%endif%}', listClass: 'square yellow', position: 'top'" data-dojo-type="tui.widget.customeraccount.Tooltips" href="javascript:void(0)" class="tooltip">{{holiday.accomViewData.differentiatedType}}</span>
+				{% endif %}				
+				<a  {% if holiday.accomViewData.resortName %}{% if holiday.accomViewData.accomName %}
+					{% if holiday.accomViewData.accomName %}
+					   		{% if holiday.locationMap.RESORT %}
+					   			{% if holiday.accomViewData.accomCode %}		
+						  			href="/{{holiday.brandTypeDomain}}/accommodation/overview/{{holiday.locationMap.RESORT|slugify}}/{{holiday.accomViewData.accomName|slugify}}-{{holiday.accomViewData.accomCode}}"
+						 		{% endif %}
+						 	{% else %}
+					    		{% if holiday.locationMap.DESTINATION %}						 
+						 			{% if holiday.accomViewData.accomCode %}		
+						  				href="/{{holiday.brandTypeDomain}}/accommodation/overview/{{holiday.locationMap.DESTINATION|slugify}}/{{holiday.accomViewData.accomName|slugify}}-{{holiday.accomViewData.accomCode}}"
+						 			{% endif %}
+						 		{% else %}
+					    			{% if holiday.locationMap.REGION %}						 
+						 				{% if holiday.accomViewData.accomCode %}		
+						  					href="/{{holiday.brandTypeDomain}}/accommodation/overview/{{holiday.locationMap.REGION|slugify}}/{{holiday.accomViewData.accomName|slugify}}-{{holiday.accomViewData.accomCode}}"
+						 				{% endif %}
+						 			{% else %}
+					    				{% if holiday.locationMap.COUNTRY %}						 
+						 					{% if holiday.accomViewData.accomCode %}		
+						  						href="/{{holiday.brandTypeDomain}}/accommodation/overview/{{holiday.locationMap.COUNTRY|slugify}}/{{holiday.accomViewData.accomName|slugify}}-{{holiday.accomViewData.accomCode}}"
+						 					{% endif %}
+						 				{% endif %}
+						 			{% endif %}
+						 		{% endif %}
+							{% endif %}
+					   {% endif %}
+				alt="{{holiday.accomViewData.resortName}}"{% endif %}{% endif %}>
+					<img class="savedHolidayImg_{{holiday.wishlistEntryId}} ensLinkTrack" data-componentid="WF_COM_441" src="{{holiday.accomViewData.accomImageUrl}}" />
+				</a>				
+				<ul>
+					{% if holiday.gallery %}
+					<li class="gallery">
+						<a class="ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %} href="javascript:void(0)" data-dojo-type="tui.widget.customeraccount.gallery.Gallery" data-dojo-props='albumId:"{{holiday.wishlistEntryId}}",images:{{holiday.gallery}}'>
+							<i class="caret camera blue"></i>
+							<span class="text">Gallery</span>
+						</a>
+					</li>
+					{% endif %}
+					<li class="map">
+						<a href="#" class="ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %}">
+							<i class="caret pin blue"></i>
+							<span class="text">Map</span>
+						</a>
+					</li>
+				</ul>
+				<div class="social">
+					<ul>
+						<li>
+							{% ifnotequal holidays.login "null" %}  
+								<a class="add-comment customer-comments ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %} href="#" id="custNewComment_{{holiday.wishlistEntryId}}" name="{{holiday.wishlistEntryId}}">{% if holiday.notes %}<i class="bubble"></i><span>View/edit comment</span>{% else %}<span>Add a comment</span> {% endif %}</a>					
+								<p style="display:none;" id="_custNewComment_{{holiday.wishlistEntryId}}" name="_{{holiday.wishlistEntryId}}">{% if holiday.notes %}{{holiday.notes}}{% endif %}</p>
+							{% endifnotequal %}
+						</li>
+						<li class="share-container">
+							<a href="#">
+								<i class="caret share blue"></i><span>Share</span>
+							</a>
+							<div class="share-box hide">
+								<i class="caret close"></i>
+								<ul>
+									<li class="facebook"><a href="#"><i class="caret facebook"></i>Facebook</a></li>
+									<li class="twitter"><a href="#"><i class="caret twitter"></i>Twitter</a></li>
+									<li class="google"><a href="#"><i class="caret google"></i>GooglePlus</a></li>
+									<li class="pinterest"><a href="#"><i class="caret pinterest parking"></i>Pinterest</a></li>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</div>
+				
+			</div>
+			<div class="copy-container">							
+				<div class="copy">
+					<h3>
+						<a  class="ensLinkTrack"  data-componentid="WF_COM_441" {% if holiday.accomViewData.accomName %}
+					   		{% if holiday.locationMap.RESORT %}
+					   			{% if holiday.accomViewData.accomCode %}		
+						  			href="/{{holiday.brandTypeDomain}}/accommodation/overview/{{holiday.locationMap.RESORT|slugify}}/{{holiday.accomViewData.accomName|slugify}}-{{holiday.accomViewData.accomCode}}"
+						 		{% endif %}
+						 	{% else %}
+					    		{% if holiday.locationMap.DESTINATION %}						 
+						 			{% if holiday.accomViewData.accomCode %}		
+						  				href="/{{holiday.brandTypeDomain}}/accommodation/overview/{{holiday.locationMap.DESTINATION|slugify}}/{{holiday.accomViewData.accomName|slugify}}-{{holiday.accomViewData.accomCode}}"
+						 			{% endif %}
+						 		{% else %}
+					    			{% if holiday.locationMap.REGION %}						 
+						 				{% if holiday.accomViewData.accomCode %}		
+						  					href="/{{holiday.brandTypeDomain}}/accommodation/overview/{{holiday.locationMap.REGION|slugify}}/{{holiday.accomViewData.accomName|slugify}}-{{holiday.accomViewData.accomCode}}"
+						 				{% endif %}
+						 			{% else %}
+					    				{% if holiday.locationMap.COUNTRY %}						 
+						 					{% if holiday.accomViewData.accomCode %}		
+						  						href="/{{holiday.brandTypeDomain}}/accommodation/overview/{{holiday.locationMap.COUNTRY|slugify}}/{{holiday.accomViewData.accomName|slugify}}-{{holiday.accomViewData.accomCode}}"
+						 					{% endif %}
+						 				{% endif %}
+						 			{% endif %}
+						 		{% endif %}
+							{% endif %}
+					   {% endif %}>
+						{{holiday.accomViewData.accomName}}
+					</a>						
+						
+						{% if holiday.accomViewData.rating %}
+						<span class="t-rating" data-dojo-type="tui.widget.customeraccount.displayTRating" data-dojo-props='wishlistEntryId:"{{holiday.wishlistEntryId}}", RefId:"trating_{{holiday.wishlistEntryId}}",trating:"{{holiday.accomViewData.rating}}", brandType:"{{holiday.brandType}}"'>
+							&nbsp;
+							<span id="trating_plus_{{holiday.wishlistEntryId}}"></span>
+						</span>
+						{% endif %}
+					</h3>
+					
+					
+					{% if holiday.locationMap.DESTINATION %} {% if holiday.locationMap.RESORT %}
+					  <p class="where">{{holiday.locationMap.RESORT}}, {{holiday.locationMap.DESTINATION}}</p>
+					  {% else %}
+					    {% if holiday.locationMap.REGION %}
+					      <p class="where">{{holiday.locationMap.DESTINATION}}, {{holiday.locationMap.REGION}}</p>
+					  		{% else %}
+						    {% if holiday.locationMap.COUNTRY %}
+						      <p class="where">{{holiday.locationMap.DESTINATION}}, {{holiday.locationMap.COUNTRY}}</p>
+						    {% endif %}
+					    {% endif %}
+					  {% endif %}
+					  {% else %}	
+					  {% if holiday.locationMap.RESORT %} {% if holiday.locationMap.REGION %}
+					      <p class="where">{{holiday.locationMap.RESORT}}, {{holiday.locationMap.REGION}}</p>
+					  		{% else %}
+						    {% if holiday.locationMap.COUNTRY %}
+						      <p class="where">{{holiday.locationMap.RESORT}}, {{holiday.locationMap.COUNTRY}}</p>
+						    {% endif %}
+					    {% endif %}
+					  {% endif %}				  
+					{% endif %}
+					
+						
+					
+					
+					{% if not empty holiday.accomViewData.featureCodesAndValues.usps %}
+					<ul class="square">
+						{% for usp in holiday.accomViewData.featureCodesAndValues.usps %}
+						<li>{{usp}}</li>
+						{% endfor %}
+					</ul>
+					{% endif %}
+					{% if holiday.tripadvisorData.ratingBar %}<img src="{{holiday.tripadvisorData.ratingBar}}" title="Tripadvisor Rating" alt="Tripadvisor Rating"/>{% endif %}{% if holiday.tripadvisorData.reviewsCount %}<p class="ta-reviews"><a href="{{holiday.tripadvisorData.reviewsCount}}">{{holiday.tripadvisorData.reviewsCount}}</a> TripAdvisor Reviews</p>{% endif %}
+					<!-- {% if holiday.accomViewData.resortName %}
+					{% if holiday.accomViewData.accomName %}
+					<a class="accommodation" href="/{{holiday.brandTypeDomain}}/accommodation/overview/{{holiday.accomViewData.resortName|slugify}}/{{holiday.accomViewData.accomName|slugify}}-{{holiday.accomViewData.accomCode}}">See accommodation details</a><div>&nbsp;</div>
+					{% endif %}
+					{% endif %} -->
+					
+					<!-- duplicate add comments is added to show it on mobile devices US6609 -->
+					
+					{% ifnotequal holidays.login "null" %} 
+						<div class="social">
+							<ul>
+								<li> 
+									<a class="add-comment customer-comments ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %} href="#" id="custNewComment_{{holiday.wishlistEntryId}}" name="{{holiday.wishlistEntryId}}">{% if holiday.notes %}<i class="bubble"></i><span>View/edit comment</span>{% else %}<span>Add a comment</span> {% endif %}</a>					
+									<p style="display:none;" id="_custNewComment_{{holiday.wishlistEntryId}}" name="_{{holiday.wishlistEntryId}}">{% if holiday.notes %}{{holiday.notes}}{% endif %}</p>
+								</li>
+								<li class="share-container">
+									<a href="#">
+										<i class="caret share blue"></i><span>Share</span>
+									</a>
+									<div class="share-box hide">
+										<i class="caret close"></i>
+										<ul>
+											<li class="facebook"><a href="#"><i class="caret facebook"></i>Facebook</a></li>
+											<li class="twitter"><a href="#"><i class="caret twitter"></i>Twitter</a></li>
+											<li class="google"><a href="#"><i class="caret google"></i>GooglePlus</a></li>
+											<li class="pinterest"><a href="#"><i class="caret pinterest parking"></i>Pinterest</a></li>
+										</ul>
+									</div>
+								</li>
+							</ul>
+						</div>
+					{% endifnotequal %}
+					
+					
+				</div>													
+				<!-- detail container div here -->
+				{% ifequal holiday.priceDecreased  "false" %}{% ifnotequal holiday.priceDiff 0 %}							
+				<div class="alter-price increased">
+					<p><span>Increased by &pound;{{holiday.priceDiff}}pp</span></p>
+					{% if holiday.savedPackageData.0.descreption %}
+						{% if holiday.savedPackageData.0.changedPrice %}
+						<a  data-dojo-props="eventType:'mouseover',floatWhere:'position-bottom-center',topClass:'top',text:'{{holiday.savedPackageData.0.descreption}}:{{holiday.savedPackageData.0.changedPrice}}', listClass: 'square yellow', position: 'top left'" data-dojo-type="tui.widget.customeraccount.Tooltips" href="javascript:void(0)" class="tooltip">Whatschanged?</a>
+						{% endif %}
+						{% endif %}
+				</div>													
+				{% endifnotequal %}{% endifequal %}								
+				{% ifequal holiday.priceDecreased  "true" %}{% ifnotequal holiday.priceDiff 0 %}
+				<div class="alter-price decreased">
+					<p>
+						<span>Decreased by &pound;{{holiday.priceDiff}}pp</span>
+						{% if holiday.savedPackageData.0.descreption %}
+						{% if holiday.savedPackageData.0.changedPrice %}
+						<a  data-dojo-props="eventType:'mouseover',floatWhere:'position-bottom-center',topClass:'top',text:'{{holiday.savedPackageData.0.descreption}}:{{holiday.savedPackageData.0.changedPrice}}', listClass: 'square yellow', position: 'top left'" data-dojo-type="tui.widget.customeraccount.Tooltips" href="javascript:void(0)" class="tooltip">Whatschanged?</a>
+						{% endif %}
+						{% endif %}
+					</p>
+				</div> 
+				{% endifnotequal %}{% endifequal %}
+				
+				
+				{% ifequal holiday.ancillarySoldOut "true" %}
+					
+					<div class="price soldout">
+															<h3>Sorry!</h3>
+															<p>One or more of the extras you added to your holiday has sold out</p>
+															<!-- <a>Continue without my added extras </a> -->
+															<a data-dojo-type="tui.widget.customeraccount.popup.TransferToDomainDynamicPopup" data-dojo-props="widgetId:'transferringToOtherTH',scrollable:false,wishlistEntryId:'{{holiday.wishlistEntryId}}'" href="/{{holiday.brandType}}/book/dflightoptions?entry={{holiday.wishlistEntryId}}"  data-componentid="WF_COM_441">Continue without my added extras</a>
+															
+														</div>
+														{% else %}
+				<div class="price">
+					<ul>
+						<li>Total price</li>
+						<li class="per-person">										
+							{% if holiday.priceBreakdownViewData.3.price %}
+								<h3>&pound;</h3><h1>{{holiday.priceBreakdownViewData.3.price}}</h1>
+								{% endif %}	
+							<p class="duration-date">
+							{% if holiday.flightViewData.duration %}
+								{{holiday.flightViewData.duration}} nights
+								{% endif %}
+							<span>
+							{% if holiday.flightViewData.outboundSectors.0.schedule.arrivalDate %}
+								{{holiday.flightViewData.outboundSectors.0.schedule.arrivalDate}}
+								{% endif %}					
+							</span>
+							</p>
+						</li>
+						{% if holiday.onlineDiscount %}
+							<li class="error">Price includes &pound;{{holiday.onlineDiscount}}pp discount. {% if holiday.deposit %}Pay only &pound;{{holiday.deposit}}pp deposit.{% endif %} {% if holiday.freeChildPlace %}{{holiday.freeChildPlace}}.{% endif %}</li>
+							{% endif %}	
+					</ul>
+					<span class="context-arrow"></span>
+				</div>
+				{% endifequal %}
+				
+				<div data-dojo-type="tui.widget.common.Accordion" class="accordion sand">
+					<div class="item">
+						<div class="trigger">
+							<i class="caret flyout brown"></i><p>Flights</p><i class="caret state grey"></i>
+						</div>
+						<div class="content" style="height:0px;"> 
+							<div class="flight-pattern">
+								
+								<p>{% if holiday.flightViewData.outboundSectors.0.departureAirport.name%}{{holiday.flightViewData.outboundSectors.0.departureAirport.name}}{% endif %} - {% if holiday.flightViewData.outboundSectors.0.arrivalAirport.name%}{{holiday.flightViewData.outboundSectors.0.arrivalAirport.name}}{% endif %}</p>
+								
+								<ul>
+									<li><i class="caret flyout brown"></i>{% if holiday.flightViewData.outboundSectors.0.schedule.departureDate %}{{holiday.flightViewData.outboundSectors.0.schedule.departureDate}}{% endif %}<span>
+									<i class="caret time brown"></i>{% if holiday.flightViewData.outboundSectors.0.schedule.depTime %} {{holiday.flightViewData.outboundSectors.0.schedule.depTime}} {% endif %} <i class="caret next brown"></i>{% if holiday.flightViewData.outboundSectors.0.schedule.arrTime %}{{holiday.flightViewData.outboundSectors.0.schedule.arrTime}} {% endif %}</span><div>{% if holiday.flightViewData.departureDateDiff %}+{{holiday.flightViewData.departureDateDiff}} Day{% endif %}</div></li>
+									<li><span class="airline-logo {{holiday.flightViewData.outboundSectors.0.carrierCode}}"></span></li>
+									{% if holiday.flightViewData.outboundDreamLiner %}
+									<li>													
+										<a href="javascript:void(0)" data-dojo-type="tui.widget.customeraccount.Tooltips" data-dojo-props="eventType:'mouseover',floatWhere:'position-bottom-center',topClass:'top', text:'<p>787 Dreamliner flights</p><ul class=\'square yellow\' ><li>Up to 34 inch seat pitch in economy and 38 inches in Premium</li><li>30% bigger windows, horizon view wherever you sit</li><li>Even at its lowest point the cabin is over 6-fioot high &ndash; a real sense of space</li><li>Altered cabin pressure &ndash; leave the flight feeling fresher</li><li>60% less noise than standard planes during take-off and landing</li></ul>'">
+											787 Dreamliner
+										</a>											
+									</li>
+									{% endif %}
+									<li><i class="caret flyin brown"></i> {% if holiday.flightViewData.inboundSectors.0.schedule.departureDate %}{{holiday.flightViewData.inboundSectors.0.schedule.departureDate}}{% endif %} <span><i class="caret time brown"></i>{% if holiday.flightViewData.inboundSectors.0.schedule.depTime %} {{holiday.flightViewData.inboundSectors.0.schedule.depTime}} {% endif %}<i class="caret next brown"></i>{% if holiday.flightViewData.inboundSectors.0.schedule.arrTime %}{{holiday.flightViewData.inboundSectors.0.schedule.arrTime}} {% endif %}</span><div>{% if holiday.flightViewData.arrivalDateDiff %}+{{holiday.flightViewData.arrivalDateDiff}} Day{% endif %}</div></li>
+									<li><span class="airline-logo {{holiday.flightViewData.inboundSectors.0.carrierCode}}"></span></li>
+									{% if holiday.flightViewData.inboundDreamLiner %}
+									<li>													
+										<a href="javascript:void(0)" data-dojo-type="tui.widget.customeraccount.Tooltips" data-dojo-props="eventType:'mouseover',floatWhere:'position-bottom-center',topClass:'top', text:'<p>787 Dreamliner flights</p><ul class=\'square yellow\' ><li>Up to 34 inch seat pitch in economy and 38 inches in Premium</li><li>30% bigger windows, horizon view wherever you sit</li><li>Even at its lowest point the cabin is over 6-fioot high &ndash; a real sense of space</li><li>Altered cabin pressure &ndash; leave the flight feeling fresher</li><li>60% less noise than standard planes during take-off and landing</li></ul>'">
+											787 Dreamliner
+										</a>											
+									</li>
+									{% endif %}
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="item">
+						<div class="trigger">
+							<i class="caret facilities brown"></i><p>What's included</p><i class="caret state grey"></i>
+						</div>
+						<div class="content" style="height:0px;">
+							<ul class="included">
+							
+								
+								{% for rooms in holiday.accomViewData.roomsMap %}								
+								  <li class="detail-type"><i class="caret room brown"></i>
+								  	{{rooms.1}} * {{rooms.0}} 
+								  	{% ifequal rooms.2 "true" %}
+									{% ifnotequal rooms.3 "0" %}
+								  		- <a data-dojo-props="eventType:'mouseover',floatWhere:'position-bottom-center',topClass:'top',text:'{{holidays.availableRoomsToolTipText}}', listClass: 'square yellow', position: 'top left'" data-dojo-type="tui.widget.customeraccount.Tooltips" href="javascript:void(0)" class="tooltip rooms-left">Only {{rooms.3}} room(s) left</a>
+								  	{% endifnotequal %}
+									{% endifequal %}
+								  </li>
+								{% endfor %}
+								
+								 <!--  <li class="detail-type"><i class="caret room brown"></i>
+									{% if holiday.accomViewData.roomViewData.0.roomType %}
+									{{holiday.accomViewData.roomViewData.0.roomType}}
+									{% endif %}
+									{% if holiday.lowAvailabilityIndicator %}
+									<a data-dojo-props="eventType:'mouseover',floatWhere:'position-bottom-center',topClass:'top',text:'{{holidays.availableRoomsToolTipText}}', listClass: 'square yellow', position: 'top left'" data-dojo-type="tui.widget.customeraccount.Tooltips" href="javascript:void(0)" class="tooltip rooms-left">
+										- {{holiday.availableRoomsText}}
+									</a>
+									{% endif %}									
+								</li> -->
+								{% if holiday.accomViewData.boardBasisName %}
+								<li class="detail-type"><i class="caret food brown"></i>{{holiday.accomViewData.boardBasisName}}</li>
+								{% endif %}
+								{% if holiday.paxViewData.noOfAdults  %}
+								<li class="detail-type"><i class="caret party brown"></i>{{holiday.paxViewData.noOfAdults}} adult{% ifnotequal holiday.paxViewData.noOfAdults  1 %}s{% endifnotequal %}{% if holiday.paxViewData.noOfChildren  %}, {{holiday.paxViewData.noOfChildren}} child{% ifnotequal holiday.paxViewData.noOfChildren  1 %}ren{% endifnotequal %}{% endif %}{% if holiday.paxViewData.noOfInfants %}, {{holiday.paxViewData.noOfInfants}} infant{% ifnotequal holiday.paxViewData.noOfInfants  1 %}s{% endifnotequal %}{% endif %}</li>
+								{% endif %}
+								{% ifnotequal holiday.ancillaryName "Taxi Transfer" %}
+								{% if holiday.coachTransfer %}
+								<li class="detail-type"><i class="caret tick brown"></i>{{ holiday.coachTransfer }}</li>
+								{% endif %}
+								{% endifnotequal %}
+								
+								{% if holiday.freeCarHire %}
+								<li class="detail-type"><i class="caret tick brown"></i>{{ holiday.freeCarHire }}</li>
+								{% endif %}
+								{% if holiday.extrasCount %}{% if holiday.priceBreakdownViewData.1.price %}{% if holiday.overlayContent %}
+								{% ifequal holiday.ancillarySoldOut "false" %}
+								<li class="detail-type"><i class="caret tick brown"></i>
+									
+									<a href="javascript:void(0)" class="tooltip added-extras" data-dojo-type="tui.widget.customeraccount.Tooltips" data-dojo-props="eventType:'mouseover',floatWhere:'position-bottom-center',topClass:'top', text:'You\'ve added the following extras {{holiday.overlayContent}}'">
+									Added extras (<span>{{holiday.extrasCount}}</span>) <span>&pound;{{holiday.priceBreakdownViewData.1.price}}</span>
+									</a>
+								
+								</li>
+								{% endifequal %}
+								{% endif %}{% endif %}{% endif %}
+														
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="button-container">
+				{% ifequal holiday.ancillarySoldOut "false" %}
+					<div class="compare" data-dojo-type="tui.widget.customeraccount.addToCompare" data-dojo-props="wishlistEntryId:'{{holiday.wishlistEntryId}}', imageUrl:'{{holiday.accomViewData.accomImageUrl}}', login:'{{holidays.login}}' " wishlistid="{{holiday.wishlistEntryId}}">
+						<i class="radio radio_enabled" style="display:inline;"></i>						
+						<a href="javascript:void(0)" class="radio_disabled" style="display:none;" data-dojo-type="tui.widget.customeraccount.Tooltips" data-dojo-props="eventType:'click',floatWhere:'position-bottom-left',topClass:'top',text:'You have reached the maximum limit and You need to delete a holiday from compare panel to add another one.', listClass: 'square yellow', position: 'top left'"><i class="radio"></i></a>
+						<span class="comparestatus">Add to compare</span> 
+						<a  data-dojo-props="refid:'addedHoliday{{holiday.wishlistEntryId}}',wishlistEntryId:'{{holiday.wishlistEntryId}}',successUrl:'{{tuiWebrootPath}}/content/compareViewPage'" data-dojo-type="tui.widget.customeraccount.CollectSavedHolidaysList" href="javascript:void(0)" class="comparenowButton1 tooltip ensLinkTrack" data-componentid="WF_COM_441" style="display:none;">
+							Compare now
+						</a>
+					</div>
+					{% endifequal %}
+					{% if holiday.accomViewData.accomName %}
+						{% ifequal holidays.login "null" %}  
+							<a class="button cta-grey b remove" href="#" data-dojo-props='message:"The {{holiday.accomViewData.accomName}} is deleted",targetURL:"{{tuiWebrootPath}}/viewAnonymousShortlist/removeAnonymousSavedHoliday?wishlistEnrtyId={{holiday.wishlistEntryId}}&wishlistId={{holiday.wishlistId}}", wishlistEntryId:"accomodation_{{holiday.wishlistEntryId}}"' data-dojo-type="tui.widget.customeraccount.RemoveSavedHoliday">Remove</a>
+						{% endifequal %}
+						{% ifnotequal holidays.login "null" %}  
+							<a class="button cta-grey b remove" href="#" data-dojo-props='message:"The {{holiday.accomViewData.accomName}} is deleted",targetURL:"{{tuiWebrootPath}}/viewShortlist/removeSavedHoliday?wishlistEnrtyId={{holiday.wishlistEntryId}}&wishlistId={{holiday.wishlistId}}", wishlistEntryId:"accomodation_{{holiday.wishlistEntryId}}"' data-dojo-type="tui.widget.customeraccount.RemoveSavedHoliday">Remove</a>
+						{% endifnotequal %}
+						
+					{% endif %}
+					
+					
+						{% ifequal tuiWebrootPath "/holiday" %}						
+						        
+								 {% ifequal holiday.brandType "destinations" %}
+								<a data-dojo-type="tui.widget.customeraccount.popup.TransferToDomainDynamicPopup" data-dojo-props="widgetId:'transferringToOtherTH',scrollable:false,wishlistEntryId:'{{holiday.wishlistEntryId}}'" class="ensLinkTrack view button blue blue{{holiday.wishlistEntryId}}" href="/{{holiday.brandType}}/book/dflightoptions?entry={{holiday.wishlistEntryId}}"  data-componentid="WF_COM_441">Book now</a>
+								{% endifequal %}
+								 {% ifequal holiday.brandType "holiday" %}
+								<a  class="ensLinkTrack view button blue b blue{{holiday.wishlistEntryId}}" href="{{tuiWebrootPath}}/book/dflightoptions?entry={{holiday.wishlistEntryId}}"  data-componentid="WF_COM_441">Book now</a>
+								{% endifequal %}
+						{% endifequal %}
+						{% ifequal tuiWebrootPath "/destinations" %}
+						       
+								{% ifequal holiday.brandType "destinations" %}
+								<a  class="ensLinkTrack view button blue b blue{{holiday.wishlistEntryId}}" href="{{tuiWebrootPath}}/book/dflightoptions?entry={{holiday.wishlistEntryId}}"  data-componentid="WF_COM_441">Book now</a>
+								{% endifequal %}
+								 {% ifequal holiday.brandType "holiday" %}
+								<a data-dojo-type="tui.widget.customeraccount.popup.TransferToDomainDynamicPopup" data-dojo-props="widgetId:'transferringToOtherFC',scrollable:false,wishlistEntryId:'{{holiday.wishlistEntryId}}'" class="ensLinkTrack view button blue blue{{holiday.wishlistEntryId}}" href="/{{holiday.brandType}}/book/dflightoptions?entry={{holiday.wishlistEntryId}}"  data-componentid="WF_COM_441">Book now</a>
+								{% endifequal %}
+						{% endifequal %}
+					
+				</div>
+			</div>
+			
+		</div>
+	</li>
+	{% endif %}
+	{% endifequal %}
+	{% endifequal %}
+	{% endfor %}
+</ul>
+{% if CSWishlistIds %}
+{% ifequal holidays.login "null" %}  
+	<p class="alert generic mid-level no-longer b">
+		<span>The following holidays are no longer available:</span> 
+		<a class="deleteall" href="#" data-dojo-props='message:"Deleted all no longer available holidays",targetURL:"{{tuiWebrootPath}}/viewAnonymousShortlist/deleteAnonymousSavedHolidays?wishlistEnrtyId={{CSWishlistIds}}", wishlistEntryId:"noLongerAvailableHolidays"' data-dojo-type="tui.widget.customeraccount.RemoveSavedHoliday">Delete all these holidays</a>
+	</p>
+{% endifequal %}
+{% ifnotequal holidays.login "null" %}  
+	<p class="alert generic mid-level no-longer b">
+		<span>The following holidays are no longer available:</span> 
+		<a class="deleteall" href="#" data-dojo-props='message:"Deleted all no longer available holidays",targetURL:"{{tuiWebrootPath}}/viewShortlist/removeSavedHoliday?wishlistEnrtyId={{CSWishlistIds}}", wishlistEntryId:"noLongerAvailableHolidays"' data-dojo-type="tui.widget.customeraccount.RemoveSavedHoliday">Delete all these holidays</a>
+	</p>
+{% endifnotequal %}
+<ul id="noLongerAvailableHolidays"> 
+	<!-- No longer hotels starts -->
+	{% for holiday in holidays %}
+	{% ifnotequal holiday.soldoutWishlistEntryId null %}
+	{% if holiday.wishlistEntryId %}
+	<li id="accomodation_{{holiday.wishlistEntryId}}"> 
+		<div class="product special sen {% if holiday.accomViewData.differentiatedCode %} {{holiday.accomViewData.differentiatedCode}}{% endif %} unavailable">
+			<div class="image-container">
+				{% if holiday.accomViewData.differentiatedType %}
+				<span data-dojo-props="eventType:'mouseover',floatWhere:'position-top-center',topClass:'bottom',text:'{%if holiday.accomViewData.featureCodesAndValues.strapline.0%}{{holiday.accomViewData.featureCodesAndValues.strapline.0}}{%endif%}', listClass: 'square yellow', position: 'top'" data-dojo-type="tui.widget.customeraccount.Tooltips" href="javascript:void(0)" class="tooltip">{{holiday.accomViewData.differentiatedType}}</span>
+				{% endif %}
+				<a  {% if holiday.accomViewData.resortName %}{% if holiday.accomViewData.accomName %}href="{{tuiWebrootPath}}/accommodation/overview/{{holiday.accomViewData.resortName|slugify}}/{{holiday.accomViewData.accomName|slugify}}-{{holiday.accomViewData.accomCode}}" alt="{{holiday.accomViewData.resortName}}"{% endif %}{% endif %}>
+					<img class="savedHolidayImg_{{holiday.wishlistEntryId}} ensLinkTrack" data-componentid="WF_COM_441" src="{{holiday.accomViewData.accomImageUrl}}" />
+				</a>						
+			</div>
+			<div class="copy-container">	
+				<div class="copy">
+					<h3>
+					<a class="ensLinkTrack"  data-componentid="WF_COM_441" {% if holiday.accomViewData.accomName %}{% if holiday.accomViewData.resortName %}{% if holiday.accomViewData.accomCode %}		
+						href="/{{holiday.brandTypeDomain}}/accommodation/overview/{{holiday.accomViewData.resortName|slugify}}/{{holiday.accomViewData.accomName|slugify}}-{{holiday.accomViewData.accomCode}}"
+						{% endif %}{% endif %}{% endif %}>
+						{{holiday.accomViewData.accomName}}
+					</a>					
+					{% if holiday.accomViewData.rating %}<span class="t-rating" data-dojo-type="tui.widget.customeraccount.displayTRating" data-dojo-props='wishlistEntryId:"{{holiday.wishlistEntryId}}", RefId:"trating_{{holiday.wishlistEntryId}}",trating:"{{holiday.accomViewData.rating}}"'>&nbsp;<span id="trating_plus_{{holiday.wishlistEntryId}}"></span></span>{% endif %}
+				   </h3>
+					{% if holiday.accomViewData.resortName %}{% if holiday.accomViewData.destinationName %}<p class="where">{{holiday.accomViewData.resortName}}, {{holiday.accomViewData.destinationName}}</p>{% endif %}{% endif %}
+					<p>
+						{% if holiday.flightViewData.duration %}
+							<span class="nights">{{holiday.flightViewData.duration}} nights</span>
+						{% endif %}
+						{% if holiday.flightViewData.outboundSectors.0.departureAirport.name%}
+							<span class="airport">{{holiday.flightViewData.outboundSectors.0.departureAirport.name}}</span>
+							{% endif %}
+						{% if holiday.flightViewData.outboundSectors.0.schedule.departureDate %}
+						<span class="leave-date">{{holiday.flightViewData.outboundSectors.0.schedule.departureDate}}.</span>
+						{% endif %}
+					</p>
+				</div>				
+				<div class="remove-shortlisted">
+					<div class="button-container">
+						<p>No longer available</p>
+						{% if holiday.accomViewData.accomName %}
+						{% ifequal holidays.login "null" %}  
+							<a class="button cta-grey b remove" href="#" data-dojo-props='message:"The {{holiday.accomViewData.accomName}} is deleted",targetURL:"{{tuiWebrootPath}}/viewAnonymousShortlist/removeAnonymousSavedHoliday?wishlistEnrtyId={{holiday.wishlistEntryId}}&wishlistId={{holiday.wishlistId}}", wishlistEntryId:"accomodation_{{holiday.wishlistEntryId}}"' data-dojo-type="tui.widget.customeraccount.RemoveSavedHoliday">Remove</a>
+						{% endifequal %}
+						{% ifnotequal holidays.login "null" %}  
+							<a class="button cta-grey b remove" href="#" data-dojo-props='message:"The {{holiday.accomViewData.accomName}} is deleted",targetURL:"{{tuiWebrootPath}}/viewShortlist/removeSavedHoliday?wishlistEnrtyId={{holiday.wishlistEntryId}}&wishlistId={{holiday.wishlistId}}", wishlistEntryId:"accomodation_{{holiday.wishlistEntryId}}"' data-dojo-type="tui.widget.customeraccount.RemoveSavedHoliday">Remove</a>
+						{% endifnotequal %}
+						{% endif %}
+					</div>
+				</div>					
+			</div>
+			<div class="alternatives b">
+				<a href="#" class="alternatives" data-dojo-type="tui.searchGetPrice.view.GetPriceModal" data-dojo-props="widgetId:'get-price-modal{{holiday.wishlistEntryId}}', modal: true, resizeListener: true"><i class="caret link blue"></i> Search for alternative holidays at this accommodation</a>
+			</div>
+		</div>
+	</li>
+	{% endif %}
+	{% endifnotequal %}
+	{% endfor %}
+	<!-- No longer hotels ends -->
+	<!-- date passed hotels starts --->
+	{% for holiday in holidays %}
+	{% ifnotequal holiday.datePassedWishlistEntryId null %}
+	{% if holiday.wishlistEntryId %}
+	<li id="accomodation_{{holiday.wishlistEntryId}}"> 
+		<div class="product special sen {% if holiday.accomViewData.differentiatedCode %} {{holiday.accomViewData.differentiatedCode}}{% endif %} unavailable">
+			<div class="image-container">
+				{% if holiday.accomViewData.differentiatedType %}
+				<span data-dojo-props="eventType:'mouseover',floatWhere:'position-top-center',topClass:'bottom',text:'{%if holiday.accomViewData.featureCodesAndValues.strapline.0%}{{holiday.accomViewData.featureCodesAndValues.strapline.0}}{%endif%}', listClass: 'square yellow', position: 'top'" data-dojo-type="tui.widget.customeraccount.Tooltips" href="javascript:void(0)" class="tooltip">{{holiday.accomViewData.differentiatedType}}</span>
+				{% endif %}
+				<a  {% if holiday.accomViewData.resortName %}{% if holiday.accomViewData.accomName %}href="{{tuiWebrootPath}}/accommodation/overview/{{holiday.accomViewData.resortName|slugify}}/{{holiday.accomViewData.accomName|slugify}}-{{holiday.accomViewData.accomCode}}" alt="{{holiday.accomViewData.resortName}}"{% endif %}{% endif %}>
+					<img class="savedHolidayImg_{{holiday.wishlistEntryId}} ensLinkTrack" data-componentid="WF_COM_441" src="{{holiday.accomViewData.accomImageUrl}}" />
+				</a>					
+			</div>
+			<div class="copy-container">
+										
+				<div class="copy">
+					<h3>
+					<a  class="ensLinkTrack"  data-componentid="WF_COM_441"	{% if holiday.accomViewData.accomName %}{% if holiday.accomViewData.resortName %}{% if holiday.accomViewData.accomCode %}		
+						href="/{{holiday.brandTypeDomain}}/accommodation/overview/{{holiday.accomViewData.resortName|slugify}}/{{holiday.accomViewData.accomName|slugify}}-{{holiday.accomViewData.accomCode}}"
+						{% endif %}{% endif %}{% endif %}>
+						{{holiday.accomViewData.accomName}}
+					</a>					
+					{% if holiday.accomViewData.rating %}
+					<span class="t-rating" data-dojo-type="tui.widget.customeraccount.displayTRating" data-dojo-props='wishlistEntryId:"{{holiday.wishlistEntryId}}", RefId:"trating_{{holiday.wishlistEntryId}}",trating:"{{holiday.accomViewData.rating}}"'>&nbsp;<span id="trating_plus_{{holiday.wishlistEntryId}}"></span></span>
+					{% endif %}
+				   </h3>
+					{% if holiday.accomViewData.resortName %}{% if holiday.accomViewData.destinationName %}<p class="where">{{holiday.accomViewData.resortName}}, {{holiday.accomViewData.destinationName}}</p>{% endif %}{% endif %}
+					<p> 
+						
+						{% if holiday.flightViewData.duration %}
+							<span class="nights">{{holiday.flightViewData.duration}} nights</span>
+						{% endif %}
+						{% if holiday.flightViewData.outboundSectors.0.departureAirport.name%}
+							<span class="airport">{{holiday.flightViewData.outboundSectors.0.departureAirport.name}}</span>
+							{% endif %}
+						{% if holiday.flightViewData.outboundSectors.0.schedule.departureDate %}
+						<span class="leave-date">{{holiday.flightViewData.outboundSectors.0.schedule.departureDate}}.</span>
+						{% endif %}
+					</p>
+				</div>
+										
+				<div class="remove-shortlisted">
+					<div class="button-container">
+						<p>Date has passed</p>
+						{% if holiday.accomViewData.accomName %}
+						<a class="button cta-grey b remove" href="#" data-dojo-props='message:"The {{holiday.accomViewData.accomName}} is deleted",targetURL:"{{tuiWebrootPath}}/viewShortlist/removeSavedHoliday?wishlistEnrtyId={{holiday.wishlistEntryId}}&wishlistId={{holiday.wishlistId}}", wishlistEntryId:"accomodation_{{holiday.wishlistEntryId}}"' data-dojo-type="tui.widget.customeraccount.RemoveSavedHoliday">Remove</a>
+						{% endif %}
+					</div>
+				</div>
+										
+			</div>
+			<div class="alternatives b">
+				<a href="#" class="alternatives" data-dojo-type="tui.searchGetPrice.view.GetPriceModal" data-dojo-props="widgetId:'get-price-modal{{holiday.wishlistEntryId}}', modal: true, resizeListener: true">Search for alternative holidays at this accommodation <i class="caret link blue"></i></a>
+			</div>
+		</div>
+	</li>
+	{% endif %}
+	{% endifnotequal %}
+	{% endfor %}
+	<!-- date passed hotels ends --->
+</ul>
+{% endif %}
+
+<!-- popups starts here --->
+<!-- add comment popup starts  -->
+<div data-dojo-type="tui.widget.customeraccount.CustomerShortListedAddComment" data-dojo-props="maxLength:{% if holidays.0.truncate %}{{holidays.0.truncate}}{% endif %}, saveNoteURL: '{{tuiWebrootPath}}/viewShortlist/addComment', deleteNoteURL: '{{tuiWebrootPath}}/viewShortlist/deleteComment'"></div>
+<div class="modal hide" id="customer-Comment">
+	<div class="window auto-height">
+		<div class="title">
+			Your comment <span class="close">y</span>
+		</div>
+		<div class="modal-content sand-bg">
+			<div class="add-comment cb" id="shortlist">
+				<form  class="commentform" id="custCommentForm" action="{{tuiWebrootPath}}/viewShortlist/addComment">
+					<textarea id="comment" class="b" maxlength="{% if holidays.0.truncate %}{{holidays.0.truncate}}{% endif %}"></textarea>
+					<p class="used-chars"><span id="textCharCount">0</span> of {% if holidays.0.truncate %}{{holidays.0.truncate}}{% endif %} characters used</p>
+					<div class="btn-container c">
+						<span id="deleteCMT"  style="display: none;">
+							<a id="deleteCMT" class="delete deleteCMT">Delete comment</a> 
+							<a id="comment-btn" class="button blue comment-btn" >Save comment</a>
+						</span>
+						<a id="deleteCMT__Disabled" class="delete deleteCMT__Disabled" ></a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="gallery" style="display:none;"></div>

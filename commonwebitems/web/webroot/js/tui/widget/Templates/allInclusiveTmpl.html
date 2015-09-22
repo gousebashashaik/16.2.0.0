@@ -1,0 +1,38 @@
+  <div class="facilities-description">
+		{% if jsonData.sportsActivities %}
+			<div class="sports-academy">
+				<div class="sports-section">
+					<h2 class="sports">sports & activities</h2>
+					<div class="activities-list">
+						{% for sportsActivities in jsonData.sportsActivities %}
+							<div class="listed-activities">
+								<h4 class="overlay-subHeading">{{sportsActivities.name|default:" "}}</h4>
+								{% if sportsActivities.openingTimes %}
+								<h6>Opening Times:{{sportsActivities.openingTimes|default:" "}}</h6>
+								{% endif %}
+								<h6>{{sportsActivities.description|default:" "}}</h6>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		{% endif %}
+		{% if jsonData.foodAndDrinks %}
+			<div class="foodnDrink">
+				<div class="food-drink-section">
+					<h2 class="food">Food & Drink</h2>
+					<div class="activities-list">
+						{% for foodAndDrinks in jsonData.foodAndDrinks %}
+							<div class="listed-activities">
+								<h4 class="overlay-subHeading">{{foodAndDrinks.name|default:" "}}</h4>
+								{% if foodAndDrinks.openingTimes %}
+								<h6>Opening Times: {{foodAndDrinks.openingTimes|default:" "}}</h6>
+								{% endif %}
+								<h6>{{foodAndDrinks.description|default:" "}}</h6>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		{% endif %}
+	</div>

@@ -1,0 +1,6 @@
+<select name="dgCountrySelect" id="dgCountrySelect" class="destinationlist dropdown jumbo-dropdown">
+    <option value="" selected>{{searchMessaging.destinationGuide.searchACountry}}</option>
+    {% for country in countryList %}
+    <option value="{{country.id}}"{% if not country.available %} disabled="disabled"{% endif %}>{{country.name}}</option>
+    {% endfor %}
+</select>

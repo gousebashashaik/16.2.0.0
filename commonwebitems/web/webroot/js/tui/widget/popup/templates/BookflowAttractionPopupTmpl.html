@@ -1,0 +1,65 @@
+<div class="popup modal-window remote-content loading">
+	<div class="attraction-lightbox-content">
+		<div class="span title"><h1>{{jsonData.viewData.name|safe}}</h1></div>
+		<div class="scroller">
+			<div class="main">
+				
+				<div class="span-two-third">
+				{% if jsonData.showCarousel %}
+					<div class="product-list slideshow">
+						<div class="viewport">
+							<ul class="plist">
+								<li style="z-index: 0; opacity: 1">
+								<img alt="{{jsonData.carousel.galleryImages.0.description}}" src="{{jsonData.carousel.galleryImages.0.mainSrc}}" />
+								</li>
+							</ul>
+						</div>
+						<p class="load">Loading</p>
+					</div>
+					{% else %}
+						<img src="{{cdnDomain}}/images/excursions-default-large.png" size="medium" width="658" height="300"/>
+					{% endif %}
+				</div>
+				
+				{% if jsonData.showEditorial %}
+				<div class="span-two-third no-bottom-margin"><p>{{jsonData.editorial.editorialContent|safe}}</p></div>
+				{% endif %}
+			</div>
+			<div class="sidebar">
+				{% if jsonData.showUsps %}
+				<div class="span-third">
+			        {% if pageType == 'cruise' %}
+			        <div class="boxout key-facts-table">
+						<ul class="square">
+							{% for usp in jsonData.usps %}
+							{% if forloop.counter|divisibleby:2 %}
+							<li class="striped-row-even">{{usp}}</li>
+							 {% else %} 
+							<li class="striped-row">{{usp}}</li>
+							{% endif %}							
+							{% endfor %}
+						</ul>
+					</div>
+			       {% else %}
+			       <div class="boxout pad24">
+			          <ul class="square">
+				    {% for usp in jsonData.usps %}
+                                    <li  class="{% if not forloop.last%} extra-top-margin {% endif %}"><span class="sprite-img-grp-1"></span>{{usp}}</li>
+                                    {% endfor %}
+			          </ul>
+			       </div>
+			      {% endif %}
+				</div>
+				{% endif %}
+				{% if jsonData.showMap %}
+				<div class="span-third">
+					<div class="thumbnail-map">
+						<img src="http://maps.googleapis.com/maps/api/staticmap?center={{jsonData.thumbnailMap.featureCodesAndValues.latitude[0]}},{{jsonData.thumbnailMap.featureCodesAndValues.longitude[0]}}&zoom=15&size=317x213&markers=color:orange|{{jsonData.thumbnailMap.featureCodesAndValues.latitude[0]}},{{jsonData.thumbnailMap.featureCodesAndValues.longitude[0]}}&Client=gme-tuitravelplc&sensor=false" alt="Map of {{jsonData.viewData.name|escape}}" />
+					</div>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	<a href="javascript:void(0);" class="close sprite-img-grp-1">Close</a>
+</div>

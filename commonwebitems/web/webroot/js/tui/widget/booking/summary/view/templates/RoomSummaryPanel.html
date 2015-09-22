@@ -1,0 +1,53 @@
+<ul class="item-list">
+<li>
+{% if imageDisplRefMeta%}
+	{% if imageDispFlag %}
+	<span
+				class="{{accomViewData.productRanges.0.code|lower|default:\' \'}} rating">
+                  <span class="diff-label {{accomViewData.productRanges.0.code|lower|default:\' \'}}" data-dojo-type="tui.widget.popup.Tooltips"
+							data-dojo-props="floatWhere:'position-top-center', text:'{{accomViewData.productRanges.0.featureCodesAndValues.strapline.0|default:\' \'}}'">
+					</span></span>
+	<img src="{{accomViewData.accomImageUrl|default:\' \'}}"		width="208" height="108"	class="main-img" />
+
+{% endif %}
+
+		<div class="hotel-name">{{accomViewData.accomName|default:" "}}</div>
+
+	<div class=""> in {{accomViewData.resortName|default:" "|safe}}, {{accomViewData.destinationName|default:" "}}</div>
+
+	<div class="rating t{{ratingCount|cut:' '|default:\' \'}}"></div>
+
+	<div class="">{{accomViewData.duration|default:" "}} night stay</div>
+{% endif %}
+
+</li>
+  {% for numberOfRooms in accomViewData.summaryRoomViewData %}
+    <li><span class="fl"> {{numberOfRooms.description|safe}}
+     </span>
+      <span class="fr">
+      {% if numberOfRooms.included == "true" %} Included
+      {% else %}
+         {{numberOfRooms.currencyAppendedPrice}}
+      {% endif %}
+       </span><div class="clear"></div></li>
+  {% endfor %}
+<li><span class="fl">{{accomViewData.boardBasisName}}</span></span></li>
+
+
+  {% for viewDatas in jsonData.packageViewData.extraFacilityCategoryViewData %}
+    {% ifequal viewDatas.extraFacilityCategoryCode|lower "accommodation" %}
+      {% for numberOfLCDRooms in viewDatas.extraFacilityViewData %}
+        <li>
+          {% if numberOfLCDRooms.selected %}
+           <span class="fl">
+            {{numberOfLCDRooms.summaryDescription|safe}}
+            </span>
+            <span class="fr">
+            {{numberOfLCDRooms.currencyAppendedPrice}}
+            </span>
+          {% endif %}<div class="clear"></div>
+        </li>
+      {% endfor %}
+    {% endifequal %}
+  {% endfor %}
+</ul>

@@ -1,0 +1,82 @@
+<ul class="item-list">
+  {% for extras in jsonData.packageViewData.extraFacilityCategoryViewData %}
+
+  {% ifequal extras.superCategoryCode 'Excursion' %}
+    <li><span class="fl">{{extras.extraFacilityCategoryCode}}
+  {% for excursion in extras.extraFacilityViewData %}
+                &times; {{ excursion.selectedQuantity }} {{excursion.paxType}}{% ifnotequal excursion.selectedQuantity 1 %}s{% endifnotequal %}
+   {% endfor %}
+              </span>
+              <span class="fr">{{extras.currencyAppendedCategoryTotalPrice}}</span>
+  </li>
+
+
+
+   {% else %}
+
+    {% ifequal extras.superCategoryCode 'Attraction' %}
+    <li><span class="fl">{{extras.extraFacilityCategoryCode}}
+  {% for attraction in extras.extraFacilityViewData %}
+                &times; {{ attraction.selectedQuantity }} {{attraction.paxType}}{% ifnotequal attraction.selectedQuantity 1 %}s{% endifnotequal %}
+   {% endfor %}
+              </span>
+              <span class="fr">{{extras.currencyAppendedCategoryTotalPrice}}</span>
+  </li>
+  {% else %}
+    {% ifequal extras.extraFacilityGroupCode "PACKAGE"%}
+      {% for extraFacility in extras.extraFacilityViewData %}
+        {% if extraFacility.selected == "true" %}
+          <li>
+          	 {% ifequal extras.extraFacilityCategoryCode "Charity" %}
+              	<span class="wcf-fl fl">{{extraFacility.summaryDescription|safe}}
+              	<span class="question-book" data-dojo-type="tui.widget.popup.Tooltips"
+           		data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.WorldCare_ToolTip|default:\' \'}}'"></span>
+              </span>
+             {% else %}
+              	<span class="wcf-fl fl">{{extraFacility.summaryDescription|safe}}</span>
+             {% endifequal %}
+              <span class="fr wcf-fr">
+            {% ifequal extraFacility.selection "Selectable" %}
+              {{ extraFacility.currencyAppendedPrice }}
+            {% else %}
+              {{ extraFacility.selection }}
+            {% endifequal %}
+          </span><div class="clear"></div></li>
+        {% endif %}
+        {% endfor %}
+
+        {% else %}
+
+					{% ifequal extras.extraFacilityGroupCode "INSURANCE"%}
+						{% for insuranceFacility in extras.insuranceViewData %}
+
+							{% if insuranceFacility.selected == "true" %}
+								<li>
+									<span class="fl">{{insuranceFacility.descriptionSummary|safe}}
+
+
+
+					  			</span>
+                                   <span class="fr">{{ insuranceFacility.price}}</span><div class="clear"></div>
+								</li>
+
+							{% endif %}
+							{% if insuranceFacility.excessWaiverViewData.selected == "true" %}
+								<li>
+
+									<span class="fl">{{insuranceFacility.excessWaiverViewData.descriptionSummary|safe}}
+
+					  			</span>
+                                   <span class="fr">{{ insuranceFacility.excessWaiverViewData.currencyAppendedPrice }}</span><div class="clear"></div>
+								</li>
+								{% endif %}
+						{% endfor %}
+						{% else %}
+							<div></div>
+					{% endifequal %}
+
+{% endifequal %}
+    {% endifequal %}
+     {% endifequal %}
+  {% endfor %}
+</ul>

@@ -1,0 +1,17 @@
+<div class="touristBoard">
+  <ul class="tour">
+    {% for galleryImage in jsonData.galleryImages %}
+      {% if forloop.first %}
+        <li><img src="{{cdnDomain}}/images/b.gif" data-dojo-type="tui.widget.LazyLoadImage" data-dojo-props="source:'{{galleryImage.xlarge.mainSrc}}'" {% if galleryImage.xlarge.description %} alt="{{galleryImage.xlarge.description}}" data-location-name="{{galleryImage.xlarge.description}}"{% endif %} id="touristBoardBannerImg" style="opacity:1"></li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+
+  <ul class="thumimg">
+    {% for galleryImage in jsonData.galleryImages %}
+      <li class="thuming-list"><a href="{{readMore}}"><img src="{{cdnDomain}}/images/b.gif" data-dojo-type="tui.widget.LazyLoadImage" data-dojo-props="source:'{{galleryImage.small.mainSrc}}'" width="110" height="60"{% if galleryImage.small.description %} alt="{{galleryImage.small.description}}" data-location-name="{{galleryImage.small.description}}"{% endif %} data-xlarge-src="{{galleryImage.xlarge.mainSrc}}"></a></li>
+    {% endfor %}
+  </ul>
+
+  <p id="touristBoardBannerCaption" style="display:none;"></p>
+</div>

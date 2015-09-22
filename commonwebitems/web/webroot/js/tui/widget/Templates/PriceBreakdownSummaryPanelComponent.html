@@ -1,0 +1,46 @@
+<ul class="item-list">
+
+
+{% for item in jsonData.packageViewData.priceBreakdownViewData %}
+
+
+
+{% ifequal item.description "TOTAL PRICE" %}
+
+<div class="grandTotal">
+	<span class="lable fl">{{jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.Summary_TotalPrice_Label}}</span>
+	<span class="price fr" id="priceBreakDown">{{item.currencyAppendedPrice}}</span>
+</div>
+
+	<div class="fl cb paxSplit">
+   		{{jsonData.packageViewData.paxViewData.paxComposition}}
+
+
+	</div>
+	<div class="grandTotalBG"></div>
+
+{% endifequal %}
+
+{% if displayDiscount %}
+{% ifequal item.description "Online Discount" %}
+    <li class="ondis-li">
+    <span class="ondis-fl">{{item.description}}
+        <span class="info-block"></span>
+    </span>
+    <span class="ondis-fr" id="onlinePrice">{{item.currencyAppendedPrice}}</span>
+    </li>
+    {% endifequal %}
+{% endif %}
+
+  {% ifnotequal  item.description  "TOTAL PRICE"  %}
+
+    {% ifnotequal  item.description "Online Discount" %}
+    <li>
+		<span class="fl">{{item.description}}</span>
+		<span class="fr"  id="{{item.description|cut:" "}}">{{item.currencyAppendedPrice}}</span><div class="clear"></div>
+	</li>
+	{% endifnotequal %}
+	{% endifnotequal %}
+
+{% endfor %}
+</ul>

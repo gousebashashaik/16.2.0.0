@@ -1,0 +1,75 @@
+	{% ifnotequal jsonData.packageViewData.availableAccommodationViewData null %}
+	<div class="duration">{{jsonData.packageViewData.availableAccommodationViewData.duration|default:"" }} nights </div>
+   {% endifnotequal %}
+	<ul class="flightInfo">
+	  {% for outbound in jsonData.packageViewData.flightViewData.outboundSectors %}
+		  <li class="place"><span class="from">{{outbound.departureAirport.name|default:""}}
+		  - </span><span class="to">{{outbound.arrivalAirport.name|default:""}}</span>
+		  </li>
+		  <li class="itinerary depart">
+			  <span class="itinerary-dates">{{outbound.schedule.departureDate|default:""}}</span>
+			  <span class="itinerary-departure-time">{{outbound.schedule.depTime|default:""}}</span>
+			  <span class="itinerary-arrival-time">{{outbound.schedule.arrTime|default:""}}</span>
+			  <span class="{{outbound.carrier.carrierInformation.marketingAirlineCode|default:''|cut:' '|lower}}name"></span>
+			
+			  {% if outbound.dreamLiner %}
+			 			<li class="dreamliner">
+ 							<span >{% if jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.DreamLinerText %}{{jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.DreamLinerText}}{% endif %}</span>
+		    				 </li>
+	 		  {% endif %}
+		  </li>
+
+		 {% if outbound.schedule.outBoundNextDay%}
+			<li class="itinerary depart textAlignRight">
+				 <span class="addedDay">+1 Day</span>
+				 <span class="ac-ques-tooltip-link" data-dojo-type="tui.widget.popup.Tooltips"
+				  data-dojo-props="floatWhere:'position-top-center', text:'{% if jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.FlightArrivalText %}{{jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.FlightArrivalText}}{% endif %} {{outbound.schedule.arrivalDate|default:\' \'}}'"></span>			</li>
+		 {% endif %}
+
+	  {% endfor %}
+
+	  {% for inbound in jsonData.packageViewData.flightViewData.inboundSectors %}
+			<li class="itinerary return">
+				<span class="itinerary-dates">{{inbound.schedule.departureDate|default:""}}</span>
+				<span class="itinerary-departure-time">{{inbound.schedule.depTime|default:""}}</span>
+				<span class="itinerary-arrival-time">{{inbound.schedule.arrTime|default:""}}</span>
+				<span class="{{inbound.carrier.carrierInformation.marketingAirlineCode|default:''|cut:' '|lower}}name"></span>
+					{% if inbound.dreamLiner %}
+			 			<li class="dreamliner">
+ 							<span>{% if jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.DreamLinerText %}{{jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.DreamLinerText}}{% endif %}</span>
+		    				 </li>
+	 				{% endif %}
+			</li>
+
+			 {% if inbound.schedule.inBoundNextDay %}
+				<li class="itinerary depart textAlignRight">
+					 <span class="addedDay">+1 Day</span>
+					 <span class="ac-ques-tooltip-link" data-dojo-type="tui.widget.popup.Tooltips"
+					 data-dojo-props="floatWhere:'position-top-center', text:'{% if jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.FlightArrivalText %}{{jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.FlightArrivalText}}{% endif %} {{inbound.schedule.arrivalDate|default:\' \'}}'"></span>
+							</li>
+			{% endif %}
+
+	  {% endfor %}
+	</ul>
+
+		<ul class="summary-sub-border item-list">
+	{% for extra in jsonData.packageViewData.extraFacilityCategoryViewData %}
+		{% ifequal extra.extraFacilityGroup "FLIGHT" %}
+			{% for flightExtra in extra.extraFacilityViewData %}
+
+			<li><span class="fl">
+              {{flightExtra.summaryDescription|default:""}}
+              </span>
+              <span class="price-break fr">
+             	{% ifequal flightExtra.selection "Selectable" %}
+             		{{ flightExtra.currencyAppendedPrice|default:"" }}
+          		{% else %}
+	   				{{ flightExtra.selection }}
+           		{% endifequal %}
+              </span><div class="clear"></div>
+            </li>
+
+		{% endfor %}
+	  {% endifequal %}
+	{% endfor %}
+	</ul>

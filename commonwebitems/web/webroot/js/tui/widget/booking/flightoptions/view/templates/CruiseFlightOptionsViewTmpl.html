@@ -1,0 +1,45 @@
+<div class="atlflight-selection">
+				
+				<ul class="tabs airport-choice-menu">
+					{% for tab in airportData %}
+    				<li class="airport-standard {% ifequal tab.airportName selectedAirport %} active {% endifequal %}" data-dojo-value="{{tab.airportCode}}">
+    				<a class="sub-tab" id="{{tab.airportName}}" href="javascript:void(0);" >
+    					{{tab.airportName}} 
+    					</a>
+    				</li>
+    				{% endfor %}
+					<li class="custom-dates" tabindex="0">
+				    	{% if model.calendarViewData.shouldDisplayAirportLink %}
+				               <span>{{Flight_MoreAirports_Link}}</span>
+				               <span class="more-arrow"></span>
+				        {% else %}
+				             <span></span>
+				        {% endif %}				               
+				        <ul>
+						{% if airportChoices %}
+							{% for choice in airportChoices %}
+				            <li data-dojo-value="{{choice.airportCode}}" value="2" class="airportpreset" >{{choice.airportName}}</li>
+				            {% endfor %}
+						{% endif %}
+				        </ul>
+				    </li>
+				 </ul>				
+<div class="clear"></div>	
+<div class="change-duration-section">
+	<div class="cruise-flights-options-display-section loaded">
+		<div class="overlay-flights-section">
+			<div class="clear"></div>
+			<div class="outbound-section">
+				<p class="overlay-outbound">GOING OUT </p>
+				<p>{{depatureDate|default:" "}}</p>
+			</div>
+			<div class="inbound-section">
+				<p class="overlay-inbound">COMING BACK</p>
+				<p>{{arrivalDate|default:" "}}</p> 
+			</div>
+		</div>
+		<div class="clear"></div>	
+		<div class="alternate-flights-section"></div>
+</div>
+</div>
+<div class="clear"></div>

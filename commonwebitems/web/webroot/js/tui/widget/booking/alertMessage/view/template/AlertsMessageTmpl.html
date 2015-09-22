@@ -1,0 +1,11 @@
+<div>
+{% if templateView %}
+{% for alerts in jsonData.alertMessages %}
+<div class="alert-infosection">
+<div class="alertsinfo-section pax-name" id="{{alerts.messageHeader|default:' '}}"><span>{{ alerts.messageHeader|default:" "}}</span><a class="close closeLink alert-fr"></a>
+<br/>{{alerts.messageText|default:" "|safe}}
+</div>
+</div>
+{% endfor %}
+{% endif %}
+</div>

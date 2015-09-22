@@ -1,0 +1,9 @@
+<div id="auto-suggest-list-to">
+<ul>
+	{% for airport in airports %}
+		<li data-country-code="{{airport.countryCode}}"
+			data-airport-id="{{airport.id}}"
+			data-country-name="{{airport.countryName}}">{{airport.name}} ({{airport.id}}), {{airport.countryName}}</li>
+	{% endfor %}
+</ul>
+</div>

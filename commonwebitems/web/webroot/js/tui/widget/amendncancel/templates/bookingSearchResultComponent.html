@@ -1,0 +1,86 @@
+<div>
+{% ifequal templateview "results" %}
+<div class="morethen-main">
+	<form class="retrieve-booking hide" action="rdisplaybooking" method="post">
+		<input type="hidden" class="bookingRefereneceId" name="bookingRefereneceId">
+	</form>
+	<div class="hr"></div>
+		<div class="clearboth"></div>
+			<div class="searchresult-text"></div>
+				<div class="clearboth padding-top10"></div>
+		<div class="leadpassenger-head">Lead Passenger </div>
+		<div class="leadpassenger-header headeing-padding">Number of other passengers </div>
+		<div class="shop-th headeing-padding">Shop name </div>
+		<div class="shop-th headeing-padding">Booking ref no. </div>	
+		<div class="bookref-th headeing-padding bookref-thlast">Destination  </div>
+		<div class="clearboth padding-top10"></div>
+
+		
+		{% for stor in bookingsSummary%}
+		
+			
+			<span class="i-icon" data-dojo-type="tui.widget.common.ClickToolTip" data-dojo-props="eventType:'click', floatWhere:'position-bottom-left', text:'<div class=\'amandtooltip\'><div class=\'amend-tooltip\'><div class=\'bold add-left float-left\'>Address:</div><div class=\'add-left\'>{% for addr in stor.bookingAddress.address%}{% if forloop.last %}<div class=\'clearboth\'></div>{{addr}}{% else %}{{addr}},&nbsp;{% endif %}{% endfor %}</div><div class=\'clearboth padding-top4\'></div> <div class=\'contact-icon\'> <div class=\'text-padding\'>{{stor.bookingAddress.contactNumber|default:'N/A'}}</div></div><div class=\'clearboth padding-top4\'></div><div class=\'mail-icon\'> <div class=\'text-padding\'>{{stor.bookingAddress.emailAddress|default:'N/A'}}</div></div></div></div>'">
+			</span>
+			
+			<div class="passenger-detail-section">
+			
+					<div class="leadpassenger-details ">&nbsp;&nbsp;{% if stor.leadPassengerName %}{{stor.leadPassengerName|safe}}{% else %}   {%endif %} </div>
+					<div class="passenger-details headeing-padding">{{stor.otherPassengers|default:"N/A"}}</div>
+					<div class="shop-td headeing-padding">{{stor.bookingShopName|default:"N/A"}}</div>
+					<div class="shop-td headeing-padding">{{stor.bookingReference|default:"N/A"}}</div>
+					
+					<div class="bookref-td headeing-padding">{{stor.destinationName|default:"N/A"}}</div>
+					<div class="bookref-button">
+						<a lang="en"  class="button search-submit ensLinkTrack loaded bookref" data-bookref="{{stor.bookingReference|default:'N/A'}}" tabindex="0" href="javascript:void(0);">RETRIEVE BOOKING</a>
+					</div>
+				</div>	
+			<div class="clearboth horizantal-line"></div>
+		{% endfor %}
+			
+			<div class="clearboth padding-top10"></div>
+			<div class="pagination-area">
+			<a href="javascript:void(0);" id="leftarrow" class="disable"><div class="pagination disabled"><</div></a>
+			{% for i in maxNoOfPages %}
+					{% ifequal currentPage i %}
+						<a href="javascript:void(0);" class="disable"><div class="pagination-select">{{i}}</div></a>
+					{% else %}
+						<a href="javascript:void(0);" class="active"><div class="pagination">{{i}}</div></a>	
+					{% endifequal %}
+					
+					<!--{% if forloop.last %} -->
+						
+						<!--{% if pages > maxSize  and  currentPage > pages %}-->
+							
+						<!--{% else %} 
+								<a href="javascript:void(0);" class="disable"><div class="pagination disabled">></div></a>
+						<!--{% endif %} -->
+						
+					<!-- {% endif %} -->
+						
+			{% endfor %}
+
+			<a href="javascript:void(0);" id="rightarrow" class="disable"><div class="pagination disabled">></div></a>
+			</div>
+			
+		
+			<div class="clearboth"></div>
+			
+</div>
+{% endifequal %}
+
+{% ifequal templateview "noResults" %}
+<div class="unabletofind-booking retrive-booking-pannel">
+<div class="hr"></div>
+<div class="clearboth"></div>
+			We found no results that match your search for <span class="bold">"{{searchedSurName|default:"na"}}", "{{searchedDate|default:"na"}}".</span>
+			<div class="bold padding-top10">Suggestions</div>
+			<ul class="square yellow padding-top10">
+				<li>Please Enter your Correct Passenger Surname</li>
+				<li>Please Enter your Correct Departure Date</li>
+				
+				</ul>
+				<div class="clearboth"></div>
+				Try again. <a id="error-new-search" href="javascript:void(0);">&nbsp;New Search</a>
+</div>
+{% endifequal %}
+</div>

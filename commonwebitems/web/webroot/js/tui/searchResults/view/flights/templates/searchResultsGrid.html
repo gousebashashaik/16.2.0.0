@@ -1,0 +1,197 @@
+{% ifequal templateview "twoWayResult" %}
+<div id="searchResultContainer">
+	<div class="selectedDepaFlight">Select your flights to and from  <b>{{depratingFrom}} ({{departingFromCode}})</b></div>
+	<p class="caption-top"><span>DEPARTING</p>
+	<table cellpadding="0" cellspacing="0"align="left" class="searchResultTable">
+		{% for returnDate in returnDates %}
+			{% if forloop.first %}
+			<tr>
+				<td width="100" class="blankCell ">&nbsp</td>
+				<td class="arrowstyle arrActive prev"><div id="leftArrow"  analytics-instance="1" analytics-text="leftClickArrow" analytics-id="{{componentId}}"></div></td>
+				<td rowspan="8" class="searchResultDeptDatesTd">
+					<!-- Dept Dates Table Start -->
+					<div id="searchResultScrollingDiv">
+						<table cellpadding="0" cellspacing="0" align="left" class="searchResultDeptDatesTable">
+							<tr>
+								{% for departureDate in departureDates %}
+									<td class="SRdeptTblHeader {% ifequal departureDate.curDate  calSelectedDeptDate  %} srSelectedDate {% endifequal %}">
+										<div>
+											<span class="srPrice_Date_Txt">{{departureDate.day}} </span>
+											<span class="srPrice_month_Txt">{{departureDate.date}} {{departureDate.month}}</span>
+										</div>
+									</td>
+								{% endfor %}
+								</tr>
+
+								{% for returnDate  in returnDates %}
+								<tr>
+									{% for departureDate in departureDates %}
+									<td class="flex-grid-cell
+											{% ifequal returnDate.curDate calSelectedRetuDate  %}
+												{% ifequal departureDate.curDate  calSelectedDeptDate  %} srBodySelectedDate srDefault mainTd {% endifequal %}
+											{% endifequal %}"
+										>
+										{% if returnDate.itinerary %}
+											{% for itinerary in returnDate.itinerary%}
+												 	{% ifequal   returnDate.curDate   itinerary.inbound.schedule.depDate %}
+												 		{% ifequal  departureDate.curDate   itinerary.outbound.schedule.depDate%}
+
+												 			{% ifequal itinerary.showComp false%}
+												 					<div class="srMultiAirport"  data-componentId="{{itinerary.id}}"  id="{{itinerary.id}}">From</div>
+												 			{% endifequal %}
+												 			{% ifequal itinerary.showComp true%}
+
+															<div class="srTdcnt cursorStyle"  data-componentId="{{itinerary.id}}"  id="{{itinerary.id}}" analytics-instance="1" analytics-text="resultDiv" analytics-id="{{componentId}}" >
+																<span class = "priceperperson"><span class="poundSymbol">{{currency}}</span>
+																<span class="srPrice_Date_Txt">	{{itinerary.pricePP|floatformat:"0" }}</span>
+																<span class="ppTxt"> pp</span>
+																</span>
+																<span class="srflightsTxt">{{itinerary.duration}} {% if itinerary.durationFlag  %} NIGHT {% else %} NIGHTS {% endif%}</span>
+															</div>
+
+															{% endifequal %}
+												 		{% endifequal  %}
+													{% endifequal  %}
+												{% endfor %}
+										{% endif %}
+										</td>
+									{% endfor %}
+									</tr>
+								 {% endfor %}
+
+						</table>
+					</div>
+					<!-- Dept Dates Table End -->
+				</td>
+				<td class="arrowstyle arrActive next"><div id="rightArrow"  analytics-instance="1" analytics-text="rightClickArrow" analytics-id="{{componentId}}"></div></td>
+			</tr>
+			{% endif %}
+		{% endfor %}
+
+		<tr>
+			<td rowspan="8" class="searchResultReturnDatesTd whitebg">
+				<!-- Dept Return Table Start -->
+				<table cellpadding="0" cellspacing="0" width="100%" align="left" class="searchResultReturnDatesTable">
+
+					{% for returnDate in returnDates %}
+							<tr>
+								{% if forloop.first %}<td rowspan="7" class="caption-left"><div></div></td> {% endif %}
+								<td class="SRrettTblHeader  {% ifequal returnDate.curDate calSelectedRetuDate  %} srSelectedDate {% endifequal %}">
+									<div>
+										<span class="srPrice_Date_Txt">{{returnDate.day}} </span>
+										<span class="srPrice_month_Txt">{{returnDate.date}} {{returnDate.month}}</span>
+									</div>
+								</td>
+							</tr>
+					{% endfor %}
+
+				</table>
+				<!-- Dept Return Table End -->
+			</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+
+	</table>
+	<!-- <p class="caption-bottom">&nbsp</p> -->
+	<!--  <p  class="caption-left"><span>RETURNING</span></p> -->
+
+</div>
+{% endifequal %}
+
+
+{% ifequal templateview "oneWayResult" %}
+
+<div id="searchResultContainer" class="onewayResultCnt" >
+	<div class="selectedDepaFlight">Select your flights to  <b>{{depratingFrom}} ({{departingFromCode}}) </b></div>
+	<p class="caption-oneway-top"><span>DEPARTING</p>
+	<table cellpadding="0" cellspacing="0"  class="searchResultTable">
+		<tr>
+
+			<td class="arrowstyle arrActive prev"><div id="leftArrow"  analytics-instance="1" analytics-text="leftClickArrow" analytics-id="{{componentId}}">&nbsp;</div></td>
+			<td rowspan="2"  width="100%" class="searchResultDeptDatesTd">
+
+					<table cellpadding="0" cellspacing="0" width="100%" align="left" class="searchResultDeptDatesTable">
+						<tr>
+							{% for departureDate in departureDates %}
+								<td class="SRdeptTblHeader {% ifequal departureDate.curDate  calSelectedDeptDate  %} srSelectedDate {% endifequal %}">
+										<div>
+											<span class="srPrice_Date_Txt">{{departureDate.day}} </span>
+											<span class="srPrice_month_Txt">{{departureDate.date}} {{departureDate.month}}</span>
+										</div>
+									</td>
+							{% endfor %}
+						</tr>
+
+						<tr>
+									{% for departureDate in departureDates %}
+
+									<td class="flex-grid-cell
+											 	{% ifequal departureDate.curDate  calSelectedDeptDate  %} srBodySelectedDate srDefault mainTd {% endifequal %}"
+									 	>
+										{% if departureDate.itinerary %}
+											{% for itinerary in departureDate.itinerary%}
+
+												 		{% ifequal  departureDate.curDate   itinerary.outbound.schedule.depDate%}
+
+												 			{% ifequal itinerary.showComp false%}
+												 					<div class="srMultiAirport"  id="{{itinerary.id}}"  data-componentId="{{itinerary.id}}">From</div>
+												 			{% endifequal %}
+												 			{% ifequal itinerary.showComp true%}
+
+															<div class="cursorStyle srTdcnt"  data-componentId="{{itinerary.id}}"  id="{{itinerary.id}}"  analytics-instance="1" analytics-text="resultDiv" analytics-id="{{componentId}}" >
+																<span class="poundSymbol">{{currency}}</span>
+																<span class="srPrice_Date_Txt">	{{itinerary.pricePP|floatformat:"0" }}</span>
+																<span class="ppTxt"> pp</span>
+																<span >&nbsp;</span>
+															</div>
+
+															{% endifequal %}
+												 		{% endifequal  %}
+
+												{% endfor %}
+										{% endif %}
+										</td>
+									{% endfor %}
+									</tr>
+							</table>
+
+
+			</td>
+			<td class="arrowstyle arrActive next"><div id="rightArrow"  analytics-instance="1" analytics-text="rightClickArrow" analytics-id="{{componentId}}">&nbsp;</div></td>
+		</tr>
+		<tr>
+			<td class="flex-grid-cell blank-cell"><div class="srTdcnt" >&nbsp;</div></td>
+			<td  class="flex-grid-cell blank-cell"><div class="srTdcnt" >&nbsp;</div></td>
+		</tr>
+
+
+	</table>
+	<!-- <p class="caption-oneway-bottom">&nbsp</p> -->
+</div>
+{% endifequal %}
+

@@ -1,0 +1,67 @@
+
+<ul class="item-list">
+	{% for extra in extraFacilityData %}
+
+		{% ifequal extra.superCategoryCode|lower "attraction" %}
+		 	{% for packageExtra in extra.extraFacilityViewData %}
+				<li>
+					<span class="fl">{% if packageExtra.description %}{{packageExtra.description}}{% endif %} {% if packageExtra.paxCompositionViewData.noOfAdults %} &times; {{ packageExtra.paxCompositionViewData.noOfAdults }} adult{{packageExtra.paxCompositionViewData.noOfAdults|pluralize}}{% endif %}{% if packageExtra.paxCompositionViewData.noOfChildren %} &times; {{ packageExtra.paxCompositionViewData.noOfChildren }} child{{packageExtra.paxCompositionViewData.noOfChildren|pluralize:"ren"}}{% endif %}</span>
+            		<span class="price-break fr">
+             		{% ifequal packageExtra.selection "Selectable" %}
+		               {{ packageExtra.currencyAppendedPrice }}
+		             {% else %}
+					   {{ packageExtra.selection }}
+		             {% endifequal %}
+            		</span><div class="clear"></div>
+            	</li>
+		   	{% endfor %}
+		{% else %}
+			{% ifequal extra.superCategoryCode|lower "excursion" %}
+				 {% for packageExtra in extra.extraFacilityViewData %}
+					<li>
+						<span class="fl">{% if packageExtra.description %}{{packageExtra.description}}{% endif %} {% if packageExtra.paxCompositionViewData.noOfAdults %} &times; {{ packageExtra.paxCompositionViewData.noOfAdults }} adult{{packageExtra.paxCompositionViewData.noOfAdults|pluralize}}{% endif %}{% if packageExtra.paxCompositionViewData.noOfChildren %} &times; {{ packageExtra.paxCompositionViewData.noOfChildren }} child{{packageExtra.paxCompositionViewData.noOfChildren|pluralize:"ren"}}{% endif %}</span>
+		            	<span class="price-break fr">
+		             	{% ifequal packageExtra.selection "Selectable" %}
+		               		{{ packageExtra.currencyAppendedPrice }}
+		             	{% else %}
+					   		{{ packageExtra.selection }}
+		             	{% endifequal %}
+		            	</span><div class="clear"></div>
+		            </li>
+				  {% endfor %}
+			{% else %}
+				{% ifequal extra.extraFacilityGroup "PACKAGE"%}
+					{% for packageExtra in extra.extraFacilityViewData %}
+						<li>
+							<span class="fl">{% if packageExtra.summaryDescription %}{{packageExtra.summaryDescription}}{% endif %}</span>
+			            	<span class="price-break fr">
+				             {% ifequal packageExtra.selection "Selectable" %}
+		               			{{ packageExtra.currencyAppendedPrice }}
+		            		 {% else %}
+					   			{{ packageExtra.selection }}
+		             		 {% endifequal %}
+			            	</span><div class="clear"></div>
+			            </li>
+					  {% endfor %}
+				{% else %}
+					{% ifequal extra.extraFacilityGroup "INSURANCE" %}
+						 {% for packageExtra in extra.extraFacilityViewData %}
+							<li>
+								<span class="fl">{% if packageExtra.description %}{{packageExtra.description}}{% endif %} {% if packageExtra.paxCompositionViewData.noOfAdults %} &times; {{ packageExtra.paxCompositionViewData.noOfAdults }} adult{{packageExtra.paxCompositionViewData.noOfAdults|pluralize}}{% endif %}{% if packageExtra.paxCompositionViewData.noOfChildren %} &times; {{ packageExtra.paxCompositionViewData.noOfChildren }} child{{packageExtra.paxCompositionViewData.noOfChildren|pluralize:"ren"}}{% endif %}</span>
+				            	<span class="price-break fr">
+					             {% ifequal packageExtra.selection "Selectable" %}
+					               {{ packageExtra.currencyAppendedPrice }}
+					             {% else %}
+								   {{ packageExtra.selection }}
+					             {% endifequal %}
+				            	</span><div class="clear"></div>
+				            </li>
+						  {% endfor %}
+					{% endifequal%}
+				{% endifequal%}
+			{% endifequal%}
+
+		{% endifequal%}
+	{% endfor %}
+</ul>
+

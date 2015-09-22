@@ -1,0 +1,25 @@
+<div style="float:left;border-top:1px solid #ccc;padding-top:15px;margin-top:15px;width:965px;">
+    <div class="title-bar">
+        <h3 style="margin-bottom:12px;">Top Countries</h3>
+    </div>
+
+    {% for country in countries %}
+    <div class="col" style="min-height:50px;">
+        <ul>
+            <li><label for="recommended-{{country.id}}" class="">
+                <input type="checkbox"
+                       data-destination-id="{{country.id}}"
+                       data-destination-name="{{country.name}}"
+                       data-destination-type="{% if country.type %}{{country.type}}{% endif %}"
+                       name="{{country.id}}"
+                       id="collection-{{country.id}}"
+                       value="{{country.id}}"
+                       class="{{country.id}}">
+                {{country.name}}<span class="checkbox"></span></label>
+            </li>
+
+        </ul>
+    </div>
+    {% endfor %}
+
+</div>

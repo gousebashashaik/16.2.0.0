@@ -1,0 +1,80 @@
+<div>
+ <h2 class="underline">{{headerTitle}}</h2>
+<div id="roomBoardBasis" class="bookflow">
+	 <h2></h2>
+	<ul class="board-heading-section {{disNoneClass|default:\' \'}}">
+	{% for headerString in headerArray%}
+		<li class="board-heading breakfast"><span>{{headerString}}</span></li>
+	{% endfor %}
+	</ul>
+	<div class="clear"></div>
+	<div  class="boardflow" data-dojo-type="tui.widget.booking.RoomBoard.view.RoomBoardBasisButtonToggler">
+		{% for alternateBB in alternateBoardBasisData %}
+
+		<div id="board-section" class="boardBasis  {% if alternateBB.selected %} selectedSection {% endif %}">
+			<div class="board-text">
+				<div class="board-title">{{alternateBB.boardBasisName|default:' '}}</div>
+				{% if toolTipFlag %}
+				<div class="board-info">
+					What's provided<span
+						data-dojo-props="floatWhere:'position-top-center', text:'{{alternateBB.boardBasisToolTip|default:\' \'}}'"
+						data-dojo-type="tui.widget.popup.Tooltips" class="loaded" lang="en">
+						<span class="{{toolTipClassName}}"></span>
+						<!--<img width="10px"
+						height="10px" src="../images/thomson/bookflow/more-info.png">--></span>
+				</div>
+				{% endif %}
+			</div>
+			<div class="selection-section">
+			<ul class="{{disNoneClass|default:\' \'}}">
+				{% for key,val in alternateBB.featureCodesAndValues.items %}
+					{% ifequal val "Y"%}
+						<li class="unselected-tick" ></li>
+					{% else %}
+			 			<li class="none-selected"></li>
+			 		{% endifequal %}
+				{% endfor %}
+				</ul>
+
+			<span class="{{spanClass|default:\' \'}}">
+
+				{{alternateBB.staticContentIntro|default:' '}}
+
+			</span>
+
+			</div>
+
+
+			<div class="section-divider">
+				<div class="{% if alternateBB.selected %} selectedBoard {% else %} section-divider-desc {% endif %}"">
+					<div class="section-divider-text">
+						<div class="priceperperson">
+							{{alternateBB.currencyAppendedPerPersonPrice|default:' '}} per person	per night
+						</div>
+					</div>
+					<div class="section-divider-included">
+						Included
+					</div>
+					<div class="chooseSection" id="boardBasis-seat">
+					{% if alternateBB.selected %}
+					<button  class="button jumbo select-seat">
+							 <span class="button-selected"></span>
+					</button>
+					{% else %}
+						<button    id="{{alternateBB.boardBasisCode|default:\' \'}}|{{currentPage}}boradBasisUrl" value="{{alternateBB.boardBasisName|default:\' \'}}" class="button jumbo unselect-seat seatingBtn  {% if alternateBB.selected %} select-seat {% endif %} ">
+							<span class="withPrice">{{alternateBB.currencyAppendedDifferencePrice|default:' '}}</span> <span class="withoutPrice"></span>
+						</button>
+					{% endif %}
+					</div>
+					<!-- <div class="section-divider-included">
+					<span class="perperson">included</span>
+				</div> -->
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+		{% endfor %}
+	</div>
+</div>
+
+</div>

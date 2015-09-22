@@ -1,0 +1,187 @@
+{% if not summary %}
+<h3>What's included?</h3>
+<ul>
+{% if showItinerary %}
+	<div class="itinerary-info">
+	   <h4  class="name">{{itinerary.name}}</h4>
+	   <div class="details">
+	      <span class="uc fl">{{itinerary.ship}}<br/>{{itinerary.duration}} night cruise</span>
+	      {% if itinerary.diffProd %}
+	      <span class="diff-label diff-label-block {{itinerary.productIdentifierCode|lower}}" {% if itinerary.productIdentifierTooltip %} data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{itinerary.productIdentifierTooltip}}'" {% endif %}></span>
+          {% endif %}
+		</div>
+	</div>
+{% endif %}
+
+    {% if accomDetails %}
+    <!--Condition for Accom detail starts-->
+        <!---Itinerary---->
+            {% if allTipsAndCharges %}
+            <li class="tips"><i></i>All Tips and Charges</li>
+            {% endif %}
+            {% if cabin %}
+             <li class="room" {% if not tracs  %}  {% for itm in cabin.cabinAry %} {% if forloop.first %}  data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: ' {% endif %}   {{itm.cabinFriendlyTitle}} {% if not forloop.last %}<br/> {% endif %}  {% if forloop.last %}  ', className: 'room'"  {% endif %}  {% endfor %}  {% endif %}>
+            	<i style="padding-left:12px"></i>
+            	{% for itm in cabin.cabinAry %}
+            		{% if itm.roomCount %}{{itm.roomCount}} x {% endif %}{{itm.roomType|lower|safe}}
+	                <div class="details">
+	                {% if itm.availability %}
+	                    <span class="alert" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{cabin.tooltip}}', className:'alert'">ONLY {{itm.sellingout}} LEFT{% ifnotequal cabin.tooltip null %}<span class="question"></span>{% endifnotequal %}</span>
+	                    <!--<span class="types">only 1 left<span class="question"></span></span>-->
+	                {% endif %}
+	                </div>
+	            {% endfor %}
+	            <div class="details">
+	            	<span class="types" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{cabin.otherCabinTypes}}', className:'types' ">OTHER TYPES<span class="question" ></span></span>
+	            </div>
+            </li>
+            {% endif %}
+            {% if boardbasis %}
+            <li class="board js-board-basis-feature" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{boardbasisTooltip}}', className:'board js-board-basis-feature'"><i></i>{{boardbasis}} cruise</li>
+            {% endif %}
+        <!---Itinerary ends---->
+
+        <!---Stay/Accom starts---->
+        <li class="border" style="border-top: 1px solid #ddd;min-height: 1px;padding-bottom: 6px;padding-top: 6px;width: 258px;margin-left: 8px;"></li>
+        {% if stayDuration %}
+            <li class="duration"><i class="d7"></i>
+                {{stayDuration}} nights Stay<div class="change-pax-di">
+                    <!-- <a lang="en" href="javascript:void(0);" class="change-pax remove-stay"><i></i> Remove</a>-->
+                    <div class="remove-stay-overlay">
+                        <span class="name">Price without hotel stay</span><span class="duration-price">&pound;{{price.withoutStay}}pp</span>
+
+                        <span class="name">Price with {{stayDuration}} nights hotel stay</span><span class="duration-price">&pound;{{price.withStay}}pp</span>
+                                <span class="remove">
+                                    <a lang="en" class="button search-alt remove-hotel-button remove-hotel-from-itinerary" href="javascript:void(0);">Remove Hotel Stay</a>
+                                </span>
+                        <a lang="en" class="change-pax remove-stay-overlay-close"  href="javascript:void(0);">
+                            CANCEL</a>
+                        <span class="arrow"></span>
+                    </div>
+                </div>
+            </li>
+        {% endif %}
+
+        {% if accommodation.roomsExist %}
+            {% for room in accommodation.rooms %}
+                <li class="room"><i style="padding-left:12px"></i>{% if room.roomCount %} {{room.roomCount}} x {{room.roomType|lower|safe}} {% endif %}
+                <div class="details">
+				{% if room.availability %}
+                   <span class="alert" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{accommodation.roomTooltip}}', className:'alert'">Only {{room.sellingout}} room{{room.sellingout|pluralize}} left<span class="question" ></span></span>
+				{% endif %}
+                   <span class="types" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{accommodation.otherRoomTypes}}', className:'types'">OTHER TYPES<span class="question"></span></span>
+                </div>
+                </li>
+            {% endfor %}
+        {% endif %}
+        {% if accommodation.boardbasis.available %}
+            <li class="board js-board-basis-feature" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{accomBoardbasisTooltip}}', className:'board js-board-basis-feature'"><i></i>{{accommodation.boardbasis.name}} stay </li>
+        {% endif %}
+
+    <!---Stay/Accom ends---->
+	<li class="border" style="border-top: 1px solid #ddd;min-height: 1px;padding-bottom: 6px;padding-top: 6px;width: 258px;margin-left: 8px;"></li>
+        <!--Other ones-->
+
+            {% if flights %}
+            <li class="flights"><i></i>Flights</li>
+            {% endif %}
+
+            {% if  transfers%}
+            <li class="coach"><i></i>Transfers</li>
+            {% endif %}
+            {% if baggage %}
+            <!--luggage(10), luggage-15 (15), luggage-20 (20), luggage-25 (25), luggage-30 (30), luggage-35 (35)-->
+            <li class="luggage"><i></i>Baggage Per Person</li>
+            {% endif %}
+            {% if offerMessage %}
+            <li class="offer-message"><i></i>Offer Message</li>
+            {% endif %}
+            {% if atol %}
+            <li class="donation"><i></i>ATOL Protection</li>
+            {% endif %}
+            {% if worldCare %}
+            <li class="protection" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{worldCareTooltip}}', className:'protection'"><i></i>World care fund Donation (Optional)</li>
+            {% endif %}
+            <li class="clear-it"></li>
+            <!--Other ones ends-->
+    <!--Condition for Accom detail complete-->
+
+    {% else %}
+        {% if flights %}
+        <li class="flights"><i></i>Flights</li>
+        {% endif %}
+        {% if cruiseDuration %}
+        <li class="cruise"><i></i>{{cruiseDuration}} night <br/> cruise</li>
+        {% endif %}
+        {% if stayDuration %}
+        <li class="duration"><i class="d7"></i>
+            {{stayDuration}} nights Stay<div class="change-pax-di">
+            	{% if tracs or stayRemoveAvailable %}
+                <a lang="en" href="javascript:void(0);" class="change-pax remove-stay"><i></i> Remove</a>
+                <div class="remove-stay-overlay">
+                    <span class="name">Price without hotel stay</span><span class="duration-price">&pound;{{price.withoutStay}}pp</span>
+
+                    <span class="name">Price with {{stayDuration}} nights hotel stay</span><span class="duration-price">&pound;{{price.withStay}}pp</span>
+                        <span class="remove">
+                            <a lang="en" class="button search-alt remove-hotel-button remove-hotel-from-itinerary" href="javascript:void(0);">Remove Hotel Stay</a>
+                        </span>
+                    <a lang="en" class="change-pax remove-stay-overlay-close"  href="javascript:void(0);">
+                        CANCEL</a>
+                    <span class="arrow"></span>
+                </div>
+                {% endif %}
+
+            </div>
+        </li>
+
+        <!--for 1st place:-top:10, 2nd:-top:-70px, 3rd:-top:-160px-->
+        {% endif %}
+
+        {% if cabin %}
+        <li class="room" {% if not tracs  %}  {% for itm in cabin.cabinAry %} {% if forloop.first %}  data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: ' {% endif %}   {{itm.cabinFriendlyTitle}} {% if not forloop.last %}<br/> {% endif %} {% if forloop.last %}  ', className:'room'"  {% endif %}  {% endfor %}  {% endif %}>
+        <i style="padding-left:12px"></i>
+
+			{% for itm in cabin.cabinAry %}
+				{% if itm.roomCount %}{{itm.roomCount}} x {% endif %}{{itm.roomType|lower|safe}}
+				 <div class="details">
+				 {% if itm.availability %}
+	                <span class="alert" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{cabin.limitedAvailabilityCabin}}', className:'alert'">ONLY {{itm.sellingout}} LEFT<span class="question"></span></span>
+				 {% endif %}
+            	</div>
+            {% endfor %}
+            <div class="details">
+	                <span class="types"  data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{cabin.otherCabinTypes}}', className:'types'">OTHER TYPES<span class="question"></span></span>
+            </div>
+        </li>
+        {% endif %}
+
+        {% if boardbasis %}
+        <li class="board js-board-basis-feature" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{boardbasisTooltip}}', className:'board js-board-basis-feature'"><i></i>
+		{{boardbasis}} cruise</li>
+
+
+        {% endif %}
+        {% if  transfers%}
+        <li class="coach"><i></i>Transfers</li>
+        {% endif %}
+        {% if allTipsAndCharges %}
+        <li class="tips"><i></i>All Tips and Charges</li>
+        {% endif %}
+        {% if baggage %}
+        <!--luggage(10), luggage-15 (15), luggage-20 (20), luggage-25 (25), luggage-30 (30), luggage-35 (35)-->
+        <li class="luggage"><i></i>Baggage Per Person</li>
+        {% endif %}
+        {% if atol %}
+        <li class="donation"><i></i>ATOL Protection</li>
+        {% endif %}
+        {% if offerMessage %}
+        <li class="offer-message"><i></i>Offer Message</li>
+        {% endif %}
+
+        {% if worldCare %}
+        <li class="protection" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{worldCareTooltip}}', className:'protection'"><i></i>World care fund Donation (Optional)</li>
+        {% endif %}
+        <li class="clear-it"></li>
+    {% endif %}
+</ul>
+{% endif %}

@@ -1,0 +1,25 @@
+{% for roomViewdata in jsonData.packageViewData.accomViewData.roomViewData %}
+	<div class="room">
+		<span class="head fl cb">
+			<span class="num">
+				Room {{forloop.counter0 }}
+			</span>{{ roomViewdata.description }}</span>
+		<div class="cb fl">
+			<span class="icon roomType fl"></span>
+			<div class="fr">
+				<select name="" id="" placeholder="Select" class="dropdown"
+					data-dojo-type="tui.widget.form.SelectOption"
+					data-dojo-attach-point="room{{forloop.counter0}}.select1"
+					data-dojo-props="fixedWidth: true">
+					<option value="">Select</option>
+				</select> 
+				<select name="" id="" placeholder="Select" class="dropdown"
+					data-dojo-type="tui.widget.form.SelectOption"
+					data-dojo-attach-point="room{{forloop.counter0}}.select2"
+					data-dojo-props="fixedWidth: true">
+					<option value="">Select</option>
+				</select>
+			</div>
+		</div>
+	</div>
+{% endfor%}

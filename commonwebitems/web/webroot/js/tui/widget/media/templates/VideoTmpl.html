@@ -1,0 +1,16 @@
+<div class="popup video-popup">
+	<div class="floater">
+		<a href="javascript:void(0)" class="close right">Close<span class="icon-close sprite-img-grp-1"></span></a>
+	</div>
+	<object id="bcp_{{id}}" class="BrightcoveExperience">
+		<param name="bgcolor" value="#111111"/>
+		<param name="width" value="100%"/>
+		<param name="height" value="100%"/>
+		<param name="playerID" value="{% if videoPlayerId %}{{videoPlayerId}}{% else %}1757882881001{% endif %}" />
+		<param name="playerKey" value="{% if videoPlayerKey %}{{videoPlayerKey}}{% else %}AQ~~,AAABmOQVOYk~,q6OkGfw0GvdOYQoNUqm6Fn3YnB4Sgdnx{% endif %}" />
+		<param name="isVid" value="true"/>
+		<param name="isUI" value="true"/>
+		<param name="dynamicStreaming" value="true"/>
+		<param name="@videoPlayer" value="ref:{{videoId}}"/>
+	</object>
+</div>

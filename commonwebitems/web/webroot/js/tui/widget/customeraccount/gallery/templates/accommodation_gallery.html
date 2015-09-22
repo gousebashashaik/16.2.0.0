@@ -1,0 +1,5 @@
+<ul id="{{id}}" class="gallery">
+	{% for image in images %}
+	<li><a href="{{image.medium}}"><img data-dojo-type="tui.widget.mobile.ResponsiveImage" alt="{% if image.description %}{{image.description}}{% endif %}" data-dojo-props="s:'{{image.small}}',m:'{{image.medium}}',l:'{{image.large}}'" src="/holiday/mobile/images/p.gif"/></a></li>
+	{% endfor %}
+</ul>

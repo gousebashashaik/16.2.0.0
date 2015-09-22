@@ -1,0 +1,13 @@
+<li>
+    <label for="recommended-{{data.value}}" class="selected">
+    <input type="checkbox"
+           data-destination-id="{{data.value}}"
+           data-destination-name="{{data.key}}"
+           data-destination-type="{% if data.type %}{{data.type}}{% endif %}"
+           name="{{data.key}}"
+           id="collection-{{data.value}}"
+           value="{{data.value}}"
+           class="{{data.value}}"
+           checked=checked>
+    {{data.key}}<span class="checkbox check-box"></span></label>
+</li>

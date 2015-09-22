@@ -1,0 +1,73 @@
+<div class="popup extras-popup-overlay hide">
+<div class="seating-overlay hide">
+		<div class="seating-wrapper">
+            <div class="seating-header">{{tmplData.Ancillary_Seat_Heading|safe|default:" "}}</div>
+			{{tmplData.Ancillary_Seat_Features|safe|default:" "}}
+
+            <div class="seating-instructions">
+                {{tmplData.Ancillary_Seat_Instructions|safe}}
+            </div>
+
+            <div class="seating-info">
+					<p>{{tmplData.Ancillary_Seat_PerAdult|safe|default:" "}},
+					{% ifequal flightViewData.inboundSectors.length 0 %}
+					{{tmplData.Ancillary_Seat_PerChild_OneWay|safe|default:" "}}
+					{% else %}
+					{{tmplData.Ancillary_Seat_PerChild|safe|default:" "}}</p>
+					{% endifequal %}
+                    <div style="width: 100%;">
+					 <a href="#SeatExtras" class="" >
+						<p class="button cta add-seat jumbo close" style="position:relative; margin-left:102px;letter-spacing: 1px;" analytics-id="" analytics-text="Add Seats" analytics-instance="1">ADD SEATING</p>
+					 </a>
+                    </div>
+            </div>
+        </div>
+</div>
+
+<div class="baggage-overlay hide">
+	<div class="Baggage-wrapper">
+		<div class="Baggage-header">{{tmplData.Ancillary_Baggage_Heading|safe|default:" "}}</div>
+
+		<div class="Baggage-instructions">{{tmplData.Ancillary_Baggage_Instructions|safe|default:" "}}</div>
+         {% if noLabel %}
+		<div class="Baggage-info">
+			{{tmplData.Ancillary_Baggage_Info|safe|default:" "}}
+		</div>
+		{% else %}
+		<div class="Baggage-info1">
+			{{tmplData.Ancillary_Baggage_Info|safe|default:" "}}
+		</div>
+		{% endif %}
+		<div class="off-det">
+		{% if noLabel %}
+		<p class="included  labelvalue {{noLabel}}">
+		<img src="{{cdnDomain}}/images/{{dojoConfig.site}}/bookflow/selected-icon-big.png" width="20"/>{{tmplData.Ancillary_Baggage_WeightDet|safe|default:" "}}
+        </p>
+
+		{% else %}
+
+			{% endif %}
+		<div class="Baggage-footer">
+				<p>
+				{{tmplData.Ancillary_Baggage_ExtraWeight|safe|default:" "}}
+				{% ifequal flightViewData.inboundSectors.length 0 %}
+				  {{tmplData.Ancillary_Baggage_ExtraPrice_OneWay|safe|default:" "}}
+			    {% else %}
+				   {{tmplData.Ancillary_Baggage_ExtraPrice|safe|default:" "}}
+			    {% endifequal %}
+
+				</p>
+
+				<div style="width: 100%;">
+					<a href="#BaggageExtras" class="" >
+						<p class="button cta jumbo add-baggage close" style="position:relative; margin-left:102px;letter-spacing: 1px;"  analytics-id="" analytics-text="Add Baggage" analytics-instance="1">ADD BAGGAGE</p>
+					</a>
+				</div>
+		</div>
+		</div>
+	</div>
+</div>
+<a href="javascript:void(0)" class="" >
+	<p id="thanks" class="button jumbo close" style="position: relative;float: right;margin-right: 27px;margin-top:22px;clear: both;"  analytics-id="" analytics-text="No Thanks" analytics-instance="1">NO THANKS</p>
+</a>
+</div>

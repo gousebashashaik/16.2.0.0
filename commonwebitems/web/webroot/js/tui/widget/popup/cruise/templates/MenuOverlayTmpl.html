@@ -1,0 +1,14 @@
+ <div class="modal-window controller popup-with-scroll loading">
+   <div class="wrapper exursion-overlay poc-overlay">
+  	 <div class="menu-image content">
+	   <div>
+	 	<h2>{{jsonData.menuName}} </h2>
+	   	{% if jsonData.galleryImages %}
+	  		<img alt="image" src="{{jsonData.galleryImages.0.mainSrc}}"/>
+	 	 {% endif %}
+	 </div>	
+	 <a class="close close-large position" href="javascript:void(0);">x</a>
+	  </div>
+	</div>
+<div class="loading-overlay"></div>
+</div>

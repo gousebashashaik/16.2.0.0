@@ -1,0 +1,245 @@
+<div id="temp">
+
+
+
+{% for cabinData in cruiseCabin %}
+                <div class="roomTypes select-room-section bookflow {{siteName}}"  data-dojo-type="tui.widget.booking.changeroomallocation.view.cruiseAlternativeCabinToggler">
+
+
+        <h2 id="{{forloop.counter0}}" class="adults-logo fs32px cl fl cruiseStayCabinTitle">
+          Cabin  {{forloop.counter}}
+
+        </h2>
+        {% for cabinView in cabinData.listOfCabinTypeViewData %}
+
+
+
+        <div id="{{forloop.counter0}}" class="item open ">
+        	{% for cabinViewAlt in cabinView.listOfCabinViewData %}
+
+
+        		{% ifequal forloop.counter 1 %}
+
+
+						         			<h3 class="item-toggle ">
+						            <span class="roomHeaderSelected">{{cabinView.cabinType|default:" "|safe}}</span>
+
+
+
+							 {% if cabinViewAlt.selected %}
+                <span class="selectedRoom"> SELECTED</span>
+                {% endif %}
+
+
+
+
+										<span class="text_container fr  {% if cabinViewAlt.selected %} displayNone  {% endif %}">
+
+									{% for deckPlan in cabinViewAlt.deckViewData %}
+        						<span class="PPPerNight pl10px">{{deckPlan.deckNo}}</span>
+        						<span class=" PPPerNight pl10px">{% if forloop.last %} {% else %} | {% endif %}</span>
+
+									{% endfor %}
+
+
+
+						               <span class="PPPerNight   "> {{cabinViewAlt.currencyAppendedPerPersonPrice}} per person per night</span>
+						               <span class="curVal">{{cabinViewAlt.differencePrice}}</span>
+
+
+						               </span>
+
+
+						               <i></i>
+
+
+
+
+						            </h3>
+
+
+
+
+              	{% endifequal %}
+					{% endfor %}
+
+						             <div class="item-content  selectedSection">
+				{% for cabinViewAlt in cabinView.listOfCabinViewData %}
+            	   	{% ifequal forloop.counter 1 %}
+            	 <div class="room-type-description">
+			            	 	 <div class="room-type-img {{cabinViewAlt.length|default:\' \'}}">
+			                {% ifnotequal cabinViewAlt.roomImage.length 0 %}
+			                   {% for image in cabinViewAlt.roomImage %} {% if forloop.first %}
+								<img src="{{image.url}}" alt="Image Not Available" width="215px" height="110px" /> {% endif%} {% endfor %}
+								{% else %}
+									<img src="../images/default-rooms.jpg" width="215px" height="110px" />
+
+							{% endifnotequal %}
+			                </div>
+			                <div class="room-type-features">
+
+			                	<p class="room-description">{{cabinViewAlt.description|default:""|safe}}
+			                	</p>
+
+			                	<div class="clear"></div>
+
+
+			                	{% if cabinViewAlt.premierServiceIncluded %}
+			                			<div class="bookflow" data-dojo-type="tui.widget.expand.Expandable" data-dojo-props="transitionType: 'WipeInOut',itemSelector:'.premiumAccord',targetSelector:'.premiumheader',itemContentSelector:'.premiumContent'">
+									    	 <div class="premiumAccord">
+											    <h3 class="premiumheader">
+
+											   premier service included
+
+
+											    </h3>
+
+											    <div class="premiumContent fl">
+											    	<span class="premiumStrapLine fl">{{jsonData.roomOptionsContentViewData.roomContentViewData.contentMap.cabin_premier_service_StrapLine}}</span>
+
+											    	<div class="premiumUsps fl">
+
+											    		 <ul>
+										                    {% for premiumFeatures in jsonData.roomOptionsContentViewData.roomContentViewData.contentMap.cabin_premier_service_usp %}
+										                    	    <li>{{premiumFeatures|safe}}</li>
+										                    {% endfor %}
+										                     </ul>
+
+											    	</div>
+
+											    </div>
+
+											   </div>
+
+
+				   						 </div>
+
+
+
+
+			                {% endif %}
+
+
+
+
+			                </div>
+
+            	 </div>
+            	 {% endifequal %}
+
+
+
+            	 <div class="radioContainer {% if cabinViewAlt.selected %} selected {% endif %}">
+
+        			<div  class="deckcontainer">
+
+        					<span id="{{forloop.counter0}}" class="decktagcontainer fl">
+ 		{% for deckPlan in cabinViewAlt.deckViewData %}
+        						<a id="{{deckPlan.deckNo}}" class="ensLinkTrack mt10px fl pl10px fs15px textBold" href="javascript:void(0)">{{deckPlan.deckNo}}</a>
+        						<span class="mt10px fl pl10px colorblack">{% if forloop.last %} {% else %} | {% endif %}</span>
+
+		{% endfor %}
+
+
+        					</span>
+        			{% if cabinViewAlt.minOccupancy 0 and cabinViewAlt.maxOccupancy 0 %}
+				 	<p class="roomoccupany">Sleeps: min {{cabinViewAlt.minOccupancy}}, max {{cabinViewAlt.maxOccupancy}}</p>
+					{% endif %}
+
+        			</div>
+
+
+
+			{% if cabinViewAlt.limitedAvailability %}
+        		 <div class="room-type-button-section fl">
+                         <div class="limitedAvailability fl" >
+                     			<label class="hurry-text-color"> Hurry - only {{cabinViewAlt.quantity}}  left!  <span class="hurry-icon"></span>
+                          			<span class="roomquestion" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="floatWhere:'position-top-center', text:'{{cabinViewAlt.limitedAvailabilityText}}'"></span>
+
+                                </label>
+                            </div>
+
+
+
+                    </div>
+			{% endif %}
+        		<div class="chooseSection fr">
+
+
+
+
+               				<label class="{% if cabinViewAlt.selected %}disNone{% endif %}">{{cabinViewAlt.currencyAppendedPerPersonPrice}} per person per night</label>
+		 					{% if cabinViewAlt.selected %}
+		 					<button class="button jumbo selected select-seat fr">
+			 					<span class="button-selected"></span>
+		 					</button>
+
+		 					{% else %}
+
+                           <button  id="{{forloop.counter0}}"class="button jumbo unselect-seat seatingBtn fr">
+									<span class="withPrice">
+
+                                           {% if cabinViewAlt.selected %}
+                                            FREE
+                                       {% else %}
+                                            <!--  delta price needs to be displayed -->
+                                            {{cabinViewAlt.differencePrice}}
+                                       {% endif %}
+
+                                        </span>
+
+                            <span class="withoutPrice"></span>
+                            </button>
+
+		 					{% endif %}
+
+
+
+                        </div>
+
+
+        	</div>
+
+
+
+
+
+
+
+
+
+
+
+        	{% endfor %}
+
+        	<div class="fl dashed-border-top mt0px pt10 fs14px">
+        		<span class="fl width99">
+        			{{jsonData.roomOptionsStaticContentViewData.roomContentMap.Cabins_DeckInfo_Text}}
+        		</span>
+        		<a class="ensLinkTrack mt10px fl fs14px moreDetails" href="javascript:void(0)"> {{jsonData.roomOptionsStaticContentViewData.genericContentViewData.genericContentMap.Generic_More_Details}}</a>
+        	</div>
+
+        	            </div>
+
+         </div>
+
+        {% endfor %}
+
+
+			<div class="btnRight fr">
+                        <button class="button large mt10px mb10px  showAll">show all
+                            available cabins</button>
+                        <button class="button large mt10px mb10px  hideAll">SHOW LESS</button>
+                    </div>
+                    <div class="clear"></div>
+<div class="dashed-border mt15px mb15px"></div>
+
+
+
+
+
+    </div>
+
+    {% endfor %}
+
+    </div>

@@ -1,0 +1,68 @@
+<h3>{{headerTitle|default:""}}</h3>
+<div class="item-content selectedSection pos-relative">
+    <ul class="adultCount">
+            {% for room in roomViewOptionViews %}
+            <li>
+                <h5>
+                    <label>{{roomTile|default:" "}}    {{forloop.counter}}</label>
+                    {% ifnotequal room.noOfAdults 0 %}
+                    	{% ifnotequal room.noOfAdults 1 %}
+                        	<span>	{{room.noOfAdults|default:" "}} adults</span>
+                        		{% else %}
+                        	<span>	{{room.noOfAdults|default:" "}} adult</span>
+                        	{% endifnotequal %}
+                    {% endifnotequal %}
+                   
+                        {% ifnotequal room.noOfChildren 0 %}
+                        	{% ifnotequal room.noOfChildren 1 %}
+                        		<span>{{room.noOfChildren|default:" "}} children</span>
+                        		{% else %}
+                        		<span>{{room.noOfChildren|default:" "}} child</span>
+                        	{% endifnotequal %}
+                         {% endifnotequal %}
+
+                        {% ifnotequal room.noOfInfants 0 %}
+                       
+                        {% ifnotequal room.noOfInfants 1 %}
+                        		<span>{{room.noOfInfants|default:" "}} Infants</span>
+                        		{% else %}
+                        		<span>{{room.noOfInfants|default:" "}} Infant</span>
+                        	{% endifnotequal %}
+                        {% endifnotequal %}
+                </h5>
+                    {% ifequal room.noOfChildren 0 %}
+                    	{% ifequal room.noOfInfants 0 %}
+
+              <div class="adult1">
+                <div class="singleAdult">{{room.noOfAdults|default:" "}}</div>
+              </div>
+              {% else %}
+              <div class="adult2">
+                <div class="adultDis">{{room.noOfAdults|default:" "}}</div>
+                <div class="childDis {% ifequal room.totalChildrenCount '1' %}mar43{% endifequal %}">{{room.totalChildrenCount|default:" "}}</div>
+              </div>
+              {% endifequal %}
+              {% else %}
+              <div class="adult2">
+                <div class="adultDis">{{room.noOfAdults|default:" "}}</div>
+                <div class="childDis {% ifequal room.totalChildrenCount '1' %}mar43{% endifequal %}">{{room.totalChildrenCount|default:" "}}</div>
+              </div>
+                   {% endifequal %}
+            </li>
+        {% endfor %}
+        
+    </ul>
+    
+    {% if displayChangeButton %}
+    
+    	<div class="roomButton fr">
+      <button class="button large "
+                data-dojo-props="widgetId:'changeRoom-Allocation', modal: true, jsonData: jsonData"
+                data-dojo-type="tui.widget.booking.changeroomallocation.view.ChangeRoomAllocationOverlay">{{jsonData.roomOptionsStaticContentViewData.genericContentViewData.genericContentMap.Generic_Change_Button|default:"Change"}}</button>
+     </div>
+    
+    {% endif %}
+
+	
+	
+</div>

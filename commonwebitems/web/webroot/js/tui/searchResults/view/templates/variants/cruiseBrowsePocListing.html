@@ -1,0 +1,38 @@
+<!-- BrowseSearch POC List : -->
+<li class="span-quarter poc-list padBottomZero browseSearch">
+    <div class="divBox"> 
+		<a href="{{holiday.portDetails.pocRedirectUrl|default:\' \'}}" >	
+			<img title="{{holiday.portDetails.portName|default:" "}}" src="{{holiday.image|default:\' \'}}" size="medium"  width="236" height="120"/>
+		</a>
+		<div class="contentBox">
+			<h2 class="title"><a href="{{holiday.portDetails.pocRedirectUrl|default:\' \'}}" >{{holiday.portDetails.portName|default:" "}}</a></h2>
+			<span class="sub-title">{{holiday.portDetails.portCountry|default:" "}}</span>				
+			{% if holiday.portDetails.portDesc > 0 %}	
+			<p class="desc">{{ holiday.portDetails.portDesc|safe|default:" " }} ...</p>
+			{% else %}
+			<p class="desc">&nbsp;</p>
+			{% endif %}
+			<h2 class="viewlink">
+				<a class="view-all ensLinkTrack has-icon-left" href="{{holiday.portDetails.pocRedirectUrl|default:\' \'}}">
+				<i class="icon arrow-main product-arrow-sm product-arrow-left arrow-right-bg">&#9658;</i> VIEW DETAILS</a>
+			</h2>
+		</div>
+		{% if holiday.portDetails.excursions.length > 0 %}
+		<div class="link-list">
+			<span class="uc list-title">Top Excursions</span>
+			<ul class="square-with-arrow">
+			{% for excursion in holiday.portDetails.excursions %}
+			<li class="excOverlay" data-index="{{holiday.index|default:\' \'}}" data-excursion-code="{{excursion.excursionCode|default:\' \'}}" data-port-code="{{holiday.portDetails.portCode|default:\' \'}}">
+				<a href="javascript:void(0);">{{excursion.excursionName|default:" "}}</a>
+			</li>    
+			{% endfor %}
+			</ul>
+		</div>
+		{% endif %}
+	</div>
+</li>
+{% if holiday.index |divisibleby:"3" %}
+<li class="clear" style="clear:both;">&nbsp;</li>
+{% endif %}
+
+<!--{{ holiday.index |divisibleby:"3" }}-->

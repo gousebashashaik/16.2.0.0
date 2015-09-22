@@ -1,0 +1,36 @@
+{% ifequal templateView "carousel" %}<div class="carousel js-carousel">
+	<div class="viewport"><ul class="list"></ul></div>
+</div>
+{% endifequal %}
+
+{% ifequal templateView "group" %}<li class="list-group" data-group-id="{{group.id}}">
+    <div class="list-group-label"><p><span class="month">{{group.monthYear.month}}</span> <span class="year">{{group.monthYear.year}}</span></p></div>
+    <ul>
+        {% for day in group.days %}<li class="list-item{% if day.freeChildPlace %} promo{% endif %}{% if not day.availability %} disabled{% endif %}" data-date-id="{{day.when}}" data-parent-id="{{group.id}}">
+        <div class="list-item-content">
+            <p class="day">{{day.label}}</p>
+            <div class="date-value">
+					<span class="price">
+						<span class="price-label">From</span>
+                        &pound;{{day.price}}
+					</span>
+					<i class="sprite-img-grp-1"></i>
+            </div>
+        </div>
+    </li>{% endfor %}
+    </ul>
+</li>
+{% endifequal %}
+
+{% ifequal templateView "items" %}{% for day in items %}<li class="list-item{% if day.freeChildPlace %} promo{% endif %}{% if not day.availability %} disabled{% endif %}" data-date-id="{{day.when}}" data-parent-id="{{groupId}}">
+    <div class="list-item-content">
+        <p class="day">{{day.label}}</p>
+        <div class="date-value">
+            <span class="price">
+                <span class="price-label">From</span>
+                &pound;{{day.price}}
+            </span>
+        </div>
+    </div>
+</li>{% endfor %}
+{% endifequal %}

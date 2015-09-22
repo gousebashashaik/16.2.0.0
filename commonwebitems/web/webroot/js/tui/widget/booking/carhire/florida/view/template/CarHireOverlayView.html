@@ -1,0 +1,70 @@
+
+<div class="temp">
+
+
+    <div id="car_hire_main_div">
+
+        {% for carHire in carHireModelObj %}
+        <div class="cartype">
+
+            <div class="cartype_details">
+                <div class="cartype_childdiv" >
+                    <div class="carhire_img {% ifequal carHire.extraFalicityCode '8 SEATER VAN' %} eightSeatVan {% else %} {% ifequal carHire.extraFalicityCode '15 SEAT VAN' %} fifteenSeatVan {% else %} {{carHire.extraFalicityCode|cut:' '|lower}} {% endifequal %} {% endifequal %}" >
+                    </div>
+                    <div class="carhire_details" >
+                        <span class="car_type_name">{{carHire.description|default:' '}}</span>
+                        <span class="car_desc"><br />{{carHire.equivalent|default:' '}}</span><br />
+                         <span class="carhire_detailslink">View Details
+							 <span class="loaded" lang="en"
+	                            data-dojo-props="floatWhere:'position-top-center', text:'<ul class=\'item-list\'>{% for usp in carHire.uspContent %}<li>{{usp|default:\' \'}}</li>{% endfor %}</ul>'"
+	                            data-dojo-type="tui.widget.popup.Tooltips"></span>
+	                     </span>
+                    </div>
+                </div>
+            </div>
+            {% for carHireFacility in carHire.extraFacility %}
+            {% ifequal carHireFacility.cartypeInsurance "nobasic" %}
+            <div class="ins_details">
+                {{carHireFacility.carDescription}} not included<br />
+            </div>
+            {% else %}
+            <div class="ins_details" name="{{carHireFacility.code}}" class="insurance_details {% if carHireFacility.free %} default {% endif %}">
+
+
+                {% if carHireFacility.free %}
+                      {% if carHireFacility.selected %}
+                      <label><span class="textCenter inc_pad_overlay fl">
+                      Included
+                        </span></label>
+                        <div class="clear"></div>
+                      {% else %}
+
+							<span class="rate_cls">{{carHireFacility.carCurrencyAppendedPrice}}</span><br />
+							<span class="rate_small_cls">({{carHireFacility.carPerPersonPrice}} per day)</span><br />
+                      {% endif %}
+                      {% else %}
+                      {% if carHireFacility.selected %}
+                      		<span class="rate_cls"></span><br />
+							<span class="rate_small_cls"></span><br />
+                      {% else %}
+
+							<span class="rate_cls">{{carHireFacility.carCurrencyAppendedPrice}}</span><br />
+							<span class="rate_small_cls">({{carHireFacility.carPerPersonPrice}} per day)</span><br />
+                      {% endif %}
+                      {% endif %} 
+
+
+                <button id="{{carHireFacility.code}}|{{carHire.description|default:' '}}" class="button jumbo sel_btn carhireSelect {% if carHireFacility.selected %} selected {% endif %} name=".{{carHireFacility.cartypeInsurance}}">
+
+                </button>
+             </div>
+
+            {% endifequal %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+
+    </div>
+
+
+    </div>

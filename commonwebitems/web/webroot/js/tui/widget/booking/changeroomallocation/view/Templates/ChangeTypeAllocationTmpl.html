@@ -1,0 +1,125 @@
+<div id="title" class="title_section">
+			<label class="adults_title fl"><span class="bold" >Adults</span></label>
+
+			{% ifnotequal jsonData.packageViewData.paxViewData.noOfChildren 0 %}
+			<label class="child_title fl"><span class="bold">Children</span> (0-17)</label>
+			<label class="child_age_title fl"><span class="bold">Ages</span> (on return date)</label>
+
+			{% else %}
+			{% ifnotequal jsonData.packageViewData.paxViewData.noOfInfants 0 %}
+			<label class="child_title fl"><span class="bold">Children</span> (0-17)</label>
+			<label class="child_age_title fl"><span class="bold">Ages</span> (on return date)</label>
+
+			{% endifnotequal %}
+			{% endifnotequal %}
+
+		</div>
+{% for roomView in roomViewOptionViews %}
+<div class="room_row  fl">
+    <div class="room_container fl">
+        <span class="room_no fl bold">Room 1</span>
+				<span class="close_mark fl">
+							<a class="close_row">Remove Room</a>
+				</span>
+    </div>
+	<span class="noOfppl">
+	<span class="left_section fl">
+
+
+		<span class="adlt_Section fl width81">
+
+				 <span class="selectAge custom-dropdown dropdown fl" >
+                     <select name="Option" data-dojo-type="tui.widget.booking.changeroomallocation.view.AdultSelectOption" class="dropdown adultCount">
+                         {% for count in adultsCount %}
+                         <option value="{{count}}"
+
+
+
+
+                         {% ifequal count roomView.noOfAdults %}
+                         selected="selected"
+
+                         {% endifequal %}
+                         >
+
+                         {{count}}
+
+                         </option>
+
+                         {% endfor %}
+                     </select>
+
+                 </span>
+
+
+
+		</span>
+		
+					{% ifnotequal jsonData.packageViewData.paxViewData.noOfChildren 0 %}
+					<span class="child_Section fl width81 ">
+						<span class="select_field fl">
+							 <select name="Option" data-dojo-type="tui.widget.booking.changeroomallocation.view.ChildSelectOption"class="dropdown childCount">
+
+                                 {% for count in childsCount %}
+                                 <option value="{{count}}"
+
+
+
+                                 {% ifequal count roomView.totalChildrenCount %}
+                                 selected="selected"
+
+                                 {% endifequal %}
+                                 >
+
+                                 {{count}}
+
+                                 </option>
+
+                                 {% endfor %}
+                             </select>
+
+							 </span>
+
+
+					</span>
+					{% else %}
+
+
+					{% ifnotequal jsonData.packageViewData.paxViewData.noOfInfants 0 %}
+					<span class="child_Section fl width81 ">
+
+
+						<span class="select_field fl">
+							 <select name="Option" data-dojo-type="tui.widget.booking.changeroomallocation.view.ChildSelectOption" data-dojo-props="accomIndexValue:0" class="dropdown childCount">
+
+                                 {% for count in childsCount %}
+                                 <option value="{{count}}"
+
+
+
+                                 {% ifequal count roomView.totalChildrenCount %}
+                                 selected="selected"
+
+                                 {% endifequal %}
+                                 >
+
+                                 {{count}}
+
+                                 </option>
+
+                                 {% endfor %}
+                             </select>
+
+							 </span>
+
+
+					</span>
+					{% endifnotequal %}
+					{% endifnotequal %}
+				</span>
+				<span class="right_section children_age fl">
+
+                </span>
+	</span>
+</div>
+{% endfor %}

@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7 ]>
+<html lang="en" class="ie6" id="firstchoice"> <![endif]-->
+<!--[if IE 7 ]>
+<html lang="en" class="ie7" id="firstchoice"> <![endif]-->
+<!--[if IE 8 ]>
+<html lang="en" class="ie8" id="firstchoice"> <![endif]-->
+<!--[if IE 9 ]>
+<html lang="en" class="ie9" id="firstchoice"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="" id="firstchoice"> <!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <title>Popup Tests</title>
+
+
+    <link href="/css/main.css" rel="stylesheet" type="text/css">
+
+    <script src="/js/underscore/underscore-min.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script type="text/javascript" src="/js/tui/config/TuiConfigTest.js"></script>
+
+
+</head>
+
+    <script type="text/javascript">
+        dojoConfig.addModuleName("tui/widget/popup/DynamicPopup", "tui/widget/popup/Tooltips", "tui/widget/popup/tests/TestPopupWidget");
+    </script>
+
+<body>
+	<div id="wrapper">
+    	<div id="content">  
+        	<div class="span">
+            	<h1 id="popupTitle">Popup</h1>
+            </div>
+            <div class="span">
+				 <a id="couplesText" href="#" class="brand platinum" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="text:'This is tooltip text. It can break onto several lines. Sometimes it may even break onto 3.'"> Couples</a>
+         	</div>
+         	 <div class="span">
+				<a id="testPopup" href="#" data-dojo-type="tui.widget.popup.tests.TestPopupWidget">test popup</a>
+         	</div>
+         	
+         	<div class="span">
+         		  <a id="termsLink" href="#" data-dojo-type="tui.widget.popup.DynamicPopup" data-dojo-props="widgetId:'termsAndConditions'">Website Terms and Conditions</a>
+
+        		 <div id="termsAndConditions" class="popup" style="display:none">
+            		terms and conditions content.
+       			 </div>
+         	</div>
+         </div>
+     </div>
+     <footer id="footer">
+     </footer>
+     <script type="text/javascript" src="/js/dojo/dojo.js"></script>
+     <script type="text/javascript">
+     	dojoConfig.init();
+     </script>
+</body>
+
+
+</html>

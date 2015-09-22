@@ -1,0 +1,216 @@
+<div class="attraction-modal-window overlayPadding attractionoverlay">
+
+    <div class="clear"></div>
+    <h2>{{categoryCode}}  <a class="close abs fr" href="javascript:void(0);">close</a></h2>
+    <div class="attractionOverlayDiv" id="content">
+        <div class="no-bottom-margin page-tabs">
+           <ul  class="tabs loaded">
+					<li class="active" data-dojo-attach-point="overView"><a class="overview-tab" href="javascript:void(0);" >Overview</a></li>
+					{% if extraContent.extraContent.extraFacilityContent.itinerary %}
+					<li class="" data-dojo-attach-point="itinerary"><a class="itinerary-tab" href="javascript:void(0);" >Itinerary</a></li>
+					{% endif %}
+					<li class="" data-dojo-attach-point="location"><a class="location-tab" href="javascript:void(0);" >Location</a></li>
+				</ul>
+        </div>
+        <div class="clear"></div>
+        <div class="dottedline"></div>
+        <div class="clear"></div>
+        <div>
+            <div class="half-attraction">
+                <div class="span-two-third " id="m365" data-dojo-attach-point="overViewData">
+					<div class="product-list slideshow" data-dojo-attach-point="excursionCarousel">
+							<div class="viewport">
+								<ul class="plist">
+								{% for image in extraContent.extraContent.galleryImages %}
+								 {% ifequal image.size 'medium' %}
+								    <li style="z-index: 0; opacity: 1;"><img alt="Image" src="{{image.mainSrc}}" /></li>
+								  {% endifequal %}
+				            	 {% endfor %}
+				                </ul>
+							</div>
+
+					 </div>
+				</div>
+				{% if extraContent.extraContent.extraFacilityContent.itinerary %}
+				<div data-dojo-attach-point="itineraryData" class="itineraryData disNone">
+					{{extraContent.extraContent.extraFacilityContent.itinerary|default:" "|safe}}
+				</div>
+				{% endif %}
+				<div id="excursionmap"  data-dojo-attach-point="locationData" class="excursion-map disNone ">
+				</div>
+				<div class="clear"></div>
+                <div class="attraction-description" data-dojo-attach-point="description">
+                   {% for eachOverlayDataVal in attractionsOptionsData %}
+                   		{% if forloop.first %}
+                   			{{eachOverlayDataVal.extraContent.extraFacilityContent.editorialContent|default:" "|safe}}
+                   		{% endif %}
+                   {% endfor %}
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="right-details">
+                <div class="duration-details">
+                    <div class="selecting-section">
+                        <div class="fair-details">
+                            <div class="ThemeParkHeading" >
+                                <div class="ThemeParkHeading themeparkHeadingSession">
+                                    <div class="fl w140">&nbsp;</div>
+                                    <div class="fl w104">Adult</div>
+                                    {% if childLable %}
+                                    	<div class="fl w104">Child</div>
+                                    {% endif %}
+                                    <div class="clear"></div>
+                                </div>
+
+                                <ul class="ThemeParkHeading"  data-dojo-attach-point="AttractionSelectCSS">
+                                	      	{% for eachOverlayDataVal in attractionsOptionsData %}
+
+		                                    <li class="theme-park-heading">
+		                                        	<div class="fl w104 w140" id="duration" data-dojo-attach-point="{{eachOverlayDataVal.extraFacilityCategoryCode}}radioBox">
+		                                            <div class="luggage-select fl " id="limit[11]">
+		                                                <div class="luggage-select-checkbox">
+		                                                    <div class="luggage-limit radio-btn">
+		                                                        <input class="radioBtn" id="chkbox{{forloop.counter}}"  data-dojo-attach-point="checkboxId{{eachOverlayDataVal.extraFacilityCategoryCode}}" name="radioOne" type="radio" {% if eachOverlayDataVal.selected %} checked {% endif %} >
+		                                                        <label class="radioBtn" for="chkbox{{forloop.counter}}">
+	                                                            <span class="radioBtn selected radioStyle" for="chkbox[{{forloop.counter}}]"></span>
+		                                                            <span class="attraction-title">{{eachOverlayDataVal.extraFacilityCategoryCode}}</span>
+		                                                        </label>
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                            <div class="clear"></div>
+		                                        </div>
+		                                        	{% for attractionObjectVal in eachOverlayDataVal.extraFacilityViewData %}
+
+			                                        {% ifequal attractionObjectVal.paxType 'Adult' %}
+			                                        <div class="fl w104">{{ attractionObjectVal.currencyAppendedPrice}}</div>
+			                                        {% endifequal %}
+			                                         {% ifequal attractionObjectVal.paxType 'Child' %}
+			                                        <div class="fr w104">{{ attractionObjectVal.currencyAppendedPrice}}</div>
+			                                        {% endifequal %}
+
+		                                       		{% endfor %}
+		                                        <div class="clear"></div>
+
+		                                    </li>
+		                                    {% endfor %}
+
+                                 </ul>
+
+                            </div>
+                        </div>
+                        <div class="border-divider"></div>
+                        <div class="duration-details">
+                            <div>
+
+                                   	{% for eachOverlayData in attractionsOptionsData %}
+									 <div  data-dojo-attach-point="{{eachOverlayData.extraFacilityCategoryCode}}Attrcation" style="display:none">
+									  <h5>{{eachOverlayData.extraFacilityCategoryCode}}</h5>
+									{% for attractionObject in eachOverlayData.extraFacilityViewData %}
+
+											{% ifequal attractionObject.paxType 'Adult' %}
+
+				                                <div class="duration">Adults</div>
+
+				                                <div class="infant-count custom-dropdown dropdown loaded"  id="{{attractionObject.paxType}}">
+				                                    <select class="dropdown" data-dojo-type="tui.widget.form.SelectOption" name="selectDropdownLabel"
+				                                    data-dojo-attach-point="{{attractionObject.code}}SelectionBox">
+				                                       {% for qty in attractionObject.selectionData %}
+														<option	{% ifequal attractionObject.selectedQuantity qty %} selected {% endifequal %} >
+												 		 {{qty}}
+														</option>
+														{% endfor %}
+				                                    </select>
+				                                </div>
+				                                <div class="priceperinfant">
+				                                     <span class="currency-indicator">&pound;</span>
+				                                    <span class="price-package">{{ attractionObject.price}}</span>
+				                                    <span class="perperson">per adult</span>
+
+
+				                                </div>
+
+				                                <div class="clear"></div>
+
+					                        {% endifequal %}
+
+
+
+					                         {% ifequal attractionObject.paxType 'Child' %}
+
+												 {% ifnotequal attractionObject.quantity '0' %}
+					                                <div class="duration">Children ({{attractionObject.minAge}} -{{attractionObject.maxAge}})</div>
+					                                <div class="infant-count custom-dropdown dropdown loaded" id="{{attractionObject.paxType}}">
+					                                    <select name="selectDropdownLabel" data-dojo-type="tui.widget.form.SelectOption" class="dropdown"
+														data-dojo-attach-point="{{attractionObject.code}}SelectionBox" >
+															{% for qty in attractionObject.selectionData %}
+															<option	{% ifequal attractionObject.selectedQuantity qty %} selected {% endifequal %} >
+													 		 {{qty}}
+															</option>
+															{% endfor %}
+														</select>
+					                                </div>
+					                                <div class="priceperinfant">
+					                                    <span class="currency-indicator">&pound;</span>
+					                                    <span class="price-package">{{ attractionObject.price}}</span>
+					                                    <span class="perperson">per child</span>
+					                                </div>
+					                                {% endifnotequal %}
+					                                {% endifequal %}
+
+
+
+
+	                                {% endfor %}
+	                               	</div>
+                                {% endfor %}
+ 								<div id="error-mgs" class="error-notation disNone"></div>
+ 								<div class="clear"></div>
+                                <div class="border-divider dropDown-divider disNone"></div>
+                                <div class="final-calculation">
+                                    <h5 class="total-cost">TOTAL PRICE</h5>
+                                    <div class="fr totalCostSession">
+                                        <div class="TotalPrice">
+                                            <span class="currency-indicator">&pound;</span> <span
+									                  class="price-package"  data-dojo-attach-point="totalCalculatedPrice"></span>
+                                        </div>
+                                        <div class="clear"></div>
+                                        <div>
+                                           <button data-dojo-attach-point= "addButton" class="button  selected fr mt5px ml10px">Add</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="points-glance">
+					{% if include %}
+					<div class="fl includes">
+						<h6>Includes</h6>
+						<ul>
+						{% for include in include %}
+							<li>{{include|default:" "|safe}}</li>
+					    {% endfor %}
+						</ul>
+					</div>
+					{% endif %}
+					{% if notinclude %}
+					<div class="fl includes">
+						<h6>Doesn't include</h6>
+						<ul>
+						{% for notinclude in notinclude %}
+							<li>{{notinclude|default:" "|safe}}</li>
+						{% endfor %}
+						</ul>
+				</div>
+					{% endif %}
+					<div class="clear"></div>
+				</div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+</div>
+</div>

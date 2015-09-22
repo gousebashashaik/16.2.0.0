@@ -1,0 +1,41 @@
+ 
+<div class="cr-masonry-section masonry-box">
+	<div class="divMain">			
+		{% if item.smallImages.0.mainSrc %}		
+			 <div class="box box-first une-width" style="position:relative; ">
+				<a class="thumbnail play-media ensLinkTrack" href="javascript:void(0);">
+					<img width="232" height="103" class="bg-image une-img-widthHeight" src="{{item.smallImages.0.mainSrc}}" alt="View Large" />
+					<span class="transparent viewlarge uc une-facility"><span class="magnifier"></span>View Large</span>
+				</a>
+				{% if item.videoCode %}
+					<div class="right-corner bottomZero">
+						<a class="view-images view-large-link" href="javascript:void(0);" ><span>Play Video</span></a>
+				    </div>
+			    {% endif %}		
+			</div>
+		{% endif %}			
+		<div class="masonry-content">				
+			{% if item.name %}
+				<h2 class="masonry-title">{{item.name}}</h2>
+			{% endif %}
+			
+			{% if item.openingTimes %}	
+				<p class="marBot2">Opening times: {{item.openingTimes}}</p>
+			{% endif %}
+			{% if item.openDays %}	
+					<p>Open  {{item.openDays}}</p>
+			{% endif %}
+			{% if item.description %}	
+				<p>{{item.description|escape}}</p>
+			{% endif %}
+			{% if item.linkUrl %}	
+			<h2 class="linkwithlabel" style="">
+				<a href="{{item.linkUrl}}" class="view-all ensLinkTrack has-icon-left">
+					<i class="icon arrow-main product-arrow-sm product-arrow-left arrow-right-bg">&#8227;</i>
+					{{item.linkLabel}}
+				</a>
+			</h2>
+			{% endif %}				
+		</div>
+	</div>
+</div>

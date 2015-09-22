@@ -1,0 +1,226 @@
+<div class="tempClass">
+    <div class="item-content flights-details-section">
+        <div class="flights-section">
+
+            <div class="flight-details">
+                <div class="outbound dashedBorder">
+                    <h6>{{jsonData.flightOptionsStaticContentViewData.flightContentMap.Flight_OutBound_Label|default:" "}}</h6>
+                </div>
+                <div class="clear"></div>
+                {% for outboundVar in flightViewData.outboundSectors %}
+                <div class="hotel-flight mb15px overflowHidden">
+                    <div class="boarding-place fl">
+                        <h5 class="hotel-name">
+                            <p>{{outboundVar.departureAirport.name|default:" "}}&nbsp;({{outboundVar.departureAirport.code|default:" "}})</p>
+                        </h5>
+                    </div>
+
+                    <div class="place-name fl">
+                        <p>going to</p>
+                    </div>
+
+                    <div class="boarding-place fl">
+                        <h5 class="hotel-name">
+                            <p> {{outboundVar.arrivalAirport.name|default:" "}}&nbsp;({{outboundVar.arrivalAirport.code|default:" "}}) </p>
+                        </h5>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                {% if outboundVar.eqmtDescription %}
+                <div class="dreamliner">
+                <h6>
+                787 Dreamliner Flight
+                </h6>
+                </div>
+                {% endif %}
+                <div class="itinerary-dates">
+                    <h6>
+                        {{outboundVar.schedule.departureDate|default:" "}}
+                    </h6>
+                </div>
+                <div class="itinerary-time">
+                    <h6>
+                        {{outboundVar.schedule.depTime|default:" "}} <span
+                            class="itinerary-arrival-time">{{outboundVar.schedule.arrTime|default:" "}}</span> <!-- {{outboundVar.jnrDuration}} -->
+
+                        {% ifnotequal  outboundVar.schedule.flightOffsetDays 0 %}
+
+                        <span class="plusDayLeft">
+                            <span class="addedDay">+1 Day</span>
+                            <span data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.Alt_Plus1Day_ToolTip|default:\' \'}}'" data-dojo-type="tui.widget.popup.Tooltips" class="question-book loaded"></span>
+                        </span>
+
+                        {% else %}
+                        {% ifnotequal  flightViewData.inboundSectors[{{forloop.counter0}}].schedule.flightOffsetDays 0 %}
+                        <span class="plusDay">
+                            <span class="addedDay">&nbsp;</span>
+
+                        </span>
+                        {% endifnotequal %}
+                        {% endifnotequal %}
+                     <div class="clear"></div>
+                    </h6>
+                </div>
+               <div class="logo{{outboundVar.carrierCode|cut:' '|default:\' \'}}"><span class="logo-text">Other Carrier</span></div>
+                {% ifequal outboundVar.eqmtDescription "DREAMLINEAR787" %}
+                        <div class="dreamlinear-logo"></div>
+                {% endifequal %}
+
+                {% endfor %}
+
+            </div>
+
+            <div class="flight-details">
+                <div class="hoteldetails dashedBorder">
+                    {% if jsonData.packageViewData.laplandDayTrip %}
+                    <h6>1 day trip </h6>
+                    {% else %}
+                    <h6>{{flightViewData.durationSummary|default:" "}} {{contentDisplay}}</h6>
+                    {% endif %}
+                </div>
+                <div class="clear"></div>
+                <div class="hotel-flight">
+
+
+                {% for accomViewData in listAccomViewData %}
+
+                     {% if forloop.first %}
+                    <div class="hotel-desc">
+                   <a href="{{accomUrl|default:\' \'}}"
+				class="back-to-review"><span
+				class="{{accomViewData.productRanges.0.code|lower|default:\' \'}} rating">
+                  <span class="diff-label {{accomViewData.productRanges.0.code|lower|default:\' \'}}" data-dojo-type="tui.widget.popup.Tooltips"
+							data-dojo-props="floatWhere:'position-top-center', text:'{{accomViewData.productRanges.0.featureCodesAndValues.strapline.0|default:\' \'}}'">
+					</span></span>
+                        <img src="{{accomViewData.accomImageUrl|default:\' \'}}" width="208" class="main-img {% if accomViewData.productRanges.0.code %} special {% endif %} ">
+                     </a>
+
+                     {% for accomViewDataRef in listAccomViewData %}
+
+                     	{% if forloop.first %}
+
+                     		  <h5 class="hotel-name">{{firstCruise|safe|default:" "}}</h5>
+                     			 followed by
+                              <h5 class="hotel-name">{{secondCruise|safe|default:" "}}</h5>
+
+                     		<h6 class="hotel-location">
+
+                            <p class="text100">{{accomViewData.destinationName|default:" "}}
+
+                            </p>
+                       	 </h6>
+
+
+                     	{% endif %}
+
+                     {% endfor %}
+
+                    </div>
+
+                    {% endif %}
+
+
+                {% endfor %}
+            </div>
+            </div>
+
+            <div class="flight-details last">
+                <div class="inbound dashedBorder">
+                    <h6>{{jsonData.flightOptionsStaticContentViewData.flightContentMap.Flight_Return_Label|default:" "}}</h6>
+                </div>
+                <div class="clear"></div>
+                {% for inboundVar in flightViewData.inboundSectors %}
+                <div class="hotel-flight mb15px overflowHidden">
+                    <div class="boarding-place fl">
+                        <h5 class="hotel-name">
+                            <p>{{inboundVar.departureAirport.name|default:" "}}&nbsp;({{inboundVar.departureAirport.code|default:" "}})</p>
+                        </h5>
+                    </div>
+
+                    <div class="place-name fl">
+                        <p>going to</p>
+                    </div>
+
+                    <div class="boarding-place fl">
+                        <h5 class="hotel-name">
+                            <p>{{inboundVar.arrivalAirport.name|default:" "}}&nbsp;({{inboundVar.arrivalAirport.code|default:" "}})</p>
+                        </h5>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                {% if inboundVar.eqmtDescription %}
+                <div class="dreamliner">
+                <h6>
+                787 Dreamliner Flight
+                </h6>
+                </div>
+                {% endif %}
+
+                <div class="itinerary-dates">
+                    <h6>
+                        {{inboundVar.schedule.departureDate|default:" "}}
+                    </h6>
+                </div>
+                <div class="itinerary-time">
+                    <h6>
+                        {{inboundVar.schedule.depTime|default:" "}} <span
+                            class="itinerary-arrival-time">{{inboundVar.schedule.arrTime|default:" "}}</span> <!--{{inboundVar.jnrDuration}} -->
+                        {% ifnotequal  inboundVar.schedule.flightOffsetDays 0 %}
+
+                        <span class="plusDay">
+                            <span class="addedDay">+1 Day</span>
+                            <span data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.Alt_Plus1Day_ToolTip|default:\' \'}}'" data-dojo-type="tui.widget.popup.Tooltips" class="question-book loaded"></span>
+                        </span>
+                        {% else %}
+
+
+                        {% ifnotequal  flightViewData.outboundSectors[{{forloop.counter0}}].schedule.flightOffsetDays 0 %}
+
+                        <span  class="plusDay">
+                            <span class="addedDay">&nbsp;</span>
+
+                        </span>
+
+                        {% endifnotequal %}
+
+                        {% endifnotequal %}
+
+ <div class="clear"></div>
+                    </h6>
+                </div>
+                <div class="logo{{inboundVar.carrierCode|cut:' '|default:\' \'}}"><span class="logo-text">Other Carrier</span></div>
+
+                {% ifequal inboundVar.eqmtDescription "DREAMLINEAR787" %}
+
+                <div class="dreamlinear-logo"></div>
+                {% endifequal %}
+
+                {% endfor %}
+
+
+
+
+            </div>
+
+            <div class="clear"></div>
+            <!-- 			<div class="details-flight-section" > -->
+            <!-- 				<div class="thomson-logo"></div> -->
+            <!-- 				{% for seatExtra in jsonData.extraFacilityViewDataContainer.seatOptions.extraFacilityViewData %}
+
+            <!-- 						<div class="premiumseats"> -->
+            <!-- 							<h5>{{seatExtra.description}} available</h5> -->
+            <!-- 						</div> -->
+
+
+            <!-- 				{% endfor %} -->
+            <!-- 				<div class="inbound-thomson-logo"> -->
+            <!-- 					<div class="thomson-logo"></div> -->
+            <!-- 					<a id="changeFlights" href="javascript:void(0);">Change flights</a> -->
+            <!-- 				</div> -->
+
+            <!-- 			</div> -->
+
+
+        </div>
+    </div>
+</div>

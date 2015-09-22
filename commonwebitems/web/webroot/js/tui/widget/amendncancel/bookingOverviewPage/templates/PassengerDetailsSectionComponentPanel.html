@@ -1,0 +1,178 @@
+<div>
+<div  data-dojo-type="tui.widget.expand.Expandable" data-dojo-props="transitionType: 'WipeInClose'">
+	<div class="item open">
+
+		<div class="item-toggle">
+			{% if staticData.Retrieve_And_Search_Pax_Header %}
+			<div class="fl">
+				<h3>{{staticData.Retrieve_And_Search_Pax_Header }}</h3>
+			</div>
+			{% endif %}
+			<div class="fr">
+				<span class="pass-icon"></span>
+				<span class="head-detail">
+					{% if packageData.paxViewData.noOfAdults %}{{packageData.paxViewData.noOfAdults}}{% endif %}
+					{% ifnotequal packageData.paxViewData.noOfAdults 0 %}Adult{{packageData.paxViewData.noOfAdults|pluralize}}{% endifnotequal %}
+
+					{% ifnotequal packageData.paxViewData.noOfChildren 0 %}
+						{% ifnotequal packageData.paxViewData.noOfInfants 0 %},&nbsp;{% else %}and&nbsp;{% endifnotequal %}
+						{{ packageData.paxViewData.noOfChildren }}
+						{% ifnotequal packageData.paxViewData.noOfChildren 0 %}child{{packageData.paxViewData.noOfChildren|pluralize:"ren"}}{% endifnotequal %}
+					{% endifnotequal %}
+
+					{% ifnotequal packageData.paxViewData.noOfInfants 0 %}
+						and {{ packageData.paxViewData.noOfInfants }} infant{{ packageData.paxViewData.noOfInfants|pluralize }}
+					{% endifnotequal %}
+
+				</span>
+				<i></i>
+			</div>
+		</div>
+
+
+		<div class="item-content">
+		{% for passenger in packageData.passenger%}
+			{% if passenger.lead %}
+				<div class="lead-pax lead-passenger">
+					{% if staticData.Retrieve_And_Search_Lead_Passenger_Name %}
+					<div class="item-col-title">{{staticData.Retrieve_And_Search_Lead_Passenger_Name}}</div>
+					{% endif %}
+					<div class="item-col-body">
+						<div class="main-text"><span>{% if passenger.title %}{{passenger.title }}{% endif %}</span><span>{% if passenger.address.firstName %}{{passenger.address.firstName }}{% endif %}</span><span>{% if passenger.address.lastName %}{{passenger.address.lastName }}{% endif %}</span></div>
+						<div class="age-text">{% if passenger.type %}
+													{{passenger.type }}
+												{% endif %}
+												{% ifnotequal passenger.type 'ADULT' %}
+													{% if passenger.address.dateofbirth %}
+														(DoB: {{ passenger.address.dateofbirth}})
+													{% endif %}
+												{% else %}
+														{% if passenger.address.dateofbirth %}
+															(DoB: {{ passenger.address.dateofbirth}})
+														{% endif %}
+												{% endifnotequal %}</div>
+							{% if packageData.showLeadPaxAddress %}
+
+							<ul class="addr-list">
+								{% if passenger.address.houseNumber %}<li><div class="sub-text">{{passenger.address.houseNumber }}</div></li>{% endif %}
+								{% if passenger.address.streetName %}<li><div class="sub-text">{{passenger.address.streetName }}</div></li>{% endif %}
+								{% if passenger.address.city %}<li><div class="sub-text">{{passenger.address.city }}</div></li>{% endif %}
+								{% if passenger.address.region %}<li><div class="sub-text">{{passenger.address.region }}</div></li>{% endif %}
+								{% if passenger.address.country %}<li><div class="sub-text">{{passenger.address.country }}</div></li>{% endif %}
+								{% if passenger.address.postalcode %}<li><div class="sub-text">{{passenger.address.postalcode }}</div></li>{% endif %}
+							</ul>
+							<ul class="contact">
+								<li><span class="phone">{{passenger.address.phone|default:"xxxxxxxxxxx" }}</span>
+								</li>
+								<li><span class="email">{{passenger.address.email|default:"xxxxxxxxxxx" }}</span>
+								</li>
+							</ul>
+							{% else %}
+							<div class="view-details" data-dojo-type="tui.widget.amendncancel.bookingOverviewPage.ModalPopup" data-dojo-props="modal:'true', resizeListener:'true',securityAnswered:'false',staticData:{{staticDataString}}">
+								<div class="view-passenger"><a href="javascript:void(0);">{% if staticData.Retrieve_And_Search_View_Pax_details %}{{staticData.Retrieve_And_Search_View_Pax_details}}{% endif %}</a></div>
+							</div>
+							{% endif %}
+					</div>
+				</div>
+			{% endif %}
+		{% endfor %}
+
+			<div class="other-pax other-passengers" data-dojo-type="tui.widget.amendncancel.ShowMore"
+                                 data-dojo-props="targetClass: 'rest', textMore: 'More passengers', textLess: 'Less passengers'">
+
+				{% ifequal packageData.passenger.length 1 %}
+					<div class="no-other">&nbsp;</div>
+				{% else %}
+				 {% if staticData.Retrieve_And_Search_Oth_Pax %}
+				<div class="item-col-title">{{staticData.Retrieve_And_Search_Oth_Pax}}</div>
+				{% endif %}
+
+				{% if paxCountFlag %}
+						<div class="nine">
+							<ul class="pass-list">
+								{% if paxList1 %}
+								{% for passenger in paxList1 %}
+									{% if not passenger.lead %}
+									<li>
+										<div class="main-text"><span>{% if passenger.title %}{{passenger.title }}{% endif %}</span><span>{% if passenger.address.firstName %}{{passenger.address.firstName }}{% endif %}</span><span>{% if passenger.address.lastName %}{{passenger.address.lastName }}{% endif %}</span></div>
+
+										<div class="age-text">{% if passenger.type %}
+																	{{passenger.type }}
+																{% endif %}
+																{% ifnotequal passenger.type 'ADULT' %}
+																	{% if  passenger.address.dateofbirth %}
+																		(DoB:{{ passenger.address.dateofbirth}})
+																	{% endif %}
+																{% else %}
+																		{% if passenger.address.dateofbirth %}
+																			(DoB: {{ passenger.address.dateofbirth}})
+																		{% endif %}
+																{% endifnotequal %}
+										</div>
+									</li>
+									{% endif %}
+								{% endfor %}
+								{% endif %}
+								<div class="rest hide">
+									{% if paxList2 %}
+									{% for passenger in paxList2 %}
+										{% if not passenger.lead %}
+											<li>
+												<div class="main-text"><span>{% if passenger.title %}{{passenger.title }}{% endif %}</span><span>{% if passenger.address.firstName %}{{passenger.address.firstName }}{% endif %}</span><span>{% if passenger.address.lastName %}{{passenger.address.lastName }}{% endif %}</span></div>
+
+												<div class="age-text">{% if passenger.type %}{{passenger.type }}{% endif %}
+																		{% ifnotequal passenger.type 'ADULT' %}
+																				{% if passenger.address.dateofbirth %}
+																					(DoB: {{ passenger.address.dateofbirth}})
+																				{% endif %}
+																		{% else %}
+																				{% if passenger.address.dateofbirth %}
+																					(DoB: {{ passenger.address.dateofbirth}})
+																				{% endif %}
+																		{% endifnotequal %}
+												</div>
+											</li>
+										{% endif %}
+									{% endfor %}
+									{% endif %}
+								</div>
+								<li>
+                                   <span class="main-text">&nbsp;</span>
+                                   <span class="more-less">More passengers</span>
+	                            </li>
+							</ul>
+
+						</div>
+
+				{% else %}
+						<ul class="pass-list">
+							{% if paxList1 %}
+							{% for passenger in paxList1 %}
+								{% if not passenger.lead %}
+									<li>
+										<div class="main-text"><span>{% if passenger.title %}{{passenger.title }}{% endif %}</span><span>{% if passenger.address.firstName %}{{passenger.address.firstName }}{% endif %}</span><span>{% if passenger.address.lastName%}{{passenger.address.lastName }}{% endif %}</span></div>
+										<div class="age-text">
+										{% if passenger.type %}{{passenger.type }}{% endif %}
+										{% ifnotequal passenger.type 'ADULT' %}
+											{% if passenger.address.dateofbirth %}(DoB: {{passenger.address.dateofbirth}}){% endif %}
+										{% else %}
+											{% if passenger.address.dateofbirth %}(DoB: {{passenger.address.dateofbirth}}){% endif %}
+										{% endifnotequal %}
+										</div>
+									</li>
+								{% endif %}
+							{% endfor %}
+							{% endif %}
+						</ul>
+				{% endif %}
+
+				{% endifequal %}
+			 </div>
+
+			<div class="clear"></div>
+
+		</div>
+
+	</div>
+</div>
+</div>

@@ -1,0 +1,25 @@
+{% ifequal templateName "destinationNoMatch" %}
+	<li class="nomatch">
+		<h3>No matches found</h3>
+		<p>Can't find what you re looking for? Please see our <a href="#" class="destinationguide-ac">Destination guide</a> or select a different date.</p>
+	</li>
+{% endifequal %}
+
+{% ifequal templateName "airportNoMatch" %}
+	<li class="nomatch">
+		<h3>No matches found</h3>
+		<p>Can't find what you re looking for? Please see our <a href="#" class="airportguide-ac">Airport guide</a> or select a different date.</p>
+	</li>
+{% endifequal %}
+
+{% ifequal templateName "destinationGuide" %}
+	<li class="">
+		Destination guide
+	</li>
+{% endifequal %}
+
+{% ifequal templateName "airportGuide" %}
+	<li class="">
+		Airport guide
+	</li>
+{% endifequal %}

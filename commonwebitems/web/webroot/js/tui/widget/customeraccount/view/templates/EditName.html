@@ -1,0 +1,48 @@
+<div class="modal hide" id="editNamepop">
+	<div class="window auto-height">
+		<div class="title">Edit your name <span class="close">y</span></div>
+		<div class="modal-content">
+			<div id="personal-details">
+				<div id="customer-form">
+					<form name="personalDetailsForm" id="editnamepopForm" method="post" autocomplete="off" action="{{tuiWebrootPath}}/manageMyAccount/changeEmailAndNameOverlay" >
+					    <input type="hidden" id="editpopoldmail" name="email" value="{{email}}">
+                        <input type="hidden" id="editpopcid" name="cdmCustomerId" value="{{cdmCustomerId}}">
+                        
+						<div class="row c" data-dojo-props='stringWithHypenSpace:"true",maximumLength:15, maxLengthMessage:"First name should not contain more than",mandatory:"true",promptMessage:"We need your first name",invalidMessage:"This isn&rsquo;t a valid first name. Re-enter your first name."' data-dojo-type="tui.widget.customeraccount.TextBox">
+							<label for="fname">First name</label>
+							<input type="text" id="editpopfname" name="firstName" value="{{firstName}}">
+							<span style="display:none;" id="editpopfnameError_1" class="message"></span>                       
+                            <i style="display:none;"  id="editpopfnameError_2" class="caret erase red"></i>
+                            <i style="display:none;" id="editpopfnameError_3" class="caret tick green"></i>
+						</div>
+						
+						<div class="row c" data-dojo-props='stringWithHypenSpace:"true",maximumLength:15, maxLengthMessage:"surname should not contain more than",mandatory:"true",promptMessage:"We need your surname",invalidMessage:"This isn&rsquo;t a valid surname. Re-enter your surname."' data-dojo-type="tui.widget.customeraccount.TextBox">
+                            <label for="lname">Surname</label>
+                            <input type="text" id="editpoplname" name="lastName" value="{{familyName}}">
+                            <span style="display:none;" id="editpoplnameError_1" class="message"></span>                       
+                            <i style="display:none;"  id="editpoplnameError_2" class="caret erase red"></i>
+                            <i style="display:none;" id="editpoplnameError_3" class="caret tick green"></i>
+                        </div>
+						
+						<div class="row c">
+							<p>To keep your account and any bookings you may have safe, we need you to enter your password.</p>
+						</div>
+						<div class="row c pwd"
+						     data-dojo-props='mandatory:"true",minimumCharactersMessage:"This isn&#39;t a valid password - it needs to have at least 6 characters. Re-enter your password.",promptMessage:"We need your password."'
+						     data-dojo-type="tui.widget.customeraccount.popup.PasswordWithoutStrengthIndicator">
+							<label for="password">Password</label>
+							<input type="password" id="editpoppassword" name="password">
+							<i style="display:none;"  id="editpoppasswordError_2" class="caret erase red"></i>
+                            <i style="display:none;" id="editpoppasswordError_3" class="caret tick green"></i> 
+                            <span id="editpoppasswordError_1" class="message"></span>         
+						</div>
+						<div class="row c button-align">
+							<input type="submit" class="button cta-grey ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %} id="nameupdatePop" value="Save my details">
+							<a href="#" class="cancel ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %}>Cancel</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

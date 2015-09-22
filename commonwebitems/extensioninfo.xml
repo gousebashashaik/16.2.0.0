@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2011 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+
+
+-->
+<extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+
+   <extension  name="commonwebitems"
+               abstractclassprefix="Generated"
+               classprefix="Commonwebitems"
+               managername="CommonwebitemsManager"
+               managersuperclass="de.hybris.platform.jalo.extension.Extension"
+               >
+
+      <!-- you should add all required extensions to this list, except platform extensions which are automatically required -->
+      <!-- <requires-extension name="cms"/> -->
+      <requires-extension name="cms2"/>
+      <requires-extension name="acceleratorcms"/>
+      <requires-extension name="travel"/>
+      <requires-extension name="mainstreamtravel"/>
+      <requires-extension name="book"/>
+	  <requires-extension name="amendncancel"/>
+      <requires-extension name="endecasearch"/>
+      <requires-extension name="tuifeeds"/>
+      <requires-extension name="searchandbrowse"/>
+
+      <coremodule	packageroot="uk.co.tui.web.common"
+					manager="uk.co.tui.web.common.jalo.CommonwebitemsManager"
+					generated="true"
+					/>
+
+      <webmodule	jspcompile="false"
+					webroot="/commonwebitems"
+					/>
+
+      <hmcmodule	extensionclassname="uk.co.tui.web.common.hmc.CommonwebitemsHMCExtension"
+					/>
+
+   </extension>
+
+</extensioninfo>

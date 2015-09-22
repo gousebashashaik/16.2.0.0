@@ -1,0 +1,162 @@
+ 
+		<div style="margin:15px 0 10px">
+		   <div style="display:inline-block;background:#A7B4BD;padding: 3px 10px;color:#fff;font-size: 14.5px;width: 91.5%;"> REFINE YOUR RESULTS</div>
+		   <div class="filter" id="filtersController" data-klass-id="cruiseBrowserFilter" data-dojo-type="tui.mvc.Klass" >
+		      	<div class="mask-interactivity"></div>
+			        <div class="item" style="position:relative;">
+			           <h3 class='item-toggle border-bottom-solid2'>
+			           <a href="javascript:void(0);">
+			              <span class="title">General</span>
+			              <span class="selection">0</span>
+			           </a>
+			           <i class="icon icon-arrow"></i>
+			           </h3>
+			           <div class="item-content" id="budgets" >
+			            <div class="item-content-wrap">
+			               <!--  <div data-dojo-type="tui.filterPanel.view.calendar.SailingDates" id="sailingDate"> </div> -->
+			                <!-- budget filter -->
+			                <div class="item-content-section border-bottom-solid" style="border-top:1px solid #e4e4e4;padding-top: 12px;margin-top:9px;">
+			                    <!-- <h4 class="first">Price display</h4> -->
+			                    <div class="budget-view toggle-group" data-dojo-type="tui.filterPanel.view.BudgetToggle" data-dojo-props='priceView:"pp"' style="padding-bottom:18px;position:relative;">
+			                        	{% if priceView "total" %}
+			                             <label class="toggle-label left js-budget-view-total active" for="budget-view-total" data-label="total" data-target="pp">Total Price</label>
+			                                <div class="toggle-slide toggle-slide-alt ${priceView}" data-value="${priceView}">
+			                                   <input type="radio" name="budget-view" value="total" id="budget-view-total" checked />
+			                                   <input type="radio" name="budget-view" value="pp" id="budget-view-pp" />
+			                                   <a class="toggle-button off" href="javascript:void(0);"><i class="icon icon-handle">||</i></a>
+			                                </div>
+			                                <label class="toggle-label right js-budget-view-pp" for="budget-view-pp" data-label="pp" data-target="total">Per Person</label>
+			                            {% else %}
+			                             	<label class="toggle-label left js-budget-view-total" for="budget-view-total" data-label="total" data-target="pp">Total Price</label>
+			                                <div class="toggle-slide toggle-slide-alt ${priceView}" data-value="${priceView}">
+			                                   <input type="radio" name="budget-view" value="total" id="budget-view-total" />
+			                                   <input type="radio" name="budget-view" value="pp" id="budget-view-pp" checked />
+			                                   <a class="toggle-button on" href="javascript:void(0);"><i class="icon icon-handle">||</i></a>
+			                                </div>
+			                                <label class="toggle-label right js-budget-view-pp active" for="budget-view-pp" data-label="pp" data-target="total">Per Person</label>
+			                           {% endif %}
+			                <div class="price-view" style="position: absolute;text-transform: uppercase;top: -23px;left: -16px;">
+			                <span style="background: #A6B6C3;color: #FFFFFF;display: inline-block;font-size: 12px;padding: 1px 5px;">
+			                Price View
+			                </span>
+			                 <span class="left-corner"></span>
+			                </div>
+			                    </div>
+			                </div>
+			                 {% ifequal jsonData.searchResult.filterPanel.filterVisibility.budgettotal  true %}
+			                    <div class="item-content-section border-bottom-solid js-budget-total">
+			                <div class="slider-title-total" style="position: relative;text-transform: uppercase;top: -10px;left: -16px;">
+			                <span style="background: #A6B6C3;color: #FFFFFF;display: inline-block;font-size: 12px;padding: 1px 5px;">
+			                Budget <span style="font-size:9px;">(total party)</span>
+			                </span>
+			                 <span class="left-corner"></span>
+			                </div>
+			
+			                   <div class="slider" id="budgettotal" data-dojo-type="tui.filterPanel.view.sliders.TotalBudget" data-dojo-props='seperator:"."' style="margin:18px 0 0 0;width:95%;">
+			                      <div class="track">
+			                         <div class="elapse" style="background-color: #73AFDD"></div>
+			                         <div class="handle"><div class="wrap">
+			                         <span class="slider-value"style="background:#FCB712;color:#fff;margin-left:-21px;"></span><span class="slider-groove"></span></div></div>
+			                      </div>
+			                   </div>
+			                </div>
+			                {% endifequal %}
+			                 {% ifequal jsonData.searchResult.filterPanel.filterVisibility.budgetPP  true %}
+			                    <div class="item-content-section border-bottom-solid js-budget-pp">
+			                  <div class="slider-title-pp" style="position: relative;text-transform: uppercase;top: -10px;left: -16px;">
+			                   <span style="background: #A6B6C3;color: #FFFFFF;display: inline-block;font-size: 12px;padding: 1px 5px;">
+			                    Budget <span style="font-size:9px;">(per person)</span>
+			                    </span>
+			                     <span class="left-corner"></span>
+			                    </div>
+			
+			                   <div class="slider" id="budgetpp" data-dojo-type="tui.filterPanel.view.sliders.PerPersonBudget" data-dojo-props='seperator:"."' style="margin:18px 0 0 0;width:95%;">
+			                      <div class="track">
+			                         <div class="elapse" style="background-color: #73AFDD"></div>
+			                         <div class="handle"><div class="wrap">
+			                         <span class="slider-value" style="background:#FCB712;color:#fff;margin-left:-21px;"></span><span class="slider-groove"></span></div></div>
+			                      </div>
+			                   </div>
+			                </div>
+			                {% endifequal %}
+			                 {% ifequal jsonData.searchResult.filterPanel.filterVisibility.allInclusive true %}
+			                <div data-dojo-type="tui.filterPanel.view.options.CruiseOptionsFilter" data-dojo-props='dataPath:"allInclusive"'>
+			                </div>
+							 {% endifequal %}
+			            </div>
+			        </div>
+			        </div>
+			         {% ifequal jsonData.searchResult.filterPanel.filterVisibility.DeparturePoints  true %}
+			        <div class="item">
+			           <h3 class="item-toggle border-bottom-solid2">
+			              <a href="javascript:void(0);">
+			                 <span class="title">Departure Points</span>
+			                 <span class="selection">0</span>
+			              </a>
+			              <i class="icon icon-arrow"></i>
+			           </h3>
+			           <div class="item-content" data-dojo-type="tui.filterPanel.view.options.CruiseOptionsFilter" data-dojo-props='dataPath:"deptPoints"'>
+			              <div class="item-content-wrap"></div>
+			           </div>
+			        </div>
+					 {% endifequal %}
+			          {% ifequal jsonData.searchResult.filterPanel.filterVisibility.cruiseDestinations  true %}
+			        <div class="item">
+			           <h3 class="item-toggle border-bottom-solid2">
+			              <a href="javascript:void(0);">
+			                 <span class="title">Cruise Destination</span>
+			                 <span class="selection">0</span>
+			              </a>
+			              <i class="icon icon-arrow"></i>
+			           </h3>
+			           <div class="item-content" data-dojo-type="tui.filterPanel.view.options.CruiseOptionsFilter" data-dojo-props='dataPath:"cruiseDestinations"'>
+			              <div class="item-content-wrap"></div>
+			           </div>
+			        </div>
+					 {% endifequal %}
+			          {% ifequal jsonData.searchResult.filterPanel.filterVisibility.cruiseStayDestinations  true %}		
+			        <div class="item">
+			           <h3 class="item-toggle border-bottom-solid2">
+			              <a href="javascript:void(0);">
+			                 <span class="title">Stay Destination</span>
+			                 <span class="selection">0</span>
+			              </a>
+			           <i class="icon icon-arrow"></i>
+			           </h3>
+			           <div class="item-content" data-dojo-type="tui.filterPanel.view.options.CruiseOptionsFilter" data-dojo-props='dataPath:"stayDestinations"'>
+			              <div class="item-content-wrap"></div>
+			           </div>
+			        </div>
+					 {% endifequal %}
+			          {% ifequal jsonData.searchResult.filterPanel.filterVisibility.cruiseShips  true %}
+			        <div class="item">
+			           <h3 class="item-toggle border-bottom-solid2">
+			              <a href="javascript:void(0);">
+			                 <span class="title">Cruise Ship</span>
+			                 <span class="selection">0</span>
+			              </a>
+			              <i class="icon icon-arrow"></i>
+			           </h3>
+			           <div class="item-content" data-dojo-type="tui.filterPanel.view.options.CruiseOptionsFilter" data-dojo-props='dataPath:"ships"'>
+			              <div class="item-content-wrap"></div>
+			           </div>
+			        </div>
+					 {% endifequal %}
+			          {% ifequal jsonData.searchResult.filterPanel.filterVisibility.cruiseFeatures  true %}
+			        <div class="item">
+			           <h3 class="item-toggle border-bottom-solid2">
+			              <a href="javascript:void(0);">
+			                 <span class="title">Cruise Features</span>
+			                 <span class="selection">0</span>
+			              </a>
+			              <i class="icon icon-arrow"></i>
+			           </h3>
+			           <div class="item-content" data-dojo-type="tui.filterPanel.view.options.CruiseOptionsFilter" data-dojo-props='dataPath:"cruiseFeatures"'>
+			              <div class="item-content-wrap"></div>
+			           </div>
+			        </div>
+					 {% endifequal %}
+			    <p><a href="javascript:void(0);" class="clear-arrow" data-dojo-type="tui.searchResults.view.ClearFilters">Clear all filters</a></p>
+		   </div>
+		</div>
+ 

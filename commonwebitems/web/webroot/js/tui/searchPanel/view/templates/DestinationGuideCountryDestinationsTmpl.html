@@ -1,0 +1,84 @@
+<div class="default-destinations" id="{{id}}-destinations">
+    <div class="country-search">
+        <label for="{{id}}" class="{% if not available %} disabled{% endif %}{% if available %}{% for to in toData %}{% ifequal to.id id %} selected{% endifequal %}{% endfor %}{% endif %}">
+            <input type="checkbox"
+                   data-destination-id="{{id}}"
+                   data-destination-name="{{name}}"
+                   data-destination-groups="{% for region in children %}{{region.id}},{% for destination in region.children %}{{destination.id}},{% endfor %}{% endfor %}"
+                   data-destination-parents=""
+                   data-destination-type="{% if type %}{{type}}{% endif %}"
+                   data-destination-multiselect="{{multiSelect}}"
+                   data-destination-fewdays="{{region.fewDaysFlag}}"
+                   name="{{id}}"
+                   id="{{id}}"
+                   value="{{id}}"
+                   class="{{id}}"
+                {% for to in toData %}
+                    {% ifequal to.id id %}
+                        checked=checked
+                    {% endifequal %}
+                {% endfor %}
+            >
+            {{searchMessaging.destinationGuide.searchAll|safe}}{{name}}<span class="checkbox"></span></label>
+    </div>
+    {% for region in children %}
+    <div class="col">
+        <label for="{{region.id}}" class="region{% if not region.available %} disabled{% endif %}{% for to in toData %}{% ifequal to.id id %} selected{% else %}{% ifequal to.id region.id %} selected{% endifequal %}{% endifequal %}{% endfor %}">
+            <input type="checkbox"
+                   data-destination-id="{{region.id}}"
+                   data-destination-name="{{region.name}}"
+                   data-destination-groups="{% for destination in region.children %}{{destination.id}}{% if not forloop.last %},{% endif %}{% endfor %}"
+                   data-destination-parents="{{id}}"
+                   data-destination-type="{% if region.type %}{{region.type}}{% endif %}"
+                   data-destination-multiselect="{{region.multiSelect}}"
+                   data-destination-fewdays="{{region.fewDaysFlag}}"
+                   name="{{region.id}}"
+                   id="{{region.id}}"
+                   value="{{region.id}}"
+                   class="{{region.id}}"
+                {% for to in toData %}
+                    {% ifequal to.id region.id %}
+                        checked=checked
+                    {% endifequal %}
+			        {% ifequal to.id id %}
+			            checked=checked
+			        {% endifequal %}
+                {% endfor %}
+            >
+            {{region.name}}<span class="checkbox"></span></label>
+        <div class="group dg region-child">
+            <ul>
+                {% for destination in region.children %}
+                <li><label for="{{destination.id}}" class="{% if not destination.available %} disabled{% endif %}{% for to in toData %}{% ifequal to.id id %} selected{% else %}{% ifequal to.id region.id %} selected{% else %}{% ifequal to.id destination.id %} selected{% endifequal %}{% endifequal %}{% endifequal %}{% endfor %}">
+                    <input type="checkbox"
+                           data-destination-id="{{destination.id}}"
+                           data-destination-name="{{destination.name}}"
+                           data-destination-groups=""
+                           data-destination-parents="{{id}},{{region.id}}"
+                           data-destination-type="{% if destination.type %}{{destination.type}}{% endif %}"
+                           data-destination-multiselect="{{destination.multiSelect}}"
+                           data-destination-fewdays="{{region.fewDaysFlag}}"
+                           name="{{destination.id}}"
+                           id="{{destination.id}}"
+                           value="{{destination.id}}"
+                           class="{{destination.id}}"
+                        {% for to in toData %}
+                            {% ifequal to.id destination.id %}
+                                checked=checked
+                            {% endifequal %}
+			                {% ifequal to.id region.id %}
+			                    checked=checked
+			                {% endifequal %}
+			                {% ifequal to.id id %}
+			                    checked=checked
+			                {% endifequal %}
+                        {% endfor %}
+                    >
+                    {{destination.name}}<span class="checkbox"></span></label>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+</div>

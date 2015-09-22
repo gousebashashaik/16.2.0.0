@@ -1,0 +1,111 @@
+
+<div class="modal hide" id="wouldyouliketoGo">
+			<div class="window auto-height">
+				<div class="title">
+					Sign in to your account					
+					<span class="close {% if sessionTimedOut %}hide{% endif %}" id="wouldyouliketoGoClose">y</span>					
+				</div>
+				<div class="modal-content">
+					<div id="content">
+						<div class="content-width">
+							<div class="signin-page" id="customer-form">
+								{% if sessionInactiveTime %}
+								<p class="alert mid-level generic top-alert">
+									You haven't interacted with your account in the last {{sessionInactiveTime}} minutes so we've signed you out.
+								</p>
+								{% endif %}
+								<!--p class="alert mid-level generic top-alert sessionInactiveTimeMsg hide"></p-->
+								<form id="manageAccountsigninpopupform"  method="post" autocomplete="off" action="{{tuiWebrootPath}}/manageMyAccount/managemyAccount" modelAttribute="manageMyAccountForm">
+									
+									<div id="emailFieldDiv" class="row c {% ifnotequal uid 'null' %}valid{% endifnotequal %}"
+							data-dojo-props='maximumLength:64, maxLengthMessage:"Email address should not contain more than",mandatory:"true",promptMessage:"We need your email address.",invalidMessage:"This isn&#39;t a valid email address. Re-enter your email address."'
+							data-dojo-type="tui.widget.customeraccount.popup.EmailAddress">	
+										
+										<label for="sign-email">Email address</label>
+										<input  tabindex="1" type="text" 	name="email" id="popemail" value="{% ifnotequal uid 'null' %}{{uid}}{% endifnotequal %}" placeholder="" />
+										<i style="display:none;"  id="popemailError_2" class="caret erase red"></i>						
+										{% ifequal uid 'null' %}
+										<i style="display:none;" id="popemailError_3" class="caret tick green"></i>
+										{% endifequal %}										
+										{% ifnotequal uid 'null' %}
+										<i style="display:inline-block;" id="popemailError_3" class="caret tick green"></i>
+										{% endifnotequal %}										
+										<span id="popemailError_1" class="message"></span>										
+									</div>
+									<div id="passwordFieldDiv" class="row c pwd"
+										data-dojo-props='mandatory:"true",minimumCharactersMessage:"This isn&#39;t a valid password - it needs to have at least 6 characters. Re-enter your password.",promptMessage:"We need your password.</br><a href=&#39;javascript:void(0)&#39; class=&#39;ForgotPasswordLinkFromOverlay&#39;>Forgotten your password?</a>"'
+										data-dojo-type="tui.widget.customeraccount.popup.PasswordWithoutStrengthIndicator">
+										
+										 <label for="sign-password">Password</label>
+										<input tabindex="2" type="password" name="pwd" id="poppwd" value="" placeholder=""  />
+										 <i style="display:none;"  id="poppwdError_2" class="caret erase red"></i>
+										 <i style="display:none;" id="poppwdError_3" class="caret tick green"></i>							 
+										 <span id="poppwdError_1" class="message"></span>
+										
+									</div>
+									<div id="accountStatus" class="hide"></div>
+									<!--
+									{% if not empty status %}
+									<div class="row no-label">
+										<p class="alert high-level generic row-content">
+											<i class="caret warning"></i>
+											
+										</p>
+									</div>
+									{% endif %}
+					                -->							
+									<div class="row c no-label" id="keepme-signin">
+										<div class="row-content">
+										<input style="display: none;" type="text" name="countryCode"
+										id="countryCode" value="" />
+
+										{% if not empty keepMecookie %}							
+										<input style="display: none;"  type="checkbox"
+										name="keepMeSignin" id="popupkeepMeSignin" checked="checked"/>
+
+
+										<a class="keep-me-in" href="#">
+										<span 
+										data-dojo-type="tui.widget.customeraccount.popup.keepMeSignedIn"
+										id="popupkeepmesignedinCheckbox" class="radio active"></span>
+										Keep me signed in
+										
+										{% else %}
+										
+										<input style="display: none;"  type="checkbox"
+										name="keepMeSignin" id="popupkeepMeSignin"  checked=""/>
+
+
+										<a class="keep-me-in" href="#">
+										<span 
+										data-dojo-type="tui.widget.customeraccount.popup.keepMeSignedIn"
+										id="popupkeepmesignedinCheckbox" class="radio"></span>
+										Keep me signed in
+										{% endif %}								
+										</a>
+										- 											
+										<a href="#"  clas="tooltip" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="eventType:'mouseover',floatWhere:'position-bottom-center',topClass:'top',listClass:'list',posClass:'center',zIndex:9999999999, text:'It\'s best to clear the tick box if you\'re on a shared computer or device.'">
+										what's this?</a>
+										</div>
+									</div>
+									<div class="row c button-align">
+										<input style="display: none;" type="text" name="spambots" id="popspambots" value="" />
+										<input style="display: none;" type="text" name="puid" id="puid" value="${uid}"/>									
+										<input tabindex="4" type="submit" name="signin_btn" id="popsignin_btn" value="SIGN IN" class="button cta-grey" />
+									</div>
+									
+									<div class="row c no-label">
+										<div class="row-content signin-links">
+											<a href="javascript:void(0)" class="ForgotPasswordLinkFromOverlay">Forgotten your password?</a>
+											<!--<a href="{{tuiWebrootPath}}/customerAccount/createCustomerAccount">Haven't got an account? Create one today</a>-->
+											<a href="javascript:void(0)" class="CreateAccountLinkFromOverlay">Haven't got an account? Create one today</a>
+											<a href="javascript:void(0)" class="ResendActivationLinkFromOverlay">Resend your activation email</a>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>

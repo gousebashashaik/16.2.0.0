@@ -1,0 +1,61 @@
+
+<div class="modal hide" id="wouldyouliketoGoResendActivation">
+			<div class="window auto-height">
+				<div class="title">
+					Resend activation email
+					<span class="close" id="wouldyouliketoGoResendActivationClose">y</span>
+				</div>
+				<div class="modal-content">
+					<div id="content">
+						<div class="content-width">
+							<div class="EditPasswordForm customer-form" id="customer-form">
+							
+								<div class="account-message">
+									<p>Lost your activation email? Enter your email address below to have it resent to you.</p>	
+								</div>
+								
+								<form id="manageAccountResendActivationpopupform"  method="post" autocomplete="off" action="{{tuiWebrootPath}}/manageMyAccount/resendActivationOverlay"  modelAttribute="forgottenPasswordForm">
+									
+		<div id="activeemailFieldDiv" class="row c {% ifnotequal uid 'null' %}valid{% endifnotequal %}" 
+		 data-dojo-props='maximumLength:64, maxLengthMessage:"Email address should not contain more than",mandatory:"true",promptMessage:"We need your email address.",invalidMessage:"This isn&#39;t a valid email address. Re-enter your email address."' data-dojo-type="tui.widget.customeraccount.popup.EmailAddress"
+		  widgetid="activeemailFieldDiv">	
+										
+										<label for="email">Email address</label>
+										<input  tabindex="1" type="text" 	name="email" id="resendpopemail" value="{% ifnotequal uid 'null' %}{{uid}}{% endifnotequal %}" placeholder="" />
+										<i style="display:none;"  id="resendpopemailError_2" class="caret erase red"></i>						
+										{% ifequal uid 'null' %}
+										<i style="display:none;" id="resendpopemailError_3" class="caret tick green"></i>
+										{% endifequal %}										
+										{% ifnotequal uid 'null' %}
+										<i style="display:inline-block;" id="resendpopemailError_3" class="caret tick green"></i>
+										{% endifnotequal %}										
+										<span id="resendpopemailError_1" class="message"></span>										
+									</div>
+									<div class="row c button-align">
+										<input style="display: none;" type="text" name="spambots" id="popspambots" value="" />
+										<input style="display: none;" type="text" name="puid" id="puid" value="${uid}"/>									
+										<input tabindex="2" type="submit" name="resendActivation_btn" id="resendActivation_btn" value="Resend email" class="button cta-grey ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %} />
+									</div>									
+									
+								</form>
+							</div>
+							<div class="hide" id="resendActivationSuccess">
+								<h1>Your activation email has been resent</h1>
+								<div id="customer-form">
+									<div class="account-message">			
+											<p>We've sent your activation email to <b><span class="resendEmailSuccessId strong"></span></b>.</p> 
+									</div> 
+								</div>
+							</div>
+							
+							
+							
+							
+							
+							
+						</div>				
+				
+					</div>
+				</div>
+			</div>
+		</div>

@@ -1,0 +1,5 @@
+<ul class="paging" id="{{ id }}">
+{% for page in pages %}
+    <li><a href="javascript:void(0);" class="js-carousel-paginator {% if forloop.first %} active{% endif %}">&nbsp;</a></li>
+{% endfor %}
+</ul>

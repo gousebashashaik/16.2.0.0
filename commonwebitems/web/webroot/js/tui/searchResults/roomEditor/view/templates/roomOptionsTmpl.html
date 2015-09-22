@@ -1,0 +1,89 @@
+{% ifequal templateView "rooms" %}
+<div class="room room-{{id}}" id="room-{{id}}">
+    <h4 class="room-title">{{messages.unit|safe}} {{id}}</h4>
+    <div class="room-options">
+        <div class="col-a">
+            <label class="label">Adults</label>
+            <select class="dropdown adults">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+            </select>
+        </div>
+        {% if showSeniors %}
+        <div class="col-s">
+            <label class="label">Seniors <span>(65+)</span></label>
+            <select class="dropdown seniors">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+            </select>
+        </div>
+        {% endif %}
+        <div class="col-c">
+            <label class="label">Children (0-17)</label>
+            <select class="dropdown children">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+            </select>
+        </div>
+    </div>
+</div>
+{% endifequal %}
+
+{% ifequal templateView "childages" %}
+<div class="child-ages childages">
+    <div>
+    <label class="label">Child ages (on return date)</label>
+    {% for ages in childAges %}
+    <select class="dropdown child-age child-age-{{forloop.counter0}}">
+        <option value="-1">-</option>
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="17">17</option>
+    </select>
+    {% endfor %}
+    <span class="room-arrow">&nbsp;</span>
+    </div>
+</div>
+{% endifequal %}
+
+{% ifequal templateView "roomSeparator" %}
+<div class="clear-it"></div>
+{% endifequal %}

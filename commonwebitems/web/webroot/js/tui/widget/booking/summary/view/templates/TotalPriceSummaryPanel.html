@@ -1,0 +1,46 @@
+{% ifnotequal  jsonData.summaryViewData.currentPage 'confirmation'%}
+	<span class="info-block">{{jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.Summary_TotalPrice_Label|default:" "}}
+
+		{% if displayDiscount%}
+		<span class="question-book" data-dojo-type="tui.widget.popup.Tooltips"
+
+		           data-dojo-props="floatWhere: 'position-top-center',text:'<ul class=\'item-list\'><li>PRICE BREAKDOWN</li>{% for priceBreakdown in jsonData.packageViewData.priceBreakdownViewData %}<li>{{priceBreakdown.description|default:\' \'}}<span class=\'fr\'>&nbsp;&nbsp;{{priceBreakdown.currencyAppendedPrice|default:\' \'}}</span></li>{% endfor %}</ul>'">
+
+	    </span>
+        {% endif %}
+        {% if not displayDiscount %}
+		<span class="question-book" data-dojo-type="tui.widget.popup.Tooltips"
+            data-dojo-props="floatWhere: 'position-top-center',text:'<ul class=\'item-list\'><li>PRICE BREAKDOWN</li>{% for priceBreakdown in jsonData.packageViewData.priceBreakdownViewData %}{% ifnotequal priceBreakdown.description 'Online Discount' %}<li>{{priceBreakdown.description|default:\' \'}}<span class=\'fr\'>&nbsp;&nbsp;{{priceBreakdown.currencyAppendedPrice|default:\' \'}}</span></li>{% endifnotequal %}{% endfor %}</ul>'">
+       </span>
+        {% endif %}
+
+    </span>
+
+	<span class="total" id="newprice">{{jsonData.packageViewData.currencyAppendedRoundUpTotalCost|default:" "}}</span>
+
+	<span class="splitPrice">
+
+	  <span class="pp">{{jsonData.packageViewData.currencyAppendedPricePerPerson|default:" "}}</span>
+
+      {% if displayDiscount %}
+	  <span class="discount">{{jsonData.packageViewData.currencyAppendedOnlineDiscount|default:" "}}</span>
+	  {% endif %}
+	</span>
+{% endifnotequal %}
+<span class="people"></span>
+<div class="paxLess">
+{{jsonData.packageViewData.paxViewData.paxComposition}}
+</div>
+ {% if jsonData.packageViewData.displaySaveButton %}
+{% ifnotequal  jsonData.summaryViewData.currentPage 'confirmation'%}
+	{% if jsonData.packageViewData.saved %}
+		<div class="save fl cb saved " data-dojo-attach-point="saveHoliday">Shortlisted</div>
+		<div class="save fl cb savecall " data-dojo-attach-point="savedHoliday" style="display:none;">Shortlist</div>
+	{% else %}
+		<div class="save fl cb savecall " data-dojo-attach-point="saveHoliday">Shortlist</div>
+		<div class="save fl cb saved " data-dojo-attach-point="savedHoliday" style="display:none;">Shortlisted</div>
+		<div class="save fl cb rremove " data-dojo-attach-point="removeHoliday" style="display:none;">Remove</div>
+	{% endif %}
+<div id="saveSummary"></div>
+{% endifnotequal %}
+{% endif %}

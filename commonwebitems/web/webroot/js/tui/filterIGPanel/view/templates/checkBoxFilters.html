@@ -1,0 +1,45 @@
+{% for filter in filters %}
+{% if filter.id %}
+<div class="item-content-section{% if not forloop.last %} border-bottom-dotted{% endif %}">
+<!-- 	{% if filter.name %}
+	<h4>{{filter.name}}</h4>
+	{% endif %} -->
+	<h4></h4>
+	<ul class="checks">
+		{% for check in filter.values %}<li id="check_{{check.id}}">
+            <span class="checkbox"
+			      id="{{check.id}}"
+			      data-dojo-type="tui.filterPanel.view.options.CheckBox"
+			      data-dojo-props='filterType: "{{filter.filterType}}", filterId: "{{filter.id}}" {% if check.categoryCode %}, categoryCode: "{{check.categoryCode}}" {% endif %} {% if check.name %}, name: "{{check.name}}" {% endif %}'>
+			<input type="checkbox"
+			       id="field_{{check.id}}"
+			       value="{{check.value}}"
+			       class="check parent-check" {% if check.selected %} checked="{{check.selected}}" {% endif %}/>
+			{% if check.name %}
+			<label for="field_{{check.id}}">{{check.name|safe}}
+                                            {% if check.noAccommodations %} <span class="package-count">({{check.noAccommodations}})</span> {% endif %}
+                                            {% if check.tooltip %} <span class="question" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="text:'{{check.tooltip|safe}}', floatWhere:'position-top-center'"></span> {% endif %}
+            </label>
+			{% endif %}
+			</span>
+			{% ifnotequal check.children.length 0 %}<ul>
+				{% for subcheck in check.children %}<li id="subcheck_{{subcheck.id}}">
+                    <span class="checkbox" id="{{subcheck.id}}"
+					      data-dojo-type="tui.filterPanel.view.options.CheckBox"
+					      data-dojo-props='filterType: "{{filter.filterType}}", filterId: "{{filter.id}}",  parentId : "{{check.id}}" {% if subcheck.categoryCode %}, categoryCode: "{{subcheck.categoryCode}}" {% endif %} {% if subcheck.name %}, name: "{{subcheck.name}}" {% endif %}'>
+					<input type="checkbox"
+					       id="field_{{subcheck.id}}"
+					       value="{{subcheck.value}}"
+					       class="check child-check" {% if subcheck.selected %} checked="{{subcheck.selected}}" {% endif
+					%}/>
+					<label for="field_{{subcheck.id}}">{{subcheck.name|safe}} {% if subcheck.noAccommodations %}
+						<span class="package-count">({{subcheck.noAccommodations}})</span> {% endif %}</label>
+					</span>
+				</li>{% endfor %}
+			</ul>{% endifnotequal%}
+		</li>{% endfor %}
+	</ul>
+</div>
+{% endif%}
+{% endfor %}
+

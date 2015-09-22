@@ -1,0 +1,246 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7 ]>
+<html lang="en" class="ie6" id="firstchoice"> <![endif]-->
+<!--[if IE 7 ]>
+<html lang="en" class="ie7" id="firstchoice"> <![endif]-->
+<!--[if IE 8 ]>
+<html lang="en" class="ie8" id="firstchoice"> <![endif]-->
+<!--[if IE 9 ]>
+<html lang="en" class="ie9" id="firstchoice"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="" id="firstchoice"> <!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results Tests</title>
+
+    <link href="/css/main.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script type="text/javascript" src="/js/tui/config/TuiConfigTest.js"></script>
+    <style>
+        .noResults {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<script type="text/javascript">
+    dojoConfig.addModuleName('tui/searchPanel/controller/SearchController', 'tui/searchResults/view/NoResultView');
+</script>
+<body>
+    <div id="wrapper">
+    <div id="header">
+
+	    <div class="search" data-dojo-type="tui.searchPanel.controller.SearchController" data-dojo-props="PERSISTED_SEARCH_PERIOD: 30, MAX_ADULTS_NUMBER: 9, INFANT_AGE: 1, FLEXIBLE_DAYS: 7">
+		    <form  class="search-form" method="post" action="/js/tui/searchResults/tests/searchResults.html">
+			    <input type="hidden" value="" name="searchCriteria"/>
+		    </form>
+		    <div class="col from">
+			    <label class="icon" for="where-from">Where from?</label>
+			    <input type="text" data-dojo-type="tui.searchPanel.view.AirportMultiFieldList" data-dojo-props="maxTextboxes:6, duration:500" class="textfield multifield where-from" placeholder="Any UK Airport" tabindex="0" id="where-from"/>
+			    <p><a href="#" id="airport-guide" data-dojo-type="tui.searchPanel.view.AirportGuide" data-dojo-props="fromLimit:6"  class="related airport airport-guide" tabindex="-1">Airport List <span class="load"></span></a>
+			    </p>
+		    </div>
+		    <div class="col to">
+			    <label for="where-to">Where to? <span>(Destination, Hotel or Type)</span></label>
+			    <input type="text" data-dojo-type="tui.searchPanel.view.DestinationMultiFieldList" data-dojo-props="duration:500" class="textfield multifield where-to" placeholder="Anywhere" tabindex="0" id="where-to"/>
+			    <p><a href="#" data-dojo-type="tui.searchPanel.view.DestinationGuide"  class="related destination destination-guide" tabindex="-1">Destination List <span class="load"></span></a></p>
+		    </div>
+		    <div class="col">
+			    <label for="when">When?</label>
+			    <div class="when" tabindex="0" id="when" data-dojo-type="tui.searchPanel.view.SearchDatePicker" data-dojo-props="seasonLength:18">Select a date</div>
+			    <p><label class="related give-take"><input type="checkbox" class="flexible" checked="checked" data-dojo-type="tui.searchPanel.view.FlexibleView"/>I'm
+			                                                                                                                                                      flexible</label><span class="flexible-tooltip" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="text: 'We ll search for holidays 7 days before and after your selected date.', floatWhere: 'position-top-right'">?</span></p>
+		    </div>
+		    <div class="col">
+			    <div class="rooms">
+				    <div class="labels">
+					    <label for="totalAdults" class="icon">Adults</label>
+					    <label for="totalSeniors" class="icon">Seniors <span>(65+)</span></label>
+					    <label for="totalChildren" class="icon">Children <span>(0-17)</span></label>
+				    </div>
+				    <div class="item">
+                            <span class="acol">
+                                <select id="totalAdults" name="totalAdults" data-dojo-type="tui.searchPanel.view.AdultsSelectOption" class="dropdown totalAdults" tabindex="-1">
+	                                <option value="0">0</option>
+	                                <option value="1">1</option>
+	                                <option value="2" selected>2</option>
+	                                <option value="3">3</option>
+	                                <option value="4">4</option>
+	                                <option value="5">5</option>
+	                                <option value="6">6</option>
+	                                <option value="7">7</option>
+	                                <option value="8">8</option>
+	                                <option value="9">9</option>
+                                </select>
+                            </span>
+                            <span class="scol">
+                                <select id="totalSeniors" name="totalSeniors" data-dojo-type="tui.searchPanel.view.SeniorsSelectOption" class="dropdown totalSeniors" tabindex="-1">
+	                                <option value="0">0</option>
+	                                <option value="1">1</option>
+	                                <option value="2">2</option>
+	                                <option value="3">3</option>
+	                                <option value="4">4</option>
+	                                <option value="5">5</option>
+	                                <option value="6">6</option>
+	                                <option value="7">7</option>
+	                                <option value="8">8</option>
+	                                <option value="9">9</option>
+                                </select>
+                            </span>
+                            <span class="ccol">
+                                <select id="totalChildren" name="totalChildren" data-dojo-type="tui.searchPanel.view.ChildSelectOption" class="dropdown totalChildren" tabindex="-1">
+	                                <option value="0">0</option>
+	                                <option value="1">1</option>
+	                                <option value="2">2</option>
+	                                <option value="3">3</option>
+	                                <option value="4">4</option>
+	                                <option value="5">5</option>
+	                                <option value="6">6</option>
+	                                <option value="7">7</option>
+	                                <option value="8">8</option>
+	                                <option value="9">9</option>
+                                </select>
+                            </span>
+				    </div>
+			    </div>
+			    <div class="search-col no-margin">
+				    <input type="submit"  data-dojo-type="tui.searchPanel.view.SubmitButton" data-dojo-props="formSelector:'.search-form'"  class="button search-submit" value="Search" tabindex="0"/>
+			    </div>
+		    </div>
+		    <div class="guide-container" style="height:0;"></div>
+	    </div>
+
+	    <div class="search-summary hide" data-dojo-type="tui.searchPanel.view.SearchSummary">
+		    <div class="col">
+			    <label class="icon" for="where-from-summary">Where from?</label>
+			    <p class="where-from-summary" id="where-from-summary"></p>
+		    </div>
+		    <div class="col">
+			    <label for="where-to-summary">Where to?</label>
+			    <p class="where-to-summary" id="where-to-summary"></p>
+		    </div>
+		    <div class="col">
+			    <label for="when-summary">When?</label>
+			    <p class="when-summary" id="when-summary"></p>
+		    </div>
+		    <div class="col">
+			    <div class="rooms">
+				    <div class="labels">
+					    <label for="total-adults" class="icon">Adults</label>
+					    <label for="total-seniors" class="icon">Seniors (65+)</label>
+					    <label for="total-children" class="icon">Children (0-17)</label>
+				    </div>
+				    <div class="item">
+					    <span class="acol-summary total-adults" id="total-adults"></span>
+					    <span class="scol-summary total-seniors" id="total-seniors"></span>
+					    <span class="ccol-summary total-children" id="total-children"></span>
+				    </div>
+			    </div>
+		    </div>
+		    <div class="col no-margin">
+			    <input type="submit" class="button search-edit" value="Edit search">
+		    </div>
+	    </div>
+    </div>
+
+        <div id="content">
+		
+                <!-- No Results -->
+				<div class="no-results-found">
+					<div class="header">
+						<div data-dojo-type="tui.searchResults.view.NoResultView">
+							<h1>All gone!</h1>
+							<p>Sorry, the holiday you're looking for must be really popular - it's sold out. Try the options below...</p>
+
+							<ul>
+								<li class="airport-list">Use out <a href="#" class="airport-list-link">Airport List</a> to search from alternate airports</li>
+								<li class="destination-list">Use our <a href="#" class="destination-list-link">Destination List</a> to search for alternate destinations</li>
+								<li class="change-date">Try <a href="#"  class="change-date-link">changing the date</a> to search different dates</li>
+							</ul>
+						</div>
+					</div>
+					<div class="options">
+						<h2>Are you flexible?</h2>
+						<h3>Here's some alternative searches</h3>
+						<ul>
+							<li class="when">
+								<div class="title"><div>Flexible</div> <span>When</span> you go?</div>
+								<div class="details">
+									<div class="from-to">
+										<span class="from">London Luton</span>
+										<span class="to">Spain</span>
+									</div>
+									<div class="date">
+										<span class="day">Sunday 21st August 2013</span>
+										<span class="flex pink">Flexible by +/- 3 days</span>
+									</div>
+									<div class="price">
+										<span>From</span>
+										<p><span>&pound;</span>1350</p>
+										<span>Per person</span>
+									</div>
+									<div class="cta-container">
+										<a href="#" class="button cta jumbo">Show Results</a>									
+									</div>
+								</div>
+							</li>
+							<li class="where">
+								<div class="title"><div>Flexible</div> <span>Where</span> you go?</div>
+								<div class="details">
+									<div class="from-to">
+										<span class="from">London Luton</span>
+										<span class="to">Lanzarote, Spain</span>
+									</div>
+									<div class="date">
+										<span class="day">Sunday 21st August 2013</span>
+										<span class="flex">Flexible by +/- 3 days</span>
+									</div>
+									<div class="price">
+										<span>From</span>
+										<p><span>&pound;</span>1350</p>
+										<span>Per person</span>
+									</div>
+									<div class="cta-container">
+										<a href="#" class="button cta jumbo">Show Results</a>									
+									</div>
+								</div>
+							</li>
+							<li class="from">
+								<div class="title"><div>Flexible</div> where you <span>Fly from?</span></div>
+								<div class="details">
+									<div class="from-to">
+										<span class="from">London Luton</span>
+										<span class="to">Spain</span>
+									</div>
+									<div class="date">
+										<span class="day">Wednesday 00th September 2013</span>
+										<span class="flex">Flexible by +/- 3 days</span>
+									</div>
+									<div class="price">
+										<span>From</span>
+										<p><span>&pound;</span>0000</p>
+										<span>Per person</span>
+									</div>
+									<div class="cta-container">
+										<a href="#" class="button cta jumbo">Show Results</a>									
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="footer"></footer>
+    <script type="text/javascript" src="/js/underscore/underscore-min.js"></script>
+    <script type="text/javascript" src="/js/dojo/dojo.js"></script>
+    <script type="text/javascript">
+        dojoConfig.init();
+    </script>
+</body>
+</html>

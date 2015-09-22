@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>DatePicker tests</title>
+
+<script src="/js/underscore/underscore-min.js"></script>
+<!-- required: dojo.js -->
+<script type="text/javascript" src="/js/dojo/dojo.js"></script>
+
+<!-- functions to help test -->
+<script type="text/javascript" src="/js/dijit/tests/helpers.js"></script>
+
+<script type="text/javascript">
+dojo.require("dojo.DeferredList");
+dojo.require("dojo.window");
+dojo.require("dojo.query");
+dojo.require("dojo.date.locale");
+dojo.require("dojo.NodeList-manipulate");
+dojo.require("dijit.robotx");
+
+dojo.ready(function () {
+    var selectOption;
+    doh.robot.initRobot('DatePicker.html');
+    var metaKey = {ctrl:true};
+    doh.register("DatePicker tests", [{
+        name:"on mouse click datepicker should display calendar",
+        timeout:8400,
+        runTest:function () {
+            var d = new doh.Deferred();
+            datePicker = dijit.byId("datePicker1");
+            doh.robot.mouseMoveAt(datePicker.domNode, 500);
+            doh.robot.mouseClick({left:true}, 700);
+            doh.robot.sequence(d.getTestCallback(function() {
+                try {
+                    doh.is(true, dojo.style(datePicker.datepickerDOM, "display") == 'block');
+                } catch (e) {
+                    d.errback(e);
+                }
+            }), 1200);
+            return d;
+        }
+    },{
+        name:"on mouse click outside datepicker should close",
+        timeout:8400,
+        runTest:function () {
+            var d = new doh.Deferred();
+            datePicker = dijit.byId("datePicker1");
+            doh.robot.mouseMoveAt(document.body, 500);
+            doh.robot.mouseClick({left:true}, 700);
+            doh.robot.sequence(d.getTestCallback(function() {
+                try {
+                    doh.is(true, dojo.style(datePicker.datepickerDOM, "display") == 'none');
+                } catch (e) {
+                    d.errback(e);
+                }
+            }), 1000);
+            return d;
+        }
+    },{
+        name:"on date selection datepicker should close and domnode should contain date value",
+        timeout:8400,
+        runTest:function () {
+            var d = new doh.Deferred();
+            var now = new Date();
+            datePicker = dijit.byId("datePicker1");
+            doh.robot.mouseMoveAt(datePicker.domNode, 500);
+            doh.robot.mouseClick({left:true}, 700);
+            doh.robot.mouseMoveAt(datePicker.daycells[now.getDate() + 1], 500);
+            doh.robot.mouseClick({left:true}, 700);
+            doh.robot.sequence(d.getTestCallback(function() {
+                try {
+                    doh.is(true, dojo.style(datePicker.datepickerDOM, "display") == 'none');
+                    var showDate = dojo.date.locale.parse(datePicker.getFieldValue(), {
+                        selector:"date",
+                        datePattern:datePicker.datePattern
+                    });
+                    showDate = new Date(showDate.getFullYear(), showDate.getMonth(), showDate.getDate())
+                    doh.is(true, showDate.toString() == datePicker.selectedDate.toString());
+                } catch (e) {
+                    d.errback(e);
+                }
+            }), 1200);
+            return d;
+        }
+    },{
+        name:"on datepicker right arrow click calendar should advance by one month",
+        timeout:8400,
+        runTest:function () {
+            var d = new doh.Deferred();
+            datePicker = dijit.byId("datePicker1");
+            var startMonth = datePicker.datePickerShowDate.getMonth();
+            doh.robot.mouseMoveAt(datePicker.domNode, 500);
+            doh.robot.mouseClick({left:true}, 700);
+            doh.robot.mouseMoveAt(dojo.query('.next', datePicker.datepickerDOM)[0], 500);
+            doh.robot.mouseClick({left:true}, 700);
+            doh.robot.sequence(d.getTestCallback(function() {
+                try {
+                    if(startMonth === 11){
+                        doh.is(true, datePicker.datePickerShowDate.getMonth() === 0);
+                    } else {
+                        doh.is(true, datePicker.datePickerShowDate.getMonth() === startMonth + 1);
+                    }
+                } catch (e) {
+                    d.errback(e);
+                }
+            }), 1200);
+            return d;
+        }
+    },{
+        name:"on datepicker left arrow click calendar should decrease by one month",
+        timeout:8400,
+        runTest:function () {
+            var d = new doh.Deferred();
+            datePicker = dijit.byId("datePicker1");
+            var startMonth = datePicker.datePickerShowDate.getMonth();
+            doh.robot.mouseMoveAt(dojo.query('.prev', datePicker.datepickerDOM)[0], 500);
+            doh.robot.mouseClick({left:true}, 700);
+            doh.robot.sequence(d.getTestCallback(function() {
+                try {
+                    if(startMonth === 0){
+                        doh.is(true, datePicker.datePickerShowDate.getMonth() === 11);
+                    } else {
+                        doh.is(true, datePicker.datePickerShowDate.getMonth() === startMonth - 1);
+                    }
+                } catch (e) {
+                    d.errback(e);
+                }
+            }), 1200);
+            return d;
+        }
+    },{
+        name:"on datepicker select option change calendar should display selected month",
+        timeout:8400,
+        runTest:function () {
+            var d = new doh.Deferred();
+            datePicker = dijit.byId("datePicker1");
+            selectOption = datePicker.dateSelectOption[0];
+            doh.robot.mouseMoveAt(selectOption.selectDropdown, 500);
+            doh.robot.mouseClick({left:true}, 700);
+            doh.robot.mouseMoveAt(dojo.query("li", selectOption.listElement)[2], 500);
+            doh.robot.mouseClick({left:true}, 700);
+            doh.robot.sequence(d.getTestCallback(function() {
+                try {
+                    var showDate = dojo.date.locale.parse(selectOption.getSelectedData().value, {
+                        selector:"date",
+                        datePattern:"M/yyy"
+                    });
+                    doh.is(true, showDate.toString() == datePicker.datePickerShowDate.toString());
+                } catch (e) {
+                    d.errback(e);
+                }
+            }), 1200);
+            return d;
+        }
+    }
+    ]);
+
+    doh.run();
+});
+</script>
+</head>
+</html>

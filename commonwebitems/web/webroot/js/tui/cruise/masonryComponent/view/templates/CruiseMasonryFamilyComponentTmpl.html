@@ -1,0 +1,23 @@
+<div class="cr-masonry-section life-on-board masonry-box fam-facility count-{{divCount}}">
+			<div class="family-Box">
+				{% if item.smallImages %}
+				{% if item.smallImages.0.mainSrc %}		
+				<div class="galerImgbox">
+					<a class="thumbnail play-media ensLinkTrack" href="javascript:void(0);">
+						<img width="318" height="160" class="bg-image family-img-widthHeight" src="{{item.smallImages.0.mainSrc}}"  alt="View Large" />
+						<span class="transparent viewlarge uc for-family"><span class="magnifier"></span>View Large</span>
+					</a>
+					{% if item.videoCode %}
+						<div class="right-corner bottomZero">
+							<a class="view-images view-large-link" href="javascript:void(0);" >Play Video</a>
+					    </div>
+				    {% endif %}
+				    {% endif %}			
+				 </div>
+				 {% endif %}
+				<div class="family-content-Box">
+					{% if item.displayName %} <h2 class="masonry-title">{{item.displayName}}</h2> {% endif %}
+					{% if item.description %}	<p>{{item.description|safe}}</p>{% endif %}
+				</div>
+			</div>
+	</div>

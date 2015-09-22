@@ -1,0 +1,67 @@
+<div class="alert-nudge" id="ca_alert_nudge_message" style="display:none;">
+	<div class="alert mid-level">
+		<p> 
+			<span id="shortlistmessage">You don't have any shortlisted holidays</span>
+		</p>
+		
+	</div>
+</div>
+
+{% if holidays %}
+
+			
+<div class="control-head" id="ca_control_head">
+	<h1 class="wishCountSpan" id="wishCountSpan">You have shortlisted holidays</h1>
+	<a  class="remove remove_all_saved_holidays" href="#" data-dojo-props='widgetId:"DeleteAllHolidaysPopup",modal:true,scrollable:true,message:"You don&#39;t have any shortlisted holidays",targetURL:"{{tuiWebrootPath}}/viewShortlist/deleteSavedHolidays?wishlistId={{holidays.0.wishlistId}}", wishlistEntryId:"shortlistresultsAvailable"' data-dojo-type="tui.widget.customeraccount.RemoveAllSavedHolidays">Delete all shortlisted holidays</a>
+	
+	<a class="button compare-btn blue" href="#">Compare (2 of 3)</a>	 
+	<div   class="select custom-options blue sort-menu">  <!-- data-dojo-type="tui.widget.search.view.SortOptions" -->
+		<span class="text">Sort by</span>
+		<span class="arrow"><span></span></span>
+		<select class="custom-select-options_" name="custom-select-options" id="custom-select-options">
+				<option value="0" class="active">Departure date<i class="caret tick blue"></i></option>
+				<option value="1">Price - low to high <i class="caret tick blue"></i></option>
+				<option value="2">Price - high to low <i class="caret tick blue"></i></option>
+				<option value="3">Tripadvisor Rating <i class="caret tick blue"></i></option>
+				<option value="4">Brand<i class="caret tick blue"></i></option>				
+				<option value="5">Saving<i class="caret tick blue"></i></option>
+				<option value="6">Ratings<i class="caret tick blue"></i></option>
+				<option value="7">A - Z <i class="caret tick blue"></i></option>
+		</select>
+	</div>
+</div>
+
+{% ifequal holidays.login "null" %}
+<div class="account-creation" id="ca_account_creation">
+	<span class="bg"></span>
+	<p style="display:inline-block;">Permanently save your shortlisted holidays by creating an account</p>
+	<ul class="square yellow">
+		<li>
+			<span class="">Save up to xx holidays (you can save x holidays without an account)</span>
+		</li>
+		<li>
+			<span class="">Access your shortlist on computers or devices</span>
+		</li>
+	</ul>
+	<div class="btn-links">
+		<span>Already got an account?</span> <a href="#">Sign in</a> or
+		<input type="submit" value="Create an account" class="button" />
+	</div>	
+</div>
+{% endifequal %}
+								
+{% ifequal holiday.soldoutWishlistEntryId "" %}
+ {% ifequal holiday.datePassedWishlistEntryId "" %}
+{% if holidays.0.wishlistId %}
+<div class="alert-nudge" id="ca_alert_nudge">
+	<div class="alert mid-level">
+		<p> 
+			<span id="shortlistmessage">Some holiday prices may have changed since the last time you visited</span>
+		</p>
+		
+	</div>
+</div>
+{% endif %}
+{% endifequal %}
+{% endifequal %}
+{% endif %}

@@ -1,0 +1,21 @@
+
+<span class="info-block">{{jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.Summary_TotalPrice_Label}}
+	<!-- <span class="ac-ques-tooltip-link" data-dojo-type="tui.widget.common.ClickToolTip" data-dojo-props="eventType:'click', floatWhere:'position-top-center', text:'<ul class=\'item-list ie-list\'><li>{{jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.priceBreakDown}}</li>{% for priceBreakdown in jsonData.packageViewData.priceBreakdownViewData %}<li>{{priceBreakdown.description|default:\' \'}}<span class=\'fr\'>&nbsp;&nbsp;{{priceBreakdown.currencyAppendedPrice|default:\' \'}}</span></li>{% endfor %}</ul>'"></span>
+ -->
+ <span class="ac-ques-tooltip-link" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="floatWhere: 'position-top-center',text:'<ul class=\'item-list ie-list\'><li>{{jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.priceBreakDown}}</li>{% for priceBreakdown in jsonData.packageViewData.priceBreakdownViewData %}<li>{{priceBreakdown.description|default:\' \'}}<span class=\'fr\'>&nbsp;&nbsp;{{priceBreakdown.currencyAppendedPrice|default:\' \'}}</span></li>{% endfor %}</ul>'"></span>
+
+</span>
+<span class="total" id="newprice">{{jsonData.packageViewData.currencyAppendedRoundUpTotalCost|default:" "}}</span>
+<span class="splitPrice">
+  <span class="pp">{{ jsonData.packageViewData.currencyAppendedPricePerPerson|default:'' }} </span>
+  {% if jsonData.packageViewData.currencyAppendedOnlineDiscount %}<span class="discount">Includes {{ jsonData.packageViewData.currencyAppendedOnlineDiscount|default:'' }} discount</span>{% endif %}
+</span>
+
+<span class="people"></span>
+<div class="paxLess">
+	{{ jsonData.packageViewData.paxViewData.paxComposition }}
+</div>
+
+
+
+

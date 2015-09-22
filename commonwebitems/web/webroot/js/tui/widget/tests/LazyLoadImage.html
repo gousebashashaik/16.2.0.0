@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7 ]>
+<html lang="en" class="ie6" id="firstchoice"> <![endif]-->
+<!--[if IE 7 ]>
+<html lang="en" class="ie7" id="firstchoice"> <![endif]-->
+<!--[if IE 8 ]>
+<html lang="en" class="ie8" id="firstchoice"> <![endif]-->
+<!--[if IE 9 ]>
+<html lang="en" class="ie9" id="firstchoice"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="" id="firstchoice"> <!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <title>LazyLoadImage Tests</title>
+
+    <link href="/css/main.css" rel="stylesheet" type="text/css">
+    <link href="/css/print.css" rel="stylesheet" type="text/css" media="print">
+    <link rel="shortcut icon" href="/images/favicon.ico">
+
+    <script src="/js/underscore/underscore-min.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script type="text/javascript" src="/js/tui/config/TuiConfigTest.js"></script>
+
+</head>
+
+<body>
+
+    <div id="content">
+        <script type="text/javascript">
+            dojoConfig.addModuleName("tui/widget/LazyLoadImage");
+        </script>
+
+        <img src="/images/b.gif" data-dojo-type="tui.widget.LazyLoadImage" data-dojo-props="source:'/images/content-blocks/img01.jpg'" width="232" height="174" />
+
+        <br><br><br><br><br><br><br>
+
+        <img src="/images/b.gif" data-dojo-type="tui.widget.LazyLoadImage" data-dojo-props="source:'/images/content-blocks/img02.jpg'" width="232" height="174" />
+
+        <br><br><br><br><br><br><br>
+
+        <img src="/images/b.gif" data-dojo-type="tui.widget.LazyLoadImage" data-dojo-props="source:'/images/content-blocks/img03.jpg'" width="232" height="174" />
+
+        <br><br><br><br><br><br><br>
+
+        <img src="/images/b.gif" data-dojo-type="tui.widget.LazyLoadImage" data-dojo-props="source:'/images/content-blocks/img04.jpg'" width="232" height="174" />
+
+    </div>
+
+    <script type="text/javascript" src="/js/dojo/dojo.js"></script>
+    <script type="text/javascript">
+        dojoConfig.init();
+    </script>
+
+    <script>
+        require(["dojo/ready", "doh/runner", "dojo/parser"], function (ready) {
+            ready(function () {
+                /*doh.register("cookie notifier tests", [
+                    {
+                        name:"initial json data should be null",
+
+                        runTest:function () {
+                            doh.assertEqual(null, dojo.byId("notifier").jsonData);
+                        }
+                    }
+                ]);
+                doh.run();*/
+            });
+        });
+    </script>
+
+
+</body>
+
+
+</html>

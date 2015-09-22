@@ -1,0 +1,7 @@
+<div class="tooltip {{ floatWhere }} {{className}} {% if topClass %} {{topClass}}{% endif %} {% if modClass %} {{modClass}}{% endif %}">
+	{% if imgSrc %}
+		<img src="{{ imgSrc }}" />
+	{% endif %}
+	<p>{{text|safe}}</p>
+	<span class="arrow"></span>
+</div>

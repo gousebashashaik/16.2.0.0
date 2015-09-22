@@ -1,0 +1,120 @@
+<div class="default-destinations sub-cat cf" id="{{id}}-destinations">
+	<div class="country-drilldown"analytics-text="DListDes" analytics-id="300ab" analytics-instance="1">
+    <h3 class="lowercase">Select where you want to go:</h3>
+    <ul class="checks no-pad-top cf">
+    <li class="pad-left-0">
+        <span class="checkbox loaded {% if not available %} disabled{% endif %}{% if available %}{% for to in toData %}{% ifequal to.id id %} selected{% endifequal %}{% endfor %}{% endif %}">
+                <span class="checkbox-bg"></span>
+                <input type="checkbox"
+                       data-destination-id="{{id}}"
+                       data-destination-name="{{name}}"
+                       data-destination-groups="{% for region in children %}{{region.id}},{% for destination in region.children %}{{destination.id}},{% endfor %}{% endfor %}"
+                       data-destination-parents=""
+                       data-destination-immediate-parent=""
+                       data-destination-siblings=""
+                       data-destination-type="{% if type %}{{type}}{% endif %}"
+                       data-destination-multiselect="{{multiSelect}}"
+                       data-destination-available="{{available}}"
+                       data-destination-fewdays="{{fewDaysFlag}}"
+                       data-destination-multiple= "false"
+                       name="{{id}}"
+                       id="{{id}}"
+                       value="{{id}}"
+                       class="{{id}} check child-check"
+                       {% for to in toData %}
+                       {% ifequal to.id id %}
+                       checked=checked
+                       {% endifequal %}
+                       {% endfor %}
+                        >
+                <label for="{{id}}" class="title"> {{name}}{{searchMessaging.destinationGuide.searchAll|safe}} </label>
+        </span>
+    </li>
+    </ul>
+
+
+       <ul class="checks five-cols cf">
+            {% for region in children %}
+            <li id="" class="multi-level pad-left-40" >
+                <span class="checkbox loaded {% if not region.available %} disabled{% endif %}{% for to in toData %}{% ifequal to.id id %}{% if region.available %} selected disabled{% endif %}{% else %}{% ifequal to.id region.id %} selected{% endifequal %}{% endifequal %}{% endfor %}">
+                        <span class="checkbox-bg region"></span>
+                        <input type="checkbox"
+                               data-destination-id="{{region.id}}"
+                               data-destination-name="{{region.name}}"
+                               data-destination-groups="{% for destination in region.children %}{{destination.id}}{% if not forloop.last %},{% endif %}{% endfor %}"
+                               data-destination-parents="{{id}}"
+                               data-destination-immediate-parent="{{id}}"
+                               data-destination-siblings="{% for region in children %}{{region.id}}{% if not forloop.last%},{% endif %}{% endfor %}"
+                               data-destination-type="{% if region.type %}{{region.type}}{% endif %}"
+                               data-destination-multiselect="{{region.multiSelect}}"
+                               data-destination-available="{{region.available}}"
+                               data-destination-fewdays="{{region.fewDaysFlag}}"
+                               data-destination-multiple= "false"
+                               name="{{region.id}}"
+                               id="{{region.id}}"
+                               value="{{region.id}}"
+                               class="{{region.id}} check parent-check"
+                               {% for to in toData %}
+                               {% ifequal to.id region.id %}
+                               checked=checked
+                               {% endifequal %}
+                               {% ifequal to.id id %}
+                               checked=checked
+                               {% endifequal %}
+                               {% endfor %}
+                                >
+                        <label for="{{region.id}}" class="region">{{region.name}}</label>
+                </span>
+                <ul class="sub-checks">
+                    {% for destination in region.children %}
+                    <li id="">
+                        <span class="checkbox loaded {% if not destination.available %}disabled{% endif %}{% for to in toData %}{% ifequal to.id id %}{% if  destination.available %} selected disabled{% endif %}{% else %}{% ifequal to.id region.id %} {% if destination.available %} selected disabled {% endif %}{% else %}{% ifequal to.id destination.id %} selected{% endifequal %}{% endifequal %}{% endifequal %}{% endfor %}">
+                                <span class="checkbox-bg "></span>
+                                <input type="checkbox"
+                                       data-destination-id="{{destination.id}}"
+                                       data-destination-name="{{destination.name}}"
+                                       data-destination-groups=""
+                                       data-destination-parents="{{region.id}},{{id}}"
+                                       data-destination-immediate-parent="{{region.id}}"
+                                       data-destination-siblings = "{% for destination in region.children %}{{destination.id}}{% if not forloop.last %},{% endif %}{% endfor %}"
+                                       data-destination-type="{% if destination.type %}{{destination.type}}{% endif %}"
+                                       data-destination-multiselect="{{destination.multiSelect}}"
+                                       data-destination-available="{{destination.available}}"
+                                       data-destination-fewdays="{{region.fewDaysFlag}}"
+                                       data-destination-multiple= "false"
+                                       name="{{destination.id}}"
+                                       id="{{destination.id}}"
+                                       value="{{destination.id}}"
+                                       class="{{destination.id}} check child-check"
+                                       {% for to in toData %}
+                                       {% ifequal to.id destination.id %}
+                                       checked=checked
+                                       {% endifequal %}
+                                       {% ifequal to.id region.id %}
+                                       checked=checked
+                                       {% endifequal %}
+                                       {% ifequal to.id id %}
+                                       checked=checked
+                                       {% endifequal %}
+                                       {% endfor %}
+                                        >
+                                <label for="{{destination.id}}">{{destination.name}}</label>
+                        </span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </li>
+           {% if forloop.counter|divisibleby:5 %}
+           {% if not forloop.last%}
+                 <li class="row-controller"></li>
+           {% endif %}
+           {% endif %}
+            {% endfor %}
+        </ul>
+	</div>
+    <div class="cta-container center">
+        <a class="button" href="{{url}}" analytics-text="ExploreDes" analytics-id="300ab" analytics-instance="1">Explore {{name}} Destinations</a>
+        <a class="button cta country-hirerchy-done" analytics-text="DLDoneDes" analytics-id="300ab" analytics-instance="1">Done</a>
+    </div>
+
+</div>

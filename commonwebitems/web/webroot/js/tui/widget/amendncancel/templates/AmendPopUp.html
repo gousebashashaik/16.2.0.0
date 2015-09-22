@@ -1,0 +1,22 @@
+<div class="overlay-wrap">
+<div class="ac-overlay"></div>
+<div class="overlay-popup width-40">
+	<ul class="pass-list fl">
+		{% for passenger in passengerData.packageViewData.passenger %}
+		{% if not passenger.lead %}
+			<li><div class="main-text">{{passenger.title }} {{passenger.address.firstName }} {{passenger.address.lastName }}</div></li>
+		{% endif %}
+		{% endfor %}
+	</ul>
+	<ul class="age-list">
+		{% for passenger in passengerData.packageViewData.passenger %}
+		{% if not passenger.lead %}
+			<li><div class="age-text"> {{passenger.type }} (DoB: {{ passenger.address.dateofbirth}})</div></li>
+		{% endif %}
+		{% endfor %}
+	</ul>
+	<div class="clear"></div>
+	<span class="overlay-close"></span>
+	<div class="clear"></div>
+</div>
+</div>

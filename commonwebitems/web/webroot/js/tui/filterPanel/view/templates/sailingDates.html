@@ -1,0 +1,18 @@
+<div class="calendar-component">
+<div class="departing">
+	<span class="content">Departing</span>
+	<span class="left-corner"></span>
+</div>
+    <ul class="dateyear">
+        <li class="prev">
+            <a id= "prevButton" href="javascript:void(0);" class="date-prev"></a>
+        </li>
+        <li class="current-monthyear" id="monthYearLabel"></li>
+        <li class="next">
+            <a data-dojo-attach-point= "nextButton" href="javascript:void(0);" class="date-next"></a>
+        </li>
+    </ul>
+    <div data-dojo-type="tui.filterPanel.view.calendar.CruiseCalendar" class="cruiseCalendar"
+         data-dojo-props="calStartDate: '{{minValue}}',  calAvail:'{{availableValues}}', selectedDate : '{{selecteValue}}', actualDate: '{{selecteValue}}'">
+    </div>
+</div>

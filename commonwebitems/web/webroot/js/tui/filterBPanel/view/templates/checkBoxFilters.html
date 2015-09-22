@@ -1,0 +1,56 @@
+<div class="filter-panel-close-outer"><a href="javascript:void(0);" class="new-filter-close close">CLOSE</a>
+<i class="close"></i></div>
+<ul class="three-cols cf">
+{% for filter in filters %}
+{% ifnotequal filter.name "Board Basis" %}
+{% ifnotequal filter.name "Holiday Operator" %}
+{% if filter.id %}
+<li class="item-content-section">
+	{% if filter.name %}
+        <h3>{{filter.name}}</h3>
+	{% endif %}
+	<ul class="checks">
+		{% for check in filter.values %}<li id="check_{{check.id}}" {% ifnotequal check.children.length 0 %} class="multi-level" {% endifnotequal %}>
+            <span class="checkbox cf checkbox-height"
+			      id="{{check.id}}"
+			      data-dojo-type="tui.filterBPanel.view.options.CheckBox"
+			      data-dojo-props='filterType: "{{filter.filterType}}", filterId: "{{filter.id}}" {% if check.categoryCode %}, categoryCode: "{{check.categoryCode}}" {% endif %} {% if check.name %}, name: "{{check.name}}" {% endif %}'>
+			    <span class="checkbox-bg"></span>
+				<input type="checkbox"
+			       id="field_{{check.id}}"
+			       value="{{check.value}}"
+			       class="check parent-check" {% if check.selected %} checked="{{check.selected}}" {% endif %}/>
+
+			{% if check.name %}
+			 <label for="field_{{check.id}}">{% ifequal check.name|lower|fix_ampersands|safe 'sensimar' %}Couple/Sensimar{% else %}{{check.labelName|lower|fix_ampersands|safe}}{% endifequal %}
+                {% if check.noAccommodations %} <span class="package-count">({{check.noAccommodations}})</span> {% endif %}
+                {% if check.tooltip %} <span class="question" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="text:'{{check.tooltip|safe}}', floatWhere:'position-top-center'"></span> {% endif %}
+            </label>
+			{% endif %}
+			</span>
+			{% ifnotequal check.children.length 0 %}<ul class="sub-checks">
+				{% for subcheck in check.children %}<li id="subcheck_{{subcheck.id}}">
+                    <span class="checkbox" id="{{subcheck.id}}"
+					      data-dojo-type="tui.filterBPanel.view.options.CheckBox"
+					      data-dojo-props='filterType: "{{filter.filterType}}", filterId: "{{filter.id}}",  parentId : "{{check.id}}" {% if subcheck.categoryCode %}, categoryCode: "{{subcheck.categoryCode}}" {% endif %} {% if subcheck.name %}, name: "{{subcheck.name}}" {% endif %}'>
+					      <span class="checkbox-bg"></span>
+						  <input type="checkbox"
+					       id="field_{{subcheck.id}}"
+					       value="{{subcheck.value}}"
+					       class="check child-check" {% if subcheck.selected %} checked="{{subcheck.selected}}" {% endif
+					%}/>
+					<label for="field_{{subcheck.id}}">{{subcheck.name|safe|lower}} {% if subcheck.noAccommodations %}
+						<span class="package-count">({{subcheck.noAccommodations}})</span> {% endif %}</label>
+					</span>
+				</li>{% endfor %}
+			</ul>{% endifnotequal%}
+		</li>{% endfor %}
+	</ul>
+</li>
+{% endif%}
+{% endifnotequal %}
+{% endifnotequal %}
+{% endfor %}
+<div class="clear"></div>
+</ul>
+<div class="filter-mask-interactivity"></div>

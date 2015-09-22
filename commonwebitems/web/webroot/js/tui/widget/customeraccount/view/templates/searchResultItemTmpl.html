@@ -1,0 +1,100 @@
+
+{% if holidays %}
+
+	
+	
+	<p class="alert generic mid-level" id="ca_alert_nudge_message" style="display:none;">You don't have any shortlisted holidays.</p>
+	
+	{% ifequal holidays.login "null" %}
+	<!--div class="create-account">
+		<i class="caret account blue"></i>
+		<p>Permanently save your shortlisted holidays by creating an account</p>
+		<ul class="square yellow">
+			<li>save up to 10 holidays (you can save 5 holidays without an account)</li>
+			<li>access your shortlist on computers or devices</li>
+		</ul>
+		<div>Already got an account? <a class="manageaccountlink" url="{{tuiWebrootPath}}/customer-account/login" commonSignIn="yes" href="javascript:void(0)"><span >Sign in</span></a> or <a class="createaccountlink button" url="#" href="javascript:void(0)"><span >Create an account</span></a></div>
+	</div-->
+	{% endifequal %}
+	{% ifequal holiday.soldoutWishlistEntryId "" %}
+	{% ifequal holiday.datePassedWishlistEntryId "" %}
+	{% if holidays.0.wishlistId %}
+	{% if priceChangeFlag %}
+	<p class="alert generic mid-level" id="shortlistmessage">Some holiday prices may have changed.</p>
+	{% endif %}
+	{% endif %}
+	{% endifequal %}
+	{% endifequal %}
+	
+	<div class="content-width position-container">
+		<div id="results" data-dojo-props='login:{{holidays.loginstring}},component:{{holidays.componentstring}},jsonData:{{holidays.holidaysstring}}' data-dojo-type="tui.widget.customeraccount.savedHolidaysList"> <!-- Listing main div starts here ----->
+		
+			
+		</div> <!-- listing main div ends here ---->
+	{% ifequal holidays.login "null" %}  
+	<a  class="remove remove_all_saved_holidays delete-holidays" href="#" data-dojo-props='widgetId:"DeleteAllHolidaysPopup",message:"You don&#39;t have any shortlisted holidays",targetURL:"{{tuiWebrootPath}}/viewAnonymousShortlist/deleteAnonymousSavedHolidays?wishlistId={{holidays.0.wishlistId}}", wishlistEntryId:"shortlistresultsAvailable"' data-dojo-type="tui.widget.customeraccount.RemoveAllSavedHolidays">Remove all shortlisted holidays</a>
+	{% endifequal %}
+	{% ifnotequal holidays.login "null" %}  
+	<a  class="remove remove_all_saved_holidays delete-holidays" href="#" data-dojo-props='widgetId:"DeleteAllHolidaysPopup",message:"You don&#39;t have any shortlisted holidays",targetURL:"{{tuiWebrootPath}}/viewShortlist/deleteSavedHolidays?wishlistId={{holidays.0.wishlistId}}", wishlistEntryId:"shortlistresultsAvailable"' data-dojo-type="tui.widget.customeraccount.RemoveAllSavedHolidays">Remove all shortlisted holidays</a>
+	{% endifnotequal %}
+	</div>
+	
+
+		
+<!-- transferring to other domain  -->
+
+
+<div class="modal hide" id="transferringToOtherTH">
+	<div class="window mini">
+		<div class="modal-content status-message">
+			<div id="content">
+				<div class="content-width">
+					<div class="transfer-to-th">
+						<p>Transferring you to Thomson.co.uk...</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal hide" id="transferringToOtherFC">
+	<div class="window mini">
+		<div class="modal-content status-message">
+			<div id="content">
+				<div class="content-width">
+					<div class="transfer-to-th">
+						<p>Transferring you to Firstchoice.co.uk...</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+						
+<!-- Delete all Popup starts -->
+
+<div class="modal hide" id="DeleteAllHolidaysPopup">
+	<div class="window auto-height">
+		<div class="title">
+			Delete all holidays <!-- <span class="close">y</span> -->
+		</div>
+		<div class="modal-content sand-bg">
+			<!-- <div id="content"> -->
+				<div class="content-width">
+					<div id="shortlist" class="cb">
+						<p>Are you sure you want to discard your shortlist?</p>
+						<a class="button blue" id="DeleteAll_No">Keep holidays</a>
+						<a class="button cta-grey" id="DeleteAll_Yes">Remove holidays</a>
+					</div>
+				</div>
+			<!-- </div> -->
+		</div>
+	</div>
+</div>
+
+<!-- popup ends here ----->
+
+<!-- starting main div ends -->
+{% endif %}

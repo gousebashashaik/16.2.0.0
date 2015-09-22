@@ -1,0 +1,181 @@
+<div>
+  {% if extraFacilityData %}
+  <div data-dojo-type="tui.widget.expand.Expandable" data-dojo-props="transitionType: 'WipeInClose'">
+      <div class="gen-ext item open">
+      <div class="item-toggle">
+         <div class="fl">
+            <h3>{% if staticData.Retrieve_And_Search_Extras_Heading %}{{staticData.Retrieve_And_Search_Extras_Heading}}{% endif %}</h3>
+         </div>
+         <div class="fr"><i></i></div>
+      </div>
+      <div class="item-content">
+         
+		 {% for extraFacMap in extraFacilityData %}
+		 
+		  {% ifequal extraFacMap.extraFacilityGroup "integratedGroup" %}  
+            {% if extraFacMap.extraFacilityViewData %}
+			{% if extraFacMap.superCategoryCode %}
+			{% ifequal extraFacMap.superCategoryCode|lower "transport" %}
+               <div class="box">
+                  <div class="ext-head trnsfr">{% if staticData.Retrieve_And_Search_Transfer_Heading %}{{staticData.Retrieve_And_Search_Transfer_Heading}}{% endif %}</div>
+                  
+				   {% for transfer in extraFacMap.extraFacilityViewData %}
+                     <div class="ext-rows">
+                        <div class="sub-text">{% if transfer.description %}{{transfer.description}}{% endif %}</div>
+                     </div>
+                  {% endfor %}
+               </div>
+           {% endifequal %}
+           {% endif %}
+			
+			{% if extraFacMap.superCategoryCode %}
+			{% ifequal extraFacMap.superCategoryCode|lower "hotel infant activities" %}
+               <div class="box">
+                  <div class="ext-head hotopt">{% if staticData.Retrieve_And_Search_Hotel_Extras_Heading %}{{staticData.Retrieve_And_Search_Hotel_Extras_Heading}}{% endif %}</div>
+                  <div class="ext-rows">
+                     <div class="title">{% if staticData.Retrieve_And_Search_Hotel_Extras_Sub_Heading2 %}{{staticData.Retrieve_And_Search_Hotel_Extras_Sub_Heading2}}{% endif %}</div>
+                    {% for accom in extraFacMap.extraFacilityViewData %}
+                        <div class="sub-text">{% if accom.description %}{{accom.description}}{% endif %}</div>
+                     {% endfor %}
+                  </div>
+                 				
+               </div>            
+			{% endifequal %}
+           {% endif %}
+		   {% if extraFacMap.superCategoryCode %}
+			{% ifequal extraFacMap.superCategoryCode|lower "hotel kids activities" %}
+               <div class="box">
+                  <div class="ext-head hotopt">{% if staticData.Retrieve_And_Search_Hotel_Extras_Heading %}{{staticData.Retrieve_And_Search_Hotel_Extras_Heading}}{% endif %}</div>
+                  <div class="ext-rows">
+                     <div class="title">{% if staticData.Retrieve_And_Search_Hotel_Extras_Sub_Heading1 %}{{staticData.Retrieve_And_Search_Hotel_Extras_Sub_Heading1}}{% endif %}</div>
+                    {% for accom in extraFacMap.extraFacilityViewData %}
+                        <div class="sub-text">{% if accom.description %}{{accom.description}}{% endif %}</div>
+                     {% endfor %}
+                  </div>
+                 				
+               </div>            
+			{% endifequal %}
+           {% endif %}
+            
+			
+			
+			
+			{% if extraFacMap.superCategoryCode %}
+			{% ifequal extraFacMap.superCategoryCode|lower "excursion" %}
+				<div class="box">
+					<div class="ext-head excr">{% if staticData.Retrieve_And_Search_Excursions_Heading %}{{staticData.Retrieve_And_Search_Excursions_Heading}}{% endif %}</div>
+					
+					 {% for excursion in extraFacMap.extraFacilityViewData %}
+						<div class="ext-rows">
+							<div class="title">{% if excursion.description %}{{excursion.description}}{% endif %}</div>
+							<div class="date">{% if excursion.startDate %}{{excursion.startDate}}{% endif %}</div>
+							<div class="sub-text">Number:&nbsp;
+								<span>
+									{% if excursion.paxCompositionViewData.noOfAdults %}{{excursion.paxCompositionViewData.noOfAdults}}{% endif %}
+									{% if excursion.paxCompositionViewData.noOfAdults %}{{ excursion.paxCompositionViewData.noOfAdults }} Adult{{ excursion.paxCompositionViewData.noOfAdults|pluralize }}{% endif %}
+									{% ifnotequal excursion.paxCompositionViewData.noOfChildren 0 %}
+											{% if excursion.paxCompositionViewData.noOfChildren %}, {{excursion.paxCompositionViewData.noOfChildren}}{% endif %}
+										{% if excursion.paxCompositionViewData.noOfAdults %}{{ excursion.paxCompositionViewData.noOfAdults }} Child{{ excursion.paxCompositionViewData.noOfAdults|pluralize:"ren" }}{% endif %}
+									{% endifnotequal%}
+								</span>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			{% endifequal %}
+           {% endif %}
+		    
+			{% if extraFacMap.superCategoryCode %}
+			{% ifequal extraFacMap.superCategoryCode|lower "attraction" %}
+				<div class="box">
+					<div class="ext-head attrc">{% if staticData.Retrieve_And_Search_Attractions_Heading %}{{staticData.Retrieve_And_Search_Attractions_Heading}}{% endif %}</div>					
+					{% for attraction in extraFacMap.extraFacilityViewData %}
+						<div class="ext-rows">
+							<div class="sub-text">{% if attraction.description %}{{attraction.description}}{% endif %}</div>
+							<div class="sub-text">{% if attraction.quantity %}Tickets &times; {{attraction.quantity}}{% endif %}</div>
+						</div>	
+					{% endfor %}
+				</div>					
+			{% endifequal %}
+           {% endif %}
+			
+            {% if extraFacMap.superCategoryCode %}
+			{% ifequal extraFacMap.superCategoryCode|lower "car hire" %}
+				<div class="box">
+					<div class="ext-head carhire">{% if staticData.Retrieve_And_Search_Car_hire_Heading %}{{staticData.Retrieve_And_Search_Car_hire_Heading}}{% endif %}</div>					
+					{% for car in extraFacMap.extraFacilityViewData %}
+						<div class="ext-rows">
+							<div class="sub-text">{% if car.description %}{{car.description}}{% endif %}</div>
+						</div>
+					{% endfor %}
+				</div>
+			{% endifequal %}
+           {% endif %}
+            
+			{% if extraFacMap.superCategoryCode %}
+			{% ifequal extraFacMap.superCategoryCode|lower "insurance" %}
+               <div class="box">
+                  <div class="ext-head insur">{% if staticData.Retrieve_And_Search_Insurance_Policy_Heading %}{{staticData.Retrieve_And_Search_Insurance_Policy_Heading}}{% endif %}</div>
+                  
+				  {% for insurance in extraFacMap.extraFacilityViewData %}
+                     <div class="ext-rows">
+                        <div class="insur-pass">
+                           <div class="title">{% if insurance.description %}{{insurance.description}}{% endif %}</div>
+						   {% for passenger in insurance.passengerViewData %}
+                              <div class="con">
+                                 <span>{% if passenger.title %}{{passenger.title}}{% endif %}&nbsp;{% if passenger.address.firstName %}{{passenger.address.firstName}}{% endif %}&nbsp;{% if passenger.address.lastName %}{{passenger.address.lastName}}{% endif%}&nbsp;</span>
+                                       <span class="sub-text">{% if passenger.type %}{{passenger.type}}{% endif %}{% if forloop.last %}&nbsp;{% else %},&nbsp;{% endif %}</span>
+                              </div>
+                           {% endfor %}
+                        </div>
+                     </div>
+                  {% endfor %}
+               </div>
+           {% endifequal %}
+           {% endif %}
+			
+			
+			{% if extraFacMap.superCategoryCode %}
+			{% ifequal extraFacMap.superCategoryCode|lower "other" %}
+				<div class="box">
+					<div class="ext-head other">{% if staticData.Retrieve_And_Search_Other_Extras_Heading %}{{staticData.Retrieve_And_Search_Other_Extras_Heading}}{% endif %}</div>
+					{% for other in extraFacMap.extraFacilityViewData %}
+						<div class="ext-rows">
+		<div class="sub-text">{% if other.description %}{{other.description}}{% ifnotequal other.code "WC" %}{% if other.quantity %} &times; {{other.quantity}}{% endif %}{% endifnotequal %}{% endif %}</div>
+						</div>
+					{% endfor %}
+				</div>
+			{% endifequal %}
+            {% endif %} 
+			{% endif %}
+			{% endifequal %}
+         {% endfor %}
+		 
+         {% if extraFacilityData %}            
+			{% for extraFacMap in extraFacilityData %}
+				{% ifequal extraFacMap.extraFacilityGroup "integratedGroup" %}  
+			   {% if extraFacMap.superCategoryCode %}
+			{% ifequal extraFacMap.superCategoryCode|lower "charity" %}                 
+				  {% if extraFacMap.extraFacilityViewData %}
+				  {% for charityFac in extraFacMap.extraFacilityViewData %}
+                     <div class="wcf">
+                        <span class="wcf-logo">{% if charityFac.description %}{{charityFac.description}}{% endif %}</span>
+                     </div>
+                  {% endfor %}
+				  {% endif %} 
+               {% endifequal %}
+            {% endif %} 
+			{% endifequal %}
+            {% endfor %}
+         {% endif %}
+         <div class="change fr hide">
+            <a href="#" class="ensLinkTrack" onclick="hideshowOverlay();"><span class="edit-icon"></span>Change</a>
+         </div>
+         <div class="clear"></div>
+      </div>
+   </div>
+   <div class="right"></div>
+   <div class="clear"></div>
+</div>
+{% endif %}
+</div>

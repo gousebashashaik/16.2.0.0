@@ -1,0 +1,31 @@
+
+{% for holiday in holidays %}
+<li class="search-result-item {% ifequal  holiday.accommodation.brand.code 'FJ' %} falcon {% else %}  thomson {% endifequal %}" data-package-id="{{holiday.packageId}}">
+    <div class="product inventory-collection{% if holiday.accommodation.differentiatedProduct %} special {{holiday.accommodation.differentiatedCode|lower}}{% endif %}">
+        <div class="image-container">
+            {% if holiday.accommodation.differentiatedProduct %}
+				<span class="diff"></span>
+				  <span class="diff-label {% ifequal holiday.accommodation.differentiatedCode|lower 'smr' %}cou-sensimar{% else %}{{holiday.accommodation.differentiatedModifiedCode|lower}}{% endifequal %} " data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{holiday.accommodation.featureCodesAndValues.strapline[0]}}'" style="top:0;left:0;"></span>
+            {% endif %}
+            <a class="url ensLinkTrack" data-componentId="{{holiday.componentId}}"  analytics-id="{{tag}}" analytics-instance="{{number}}" analytics-text="{{analyticsText.url}}" href="{{holiday.accommodation.url}}">
+            <img src="{{holiday.accommodation.imageUrlsMap.small.0}}" alt="{{holiday.accommodation.name}}"></a>
+        </div>
+        <h4><a class="url ensLinkTrack"  analytics-id="{{tag}}" analytics-instance="{{number}}" analytics-text="{{analyticsText.url}}" data-componentId="{{holiday.componentId}}" href="{{holiday.accommodation.url}}">{{holiday.accommodation.name}}</a></h4>
+     
+        {% if holiday.accommodation.ratings.officialRating %}
+        <p class="rating t{{holiday.accommodation.ratings.officialRating|lower|cut:' '}}{% if holiday.accommodation.differentiatedProduct %} {{holiday.accommodation.differentiatedCode|lower}}{% endif %}">Rating: {{holiday.accommodation.ratings.officialRating}}</p>
+        {% endif %}
+        {% if holiday.accommodation.locationMap %}
+        <p class="where">in {% for loc in holiday.accommodation.locationMap %}{{loc}}{% if not forloop.last %},&nbsp;{% endif %}{% endfor %} </p>
+        {% endif %}
+        <div class='boxout floater'>
+            <!-- TODO, need to update the price details from JSONDATA -->
+            <p class='price left'> From <strong><span>{{currency}}</span> <span class="price-value pp-price">{{holiday.price.perPerson|floatformat:"0"}}</span></strong> per person</p>
+            <div class="cta-buttons">
+                <a href="{{holiday.accommodation.url}}" class="button"  analytics-id="{{tag}}" analytics-instance="{{number}}" analytics-text="{{analyticsText.viewButton}}"  data-id="{{holiday.accommodation.code}}"><span class="text">View Details</span></a>
+            </div>
+        </div>
+    </div>
+</li>
+{% if forloop.counter|divisibleby:"3" %}{% if not forloop.last %}<li class="clear-it"></li>{% endif %}{% endif %}
+{% endfor %}

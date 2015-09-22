@@ -1,0 +1,47 @@
+<div class="cr-masonry-section masonry-box">
+	<div class="divMain">	
+		{% if item.smallImages.0.mainSrc %}		
+			 <div class="box box-first une-width" style="position:relative; ">
+				<a class="thumbnail play-media ensLinkTrack" href="javascript:void(0);">
+					<img width="230" height="90" class="bg-image une-img-widthHeight" src="{{item.smallImages.0.mainSrc}}" alt="View Large" />
+					<span class="transparent viewlarge uc une-facility"><span class="magnifier"></span>View Large</span>
+				</a>
+				{% if item.videoCode %}
+					<div class="right-corner"  style="bottom:0px;">
+						<a class="view-images view-large-link" href="javascript:void(0);" ><span>Play Video</span></a>
+				    </div>
+				{% endif %}	
+			</div>
+		{% endif %}			
+		<div class="masonry-content">				
+			{% if item.displayName %}
+				<h2 class="masonry-title">{{item.displayName}}</h2>
+			{% endif %}
+			
+			{% if item.description %}	<p>{{item.description|safe}}</p>{% endif %}
+			{% if item.linkUrl %}	
+			<h2 class="linkwithlabel" style="">
+				<a href="{{item.linkUrl}}" class="view-all ensLinkTrack has-icon-left">
+					<i class="icon arrow-main product-arrow-sm product-arrow-left arrow-right-bg">&#8227;</i>
+					{{item.linkLabel}}
+				</a>
+			</h2>
+			{% endif %}				
+		{% ifequal componentName "UNE"  %}
+		{% if item.menuList.0  %}
+		{% if item.menuListJson  %}
+			<div class="link-list">
+			<ul class="square-with-arrow">
+					<li><a href="javascript:void(0);" 
+					data-dojo-type="tui.widget.popup.cruise.FacilityOverlay" 
+					data-dojo-props='jsonData:{{item.menuListJson}}, componentName:"menuOverlay"'>
+					{{item.menuList.0.menuName}}
+					</a></li>			
+			</ul>
+		</div>
+		{% endif %}				
+		{% endif %}
+		{% endifequal %}
+		</div>
+	</div>
+</div>

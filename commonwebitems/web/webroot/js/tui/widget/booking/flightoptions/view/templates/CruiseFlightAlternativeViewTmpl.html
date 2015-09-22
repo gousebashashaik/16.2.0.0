@@ -1,0 +1,71 @@
+			<div>
+			{% ifequal alternativeFlightsFlag true %}
+			{% for flightAirports in model %}
+			{% ifequal flightAirports.selected true %}
+				{% for flightData in flightAirports.flightViewData %}
+				<div class="dashed-border"></div>
+				{% ifequal flightData.selected true %}
+
+				<div  id="{{flightAirports.airportCode}}" class="flight-options-section highlighted-div dashed-border
+				">
+				{% else %}
+				<div id="{{flightAirports.airportCode}}" class="flight-options-section dashed-border
+				">
+
+				{% endifequal %}
+
+					<div class="selection-section textLeft x">
+					{% for outboundData in flightData.flightViewData %}
+						<span class="to">{{outboundData.outboundSectors.0.schedule.depTime}}</span>
+						<span class="arrTime">{{outboundData.outboundSectors.0.schedule.arrTime}}</span>
+						{% ifnotequal  outboundData.outboundSectors.0.schedule.flightOffsetDays 0 %}
+							 <span class="addedDay">+1 Day</span>
+							 <span lang="en" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="floatWhere:'position-top-center', text: 'Your flight arrives the next day'" class=""><span class="question-book"></span></span>
+						{% endifnotequal %}
+						<div class="logo{{outboundData.outboundSectors.0.carrierCode}}"><span class="logo-text">Other Carrier</span></div>
+						{% ifequal outboundData.outboundSectors.0.eqmtDescription "DREAMLINEAR787" %}
+							 <div class="dreamlinear-logo"></div>
+						{% endifequal %}
+					{% endfor %}
+					</div>
+
+					<div class="selection-section middle">
+					{% for inboundData in flightData.flightViewData %}
+						<span class="to">{{inboundData.inboundSectors.0.schedule.depTime}}</span>
+						<span class="arrTime">{{inboundData.inboundSectors.0.schedule.arrTime}}
+						</span>
+						{% ifnotequal  inboundData.inboundSectors.0.schedule.flightOffsetDays 0 %}
+							 <span class="addedDay">+1 Day</span>
+							 <span lang="en" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="floatWhere:'position-top-center', text: 'Your flight arrives the next day'" class=""><span class="question-book"></span></span>
+						{% endifnotequal %}
+
+						<div class="logo{{inboundData.inboundSectors.0.carrierCode}}"><span class="logo-text">Other Carrier</span></div>
+
+						{% ifequal inboundData.inboundSectors.0.eqmtDescription "DREAMLINEAR787" %}
+						      <div class="dreamlinear-logo"></div>
+
+						{% endifequal %}
+					{% endfor %}
+					</div>
+
+					<div class="selection-section last">
+						{% ifequal flightData.selected true %}
+							<button class="button jumbo mt10px selected" ></button>
+							<div class="clear"></div>
+						{% else %}
+							<p class="textCenter"><b>{{flightData.currencyAppendedRoundUpTotalCost|default:" "}}</b></p>
+							<p class="textCenter">{{flightData.currencyAppendedPricePerPerson}}</p>
+							<button class="button jumbo mt10px" value = {{flightData.id}}></button>
+						{% endifequal %}
+					</div>
+					<div class="clear"></div>
+				</div>
+				{% endfor %}
+				{% endifequal %}
+			{% endfor %}
+			{% else %}
+			<div class="dashed-border"></div>
+		<p  class="noresultcls"> No Results found</p>
+		{% endifequal %}
+		</div>
+

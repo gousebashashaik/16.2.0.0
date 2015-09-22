@@ -1,0 +1,40 @@
+<div class="bookflow loginComp" data-dojo-type="tui.widget.expand.Expandable" data-dojo-props="transitionType: 'WipeInOut',jsonData:jsonData">
+	<div class="item open">
+	<h3 class="item-toggle">{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Have_Account|default:""}}
+			<i></i>
+		</h3>
+<div class="item-content">
+<div class="account ">
+	<div  data-dojo-type="tui.bookFlow.LoginAction">
+							<input type="radio" checked name="login" id="signin">
+							<label for="signin"><span></span>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.No_Account|default:""|safe}}</label><br>
+							<input type="radio"  name="login" id="signup">
+							<label for="signup"><span></span>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Has_Account|default:""|safe}}</label>
+							<div class="loginForm disNone">
+							
+								<h4 class="noBorder">{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Retrieve_Details|default:" "}}</h4>
+								<div>
+									<div class="form-field">
+									<span>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Email_Address|default:" "}}</span>
+									<input type="text" class="psgr-textfield passEmail" data-dojo-attach-point="passEmail"  data-dojo-type="tui.widget.form.ValidationTextBox" data-dojo-props="regExp:'^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$', required:true, missingMessage:'', invalidMessage:'Please enter valid eMail ID'"></div>
+									<div class="form-field">
+									<div class="fl">
+									<span>{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Password|default:""}}</span>
+									<input type="Password" class="psgr-textfield passPassword" data-dojo-attach-point="passPassword" data-dojo-type="tui.widget.form.ValidationTextBox" data-dojo-props="regExp:'^([a-zA-Z0-9\.\@\$\!\#\&\*\s]+$)', required:true, missingMessage:'', invalidMessage:'Please enter valid password.'">
+									</div>
+										<div class="fr loginSubmit">
+											<button class="button jumbo fl" data-dojo-attach-point="getDetails">{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Get_Details|default:""}}</button>
+											<a data-dojo-attach-point="forgotpwd" class="tm fr">{{jsonData.passengerDetailsStaticContentViewData.passengerContentMap.Forgot_Password_Title|default:""}}</a>
+										</div>
+										<div class="clear"></div>
+									</div>
+									
+								</div>
+								<div class="disNone error-notationlogin" data-dojo-attach-point="enterDetails"> {{jsonData.customerSignInViewData.alert.messageText|default:""|safe}}<!-- Please enter your details--></div>
+								<div class="clear"></div>					
+										</div><!-- promptMessage:'email please' -->
+		</div>
+</div>
+</div>
+</div>
+</div>

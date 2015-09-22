@@ -1,0 +1,556 @@
+<div class="transfer-section-conatiner">
+  <div class="try1">
+    <div class="distance-desc fl">
+      <!-- {% for outboundVar in jsonData.packageViewData.flightViewData.outboundSectors %}
+        <span
+            class="airport-name">
+          {{outboundVar.arrivalAirport.name}} airport.
+          </span>
+      {% endfor %} -->
+    </div>
+    {% if displayNoTransferSection%}
+    <div class="checkbox-cont fr">
+     <div class="fr">
+       <input type="checkbox" class="no-transfer" value="" name="dontneedtransfer" id="NOTF"
+       {% if jsonData.extraFacilityViewDataContainer.transferOptions.noTransferOpted %}
+      checked="checked"
+      {% endif %}
+      >
+       <label for="NOTF"><span></span></label>
+
+      <span> <span class="return_coach">{{jsonData.extraOptionsStaticContentViewData.extraContentMap.Extra_DontNeedTransfers_Text|default:" "}}</span>
+        </span>
+         <span class="loaded " lang="en"
+                        data-dojo-props="floatWhere:'position-top-center',
+
+text:'{{jsonData.extraOptionsStaticContentViewData.extraContentMap.DontNeedTransfers_ToolTip|default:\' \'}}'"
+                        data-dojo-type="tui.widget.popup.Tooltips"></span>
+       </div>
+
+    </div>
+    {% endif %}
+  </div>
+
+  {% ifequal jsonData.extraFacilityViewDataContainer.transferOptions.extraFacilityViewData.length "3" %}
+    {% for transferOption in jsonData.extraFacilityViewDataContainer.transferOptions.extraFacilityViewData %}
+      <div class="bookflow {{jsonData.extraFacilityViewDataContainer.transferOptions.extraFacilityViewData.length}}">
+        <div id="{{transferOption.code}}"
+             class="item blocks {% if transferOption.selected %} active {% endif %} {% if transferOption.free %} default {% else %} {% if transferOption.included %} default {% endif %}{% endif %} {% ifequal transferOption.code 'HMZ' %}{% else %}{% ifequal transferOption.code 'TXX' %}{% else %}basic{% endifequal %}{% endifequal %} ">
+          <span
+              class="{% ifequal transferOption.code 'TXX' %}coachImage {% else %} {% ifequal transferOption.code 'HMZ' %}taxiImage {% else %} taxiImage {% endifequal %} {% endifequal %}"></span>
+
+          <div class="section-header3">
+            <h3><span class="return_coach" >
+                   {% ifequal transferOption.code "TXX" %}
+                 		{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.coach_transfer_displayName|default:" "}}
+
+           		 		{% else %}
+	                		{% ifequal transferOption.code "HMZ" %}
+    	              			{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.taxi_transfer_displayName|default:" "}}
+
+           					{% else %}
+
+	                  {% ifequal transferOption.code "ECW" %}
+           				 Care hire
+           			  {% else %}
+
+     	 		 	  {% ifequal transferOption.code "ACR" %}
+                  		  {{transferOption.description}}
+                	   {% else %}
+           				 {{transferOption.description}}
+                		{% endifequal %}
+
+                {% endifequal %}
+
+{% endifequal %}
+
+                	{% endifequal %}
+               	 	{% ifequal transferOption.code "NOTRANSFER" %}
+                  	I don't need transfers
+                	{% endifequal %}	</span>
+            </h3>
+          </div>
+
+          <div class="parent h163">
+            <div class="padding54">
+              {% ifnotequal transferOption.code "NOTRANSFER" %}
+              <div class="time-img-desc">
+                <div class="time-desc ">
+                  <!-- <div class="tip-desc"> Transfer time (approx)</div>
+                  <span class="loaded " lang="en"
+                        data-dojo-props="floatWhere:'position-top-center',text:'{{jsonData.extraOptionsStaticContentViewData.extraContentMap.TransferTime_ToolTip|default:\' \'}}'"
+                        data-dojo-type="tui.widget.popup.Tooltips">
+				</span> -->
+                </div>
+              </div>
+                {% endifnotequal %}
+
+              <div class="transfer-desc">
+
+
+                {% ifequal transferOption.code "TXX" %}
+                	{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.coach_transfer_Intro|default:" "}}
+                	<!-- Display additional description only if both inbound & outbound are thrid party or just outbound is thrid party -->
+                	{% ifequal thirdPartyFlightSelectionFlag true %}
+                		<br>{{thirdPartyCoachTransferInfo.coachTransferDesc|default:" "|safe}}
+                	{% else %}
+		          		{% ifnotequal getoutBoundCarrierCode "TOM" %}
+							<br>{{thirdPartyCoachTransferInfo.mixedCoachTransferDesc|default:" "|safe}}
+						{% endifnotequal %}
+					{% endifequal %}
+
+				{% else %}
+
+	                {% ifequal transferOption.code "HMZ" %}
+    		           {{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.taxi_transfer_StrapLine|default:" "}}
+				<!--                 Maximum of  {{transferOption.maxAllowedPassengers}} passengers per taxi. -->
+					{% else %}
+		           		{% ifequal transferOption.code "ECW" %}
+             		 		Why not discover the Sunshine State on four wheels? Basic car hire is included with all our Florida holidays
+               	 			or you've get the chance to upgrade your car below.
+		            	{% else %}
+
+          					{% ifequal transferOption.code "ACR" %}
+              		 		Why not discover the Sunshine State on four wheels? Basic car hire is included with all our Florida holidays
+               	 			or you've get the chance to upgrade your car below.
+	                		{% else %}
+
+				              Why not discover the Sunshine State on four wheels? Basic car hire is included with all our Florida holidays
+				             or you've get the chance to upgrade your car below.
+
+              				{% endifequal %}
+              			{% endifequal %}
+	      			{% endifequal %}
+	            {% endifequal %}
+              </div>
+            </div>
+            <div class=" button-cont" >
+            <div class="price-desc fr">
+
+              {% if transferOption.included %}
+
+              	{% ifequal transferOption.code "HMZ" %}
+				Included
+              	{% else %}
+              		{% ifequal transferOption.code "TXX" %}
+						Included
+              		{% else %}
+						Included (Basic car hire)
+              		{% endifequal %}
+
+              	{% endifequal %}
+
+              {% else %}
+ {% ifequal transferOption.quantity "1" %}
+
+ {% else %}
+ 		{% if transferOption.selected %}
+ 		{% else %}
+                          <span class="price-taxi-person">
+                          {% ifequal transferOption.code "HMZ" %}
+                            {{transferOption.currencyAppendedPerTaxiPrice}} per taxi
+                          {% endifequal %}
+                          {% ifequal transferOption.code "TXX" %}
+                          {{transferOption.currencyAppendedPerPersonPrice}} per person
+                          {% endifequal %}
+
+                        </span>
+                        {% endif %}
+{% endifequal %}
+              {% endif %}
+
+
+            </div>
+            	{% if transferOption.selected %}
+
+            	<button  class="button jumbo fr">
+                      <span class="button-selected"></span>
+
+              </button>
+
+            	 {% else %}
+
+            	  <button  class="button jumbo fr transfer-select">
+                      <span class="separator-right {% if transferOption.free %} transfer-free {% endif %}">
+
+                     {% if transferOption.free %}
+                          {% if transferOption.selected %}
+                     		 Included
+                      	  {% else %}
+                         	{{transferOption.currencyAppendedPrice}}
+                      	  {% endif %}
+                      {% else %}
+                      {{transferOption.currencyAppendedPrice}}
+                      {% endif %}
+
+                      </span> <span class="button-selected"></span>
+
+              </button>
+
+            	 {% endif %}
+
+
+
+
+
+
+          </div>
+
+
+        </div>
+    </div>
+    </div>
+
+    {% endfor %}
+    {% endifequal %}
+
+
+{% ifequal jsonData.extraFacilityViewDataContainer.transferOptions.extraFacilityViewData.length "2" %}
+
+
+{% for transferOption in jsonData.extraFacilityViewDataContainer.transferOptions.extraFacilityViewData %}
+<div class="bookflow">
+  <div id="{{transferOption.code}}"
+       class="item  {% if transferOption.selected %} active {% endif %} {% if transferOption.free %} default {% else %} {% if transferOption.included %} default {% endif %}{% endif %}  ">
+    <div class="section-header ">
+      <h3><span class="return_coach">
+				{% ifequal transferOption.code "TXX" %}
+                 	{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.coach_transfer_displayName|default:" "}}
+           		 {% else %}
+	                {% ifequal transferOption.code "HMZ" %}
+    	              {{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.taxi_transfer_displayName|default:" "}}
+           			{% else %}
+	                  {% ifequal transferOption.code "ECW" %}
+           				 Care hire
+           			  {% else %}
+
+     	 		 	  {% ifequal transferOption.code "ACR" %}
+                  		  {{transferOption.description}}
+                	   {% else %}
+           				 {{transferOption.description}}
+                		{% endifequal %}
+                	{% endifequal %}
+					{% endifequal %}
+                {% endifequal %}
+
+					{% ifequal transferOption.code "NOTRANSFER" %}
+						I don't need transfers
+
+					{% endifequal %}</span>
+      </h3>
+    </div>
+
+    <div class="parent">
+      <span
+          class="{% ifequal transferOption.code 'TXX' %}coachImage {% else %} {% ifequal transferOption.code 'HMZ' %}taxiImage {% else %} taxiImage  {% endifequal %} {% endifequal %}"></span>
+
+      <div class="section-img fl"></div>
+      <div class="padding54">
+        {% ifnotequal transferOption.code "NOTRANSFER" %}
+        <div class="time-img-desc">
+          <div class="time-desc ">
+            <!-- <div class="tip-desc"> Transfer time (approx)</div>
+            <span class="loaded " lang="en"
+                        data-dojo-props="floatWhere:'position-top-center',text:'{{jsonData.extraOptionsStaticContentViewData.extraContentMap.TransferTime_ToolTip|default:\' \'}}'"
+                        data-dojo-type="tui.widget.popup.Tooltips">
+			</span> -->
+          </div>
+        </div>
+       {% endifnotequal %}
+
+        <div class="transfer-desc">
+
+
+                {% ifequal transferOption.code "TXX" %}
+                	{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.coach_transfer_Intro|default:" "}}
+                	<!-- Display additional description only if both inbound & outbound are thrid party or just outbound is thrid party -->
+                	{% ifequal thirdPartyFlightSelectionFlag true %}
+                		<br>{{thirdPartyCoachTransferInfo.coachTransferDesc|default:" "|safe}}
+                	{% else %}
+		          		{% ifnotequal getoutBoundCarrierCode "TOM" %}
+							<br>{{thirdPartyCoachTransferInfo.mixedCoachTransferDesc|default:" "|safe}}
+						{% endifnotequal %}
+					{% endifequal %}
+				{% else %}
+	                {% ifequal transferOption.code "HMZ" %}
+    		           {{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.taxi_transfer_StrapLine|default:" "}}
+				<!--                 Maximum of  {{transferOption.maxAllowedPassengers}} passengers per taxi. -->
+					{% else %}
+		           		{% ifequal transferOption.code "ECW" %}
+             		 		Why not discover the Sunshine State on four wheels? Basic car hire is included with all our Florida holidays
+               	 			or you've get the chance to upgrade your car below.
+		            	{% else %}
+
+          					{% ifequal transferOption.code "ACR" %}
+              		 		Why not discover the Sunshine State on four wheels? Basic car hire is included with all our Florida holidays
+               	 			or you've get the chance to upgrade your car below.
+	                		{% else %}
+				              Why not discover the Sunshine State on four wheels? Basic car hire is included with all our Florida holidays
+				             or you've get the chance to upgrade your car below.
+              				{% endifequal %}
+              			{% endifequal %}
+	      			{% endifequal %}
+	            {% endifequal %}
+
+          {% ifequal transferOption.code "NOTRANSFER" %}
+         	 Just so you know, you won't be able to book a transfer when you arrive at your destination airport.
+          {% endifequal %}
+        </div>
+      </div>
+      <div class=" button-cont" >
+      <div class="price-desc fr">
+
+          {% if transferOption.included %}
+           {% if transferOption.selected %}
+
+          <span class="">Included</span>
+				{% endif %}
+
+
+
+
+          {% else %}
+          					{% ifequal transferOption.quantity "1" %}
+
+								{% else %}
+									{% if transferOption.selected %}
+ 							{% else %}
+										<span class="price-taxi-person">
+										{% ifequal transferOption.code "HMZ" %}
+											{{transferOption.currencyAppendedPerTaxiPrice}} per taxi
+										{% endifequal %}
+										{% ifequal transferOption.code "ECW" %}
+										{{transferOption.currencyAppendedPerPersonPrice}} per person
+										{% endifequal %}
+										{% ifequal transferOption.code "NOTRANSFER" %}
+
+										{% endifequal %}
+										</span>
+										{% endif %}
+							{% endifequal %}
+
+          {% endif %}
+
+
+        </div>
+        {% if transferOption.selected %}
+
+            	<button  class="button jumbo fr">
+                      <span class="button-selected"></span>
+
+              </button>
+
+            	 {% else %}
+
+            	  <button  class="button jumbo fr transfer-select">
+                      <span class="separator-right {% if transferOption.free %} transfer-free {% endif %}">
+
+                          {% if transferOption.free %}
+                      {% if transferOption.selected %}
+                     		 Included
+                      	  {% else %}
+                         	{{transferOption.currencyAppendedPrice}}
+                      	  {% endif %}
+                      {% else %}
+                      {{transferOption.currencyAppendedPrice}}
+                      {% endif %}
+
+                      </span> <span class="button-selected"></span>
+
+              </button>
+
+            	 {% endif %}
+
+
+
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+{% endfor %}
+
+{% endifequal %}
+
+
+{% ifequal jsonData.extraFacilityViewDataContainer.transferOptions.extraFacilityViewData.length "1" %}
+
+
+{% for transferOption in jsonData.extraFacilityViewDataContainer.transferOptions.extraFacilityViewData %}
+<div class="bookflow">
+  <div id="{{transferOption.code}}"
+       class="item taxiTransfer {% if transferOption.selected %} active {% endif %} default">
+    <div class="section-header ">
+      <h3><span class="return_coach">
+					{% ifequal transferOption.code "TXX" %}
+						{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.coach_transfer_displayName|default:" "}}
+
+					{% endifequal %}
+
+					{% ifequal transferOption.code "HMZ" %}
+						{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.taxi_transfer_displayName|default:" "}}
+					{% endifequal %}
+
+					{% ifequal transferOption.code "DEF_HMZ" %}
+						Return taxi transfers
+					{% endifequal %}
+
+					{% ifequal transferOption.code "ECW" %}
+						Care hire
+					{% endifequal %}
+
+					{% ifequal transferOption.code "ACR" %}
+             				{{transferOption.description}}
+       					{% endifequal %}
+					{% ifequal transferOption.code "NOTRANSFER" %}
+						I don't need transfers
+
+					{% endifequal %}</span>
+      </h3>
+    </div>
+
+    <div class="parent" >
+      <span
+          class="{% ifequal transferOption.code 'TXX' %}coachImage {% else %} {% ifequal transferOption.code 'HMZ' %}taxiImage {% else %} taxiImage  {% endifequal %} {% endifequal %}"></span>
+
+      <div class="section-img fl"></div>
+      <div class="padding54">
+        {% ifnotequal transferOption.code "NOTRANSFER" %}
+        <div class="time-img-desc">
+          <div class="time-desc ">
+           <!--  <div class="tip-desc"> Transfer time (approx)</div>
+
+            <span class="loaded " lang="en"
+                        data-dojo-props="floatWhere:'position-top-center', text:'Waiting for the Content'"
+                        data-dojo-type="tui.widget.popup.Tooltips"></span> -->
+          </div>
+        </div>
+        {% endifnotequal %}
+
+        <div class="transfer-desc">
+
+          {% ifequal transferOption.code "TXX" %}
+
+          	{% if  jsonData.packageType "FNC" || jsonData.packageType "CNS" || jsonData.packageType "SNC" %}
+
+				{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.coach_transfer_Key_Value_One_Body|default:" "}}
+
+          		{% else %}
+
+          		{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.coach_transfer_Intro|default:" "}}
+          	<!-- Display additional description only if both inbound & outbound are thrid party or just outbound is thrid party -->
+               	{% ifequal thirdPartyFlightSelectionFlag true %}
+                		<br>{{thirdPartyCoachTransferInfo.coachTransferDesc|default:" "|safe}}
+                	{% else %}
+		          		{% ifnotequal getoutBoundCarrierCode "TOM" %}
+							<br>{{thirdPartyCoachTransferInfo.mixedCoachTransferDesc|default:" "|safe}}
+				{% endifnotequal %}
+			{% endifequal %}
+
+          	{%endif%}
+
+
+
+
+          {% endifequal %}
+
+          {% ifequal transferOption.code "HMZ" %}
+	          {{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.taxi_transfer_StrapLine|default:" "}}
+<!--           Maximum of {{transferOption.maxAllowedPassengers}} passengers per taxi. -->
+          {% endifequal %}
+
+         {% ifequal transferOption.code "DEF_HMZ" %}
+    	     {{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.taxi_transfer_StrapLine|default:" "}}
+<!--           Maximum of {{transferOption.maxAllowedPassengers}} passengers per taxi. -->
+         {% endifequal %}
+
+         {% ifequal transferOption.code "ECW" %}
+          	Why not discover the Sunshine State on four wheels? Basic car hire is included with all our Florida holidays
+          	or you've get the chance to upgrade your car below.
+ 		 {% endifequal %}
+
+      	 {% ifequal transferOption.code "ACR" %}
+ 			Why not discover the Sunshine State on four wheels? Basic car hire is included with all our Florida holidays
+ 			or you've get the chance to upgrade your car below.
+       	 {% endifequal %}
+
+         {% ifequal transferOption.code "NOTRANSFER" %}
+          Just so you know, you won't be able to book a transfer when you arrive at your destination airport.
+         {% endifequal %}
+        </div>
+      </div>
+      <div class=" button-cont">
+         {% if transferOption.selected %}
+<div class="price-desc fr">
+
+          <span class="">Included</span>
+
+
+
+
+        </div>
+            	<button  class="button jumbo fr">
+                      <span class="separator-right"> Included</span>
+						    <span class="button-selected"></span>
+
+              </button>
+
+            	 {% else %}
+
+            	  <button class="button jumbo fr transfer-select">
+          <span class="separator-right"> {{transferOption.currencyAppendedPrice}} </span>
+						    <span class="button-selected"></span>
+
+        </button>
+
+            	 {% endif %}
+      </div>
+
+
+
+
+
+    </div>
+
+
+  </div>
+</div>
+
+{% endfor %}
+
+{% endifequal %}
+
+<div id="checkBox-Overlay" class="checkBoxOverlay">
+
+<div class="iDontNeedTransfer fl ">
+        <p class="fl infoclassP">
+			<span class="fl">
+				<strong class="info">i</strong>
+			</span>
+          <span class="iDNTransferText fl ">Just so you know , you won't be able to book a transfer when you arrive at your destination airport.</span>
+          <span class="iDNCarHireText fl disNone">Just so you know , you will be losing free car hire and it can't be booked at your destination airport</span>
+        </p>
+
+      </div>
+
+      <div class="button-section fl">
+			<div class="fl">
+				<a id="checkBoxCancel" href="javascript:void(0);" class="cancel">CANCEL</a>
+
+			</div>
+			<div class="fr">
+				<button id="checkBoxOk" class="button selected submit">Ok</button>
+			</div>
+		</div>
+
+
+
+</div>
+
+
+
+
+</div>
+

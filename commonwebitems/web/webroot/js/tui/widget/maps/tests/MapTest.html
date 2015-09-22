@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>Popup tests</title>
+
+    <script src="/js/underscore/underscore-min.js"></script>
+    <!-- required: dojo.js -->
+    <script type="text/javascript" src="/js/dojo/dojo.js"></script>
+
+    <!-- functions to help test -->
+    <script type="text/javascript" src="/js/dijit/tests/helpers.js"></script>
+
+    <script type="text/javascript">
+        dojo.require("dojo.DeferredList");
+        dojo.require("dojo.window");
+        dojo.require("dijit.robotx");
+
+
+        dojo.ready(function () {
+            doh.robot.initRobot('Maps.html');
+
+            var metaKey = {ctrl:true};
+
+            doh.register("map tests", [
+                {
+                    name:"should display a dynamic popup",
+                    timeout:6900,
+                    runTest:function () {
+                        var d = new doh.Deferred();
+                        doh.robot.mouseMoveAt(dojo.byId("termsLink"), 500);
+                        doh.robot.mouseClick({left:true}, 500);
+                        doh.robot.sequence(d.getTestCallback(function () {
+                            var termsAndConditions = dojo.byId("termsAndConditions");
+                            try {
+                                doh.is(true, dojo.style(termsAndConditions, "display") == 'block');
+                            } catch (e) {
+                                d.errback(e);
+                            }
+                        }), 900);
+                        return d;
+                    }
+                }
+            ]);
+
+            doh.run();
+        });
+
+
+    </script>
+</head>
+</html>

@@ -1,0 +1,5 @@
+{% for control in controls %}
+<a class="{{ control.controlClass }} carousel-control js-carousel-control{% if forloop.first %} disable{% endif %}" href="javascript:void(0);">
+    <span class='text'>{{ control.controlText }}</span>
+    <span class='arrow'></span>
+</a>{% endfor %}

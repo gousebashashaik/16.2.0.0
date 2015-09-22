@@ -1,0 +1,329 @@
+<div>
+{% if not jsonData.packageViewData.multicomThirdPartyFlight %}
+<div class="luggage-container">
+<a name="BaggageExtras"></a>
+ <h2 class="luggage-header fs28px underline">{{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.larger_bag_info_one_displayName|default:" "|safe}}</h2>
+	<div class="hand-lagguage" >
+	  <h2>{{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.larger_bag_info_two_displayName|default:" "|safe}}</h2>
+		<div class="oneTime">
+		<div class="perPassenger">
+		<p> {{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.larger_bag_info_two_extra_detail_2|default:" "|safe}}
+		</p>
+		<!-- 	One item per passenger	{% ifnotequal jsonData.packageViewData.paxViewData.noOfInfants 0 %} (except infants) {% endifnotequal %}{{jsonData.flightOptionsStaticContentViewData.flightContentMap.Flight_LuggageAllowance_Text8|default:" "}}-->
+		<div class="handbaggage">
+		{% if jsonData.baggageSectionDisplayed == "true"%}
+				<div class="fl hand-luggageIcon5">(Per passenger)</div>
+			{% else %}
+				<div class="fl hand-luggageIcon7">(Per passenger)</div>
+			{% endif %}
+			<ul>
+			 {% for description in jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.larger_bag_info_two_usp %}
+	      		 <li>{{description|default:" "}}</li>
+	 				{% endfor %}
+			</ul>
+
+<!-- 			<ul>					 -->
+<!-- 			   <li>Each Passenger can take 1 item of hand Luggage</li> -->
+<!-- 			   <li>This item can't be bigger than 50x40x20cm, including wheels and handles</li> -->
+<!-- 			   <li>It can weigh up to 5kg</li>			   			   -->
+<!-- 			</ul> -->
+			<div ><a href="{{restrictionString|default:\' \'}}" target="_blank">Restrictions apply</a></div>
+		<div class="clear"></div>
+		</div>
+
+
+
+
+				<div class="clear"></div>
+		</div>
+		</div>
+	<div class="clear"></div>
+  <h2 style="display:block">Checked-in Luggage</h2>
+	{% if jsonData.baggageSectionDisplayed == "true" %}
+	<p class="luggage-text">
+		{{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.larger_bag_info_extra_detail_1|default:" "|safe}}
+		<br />{{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.larger_bag_info_extra_detail_2|default:" "|safe}}
+
+		</p>
+
+		{% else %}
+			{% endif %}
+		<div class="luggage">
+	      		<div class="luggageIcon"></div>
+	      	{% if jsonData.baggageSectionDisplayed == "true"%}
+					<ul>
+		      		 {% for description in jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.larger_bag_info_one_usp %}
+		      		 <li>{{description|default:" "}}</li>
+		 				{% endfor %}
+		           </ul>
+				{% else %}
+					<ul>
+	      		 {% for description in jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.premimum_seats_usp %}
+	      		 <li>{{description|default:" "}}</li>
+	 				{% endfor %}
+	           </ul>
+			{% endif %}
+
+
+				<div class="clear"></div>
+		</div>
+	<div class="tooltip position-top-center disNone">
+		<p>Waiting for the content from UX team.</p>
+		<span class="arrow"></span>
+	</div>
+	<div id="luggage-allowance" class="luggage-allowance">
+		<div class="relative">
+			<div class="luggage-type">
+				<div class="checkin" >
+					<div class="width32per">
+						<h5>{{jsonData.flightOptionsStaticContentViewData.flightContentMap.Flight_LuggageAllowance_Text6|default:" "}}</h5>
+	                        <span class="weight-kg fl">All weights are in kg</span>
+	                        <!--<span lang="en" data-dojo-type="tui.widget.popup.Tooltips"  data-dojo-props="floatWhere:'position-top-center', text: 'Waiting for the Content'" class="">
+				 				<span class="more-info fr "></span></span> ram -->
+					</div>
+					{% if jsonData.baggageSectionDisplayed == "true"%}
+						{% for extraFacility in jsonData.extraFacilityViewDataContainer.baggageOptions.extraFacilityViewData %}
+						 	{% ifnotequal jsonData.packageViewData.paxViewData.noOfInfants 0 %}
+								{% if forloop.first %}
+									<div class="luggage-allowance-limit tenkg">
+									<div class="baggage-Headings texttenkg">Infants</div>
+									</div>
+								{% endif %}
+							{% endifnotequal %}
+							{% ifnotequal extraFacility.weightCode 0 %}
+							<div class=" luggage-allowance-limit img{{extraFacility.weightCode}} {% ifequal jsonData.extraFacilityViewDataContainer.baggageOptions.extraFacilityViewData.length 2 %} {% ifequal extraFacility.weightCode 15 %} default {% endifequal %} {% endifequal %} {% ifnotequal jsonData.packageViewData.paxViewData.noOfInfants 0 %} {% ifequal jsonData.extraFacilityViewDataContainer.baggageOptions.extraFacilityViewData.length 1 %} default {% endifequal %} {% endifnotequal %} {% ifnotequal jsonData.packageViewData.paxViewData.noOfInfants 0 %} {% ifequal extraFacility.weightCode 15 %} default {% endifequal %} {% endifnotequal %}">
+							<div class=" baggage-Headings text{{extraFacility.weightCode}}">
+							</div>
+							</div>
+							{% endifnotequal %}
+						{% endfor %}
+						{% else %}
+							{% ifnotequal jsonData.packageViewData.paxViewData.noOfInfants 0 %}
+								<div class="luggage-allowance-limit tenkg"><div class="baggage-Headings texttenkg">Infants</div>
+								</div>
+							{% endifnotequal %}
+							 <div class="luggage-allowance-limit img23 ">
+							 <div class="baggage-Headings twenty-threekg">Premium</div>
+							 </div>
+						    {% endif %}
+					<div class="clear"></div>
+				</div>
+			<div class="clear"></div>
+			<div class="shadow-border posAbsolute">
+
+				{% for passenger in jsonData.packageViewData.passenger %}
+					<div class="details-people-luggage {% if forloop.last %}  {% else %} hide-border {% endif %}" >
+						<div id="{{passenger.identifier}}" class="person-type fl">
+							{% ifequal passenger.type "ADULT"%}
+					                     {{passenger.passengerLabel}}
+							{% endifequal %}
+					        {% ifequal passenger.type "SENIOR"%}
+					                    {{passenger.passengerLabel}}
+					        {% endifequal %}
+					        {% ifequal passenger.type "CHILD"%}
+					                    {{passenger.passengerLabel}} <span>(age {{passenger.age}})</span>
+					        {% endifequal %}
+					        {% ifequal passenger.type "INFANT"%}
+					                     {{passenger.passengerLabel}} <span>(age 0-2)</span>
+					        {% endifequal %}
+		   				</div>
+
+				        {% ifnotequal jsonData.packageViewData.paxViewData.noOfInfants 0 %}
+							<div class="luggage-select fl" id="limit[{{passenger.identifier}}]">
+		                            <div class="luggage-select-checkbox">
+		                                <div class="luggage-limit">
+		                                    <input data-dojo-attach-point="radioButton" type="radio"
+		                                        id="chkbox[{{passenger.identifier}}]"
+		                                        name="passenger[{{passenger.identifier}}]" class="radioBtn {% ifequal bag.price 0 %}{% ifnotequal passenger.type 'INFANT' %}{% if passenger.selectedBaggageOption.included == 'true' %}{% else %}dispnone{% endif%}{% else %}dispnone{% endifnotequal %}{% else %}{% ifequal passenger.type 'INFANT' %}dispnone{% else %}{% endifequal %}{% endifequal %}"
+		                                        value="doubleAmt"
+												{% ifequal passenger.type "INFANT" %}
+												    checked
+		                                	        disabled
+													{% else %}
+														{% ifequal bag.price 0 %}
+
+															disabled
+
+														{% endifequal %}
+
+
+												{% endifequal %}  />
+		                                        <label  for="chkbox[{{passenger.identifier}}]" class="radioBtn">
+		                                         <span for="chkbox[{{passenger.identifier}}]"  class="radioBtn{% ifequal bag.price 0 %}{% ifnotequal passenger.type 'INFANT' %}{% if passenger.selectedBaggageOption.included == 'true' %}{% if jsonData.baggageSectionDisplayed == 'true' %}{% else %}dispnone{% endif %}{% else %}dispnone{% endif%}dispnone{% endifnotequal %}{% else %}{% ifequal passenger.type 'INFANT' %}dispnone{% endifequal %}{% endifequal %}"></span>
+													{% ifequal passenger.type "INFANT" %}
+		                            			      <p>Included</p>
+													  {% else %}
+															<p style="color:#ccc;padding-left:21px">Unavailable </p>
+
+													{% endifequal %}
+		                                       </label>
+		                                </div>
+		                            </div>
+		                        </div>
+						{% endifnotequal %}
+
+						{% if jsonData.baggageSectionDisplayed == "true" %}
+							{% for bag in jsonData.extraFacilityViewDataContainer.baggageOptions.extraFacilityViewData %}
+							{% ifnotequal bag.weightCode 0 %}
+								<div class="luggage-select fl "	id="limit[{{passenger.identifier}}{{forloop.counter}}]">
+									<div class="luggage-select-checkbox">
+										<div class="luggage-limit">
+											<input type="radio" data-dojo-attach-point="radioButton"
+
+												id="chkbox[{{passenger.identifier}}{{forloop.counter}}]"
+												name="{{passenger.identifier}}" class="radioBtn {% ifequal bag.price 0 %}{% ifnotequal passenger.type 'INFANT' %}{% if passenger.selectedBaggageOption.included == 'true' %}{% else %}dispnone{% endif%}{% else %}{% endifnotequal %}{% else %}{% ifequal passenger.type 'INFANT' %}dispnone{% else %}{% endifequal %}  {% endifequal %}  {% ifnotequal passenger.type 'INFANT' %}{% ifequal bag.code passenger.selectedBaggageOption.code %}checked{% endifequal %}{% else %}{% endifnotequal %}"
+												value="{{bag.code}}"
+												{% ifnotequal passenger.type "INFANT" %}
+													{% ifequal bag.code passenger.selectedBaggageOption.code %}
+														checked
+
+														{% ifequal jsonData.extraFacilityViewDataContainer.baggageOptions.extraFacilityViewData.length 1 %}
+
+															{% ifequal bag.price 0 %}
+															disabled
+														{% endifequal %}
+
+
+
+														{% endifequal %}
+
+													{% endifequal %}
+												{% else %}
+													disabled
+												{% endifnotequal %} />
+												<label for="chkbox[{{passenger.identifier}}{{forloop.counter}}]" class="radioBtn ">
+												<span for="chkbox[{{passenger.identifier}}{{forloop.counter}}]"	class="radioBtn{% ifequal bag.price 0 %}{% ifnotequal passenger.type 'INFANT' %}{% if passenger.selectedBaggageOption.included == 'true' %}{% else %}dispnone{% endif%}{% else %}dispnone{% endifnotequal %}{% else %}{% ifequal passenger.type 'INFANT' %}dispnone{% else %}{% endifequal %}{% endifequal %} "></span>
+														{% ifequal bag.price 0 %}
+
+															{% ifnotequal passenger.type "INFANT" %}
+																{% if passenger.selectedBaggageOption.included == "true" %}
+																	<p>Included</p>
+
+
+
+																	{% else %}
+
+																	<p style="color:#ccc;padding-left:21px">Unavailable</p>
+
+																{% endif%}
+
+															{% else %}
+																{% ifnotequal passenger.type "INFANT" %}
+														        <p class= "bag-Price">{{bag.currencyAppendedPrice}}</p>
+														        	{% else %}
+
+																	<p style="color:#ccc;padding-left:21px">Unavailable</p>
+
+																 {% endifnotequal %}
+														    {% endifnotequal %}
+													{% else %}
+														{% ifequal passenger.type "INFANT" %}
+															<p style="color:#ccc;padding-left:21px">Unavailable</p>
+															{% else %}
+																 <p class= "bag-Price">{{bag.currencyAppendedPrice}}</p>
+														{% endifequal %}
+													{% endifequal %}
+
+												</label>
+											</div>
+										</div>
+									</div>
+									{% endifnotequal %}
+							{% endfor %}
+							{% else %}
+							<div class="luggage-select fl"
+		                            id="limit[{{passenger.identifier}}{{forloop.counter}}]">
+		                            <div class="luggage-select-checkbox">
+		                                <div class="luggage-limit">
+		                                    <input type="radio" data-dojo-attach-point="radioButton"
+		                                        id="chkbox[{{passenger.identifier}}{{forloop.counter}}]"
+		                                        name="passenger[{{passenger.identifier}}{{forloop.counter}}]" class="radioBtn {% ifequal bag.price 0 %}{% ifequal passenger.type 'INFANT'%} dispnone {% endifequal %}{% endifequal %}"
+		                                        value="doubleAmt"
+
+		                                          {% ifnotequal passenger.type "INFANT" %}
+		                                        checked
+		                                        disabled
+		                                        {% else %}
+												disabled
+												{% endifnotequal %}  />
+		                                        <label
+		                                        for="chkbox[{{passenger.identifier}}{{forloop.counter}}]"
+		                                        class="radioBtn">
+		                                         <span
+		                                        for="chkbox[{{passenger.identifier}}{{forloop.counter}}]"
+		                                        class="radioBtn {% ifequal bag.price 0 %}{% ifequal bag.price 0 %}{% ifequal passenger.type 'INFANT'%} dispnone {% endifequal %}{% endifequal %}{% endifequal %}">
+		                                        </span>
+		                                           {% ifnotequal passenger.type "INFANT" %}
+		                                            Included
+		                                            {% else %}
+		                                            <p style="color:#ccc;padding-left:21px">Unavailable</p>
+													{% endifnotequal %}
+		                                        </label>
+		                                </div>
+		                            </div>
+		                        </div>
+
+							 {% endif %}
+							 <div class="clear"></div>
+						</div>
+					{% endfor %}
+
+					{% ifequal jsonData.packageViewData.paxViewData.noOfInfants 0 %}
+					  {% ifnotequal jsonData.packageViewData.passenger.length 1 %}
+						<div class="details-people-luggage bordernone">
+							<div class="person-type fl" >&nbsp;</div>
+	                  			{% if jsonData.baggageSectionDisplayed == "true" %}
+									 {% for bag in jsonData.extraFacilityViewDataContainer.baggageOptions.extraFacilityViewData %}
+									 	{% ifnotequal bag.weightCode 0 %}
+										{% if bag.totalSelected == "true" %}
+
+							    				<div class="luggage-select fl" data-dojo-attach-point="Added"><button class="button jumbo selected select-seat"  disabled><span>Selected</span></button></div>
+
+										{% else %}
+
+									  		<div class="luggage-select fl"><button  class="button jumbo" id="{{bag.code}}"><span class="withPrice"> SELECT FOR ALL</span></button></div>
+								   		{% endif %}
+										{% endifnotequal %}
+							    	{% endfor %}
+						      {% endif %}
+
+							<div class="clear"></div>
+						</div>
+					  {% endifnotequal %}
+					{% endifequal %}
+				</div>
+ 			</div>
+		</div>
+	</div>
+
+	<div class="hand-lagguage">
+			<div class=" total">
+				Total check-in allowance <strong>{{jsonData.extraFacilityViewDataContainer.baggageOptions.totalSelectedWeight}}kg</strong><br>
+				<span>{{jsonData.flightOptionsStaticContentViewData.flightContentMap.Flight_LuggageAllowance_Text7|default:" "}}</span>
+			</div>
+			<div class="clear"></div>
+	</div>
+</div><div class="dashed-border mb20px mt20px"></div>
+{% else %}
+ <h2 class="luggage-threepf-header underline">{{jsonData.flightOptionsStaticContentViewData.flightContentMap.Flight_LuggageAllowance_CompHeader}}</h2>
+<div id="luggage-allowance" class="luggage-allowance-threepf">
+	<h4 class="luggage-threepf-text">{{jsonData.flightOptionsStaticContentViewData.flightContentMap.Flight_LuggageAllowance_Text3}}</h4>
+	<div class="luggage-threepf">
+      		<div class="luggageIcon"></div>
+      			{{thirdPartyLuggageContent|default:" "|safe}}
+           <div class="preBook">
+					<h3>20kg</h3>
+					<p>included per person</p>
+
+			</div>
+			<div class="clear"></div>
+	</div>
+	<h4 class="luggage-threepf-text">{{jsonData.flightOptionsStaticContentViewData.flightContentMap.Flight_LuggageAllowance_Text5}}</h4>
+	<div class="hand-luggage">
+      		<div class="luggageIcon"></div>
+      		{{thirdPartyHandLuggage|default:" "|safe}}
+			<div class="clear"></div>
+	</div>
+</div>
+{% endif %}
+</div>

@@ -1,0 +1,14 @@
+<h3>Return flights from {{departureAirport}}</h3>
+<ul>
+    <li class="itinerary departure uc"><span class="itinerary-dates">{{departure.departureDate}}</span> <span class="itinerary-departure-time">{{departure.startTime}}</span> <span class="itinerary-arrival-time">- {{departure.endTime}}</span> {% if departure.overlap %} <span data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props = "text:'Your flight arrives the next day'">(+1)</span>{% endif %} </li>
+    <li class="itinerary arrival uc"><span class="itinerary-dates">{{arrival.departureDate}}</span> <span class="itinerary-departure-time">{{arrival.startTime}}</span> <span class="itinerary-arrival-time">- {{arrival.endTime}}</span> {% if arrival.overlap %} <span data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props = "text:'Your flight arrives the next day'">(+1)</span>{% endif %} </li>
+	{% if dreamlinerLogo %}
+		<li class="dreamliner dlinerlogo"><span class="info-block dliner" lang="en" data-dojo-props="tooltipTitle: '{{messages.dreamliner.title}}', list: '{{messages.dreamliner.features|safe}}', listClass:'bullets', width: 'jumbo'" data-dojo-type="tui.searchResults.view.Tooltips">787 DREAMLINER <span class="question">?</span></span></li>
+	{% endif %}
+	</ul>
+
+{% if showAltFlightLink %}
+<div class="change-flights">
+	<a lang="en" id="viewall" class="button search-alt ensLinkTrack loaded" href="javascript:void(0);">View alternative Flights </a>
+</div>
+{% endif %}

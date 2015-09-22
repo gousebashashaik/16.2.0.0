@@ -1,0 +1,78 @@
+<div class="bookflow">
+<h2 class="fs28px">{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.fam_ins_info_one_displayName|default:" "}}</h2>
+<div class="insurance-logo">
+<span></span>
+<div class="incDescription">
+<p class="companyName">In partnership with AXA</p>
+<p class="companyDec">{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Text2}}</p>
+</div>
+<div class="clear"></div>
+</div>
+<p>{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.fam_ins_info_one_Intro|default:" "}}</p>
+
+      <div class="family-coverage">
+          <h3>Single trip family travel insurance</h3>
+          <h4>{{currency}}{{FrmPrice|default:" "}}*</h4>
+          <div class="clear"></div>
+          <div class="taxInclusion">{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Text37|safe|default:" "}}</div>
+          <div class="clear"></div>
+      </div>
+       <div class="clear"></div>
+        {% if currAppPrice %}
+       <div  class="dashed-border mt10px mb10px"></div>
+      <h4> {{excessWaiverTitle|default:" "}} </h4>
+      <p> {{excessWaiverBody|default:" "}}
+      <label name="passengerName"></label>
+      </p>
+
+      <div class="family-coverage">
+          <input type="checkbox" data-dojo-attach-point="familyCheckboxid" id="familyCheckid"  {% if ewflag %}checked{% endif %}>
+          <label name="passengerName" for="familyCheckid"><span ></span>Add excess waiver
+         <!--  <span
+          data-dojo-props="floatWhere:'position-top-center', text:'{{insStaticTooltipData|default:\' \'}}'"
+          data-dojo-type="tui.widget.popup.Tooltips"
+          class="questionMarkgrey loaded"></span> -->
+          </label>
+          <h4>{{currAppPrice}}</h4>
+      </div>
+      {% else %}
+
+      <div data-dojo-attach-point="familyCheckboxid" class="disNone"></div>
+{% endif %}
+      <div class="clear"></div>
+        <div id="eligibility" class="familyCover">
+        	<p class="heading">Eligibility</p>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Eligibility|safe|default:" "}}
+        </div>
+        <div id="healthAndDeclaration" class="familyCover">
+        	<p class="heading">Health Declaration</p>
+        	<ul><li>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Health_Declaration1|safe|default:" "}}</li></ul>
+        	{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Health_Declaration2|safe|default:" "}}
+        	<ul class="note"><li>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Health_Declaration3|safe|default:" "}}</li></ul>
+        </div>
+      <div class="clear"></div>
+      <div  class="dashed-border mt10px mb10px"></div>
+      <h4>{{jsonData.extraOptionsStaticContentViewData.genericContentViewData.genericContentMap.Generic_Terms_Conditions|default:" "}}</h4>
+      <div class="prebook-feedback-section">
+        <div class="prebook-confirmation">
+        <p class="tc-point">{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_terms_and_conditions1|default:" "}}</p>
+
+            <p class="tc-point">{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_terms_and_conditions2|default:" "}}</p>
+
+            <p class="tc-point">{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_terms_and_conditions3|default:" "}}</p>
+
+            <p class="tc-point">{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_terms_and_conditions4|safe|default:" "}}</p>
+          <input type="checkbox" data-dojo-attach-point="familyconfirmation" id="familyconfirmationid"></input>
+          <label name="passengerName" for="familyconfirmationid">
+            <span></span>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Confirm_Agree|safe|default:" "}}</label>
+        </div>
+        <div id="impInfoCheckbox_Error22" class="error-notation-insurance disNone"></div>
+      </div>
+<div class="clear"></div>
+  <div class="dashed-border mt20px mb10px"></div>
+  <div class="totalcost">Total cost <span class="pound">{{currency}} </span><span class="rate" data-dojo-attach-point="totalValue">{{FrmPrice|default:" "}}</span>
+  </div>
+  <div class="clear"></div>
+   <div class="famAddBtn"><button class="button-brand button selected jumbo fr transfer-select loaded fr" data-dojo-attach-point="familygQAdd">ADD</button></div>
+
+
+</div>

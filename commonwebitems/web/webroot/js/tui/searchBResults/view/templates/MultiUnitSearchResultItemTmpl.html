@@ -1,0 +1,326 @@
+{% for holiday in holidays %}
+
+<li class="search-result-item" data-package-id="{{holiday.packageId}}" data-package-sort="{{holiday.uiPos}}">
+    <div class="product{% if holiday.accommodation.differentiatedProduct %} special {{holiday.accommodation.differentiatedCode|lower}}{% endif %}{% if holiday.nonCoreProduct.multipleStay %} multi-center special{% endif %}">
+        <div class="product-viewport">
+            <div class="product-content">
+                <div class="image-container{% if holiday.nonCoreProduct.multipleStay %} image-container-split{% endif %}">
+                   {% ifnotequal holiday.nonCoreProduct.multipleStay true %}
+                    {% if holiday.accommodation.differentiatedProduct %}
+                        {% ifequal holiday.accommodation.differentiatedCode|lower 'smr' %}
+                         <span class="diff-label cou{% ifequal siteName 'thomson' %}-sensimar{% endifequal %}" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{holiday.accommodation.featureCodesAndValues.strapline[0]}}'"></span>
+                        {% else %}
+                         <span class="diff-label {{holiday.accommodation.differentiatedCodeModified|lower}}" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{holiday.accommodation.featureCodesAndValues.strapline[0]}}'"></span>
+                        {% endifequal %}
+                        
+                    {% endif %}
+                     {% endifnotequal %}
+                    {% ifnotequal holiday.nonCoreProduct.multipleStay true %}
+                    <a class="url ensLinkTrack" data-componentId="{{holiday.componentId}}" href="{{holiday.accommodation.url}}&finPos={{holiday.finPos}}" analytics-id="{{tag}}" analytics-instance="{{number}}" analytics-text="{{analyticsText.url}}">
+                        <img src="{{holiday.accommodation.imageUrl}}" alt="{{holiday.accommodation.name|safe}}">
+                    </a>
+                    {% endifnotequal %}
+                    {% ifequal holiday.nonCoreProduct.multipleStay true %}
+                    <a class="url ensLinkTrack" data-componentId="{{holiday.componentId}}" href="{{holiday.accommodation.url}}&finPos={{holiday.finPos}}" analytics-id="{{tag}}" analytics-instance="{{number}}" analytics-text="{{analyticsText.url}}">
+                        {% for img in holiday.accommodation.multiStayImages %}
+                        <div class="img-split{% if forloop.first %} img-split-left{% endif %}">
+                            <img src="{{img}}" alt="{{holiday.accommodation.name|safe}}">
+                        </div>
+                        {% endfor %}
+                    </a>
+                    <span class="product-flag">Multi Center</span>
+                    {% endifequal %}
+                    
+                           <div class="popup-icons">
+                         
+                          
+                                    <div class="center">
+                                          <div data-accomodation="{{holiday.accommodation.name|safe}}" data-product-id="{{holiday.accommodation.code}}"  class="js-img-data-req photo icon"><span>Gallery</span></div> 
+                                          {% if holiday.accommodation.videoPresent %}
+                                          <div data-product-id="{{holiday.accommodation.code}}" data-accomodation="{{holiday.accommodation.name|safe}}" class="js-img-data-req video icon" ><span>Video</span></div>
+                                          {% endif %}
+                                          
+                                          
+                                          {%ifequal holiday.brandType "First Choice" %} 
+                                          
+                                          <div style="height:28px;" class="js-img-data-req photoFC icon" data-product-id="{{holiday.accommodation.code}}" data-accomodation="{{holiday.accommodation.name|safe}}" ></div> 
+                                          {%endifequal%}
+                                          
+                                    </div>
+                              </div>
+                </div>
+                <div class="hide gallery-product-details">
+                
+                
+                                          {%ifequal holiday.brandType "First Choice" %} 
+                
+                    <h4 class="product-name"><a style="color:#119CA6;" class="url ensLinkTrack" data-componentId="{{holiday.componentId}}" href="{{holiday.accommodation.url}}&finPos={{holiday.finPos}}" analytics-id="{{tag}}" analytics-instance="{{number}}" analytics-text="{{analyticsText.url}}">{{holiday.accommodation.name|safe}}</a></h4>
+                    {% if holiday.accommodation.ratings.officialRating %}
+                    <p class="ratingFC rating-inline rating-md t{{holiday.accommodation.ratings.officialRating|lower|cut:' '}}{% if holiday.accommodation.differentiatedProduct %} {{holiday.accommodation.differentiatedCode|lower}}{% endif %}"><!-- Rating: {{holiday.accommodation.ratings.officialRating}} --></p>
+                    {% else %}
+                    <p class="rating rating-inline rating-md rating-spacer"></p>
+                    {% endif %}
+                    {%endifequal%}
+                    
+                    {%ifequal holiday.brandType false %} 
+                
+                    <h4 class="product-name"><a class="url ensLinkTrack" data-componentId="{{holiday.componentId}}" href="{{holiday.accommodation.url}}&finPos={{holiday.finPos}}" analytics-id="{{tag}}" analytics-instance="{{number}}" analytics-text="{{analyticsText.url}}">{{holiday.accommodation.name|safe}}</a></h4>
+                    {% if holiday.accommodation.ratings.officialRating %}
+                    <p class="rating rating-inline rating-md t{{holiday.accommodation.ratings.officialRating|lower|cut:' '}}{% if holiday.accommodation.differentiatedProduct %} {{holiday.accommodation.differentiatedCode|lower}}{% endif %}"><!-- Rating: {{holiday.accommodation.ratings.officialRating}} --></p>
+                    {% else %}
+                    <p class="rating rating-inline rating-md rating-spacer"></p>
+                    {% endif %}
+                    {%endifequal%}
+                    
+                                          
+                    
+                    
+                    <!-- {% if holiday.brandType %}<span class="cross-sell-identifier">{{holiday.brandType}}</span>{% endif %} -->
+                    <span class="shortlist-indicator"><span class="icon"><i class="icon-star"></i></span> Saved</span>
+                    {% if holiday.accommodation.locationMap %}
+                    <p class="where">in {% for loc in holiday.accommodation.locationMap %}{{loc|safe}}{% if not forloop.last %},&nbsp;{% endif %}{% endfor %} </p>
+                    {% endif %}
+                    <div class="popup-icons">
+                                    <div class="center">
+                                          <div data-product-id="{{holiday.accommodation.code}}" data-accomodation="{{holiday.accommodation.name|safe}}" class="js-img-data-req photo icon"></div> 
+                                          {% if holiday.accommodation.videoPresent %}
+                                          <div data-product-id="{{holiday.accommodation.code}}" data-accomodation="{{holiday.accommodation.name|safe}}" class="js-img-data-req video icon"></div>
+                                          {% endif %}
+                                           
+                     {%ifequal holiday.brandType "First Choice" %}  
+                     <div style="height:27px;margin-right:221px;margin-top:-25px;" class="js-img-data-req photoFC icon" data-product-id="{{holiday.accommodation.code}}" data-accomodation="{{holiday.accommodation.name|safe}}" ></div> 
+                                        {%endifequal%}
+                                        
+                                    </div>
+                              </div>
+                              <div class="clear"></div>
+                    <div class="gallery-info-wrap cf">
+                        <div class="gallery-info-section first border-right fl">
+                            <p class="price">
+                                <span class="currency">&pound;</span>
+                                <span class="price-value pp-price">{{holiday.price.perPerson|floatformat:"0"}}</span>
+                                <span class="price-info pp-price product-info" lang="en">Per Person</span>
+                                <span class="price-value total-price">{{holiday.price.totalParty|floatformat:"0"}}</span>
+                                <span class="price-info total-price product-info" lang="en">Total Price</span>
+                            </p>
+                        </div>
+                        <div class="gallery-info-section last fl">
+                            <ul class="gallery-info-list">
+                                <li class="gallery-info-list-item">{% for altBoard in holiday.alternateBoard %}{% if altBoard.defaultBoardBasis %}{{altBoard.name}}{% endif %}{% endfor %}</li>
+                                <li class="gallery-info-list-item">
+                                 {% if displayDiscount %}
+                                  {% if holiday.price.discount|floatformat:"0" > 0 %}
+                                    <span class="discount highlight total-discount">Includes &pound;{{holiday.price.discount|floatformat:"0"}} discount</span>
+                                    {% endif %}
+                                    {% if holiday.price.discountPP|floatformat:"0" > 0 %}
+                                    <span class="discount highlight pp-discount">Includes &pound;{{holiday.price.discountPP|floatformat:"0"}}pp discount</span>
+                                    {% endif %}
+                                     {% endif %}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+  
+                     {%ifequal holiday.brandType "First Choice" %}                       
+                <div class="details-wrap">
+                    <div class="accom-details top-margin">
+                    
+                   
+                                         
+                        <h4 class="product-name"><a style="color:#119CA6;" class="url ensLinkTrack" data-componentId="{{holiday.componentId}}" href="{{holiday.accommodation.url}}&finPos={{holiday.finPos}}" analytics-id="{{tag}}" analytics-instance="{{number}}" analytics-text="{{analyticsText.url}}">{{holiday.accommodation.name|safe}}</a></h4>
+                        {% if holiday.accommodation.ratings.officialRating %}
+                        <p class="ratingFC rating-inline rating-md t{{holiday.accommodation.ratings.officialRating|lower|cut:' '}}{% if holiday.accommodation.differentiatedProduct %} {{holiday.accommodation.differentiatedCode|lower}}{% endif %}"><!-- Rating: {{holiday.accommodation.ratings.officialRating}} --></p>
+                        {% endif %}
+                       <!--  {% if holiday.brandType %}<span class="cross-sell-identifier">{{holiday.brandType}}</span>{% endif %} -->
+                        {% if holiday.accommodation.locationMap %}
+                        <p class="where">in {% for loc in holiday.accommodation.locationMap %}{{loc|safe}}{% if not forloop.last %},&nbsp;{% endif %}{% endfor %} </p>
+                        {% endif %}
+                            <div class="popup-icons" >
+                                                <div class="center">
+                                                      <div data-product-id="{{holiday.accommodation.code}}" data-accomodation="{{holiday.accommodation.name|safe}}" class="js-img-data-req photo icon" ></div> 
+                                                      {% if holiday.accommodation.videoPresent %}
+                                                      <div data-product-id="{{holiday.accommodation.code}}" data-accomodation="{{holiday.accommodation.name|safe}}" class="js-img-data-req video icon"></div>
+                                                      {% endif %}
+                                                      <div style="height:28px;margin-top:-23px" class="js-img-data-req photoFC icon" data-product-id="{{holiday.accommodation.code}}" data-accomodation="{{holiday.accommodation.name|safe}}" ></div> 
+                                                </div>
+                                          </div>
+                                          <div class="clear"></div>
+                        <div class="main-details">
+                            {% if holiday.accommodation.featureCodesAndValues.usps %}
+                            <ul class="attractions square">
+                                {% for usp in holiday.accommodation.featureCodesAndValues.usps %}{% ifnotequal forloop.counter 4 %}{% ifnotequal forloop.counter 5 %}<li style="background: url('http://www.firstchoice.co.uk/holiday/images/icon-bullet-pink.png') no-repeat scroll 8px 6px rgba(0, 0, 0, 0);">{{usp|striptags}}</li>{% endifnotequal %}{% endifnotequal %}{% endfor %}
+                            </ul>
+                            {% endif %}
+                            {% if holiday.accommodation.ratings.tripAdvisorRating %}
+                            <p class="trip-advisor {{holiday.accommodation.ratings.tripAdvisorRatingKlass}}">TripAdvisor - <span class="ta-review-count">{{holiday.accommodation.tripAdvisorReviewCount}} reviews</span><span class="ta-rating">{{holiday.accommodation.ratings.tripAdvisorRating|floatformat}}/5</span></p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {%endifequal%}
+                    
+                    {%ifequal holiday.brandType false %}                       
+                <div class="details-wrap">
+                    <div class="accom-details top-margin">
+                    
+                   
+                                         
+                        <h4 class="product-name"><a class="url ensLinkTrack" data-componentId="{{holiday.componentId}}" href="{{holiday.accommodation.url}}&finPos={{holiday.finPos}}" analytics-id="{{tag}}" analytics-instance="{{number}}" analytics-text="{{analyticsText.url}}">{{holiday.accommodation.name|safe}}</a></h4>
+                        {% if holiday.accommodation.ratings.officialRating %}
+                        <p class="rating rating-inline rating-md t{{holiday.accommodation.ratings.officialRating|lower|cut:' '}}{% if holiday.accommodation.differentiatedProduct %} {{holiday.accommodation.differentiatedCode|lower}}{% endif %}"><!-- Rating: {{holiday.accommodation.ratings.officialRating}} --></p>
+                        {% endif %}
+                         {% if holiday.brandType %}<span class="cross-sell-identifier">{{holiday.brandType}}</span>{% endif %} 
+                        {% if holiday.accommodation.locationMap %}
+                        <p class="where">in {% for loc in holiday.accommodation.locationMap %}{{loc|safe}}{% if not forloop.last %},&nbsp;{% endif %}{% endfor %} </p>
+                        {% endif %}
+                            <div class="popup-icons" >
+                                                <div class="center">
+                                                      <div data-product-id="{{holiday.accommodation.code}}" data-accomodation="{{holiday.accommodation.name|safe}}" class="js-img-data-req photo icon" ></div> 
+                                                      {% if holiday.accommodation.videoPresent %}
+                                                      <div data-product-id="{{holiday.accommodation.code}}" data-accomodation="{{holiday.accommodation.name|safe}}" class="js-img-data-req video icon"></div>
+                                                      {% endif %}
+                                                       
+                                                </div>
+                                          </div>
+                                          <div class="clear"></div>
+                        <div class="main-details">
+                            {% if holiday.accommodation.featureCodesAndValues.usps %}
+                            <ul class="attractions square">
+                                {% for usp in holiday.accommodation.featureCodesAndValues.usps %}{% ifnotequal forloop.counter 4 %}{% ifnotequal forloop.counter 5 %}<li >{{usp|striptags}}</li>{% endifnotequal %}{% endifnotequal %}{% endfor %}
+                            </ul>
+                            {% endif %}
+                            {% if holiday.accommodation.ratings.tripAdvisorRating %}
+                            <p class="trip-advisor {{holiday.accommodation.ratings.tripAdvisorRatingKlass}}">TripAdvisor - <span class="ta-review-count">{{holiday.accommodation.tripAdvisorReviewCount}} reviews</span><span class="ta-rating">{{holiday.accommodation.ratings.tripAdvisorRating|floatformat}}/5</span></p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {%endifequal%} 
+       
+                        <div class="more-details">
+                        <div class="divider price-box hide">
+                            <p class="price">
+                                <span>&pound;</span><span class="price-value pp-price">{{holiday.price.perPerson|floatformat:"0"}}</span>
+                                <span class="price-value total-price">{{holiday.price.totalParty|floatformat:"0"}}</span>
+                            </p>
+                            <span class="float price-info total-price" lang="en">
+                                Total Price
+                            </span>
+                            <span class="info-block float price-info pp-price" lang="en" data-dojo-props="text: '{{messages.perPersonTooltip}}'" data-dojo-type="tui.searchBResults.view.Tooltips">
+                                Per Person <span class="question">?</span>
+                            </span>
+                            {% if displayDiscount %}
+                            {% if holiday.price.discount|floatformat:"0" > 0 %}
+                                <span class="discount highlight total-discount">Includes &pound;{{holiday.price.discount|floatformat:"0"}} discount</span>
+                            {% endif %}
+                            {% if holiday.price.discountPP|floatformat:"0" > 0 %}
+                                <span class="discount highlight pp-discount">Includes &pound;{{holiday.price.discountPP|floatformat:"0"}}pp discount</span>
+                            {% endif %}
+                             {% endif %}
+                        </div>
+                        <div class="divider">
+                            <ul>
+                            {% if holiday.offer %}
+                                <li class="offer {{holiday.offer.id|lower}}">{{holiday.offer.description}}</li>
+                            {% endif %}
+                            {% if holiday.itinerary.departureAirport %}
+                                {% if holiday.itinerary.outbounds.length > 0 %}
+                                <li lang="en" class="itinerary">{{holiday.itinerary.departureAirport}} <span class="info-block" data-dojo-props="list: '{% for outbound in holiday.itinerary.outbounds %}<li>{{outbound.schedule.departureDate}}: {{outbound.schedule.departureTime}} &gt; {{outbound.schedule.arrivalTime}}{% if outbound.schedule.overlapDay %} <span>{{messages.overlapDay}}</span>{% endif %}</li>{% endfor %}{% for inbound in holiday.itinerary.inbounds %}<li>{{inbound.schedule.departureDate}}: {{inbound.schedule.departureTime}} &gt; {{inbound.schedule.arrivalTime}}{% if inbound.schedule.overlapDay %} <span>{{messages.overlapDay}}</span>{% endif %}</li>{% endfor %}', comment: '{{messages.otherFlightOptions}}', width: 'large'" data-dojo-type="tui.searchBResults.view.Tooltips">see times <span class="question">?</span></span></li>
+                                {% endif %}
+                            {% endif %}
+                            {% if holiday.itinerary.dreamlinerLogo %}
+                                <li class="dreamliner"><span class="info-block" lang="en" data-dojo-props="tooltipTitle: '{{messages.dreamliner.title}}', list: '{{messages.dreamliner.features|safe}}', listClass:'bullets', width: 'jumbo'" data-dojo-type="tui.searchBResults.view.Tooltips">787 Dreamliner <span class="question">?</span></span></li>
+                            {% endif %}
+                                <li class="date">{{holiday.itinerary.departureDate}}</li>
+                                <li class="duration">{% ifnotequal holiday.duration 1 %}{{holiday.duration}} nights{% else %}Day Trip{% endifnotequal %}</li>
+                                <!-- {{holiday.duration}} night{{holiday.duration|pluralize}} -->
+                            </ul>
+                        </div>
+                        
+                         {% if holiday.accommodation.rooms.length > 0 %} 
+                         
+                        
+                         <div class="divider room-n-board">
+                            {% for room in holiday.accommodation.rooms %}
+                                <ul class="hotel">
+                            <li class="room">{{room.roomType}}</li>
+                                   <li class="info">{{room.occupancy.adults}} Adults {{room.occupancy.children}} Children {% if room.availability %}<span class="info-block highlight" data-dojo-type="tui.searchBResults.view.Tooltips" data-dojo-props="text: '{{messages.roomsTooltip}}'">Only {{room.sellingout}} left <span lang="en" class="question">?</span></span></li>{% endif %}
+                                </ul>
+                            {% endfor %}
+                            <ul class="hotel last">
+                                <li class="board">{% for altBoard in holiday.alternateBoard %}{% if altBoard.defaultBoardBasis %}{{altBoard.name}}{% endif %}{% endfor %}
+                                    {% ifnotequal holiday.alternateBoard.length "1" %}
+
+                                        <span class="info-block" data-dojo-props="text:'{{messages.boardTypes.otherAvailable|safe}}', postText:'{{messages.boardTypes.otherOptions|safe}}', listClass: 'table-list', list: '{% for altBoard in holiday.alternateBoard %}<li class=\'tabular\'><span class=\'fl\'>{{altBoard.name}}</span> <span class=\'fr\'>{% if altBoard.defaultBoardBasis %}Selected{% else %} {% if parseDouble(altBoard.accomdboardpriceDiffrence)>0 && parseDouble(altBoard.accomdboardpriceDiffrence)<1 %} {{altBoard.accomdboardpriceDiffrence|floatFormat:'2'}}{% else %} {{altBoard.priceDiffrence}}{% endif %}  {% endif %}</span></li>{% endfor %}', width: 'large'" data-dojo-type="tui.searchBResults.view.Tooltips">board types <span class="question">?</span></span>
+                                    {% endifnotequal %}
+                                </li>
+                            </ul>
+                        </div>
+  
+                 {% endif %} 
+                        {% if holiday.price.lowDepositExists %}
+                        <div class="divider no-border deposits">
+                            <ul>
+                                <li class="deposit total-deposit"><span class="highlight">Pay only &pound;{{holiday.price.depositAmount|floatformat:"0"}} low deposit today</span></li>
+                                <li class="deposit pp-deposit"><span class="highlight">Pay only &pound;{{holiday.price.depositAmountPP|floatformat:"0"}}pp low deposit today</span></li>
+                            </ul>
+                        </div>
+                        {% endif %}
+                        {% if holiday.price.depositExists %}
+                        <div class="divider no-border deposits">
+                            <ul>
+                                <li class="deposit total-deposit"><span class="highlight">Pay only &pound;{{holiday.price.depositAmount|floatformat:"0"}} deposit today</span></li>
+                                <li class="deposit pp-deposit"><span class="highlight">Pay only &pound;{{holiday.price.depositAmountPP|floatformat:"0"}}pp deposit today</span></li>
+                            </ul>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="gallery-info-wrap">
+                        <div class="gallery-info-section first hide fl{% if not holiday.showDeposits %} no-meta{% endif %}">
+                            {% if holiday.price.lowDepositExists %}
+                            <p class="highlight deposit total-deposit">Pay only &pound;{{holiday.price.depositAmount|floatformat:"0"}} low deposit today</p>
+                            <p class="highlight deposit pp-deposit">Pay only &pound;{{holiday.price.depositAmountPP|floatformat:"0"}}pp low deposit today</p>
+                            {% endif %}
+                            {% if holiday.price.depositExists %}
+                            <p class="highlight deposit total-deposit">Pay only &pound;{{holiday.price.depositAmount|floatformat:"0"}} deposit today</p>
+                            <p class="highlight deposit pp-deposit">Pay only &pound;{{holiday.price.depositAmountPP|floatformat:"0"}}pp deposit today</p>
+                            {% endif %}
+                            <p class="price">
+                                <span class="currency">&pound;</span>
+                                <span class="price-value pp-price">{{holiday.price.perPerson|floatformat:"0"}}</span>
+                                <span class="info-block price-info pp-price product-info" lang="en" data-dojo-props="text: '{{messages.perPersonTooltip}}'" data-dojo-type="tui.searchBResults.view.Tooltips">Per Person <span class="question">?</span></span>
+                                <span class="price-value total-price">{{holiday.price.totalParty|floatformat:"0"}}</span>
+                                <span class="price-info total-price product-info" lang="en">Total Price</span>
+                            </p>
+                            {% if displayDiscount %}
+                            {% if holiday.price.discount|floatformat:"0" > 0 %}
+                            <p class="discount highlight total-discount">Includes &pound;{{holiday.price.discount|floatformat:"0"}} discount</p>
+                            {% endif %}
+                            {% if holiday.price.discountPP|floatformat:"0" > 0 %}
+                            <p class="discount highlight pp-discount">Includes &pound;{{holiday.price.discountPP|floatformat:"0"}}pp discount</p>
+                            {% endif %}
+                            {% endif %}
+                        </div>
+                        <div class="gallery-info-section last fl cta-buttons gallery-view-buttons">
+                            <a href="javascript:void(0);" class="button shortlist" data-id="{{holiday.accommodation.code}}" ><i></i><span class="text">Save</span></a>
+                            <a href="{{holiday.accommodation.url}}&finPos={{holiday.finPos}}" class="button cta jumbo url ensLinkTrack" data-componentId="{{holiday.componentId}}" >Continue</a>
+                        </div>
+                        <div class="gallery-info-section last fl cta-buttons list-view-buttons">
+                       
+                             <a href="javascript:void(0);" class="button shortlist" data-id="{{holiday.accommodation.code}}" analytics-id="{{tag}}" analytics-instance="{{number}}" analytics-text="{{analyticsText.shortlist}}"><i></i><span class="text">Save</span></a> 
+                        
+                       
+                           
+                            <a href="{{holiday.accommodation.url}}&finPos={{holiday.finPos}}" class="button cta jumbo url ensLinkTrack" data-componentId="{{holiday.componentId}}" analytics-id="{{tag}}" analytics-instance="{{number}}" analytics-text="{{analyticsText.url}}">Continue</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<span class="mask mask-top"></span>-->
+            <!--<span class="mask mask-bottom"></span>-->
+        </div>
+    </div>
+    {% ifequal holiday.nonCoreProduct.multipleStay true %}
+    <span class="multi-center-flag hide">Multi Center</span>
+    {% endifequal %}
+</li>
+{% endfor %}

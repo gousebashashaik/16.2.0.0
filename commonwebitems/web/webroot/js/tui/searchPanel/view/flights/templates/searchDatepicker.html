@@ -1,0 +1,299 @@
+{% ifequal templateview "datepicker" %}
+<div class="calendar ms {{floatWhere}} {{calClass}}" >
+	<div class="calenderclose">
+	<a href="javascript:void(0);" class="closecal close-hide"  analytics-id="COM_FO_SEARCH_PANEL" analytics-instance="1" analytics-text="DepartClose"></a>
+	</div>
+	<div class="calenderheader">
+	 <h3 style="display: inline-block; float: left;">{{searchMessaging.date.selectDepartureDate}}</h3>
+	 	<div onclick="oneWayOverLayCheckBox(this);">
+		 	<div class="oneWayChkCnt">
+		 		<span class="checkbox"></span>
+		 		<span data-klass-id="foOneWayOnly" data-dojo-type="tui.mvc.Klass" class="loaded" id="oneway_only1" lang="en">
+		 		<input class="oneWay" id="oWay" type="checkbox"></span>
+		 	</div>
+		 	<div class="oneWaylabelCnt">
+		 		<label  for="oWay" class="related take-take" >One way only</label>
+		 	</div>
+	 	</div>
+	</div>
+	
+<ul class="cal-nav cal-row departuredate-selector">
+        <li class="prev cal-prev cal-nav-item"><a href="javascript:void(0);" title="Previous"  analytics-id="COM_FO_SEARCH_PANEL" analytics-instance="1" analytics-text="LeftScrollDate" class="date-prev arrow-main arrow-left arrow-left-link arrow-lrg ir">&larr;</a></li>
+        <li class="cal-month-selector cal-nav-item" analytics-id="COM_FO_SEARCH_PANEL" analytics-instance="1" analytics-text="DepartingDepDate">
+            <select data-dojo-type="tui.widget.datepicker.DateSelectOption" class="dropdown" >
+                {% for month in monthsAndYears %}
+                   <option value="{{month.value}}" {% ifequal monthAndYearTxt month.label %} selected="selected"{% endifequal %}>{{month.label}}</option>
+                {% endfor %}
+            </select>
+        </li>
+        <li class="next cal-next cal-nav-item"><a href="javascript:void(0);" title="Next" analytics-id="COM_FO_SEARCH_PANEL" analytics-instance="1" analytics-text="RightScrollDate" class="date-next arrow-main arrow-right arrow-right-link arrow-lrg ir">&rarr;</a></li>
+    </ul>
+    
+    {% ifequal isFirstMonthNotAvailableByDefault false %}
+    <table class="datepickertable cal-table first-month">
+        <thead>
+        <tr class="weekdays">
+            {% for day in days %}
+            <th class="text-center cal-cell cal-cell-head">{{day}}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for predate in predates %}
+            <td class="premonth text-center cal-cell">&nbsp;</td>
+            {% endfor %}
+            {% for monthdate in monthdates %}
+            <td class="datepicker-day date-text-indent cal-cell"><a href="javascript:void(0);"> {{monthdate.date}}</a></td>
+            {% if monthdate.newrow %}
+        </tr><tr>
+            {% endif %}
+            {% endfor %}
+            {% for enddate in enddates %}
+            <td class="premonth text-center cal-cell">&nbsp;</td>
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+    {% endifequal %}
+    
+    {% ifequal isFirstMonthNotAvailableByDefault true %}
+    <div class="first-month-available-message cal-msg first-month-available">
+       <p>{{searchMessaging.date.noAvailability}} {{monthAndYearTxt}}</p>
+       <ul class="available-date-links">
+           <li class="left">
+               <a href="javascript:void(0);" class="first-month-monthbar-link">{{searchMessaging.date.availability}}</a>
+           </li>
+       </ul>
+     </div> 
+    {% endifequal %}
+    
+    {% ifequal isSecondMonthNotAvailableByDefault false %}
+       <div class="second-month-datepickertable second-month next-month-label">
+        {% for monthAndYearLabel in monthAndYearLabelForNextMonth %}
+       {% ifequal monthAndYearLabel monthAndYearTxtForNextMonth %}
+           <span>{{monthAndYearTxtForNextMonth}}</span>
+       {% endifequal %}
+     {% endfor %}
+    </div> 
+    
+    <table class="second-month-datepickertable cal-table second-month">
+        <thead>
+        <tr class="weekdays">
+            {% for day in days %}
+            <th class="text-center cal-cell cal-cell-head">{{day}}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for nextmonthpredate in nextmonthpredates %}
+            <td class="premonth text-center cal-cell">&nbsp;</td>
+            {% endfor %}
+            {% for nextmonthdate in nextmonthdates %}
+            <td class="next-month-datepicker-day date-text-indent cal-cell"><a href="javascript:void(0);">{{nextmonthdate.date}}</a></td>
+            {% if nextmonthdate.nextmonthnewrow %}
+        </tr><tr>
+            {% endif %}
+            {% endfor %}
+            {% for nextmonthenddate in nextmonthenddates %}
+            <td class="premonth text-center cal-cell">&nbsp;</td>
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+    {% endifequal %}
+    {% ifequal isSecondMonthNotAvailableByDefault true %}
+       <div class="second-month-available-message second-cal-msg second-month-available">
+	       <p>{{searchMessaging.date.noAvailability}} {{monthAndYearTxtForNextMonth}}</p>
+	       <ul class="available-date-links">
+	           <li class="left">
+	               <a href="javascript:void(0);" class="second-month-monthbar-link">{{searchMessaging.date.availability}}</a>
+	           </li>
+	       </ul>
+       </div>
+    {% endifequal %}
+    
+    {% ifequal widgetController.searchApi 'getPrice' %}<span class="arrow-main arrow-left arrow-left-bg"></span>{% endifequal %}
+    {% ifequal widgetController.searchApi 'searchPanel' %}<span class="arrow-main depart-arrow-top arrow-top-bg"></span>{% endifequal %}
+</div> 
+{% endifequal %}
+
+{% ifequal templateview "datepickercells" %}
+{% ifequal isFirstMonthNotAvailableByDefault false %}
+<table class="datepickertable cal-table first-month">
+    <thead>
+    <tr class="weekdays">
+        {% for day in days %}
+        <th class="text-center cal-cell cal-cell-head">{{day}}</th>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        {% for predate in predates %}
+        <td class="premonth text-center cal-cell">&nbsp;</td>
+        {% endfor %}
+        {% for monthdate in monthdates %}
+        <td class="datepicker-day date-text-indent cal-cell"><a href="javascript:void(0);">{{monthdate.date}}</a></td>
+        {% if monthdate.newrow %}
+    </tr><tr>
+        {% endif %}
+        {% endfor %}
+        {% for enddate in enddates %}
+        <td class="premonth text-center cal-cell" >&nbsp;</td>
+        {% endfor %}
+    </tr>
+    </tbody>
+</table>
+{% endifequal %}
+
+{% ifequal isFirstMonthNotAvailableByDefault true %}
+<div class="first-month-available-message cal-msg first-month-available">
+   <p>{{searchMessaging.date.noAvailability}} {{monthAndYearTxt}}</p>
+   <ul class="available-date-links">
+       <li class="left">
+           <a href="javascript:void(0);" class="first-month-monthbar-link">{{searchMessaging.date.availability}}</a>
+       </li>
+   </ul>
+ </div> 
+{% endifequal %}
+
+{% ifequal isSecondMonthNotAvailableByDefault false %}
+<div class="second-month-datepickertable second-month next-month-label">
+        {% for monthAndYearLabel in monthAndYearLabelForNextMonth %}
+       {% ifequal monthAndYearLabel monthAndYearTxtForNextMonth %}
+           <span>{{monthAndYearTxtForNextMonth}}</span>
+       {% endifequal %}
+     {% endfor %}
+</div>    
+
+<table class="second-month-datepickertable cal-table second-month">
+    <thead>
+    <tr class="weekdays">
+        {% for day in days %}
+        <th class="text-center cal-cell cal-cell-head">{{day}}</th>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        {% for nextmonthpredate in nextmonthpredates %}
+        <td class="premonth text-center cal-cell">&nbsp;</td>
+        {% endfor %}
+        {% for nextmonthdate in nextmonthdates %}
+        <td class="next-month-datepicker-day date-text-indent cal-cell"><a href="javascript:void(0);">{{nextmonthdate.date}}</a></td>
+        {% if nextmonthdate.nextmonthnewrow %}
+    </tr><tr>
+        {% endif %}
+        {% endfor %}
+        {% for nextmonthenddate in nextmonthenddates %}
+        <td class="premonth text-center cal-cell">&nbsp;</td>
+        {% endfor %}
+    </tr>
+    </tbody>
+</table>
+{% endifequal %}
+
+{% ifequal isSecondMonthNotAvailableByDefault true %}
+   <div class="second-month-available-message second-cal-msg second-month-available">
+    <p>{{searchMessaging.date.noAvailability}} {{monthAndYearTxtForNextMonth}}</p>
+    <ul class="available-date-links">
+        <li class="left">
+            <a href="javascript:void(0);" class="second-month-monthbar-link">{{searchMessaging.date.availability}}</a>
+        </li>
+    </ul>
+   </div>
+{% endifequal %}
+
+{% endifequal %}
+
+{% ifequal templateview "noavailability" %}
+   <div class="first-month-available-message cal-msg first-month-available">
+       <p>{{searchMessaging.date.noAvailability}} {{monthAndYearTxt}}</p>
+       <ul class="available-date-links">
+           <li class="left">
+               <a href="javascript:void(0);" class="first-month-monthbar-link">{{searchMessaging.date.availability}}</a>
+           </li>
+       </ul>
+   </div> 
+   
+   <div class="second-month-datepickertable second-month next-month-label">
+     {% for monthAndYearLabel in monthAndYearLabelForNextMonth %}
+       {% ifequal monthAndYearLabel monthAndYearTxtForNextMonth %}
+           <span>{{monthAndYearTxtForNextMonth}}</span>
+       {% endifequal %}
+     {% endfor %}
+	</div>    
+	
+	<table class="second-month-datepickertable cal-table second-month first-month-not-available">
+	    <thead>
+	    <tr class="weekdays">
+	        {% for day in days %}
+	        <th class="text-center cal-cell cal-cell-head">{{day}}</th>
+	        {% endfor %}
+	    </tr>
+	    </thead>
+	    <tbody>
+	    <tr>
+	        {% for nextmonthpredate in nextmonthpredates %}
+	        <td class="premonth text-center cal-cell">&nbsp;</td>
+	        {% endfor %}
+	        {% for nextmonthdate in nextmonthdates %}
+	        <td class="next-month-datepicker-day date-text-indent cal-cell"><a href="javascript:void(0);">{{nextmonthdate.date}}</a></td>
+	        {% if nextmonthdate.nextmonthnewrow %}
+	    </tr><tr>
+	        {% endif %}
+	        {% endfor %}
+	        {% for nextmonthenddate in nextmonthenddates %}
+	        <td class="premonth text-center cal-cell">&nbsp;</td>
+	        {% endfor %}
+	    </tr>
+	    </tbody>
+	</table>
+{% endifequal %}
+
+{% ifequal templateview "noavailabilityinsecondmonth" %}
+   <table class="datepickertable cal-table first-month">
+	    <thead>
+	    <tr class="weekdays">
+	        {% for day in days %}
+	        <th class="text-center cal-cell cal-cell-head">{{day}}</th>
+	        {% endfor %}
+	    </tr>
+	    </thead>
+	    <tbody>
+	    <tr>
+	        {% for predate in predates %}
+	        <td class="premonth text-center cal-cell">&nbsp;</td>
+	        {% endfor %}
+	        {% for monthdate in monthdates %}
+	        <td class="datepicker-day date-text-indent cal-cell"><a href="javascript:void(0);">{{monthdate.date}}</a></td>
+	        {% if monthdate.newrow %}
+	    </tr><tr>
+	        {% endif %}
+	        {% endfor %}
+	        {% for enddate in enddates %}
+	        <td class="premonth text-center cal-cell">&nbsp;</td>
+	        {% endfor %}
+	    </tr>
+	    </tbody>
+	</table>
+
+   <div class="second-month-available-message second-cal-msg second-month-available">
+       <p>{{searchMessaging.date.noAvailability}} {{monthAndYearTxtForNextMonth}}</p>
+       <ul class="available-date-links">
+           <li class="left">
+               <a href="javascript:void(0);" class="second-month-monthbar-link">{{searchMessaging.date.availability}}</a>
+           </li>
+       </ul>
+   </div>
+{% endifequal %}
+
+{% ifequal templateview "showMonthBar" %}
+  <div class="mnoth-bar"  analytics-id="COM_FO_SEARCH_PANEL" analytics-instance="1" analytics-text="Sorryoverall"> 
+      <p class="month-not-available-message start" >{{monthbarmessagestart}} </p>
+	  <p class="month-not-available-message middle" >{{unAvailableMonthName}} </p>
+	  <p class="month-not-available-message end" >{{monthbarmessageend}} </p>  
+  </div>
+{% endifequal %}

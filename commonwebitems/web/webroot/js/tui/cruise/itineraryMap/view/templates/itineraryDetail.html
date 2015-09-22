@@ -1,0 +1,31 @@
+{% if atSea %}
+    {% for facility in facilities %}
+        <div class="item-list-box{% if forloop.counter|divisibleby:'3'  %}-last{% endif %}">
+
+            <a href="javascript:void(0);" data-dojo-type="tui.widget.popup.cruise.FacilityOverlay" data-dojo-props="jsonData:{{facility.json}}">
+                <img src="{{facility.image}}" height="107" width="190"/>
+            </a>
+            <h4><a href="javascript:void(0);" data-dojo-type="tui.widget.popup.cruise.FacilityOverlay" data-dojo-props="jsonData:{{facility.json}}">{{facility.name|safe}}</a></h4>
+            <p>{{facility.descriptionItineraryPage|safe}}...</p>
+        </div>
+    {% endfor %}
+{% else  %}
+    {% for exc in excursion %}
+        <div class="item-list-box{% if forloop.counter|divisibleby:'3'  %}-last{% endif %}">
+            <!--Using first image as per backend decision-->
+            <a href="javascript:void(0);" data-dojo-type="tui.widget.popup.cruise.FacilityOverlay"
+               data-dojo-props="jsonData:{{exc.json}}, portName:'{{locationName|safe}}' , componentName: 'excursionOverlay', bookMode:{{bookMode}} ">
+                <img src="{{exc.image}}" height="107" width="190"/>
+            </a>
+            <h4><a href="javascript:void(0);" data-dojo-type="tui.widget.popup.cruise.FacilityOverlay"
+                   data-dojo-props="jsonData:{{exc.json}}, portName:'{{locationName|safe}}' , componentName: 'excursionOverlay', bookMode:{{bookMode}} ">{{exc.excursionName|safe}}</a></h4>
+            <p>{{exc.descriptionItineraryPage|safe}}...</p>
+            <ul class="square-with-arrow">
+                <li>
+                   <a href="javascript:void(0);" data-dojo-type="tui.widget.popup.cruise.FacilityOverlay"
+                         data-dojo-props="jsonData:{{exc.json}}, portName:'{{locationName|safe}}' , componentName: 'excursionOverlay', bookMode:{{bookMode}} ">Find out More</a>
+                </li>
+            </ul>
+        </div>
+    {% endfor %}
+{% endif %}

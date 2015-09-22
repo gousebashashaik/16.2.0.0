@@ -1,0 +1,37 @@
+<div class="cta-buttons pad-bottom {% if not summary %} border-bottom {% endif %}" {% if showItinerary %} style="border-bottom: 0px;"{% endif %}>
+    <!--<a lang="en"  class="button shortlist ensLinkTrack loaded" href="javascript:void(0);"><i></i><span class="text">Shortlist</span></a>-->
+    {% if noBookflow %}
+    <a class="button cta medium ensLinkTrack" {% if summary %}style="margin-top: 8px;"{% endif %} href="javascript:void(0);" data-dojo-type="tui.widget.popup.cruise.BookInterimOverlay" data-dojo-props="stay:true">
+       <span class="text">How To Book</span>
+    </a>
+    {% else %}
+    <a class="button cta medium ensLinkTrack" {% if summary %}style="margin-top: 8px;"{% endif %} href="{{nextPageUrl}}">
+       <span class="text">{{buttonText}}</span>
+    </a>
+    {% endif %}
+</div>
+{% if not summary %}
+{% if repoMsg %}
+   <div class="message border-bottom">
+      <span class="info">
+         <i></i>Repositional message - sail to/from the UK and fly the other way, and can book a coach for &pound;10 between the port and the airport
+      </span>
+   </div>
+{% endif %}
+{% endif %}
+
+{% if summary %}
+ {% if prevPageUrl %}<a lang="en" class="show-full-summary"  href="{{prevPageUrl}}"><i></i>SHOW FULL SUMMARY</a>{% endif %}
+ {% if  showItinerary %}
+<div class="itinerary-info" style="margin: 0 -24px 0px;width:100%;padding: 6px 24px;background:#F2F0F1;border-top: 2px solid #E3E3E5;">
+	   <h4  style="font-size:12.5px;color:#333;text-shadow: 0 0 #333; margin-bottom: 0;">{{itinerary.name}}</h4>
+	   <div style="font-size: 10.5px;display: inline-block;width: 100%;">
+	      <span class="uc" style="float:left;padding-right:12px;text-transform: uppercase;font-size: 10.5px;">{{itinerary.ship}}<br/>{{itinerary.duration}} Night Cruise</span>
+	      {% if itinerary.diffProd %}
+	      <!-- Product Identifier in Image Box  //data.selectedResult.sailings[0].differentiatedProduct-->
+	      <span class="diff-label diff-label-block {{itinerary.productIdentifierCode|lower}}" {% if itinerary.productIdentifierTooltip %} data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{itinerary.productIdentifierTooltip}}'" {% endif %}></span> 
+          {% endif %}
+		</div>
+</div>
+{% endif %}
+{% endif %}

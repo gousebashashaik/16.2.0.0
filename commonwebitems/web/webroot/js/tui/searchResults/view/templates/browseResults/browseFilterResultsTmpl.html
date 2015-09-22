@@ -1,0 +1,49 @@
+ 
+		<div class="filter-section">
+		   <div class="filter-head hide"> REFINE YOUR RESULTS</div>
+		   <div class="filter" id="filtersController" data-klass-id="cruiseBrowserFilter" data-dojo-type="tui.mvc.Klass" data-dojo-props="defaultOpen: [0,1,2]">
+		      	<div class="mask-interactivity"></div>
+			       
+			        <div class="item">
+			           <h3 class="item-toggle border-bottom-solid2">
+			              <a href="javascript:void(0);">
+			                 <span class="title">Cruise Destination</span>
+			                 <span class="selection">0</span>
+			              </a>
+			              <i class="icon icon-arrow"></i>
+			           </h3>
+			           <div class="item-content" data-dojo-type="tui.filterPanel.view.options.CruiseOptionsFilter" data-dojo-props='dataPath:"cruiseDestinations"'>
+			              <div class="item-content-wrap"></div>
+			           </div>
+			        </div>
+
+			        <div class="item">
+			           <h3 class="item-toggle border-bottom-solid2">
+			              <a href="javascript:void(0);">
+			                 <span class="title">Stay Destination</span>
+			                 <span class="selection">0</span>
+			              </a>
+			           <i class="icon icon-arrow"></i>
+			           </h3>
+			           <div class="item-content" data-dojo-type="tui.filterPanel.view.options.CruiseOptionsFilter" data-dojo-props='dataPath:"stayDestinations"'>
+			              <div class="item-content-wrap"></div>
+			           </div>
+			        </div>
+
+			        <div class="item">
+			           <h3 class="item-toggle border-bottom-solid2">
+			              <a href="javascript:void(0);">
+			                 <span class="title">Cruise Ship</span>
+			                 <span class="selection">0</span>
+			              </a>
+			              <i class="icon icon-arrow"></i>
+			           </h3>
+			           <div class="item-content" data-dojo-type="tui.filterPanel.view.options.CruiseOptionsFilter" data-dojo-props='dataPath:"ships"'>
+			              <div class="item-content-wrap"></div>
+			           </div>
+			        </div>
+			        
+			    <p><a href="javascript:void(0);" class="clear-arrow" data-dojo-type="tui.searchResults.view.ClearFilters">Clear all filters</a></p>
+		   </div>
+		</div>
+ 

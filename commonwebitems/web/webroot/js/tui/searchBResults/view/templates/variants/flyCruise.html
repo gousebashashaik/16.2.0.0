@@ -1,0 +1,126 @@
+<!-- Fly/Cruise result : -->
+<div class="search-listing">
+    <div class="image-with-content">
+	<!-- Common for Gallery Images -->
+        <div class="media-comp">
+            <img src="{{holiday.itineraries.image}}" size="medium" width="273" height="162"/>
+        </div>
+	<!-- Common name and Listing -->
+        <div class="listings">
+            <h2>{{holiday.itineraries.name}}</h2>
+            <span class="staticText">{{messages.visiting}}:</span>
+            <ul class="square">
+                {% for leg in holiday.itineraries.left %}
+                <li>{{leg.nameOfPort}}, {{leg.parentLocationName}}</li>
+                {% endfor %}
+            </ul>
+            <ul class="square">
+                {% for leg in holiday.itineraries.right %}
+                <li>{{leg.nameOfPort}}, {{leg.parentLocationName}}</li>
+                {% endfor %}
+            </ul>
+        </div>		
+        {% for sailing in holiday.sailings %}
+		<!-- Common detail Box -->
+        <div class="details-box">
+			<!-- Common Listing -->
+            <div class="listwithIcon">
+                <div class="item-list">
+                    <ul class="item">
+                        {% if sailing.shipName.available %}
+                            <li class="listing-ship-icon">
+                                <span class="name">{{sailing.shipName.name|title:""}}</span>
+                            </li>
+                        {% endif %}
+                        <li class="listing-calander-icon">
+							<span class="name">Departs {{sailing.durationInfo.departureDate|default:""}} | {{sailing.durationInfo.cruiseDuration|default:""}}-night cruise</span>
+						</li>
+                        {% for offer in sailing.offers %}
+                           <li class="listing-free-child-icon">
+                              <span class="name">{{offer.description}}</span>
+                           </li>
+                        {% endfor %}
+                        {% if sailing.cruiseNStay.available %}
+                            <li class="listing-cruise-stay-icon">
+                                <span class="name">{{sailing.cruiseNStay.name|default:""}}</span>
+                                <span class="question search-tooltip" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{sailing.cruiseNStay.tooltip}}'"></span>
+                            </li>
+                        {% endif %}
+                    </ul>
+                    <ul  class="item">
+                        {% if sailing.sailingAirport.available %}
+                            <li class="listing-flight-icon">
+                                <span class="name">{{sailing.sailingAirport.name}} flights</span>
+                                <span class="question search-tooltip" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{sailing.sailingAirport.tooltip}}'"></span>
+                            </li>
+                        {% endif %}
+                        {% if sailing.cabinType.available %}
+                            <li class="listing-in-cabin-icon">
+                                <span class="name">{{sailing.cabinType.name|default:""}} (cheapest available)</span>
+                                <span class="question search-tooltip" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{sailing.cabinType.tooltip}}'"></span>
+								{% if sailing.cabinType.lowAvailability %}
+								<span class="error-line uc" style="display:inline-block;color:red;width:100%;">
+								<span class="available indicator" style="height: 11px;width:12px;background: url('images/cruise/cruise-searchIcons-sprite.png') no-repeat scroll 0 -34px;display: inline-block;position: relative;top:2px;"></span>
+								Only {{sailing.cabinType.count|default:""}} Cabin Left 
+								<span class="available info" style="height: 11px;width:12px;background: url('images/cruise/cruise-searchIcons-sprite.png') no-repeat scroll 0 -69px;display: inline-block;position: relative;top:2px;" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: 'Limited availability indicator'"></span>
+								</span>
+								{% endif %}
+                            </li>
+                        {% endif %}
+                        {% if sailing.boardBasis.available %}
+                            <li class="listing-board-icon">
+                                <span class="name">{{sailing.boardBasis.name|default:""}} (all tips included)</span>
+                                <span class="question search-tooltip" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{sailing.boardBasis.tooltip}}'"></span>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+				<!-- Common Price Details -->
+                <div class="priceDetails">
+                    <div class="floater accom-price price-box">
+                        <div class="all-details">
+                            <p class="price">
+                                <span class="currency size-color">&pound;</span>
+								<span class="price-value pp-price">{{sailing.price.perPerson|floatformat:"0"}}
+									<span class="info-text uc">Per Person</span><span class="question pp-tooltip"></span>
+								</span>
+                                <span class="price-value total-price">{{sailing.price.total|floatformat:"0"}}
+									<span class="info-text uc">Total Price</span><!--with-from-->
+								</span>								
+                            </p>
+                            <p lang="en" class="question-info-text size-and-margin">Includes &pound;{{sailing.price.discountPP|floatformat:"0"}}pp discount</p>
+                        </div>
+                    </div>
+                    {% if sailing.price.lowDepositExists %}
+					   <div class="pay-deposit">Pay only &pound;{{sailing.price.lowDeposit}}pp deposit today</div>
+                    {% endif %}
+                </div>
+				<!-- Common Button Box -->
+                <div class="link-box">
+					<!-- Common Option Item list -->
+                    <div class="option-list">
+                        <ul class="item">
+                            {% if sailing.includeOption.available %}
+                                <li class="listing-option-icon">{{sailing.includeOption.name}}</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+					<!-- Common shortList and MoreDetails-->
+                    <div class="cta-buttons">
+                        <a class="button shortlist" href="javascript:void(0);"><i></i><span class="text"> Shortlist</span></a>
+                        <a  class="button cta jumbo url ensLinkTrack" href="{{sailing.url}}">More details</a>
+                    </div>
+                </div>
+            </div>
+			<!-- Product Identifier in Detail box-->
+            <div class="specials">
+                {% if sailing.differentiatedProduct.differentiatedProduct %}
+                    <span class="diff-label {{sailing.differentiatedProduct.code|lower}}" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{sailing.differentiatedProduct.featureCodesAndValues.strapline[0]}}'"></span>
+				<span class="corner"></span>
+			   {% endif %}
+                
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

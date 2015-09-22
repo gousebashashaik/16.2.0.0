@@ -1,0 +1,37 @@
+<div>
+  <div class="coverage" data-dojo-attach-point="coverage1"  >
+    <div class="fl">
+      <span data-dojo-attach-point="familytitle" class="title">{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.ind_ins_info_one_displayName|default:" "}}</span>
+      <p class="desc">
+      {{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.ind_ins_info_one_StrapLine|default:" "}}
+         <a id="fmd" class="moreDetails"
+           data-dojo-attach-point="familyoverlay"
+           href="javascript:void(0);">More details</a>
+      </p>
+     <!--  <p class="fl"> Restrictions apply <span
+          data-dojo-props="floatWhere:'position-top-center', text:'{{insuranceRestrictionsToolTip|default:\' \'}}'"
+          data-dojo-type="tui.widget.popup.Tooltips"
+          class="questionMark loaded"></span>
+      </p> -->
+    </div>
+    <div class=" fr indCl pos-relative">
+     <p data-dojo-attach-point="pricecontainerInd" class="price-containerInd alignr pt10">
+        From <span class="price">{{adtPrice|default:" "}}</span> per adult {% ifnotequal jsonData.packageViewData.paxViewData.noOfChildren 0 %}, <span
+          class="price">{{chdPrice|default:" "}}</span> per child {% endifnotequal %}
+      </p>
+
+      <div class="button-cont indClButton getQuoteBtn" data-dojo-attach-point="getQuoteBtn">
+        <button id="changeButton" class="button jumbo fr transfer-select loaded fr familyButton"
+                data-dojo-attach-point="familygq" data-dojo-props="title:{{familyTitle}}">get a quote
+
+        </button>
+
+      </div>
+
+	<div class="fr addedInd addedIndBtn disNone" data-dojo-attach-point="addedIndBtn">
+		<button class="button jumbo selected select-seat"><span class="button-selected"></span><span>added</span></button>
+	</div>
+
+      </div>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="guide airport {{expandableProp}}" tabindex="0">
+    <span class="arrow"></span>
+	<div class="wrapper">
+        <div class="title-bar">
+	        {% ifequal widgetController.searchApi "searchPanel" %}
+            <h3>{{searchMessaging.airportGuide.title}} {{fromLimit}} {{searchMessaging.airports}}
+                <span class="status">
+                    <span class="airport-guide-count">{{searchPanelModel.from.selectedSize}}</span> {{searchMessaging.airports}} {{searchMessaging.selected}}
+                </span>
+                <a href="javascript:void(0);" class="empty-airport-model{% ifequal searchPanelModel.from.selectedSize 0 %} inactive{% endifequal %}">{{searchMessaging.unselect}}</a>
+            </h3>
+	        {% endifequal %}
+	        {% ifequal widgetController.searchApi "getPrice" %}
+	        <h3>{{searchMessaging.airportGuide.title}} {{fromLimit}} {{searchMessaging.airports}}</h3>
+	        <ul class="status-info list list-inline">
+                <li class="status-count"><span class="airport-guide-count">{{searchPanelModel.from.selectedSize}}</span> {{searchMessaging.airports}} {{searchMessaging.selected}}</li>
+		        <li class="status-remove"><a href="#" class="empty-airport-model{% ifequal searchPanelModel.from.selectedSize 0 %} inactive{% endifequal %}">{{searchMessaging.unselect}}</a></li>
+            </ul>
+	        {% endifequal %}
+        </div>
+    <!--{{airport.group}}-->
+        <div class="col">
+          <ul>
+            {% for airport in airportList %}
+              <li><label for="{{airport.id}}" class="{% if not airport.available %}disabled {% endif %}
+                    {% for from in searchPanelModel.from.data %}
+                        {% if from.children.length > 0 %}
+                            {% for child in from.children %}
+                                {% ifequal child airport.id %}selected {% endifequal %}
+                            {% endfor %}
+                        {% else %}
+                            {% ifequal from.id airport.id %}selected {% endifequal %}
+                        {% endif %}
+                    {% endfor %}" >
+                  <input type="radio"
+                         data-airportmodel-id="{{airport.id}}"
+                         data-airportmodel-name="{{airport.name}}"
+                         data-airportmodel-groups="{{airport.group}}"
+                         name="{{airport.id}}"
+                         id="{{airport.id}}"
+                         value="{{airport.id}}"
+                         class="{{airport.id}}"
+                  {% for from in searchPanelModel.from.data %}
+                      {% if from.children.length > 0 %}
+                        {% for child in from.children %}
+                            {% ifequal child airport.id %}
+                      checked=checked
+                            {% endifequal %}
+                        {% endfor %}
+                      {% else %}
+                        {% ifequal from.id airport.id %}
+                      checked=checked
+                        {% endifequal %}
+                      {% endif %}
+                  {% endfor %}
+                  />
+                  {{airport.name}}<span class="radio"></span></label>
+              </li>
+            {% if forloop.counter|divisibleby:columnLength %}
+            {% if not forloop.last %}
+          </ul>
+        </div>
+        <div class="col">
+          <ul>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+		<a href="javascript:void(0);" class="close close-hide"><!-- {{searchMessaging.close}} <i class="icon icon-arrow"></i> --></a>
+    </div>
+</div>

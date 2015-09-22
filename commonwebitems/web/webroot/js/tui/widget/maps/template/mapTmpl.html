@@ -1,0 +1,356 @@
+{% ifequal templateview "map" %}
+   <div class="mapped">
+      <ul class="menu{% if mapcategoryimages %} inspirational{% endif %}" data-dojo-attach-point="markercatergories">
+         {% for catergories in mapcatergories %}
+            <li>
+               <a href="#{{catergories.type}}">
+                  <span class="menu-heading">Top {{catergories.count}} </span>
+                  <span class="menu-category">{{catergories.name}} &rsaquo;</span>
+                  {% if mapcategoryimages %}
+                  <span class="menu-image">
+                     {{catergories.pictureUrl|safe}}
+                     <span></span>
+                  </span>
+                  {% endif %}
+               </a>
+            </li>
+         {% endfor %}
+      </ul>
+      <div class="map-viewport{% if mapcategoryimages %} inspirational{% endif %}">
+         <div class="shadow top"></div>
+         <div class="shadow right"></div>
+         <div class="shadow bottom"></div>
+         <div class="shadow left"></div>
+         <div class="slide-panel left" data-dojo-type="tui.widget.maps.MapSidePanel">
+            <div data-dojo-type="tui.widget.maps.MapTab">
+               <div id="mapplaces">
+                  <div class="scroller" data-dojo-type="tui.widget.maps.MapScrollPanel">
+                     <ul class="result-list">
+                     {% for location in selectedLocations %}
+                        <li class="marker_{{location.id}}" idx="{{forloop.counter}}">
+                           {% if location.thumbnail %}
+                              {{location.thumbnail.src|safe}}
+                           {% else %}
+                              {{placeHolderImages.tiny|safe}}
+                           {% endif %}
+                           <div class="copy">
+                              <span class="count">{{forloop.counter}} {% ifequal pageType "cruise" %}<span class="corner-top"></span>{% endifequal %}</span>
+                              {% ifequal mapFilter true %}
+                                 {% if location.productRanges %}
+                                    <h5 class="prod-range-title">
+                                       {% ifequal location.brand 'TI'%}
+                                       		<span class="thomson">
+                                       		<a href="javascript:void 0;">{{location.featureCodesAndValues.name|safe}}&nbsp;</a>
+                                       		<span class="rating rating-sm t{{location.featureCodesAndValues.tRating|cut:' '}}"></span>
+                                       		</span>
+                                       	{% endifequal %}
+
+                                        {% ifnotequal location.brand 'TI'%}
+                                        	<span class="falcon">
+                                        	<a href="javascript:void 0;">{{location.featureCodesAndValues.name|safe}}&nbsp;</a>
+                                       		<span class="rating rating-sm t{{location.featureCodesAndValues.tRating|cut:' '}}"></span>
+                                       		</span>
+                                       	{% endifnotequal %}
+
+                                    </h5>
+                                    {% ifequal location.productRanges.code|lower 'smr' %}
+									<span class="diff-label cou-sensimar"></span>
+									{% else %}
+                                    <span class="diff-label {{location.productRanges.code|lower}}"></span>
+									{% endifequal %}
+                                 {% else %}
+                                    <h5>
+                                        {% ifequal location.brand 'TI'%}
+                                         	<span class="thomson">
+                                         		<a href="javascript:void 0;">{{location.featureCodesAndValues.name|safe}}</a>
+                                       			<span class="rating rating-sm t{{location.featureCodesAndValues.tRating|cut:' '}}"></span>
+                                       		</span>
+                                       	{% endifequal %}
+
+                                        {% ifnotequal location.brand 'TI'%}
+                                     		<span class="falcon">
+                                     			<a href="javascript:void 0;">{{location.featureCodesAndValues.name|safe}}</a>
+                                    	 		<span class="rating rating-sm t{{location.featureCodesAndValues.tRating|cut:' '}}"></span>
+                                    	 	</span>
+                                       	{% endifnotequal %}
+                                    </h5>
+                                 {% endif %}
+                                 {% ifequal mapLevel "accommodation" %}
+                                    <span class="destination">
+                                       {% if destinationBreadcrumb %}
+                                          {{destinationBreadcrumb}}
+                                       {% else %}
+                                          {{location.destinationBreadcrumb}}
+                                       {% endif %}
+                                    </span>
+                                 {% endifequal %}
+                              {% else %}
+                                 {% if location.productRanges %}
+                                    <h5 class="prod-range-title">
+
+                                        {% ifequal location.brand 'TI'%}
+                                       		<span class="thomson">
+                                       			<a href="javascript:void 0;">{{location.featureCodesAndValues.name|safe}}&nbsp;</a>
+                                       		 	<span class="rating rating-sm t{{location.featureCodesAndValues.tRating|cut:' '}}"></span>
+                                       		 </span>
+                                       	{% endifequal %}
+                                        {% ifnotequal location.brand 'TI'%}
+                                        	<span class="falcon">
+                                        		<a href="javascript:void 0;">{{location.featureCodesAndValues.name|safe}}&nbsp;</a>
+                                       	  		<span class="rating rating-sm t{{location.featureCodesAndValues.tRating|cut:' '}}"></span>
+                                       	  </span>
+                                       	{% endifnotequal %}
+                                    </h5>
+                                    {% ifequal location.productRanges.code|lower 'smr' %}
+									<span class="diff-label cou-sensimar"></span>
+									{% else %}
+                                    <span class="diff-label {{location.productRanges.code|lower}}"></span>
+									{% endifequal %}
+                                 {% else %}
+                                    <h5>
+
+                                     {% ifequal location.brand 'TI'%}
+                                         	<span class="thomson">
+                                         		<a href="javascript:void 0;">{{location.featureCodesAndValues.name|safe}}</a>
+                                       			<span class="rating rating-sm t{{location.featureCodesAndValues.tRating|cut:' '}}"></span>
+                                       		</span>
+                                       	{% endifequal %}
+
+                                        {% ifnotequal location.brand 'TI'%}
+                                        	<span class="falcon">
+                                        		<a href="javascript:void 0;">{{location.featureCodesAndValues.name|safe}}</a>
+                                       	 		<span class="rating rating-sm t{{location.featureCodesAndValues.tRating|cut:' '}}"></span>
+                                       	 	</span>
+                                       	{% endifnotequal %}
+                                 	</h5>
+                                 {% endif %}
+                                 <span class="destination">
+                                    {% if destinationBreadcrumb %}
+                                       {{destinationBreadcrumb}}
+                                    {% else %}
+                                       {{location.destinationBreadcrumb}}
+                                    {% endif %}
+                                 </span>
+                                 {% if location.featureCodesAndValues.strapline %}
+                                    <p>{{location.featureCodesAndValues.strapline|truncatewords:16}}</p>
+                                 {% else %}
+                                    {% if location.featureCodesAndValues.introduction %}
+                                       <p>{{location.featureCodesAndValues.introduction|truncatewords:16}}</p>
+                                    {% endif %}
+                                 {% endif %}
+                              {% endifequal %}
+                           </div>
+                        </li>
+                     {% endfor %}
+                     </ul>
+                  </div>
+               </div>
+               {% ifequal mapFilter true %}
+               <div id="mapfilters">
+                  <div class="scroller" data-dojo-type="tui.widget.maps.MapScrollPanel">
+                     <h5 class="filters-heading">Show on map</h5>
+                        <ul class="filters-list">
+                           {% for filtertype in mapFilterTypes %}
+                           <li>
+                              <label for="{{filtertype.type}}" class="{{filtertype.name}}" analytics-text="{{filtertype.name}}OnMap" data-dojo-type="tui.widget.maps.MapSwitchButton">
+                                 <span class="icons"></span>
+                                 <span class="label-text">{{filtertype.name|safe}}</span>
+                                 <div class="switch-fix">
+                                    <div class="switch">
+                                       <span class="text"><span class="on">on</span><span class="round-bit"></span><span class="off">off</span></span>
+                                       <input id="{{filtertype.type}}" type="checkbox" value="{{filtertype.type}}"></input>
+                                    </div>
+                                 </div>
+                              </label>
+                           </li>
+                           {% endfor %}
+                           <!--
+                           <li>
+                              <label for="airport" class="airport disabled">
+                                 <span class="icons"></span>
+                                 <span class="label-text">Airport </span>
+                                 <div class="switch">
+                                    <span class="text"><span class="on">on</span><span class="round-bit"></span><span class="off">off</span></span>
+                                    <input id="airport" type="checkbox"></input>
+                                 </div>
+                              </label>
+                           </li>-->
+                        </ul>
+                  </div>
+               </div>
+               {% endifequal %}
+               <div class="map-tabs">
+                  <ul>
+                     <li><a href="#mapplaces" class="places-tab"><span></span>Places</a></li>
+                     {% ifequal mapFilter true %}
+                     <li><a href="#mapfilters" class="filters-tab"><span></span>Filter</a></li>
+                     {% endifequal %}
+                  </ul>
+               </div>
+            </div>
+         </div>
+         <div data-dojo-attach-point="mapnode" id="mapnode"></div>
+      </div>
+   </div>
+{% endifequal %}
+
+{% ifequal templateview "markerlist" %}
+   <ul class="result-list" id="t">
+      {% for location in selectedLocations %}
+         <li class="marker_{{location.id}}" idx="{{forloop.counter}}">
+            {% if location.thumbnail %}
+               {{location.thumbnail.src|safe}}
+            {% else %}
+                {{placeHolderImages.tiny|safe}}
+            {% endif %}
+            <div class="copy">
+
+               <span class="count">{{forloop.counter}}</span>
+               <h5 {% if location.productRanges %}class="prod-range-title"{% endif %}>
+
+               		   {% ifequal location.brand 'TI'%}
+						<span class="thomson">
+							{% if location.featureCodesAndValues.name %}<a href="javascript:void 0;">{{location.featureCodesAndValues.name|safe}}</a>{% endif %}
+							{% if location.featureCodesAndValues.tRating %}
+                      	  			<span class="rating rating-sm t{{location.featureCodesAndValues.tRating|cut:' '}}"></span>
+                      	  	{% endif %}
+							</span>
+                       {% endifequal %}
+                       {% ifnotequal location.brand 'TI'%}
+                        	<span class="falcon">
+                        		{% if location.featureCodesAndValues.name %}<a href="javascript:void 0;">{{location.featureCodesAndValues.name|safe}}</a>{% endif %}
+                       	  		{% if location.featureCodesAndValues.tRating %}
+                       	  			<span class="rating rating-sm t{{location.featureCodesAndValues.tRating|cut:' '}}"></span>
+                       	  		{% endif %}
+                       	  	</span>
+                       {% endifnotequal %}
+
+               </h5>
+               {% if location.productRanges %}
+                  {% ifequal location.productRanges.code|lower 'smr' %}
+									<span class="diff-label cou-sensimar"></span>
+									{% else %}
+                  <span class="diff-label {{location.productRanges.code|lower}}"></span>
+									{% endifequal %}
+               {% endif %}
+               <span class="destination">
+                  {% if destinationBreadcrumb %}
+                     {{destinationBreadcrumb}}
+                  {% else %}
+                     {{location.destinationBreadcrumb}}
+                  {% endif %}
+               </span>
+               {% if location.featureCodesAndValues.tRating %}
+               {% else %}
+                    {% if location.featureCodesAndValues.strapline %}
+                        <p>{{location.featureCodesAndValues.strapline|truncatewords:16}}</p>
+                    {% else %}
+                        {% if location.featureCodesAndValues.introduction %}
+                            <p>{{location.featureCodesAndValues.introduction|truncatewords:16}}</p>
+                        {% endif %}
+                    {% endif %}
+               {% endif %}
+            </div>
+         </li>
+      {% endfor %}
+   </ul>
+{% endifequal %}
+
+{% ifequal templateview "popup-content" %}
+   <div class="product map-popup">
+      <div class="image-container">
+
+         {% if thumbnail %}
+            {% if productRanges %}
+            	<span class="diff-label {% ifequal productRanges.code|lower 'smr' %}cou-sensimar{% else %}{{productRanges.code|lower}}{% endifequal %}"></span>
+            {% endif %}
+          	{{thumbnail.popSrc|safe}}
+         {% else %}
+          {{placeHolderImages.small|safe}}
+         {% endif %}
+      </div>
+
+		{% ifequal brand 'TI'%}
+			<span class="thomson">
+				{% if url %}
+         			<h4><a href="{{url}}">{{featureCodesAndValues.name|safe}}</a></h4>
+      			{% else %}
+         			<h4>{{featureCodesAndValues.name|safe}}</h4>
+         		{% endif %}
+			 {% if featureCodesAndValues.tRating %}
+				<span class="rating rating-sm t{{featureCodesAndValues.tRating|cut:' '}}"></span>
+			 {% endif %}
+			</span>
+		{% endifequal %}
+
+
+		{% ifnotequal brand 'TI'%}
+            <span class="falcon">
+				{% if url %}
+         			<h4><a href="{{url}}">{{featureCodesAndValues.name|safe}}</a></h4>
+      			{% else %}
+         			<h4>{{featureCodesAndValues.name|safe}}</h4>
+         		{% endif %}
+			 	{% if featureCodesAndValues.tRating %}
+					<span class="rating rating-sm t{{featureCodesAndValues.tRating|cut:' '}}"></span>
+			 	{% endif %}
+			</span>
+		{% endifnotequal %}
+
+
+
+      {% ifequal mapFilter true %}
+         {% ifequal mapLevel "accommodation" %}
+            <span class="destination">
+               {% if destinationBreadcrumb %}
+                  {{destinationBreadcrumb}}
+               {% endif %}
+            </span>
+         {% endifequal %}
+      {% else %}
+         <span class="destination">
+            {% if destinationBreadcrumb %}
+               {{destinationBreadcrumb}}
+            {% endif %}
+         </span>
+      {% endifequal %}
+      {% if priceFrom %}
+         <div class="boxout">
+            <p class="price left">
+               From <strong>{{currency}}{{ priceFrom|floatformat:0 }}</strong> per person
+            </p>
+            {% if url %}
+            <a class="button cta large right ensLinkTrack" data-componentid="WF_COM_057-1" href="{{url}}">Find out more</a>
+            {% endif %}
+         </div>
+      {% else %}
+	     {% ifequal mapFilter true %}
+	         {% ifequal mapLevel "accommodation" %}
+	             {% if cruiseBookFlowAccom %}
+	                 {% ifnotequal type "accommodations" %}
+	                 {% ifnotequal type "hotels" %}
+	                 {% ifnotequal type "villas" %}
+			         {% if url %}
+			            <a class="button cta large right ensLinkTrack" data-componentId="WF_COM_057-1" href="{{url}}">Find out more</a>
+			         {% endif %}
+	                 {% endifnotequal %}
+	                 {% endifnotequal %}
+	                 {% endifnotequal %}
+	             {% else %}
+				     {% if url %}
+				     <a class="button cta large right ensLinkTrack" data-componentId="WF_COM_057-1" href="{{url}}">Find out more</a>
+				     {% endif %}
+	             {% endif %}
+		     {% else %}
+			     {% if url %}
+			     <a class="button cta large right ensLinkTrack" data-componentId="WF_COM_057-1" href="{{url}}">Find out more</a>
+			     {% endif %}
+	         {% endifequal %}
+		 {% else %}
+		     {% if url %}
+		     <a class="button cta large right ensLinkTrack" data-componentId="WF_COM_057-1" href="{{url}}">Find out more</a>
+		     {% endif %}
+	     {% endifequal %}
+      {% endif %}
+   </div>
+{% endifequal %}

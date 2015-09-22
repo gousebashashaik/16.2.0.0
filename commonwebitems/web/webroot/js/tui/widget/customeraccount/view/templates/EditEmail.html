@@ -1,0 +1,60 @@
+<div class="modal hide" id="editEmailpop">
+	<div class="window auto-height">
+		<div class="title">Edit your email address <span class="close">y</span></div>
+		<div class="modal-content">
+			<div id="personal-details">
+				<div id="customer-form">
+					<p class="alert mid-level generic top-alert">
+						If you change your email address, you'll need to use your new email address next time you sign into your account.
+					</p>
+					<form name="personalDetailsForm" autocomplete="off" id="editemailpopForm" action="{{tuiWebrootPath}}/manageMyAccount/changeEmailAndNameOverlay" method="post">
+					    <input type="hidden" id="editemailpopfname" name="firstName" value="{{firstName}}">
+					    <input type="hidden" id="editemailpoplname" name="lastName" value="{{familyName}}">
+					    <input type="hidden" id="editemailpopcid" name="cdmCustomerId" value="{{cdmCustomerId}}">
+					     <input type="hidden" id="editemailpopemail" name="email" value="{{email}}">
+						<div class="row c edit">
+							<label class="two-lines">Old <span>email address</span></label>
+							<p class="oldmail">{{email}}</p>
+						</div>
+						<div class="row c" data-dojo-props='RefId:"editpopre-email",maximumLength:64, maxLengthMessage:"Email address should not contain more than",mandatory:"true", notMatching:"Your email addresses do not match. Please try again.", promptMessage:"We need your email address",invalidMessage:"This isn&#39;t a valid email address. Re-enter your email address."' data-dojo-type="tui.widget.customeraccount.EmailAddress">
+							<label for="email" class="two-lines">New <span>email address</span></label>
+							<input type="text" id="editpopemail" name="newEmailAddress">
+							<span style="display:none;" id="editpopemailError_1" class="message"></span>
+							<i style="display:none;"  id="editpopemailError_2" class="caret erase red"></i>
+							<i style="display:none;" id="editpopemailError_3" class="caret tick green"></i>
+						</div>
+						<div class="row c" data-dojo-props='RefId:"editpopemail",maximumLength:64, maxLengthMessage:"Email address should not contain more than",mandatory:"true", notMatching:"Your email addresses do not match. Please try again.", promptMessage:"We need your email address",invalidMessage:"This isn&#39;t a valid email address. Re-enter your email address."' data-dojo-type="tui.widget.customeraccount.EmailAddress">
+							<label for="re-email">Re-enter email address</label>
+							<input type="text" id="editpopre-email" name="ReEnterEmail">
+							<span style="display:none;" id="editpopre-emailError_1" class="message"></span>
+							<i style="display:none;"  id="editpopre-emailError_2" class="caret erase red"></i>
+							<i style="display:none;" id="editpopre-emailError_3" class="caret tick green"></i>
+						</div>
+						<div class="row c no-label hide emailexist" id="emailalreadyexist">
+									<p class="alert high-level generic row-content">
+										<i class="caret warning"></i>
+										This email address, first name, and surname is already registered for an account.
+									</p>
+						</div>
+						<div class="row c">
+							<p>To keep your account and any bookings you may have safe, we need you to enter your password.</p>
+						</div>
+						<div class="row c pwd"
+							data-dojo-props='mandatory:"true",minimumCharactersMessage:"This isn&#39;t a valid password - it needs to have at least 6 characters. Re-enter your password.",promptMessage:"We need your password."'
+						    data-dojo-type="tui.widget.customeraccount.popup.PasswordWithoutStrengthIndicator">
+							<label for="password">Password</label>
+							<input type="password" id="editemailpoppassword" name="password">
+							<i style="display:none;"  id="editemailpoppasswordError_2" class="caret erase red"></i>
+                            <i style="display:none;" id="editemailpoppasswordError_3" class="caret tick green"></i> 
+                            <span id="editemailpoppasswordError_1" class="message"></span>
+						</div>
+						<div class="row c button-align">
+							<input type="submit" class="button cta-grey ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %} id="emailupdatePop" value="Save my details">
+							<a href="#" class="cancel ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %}>Cancel</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

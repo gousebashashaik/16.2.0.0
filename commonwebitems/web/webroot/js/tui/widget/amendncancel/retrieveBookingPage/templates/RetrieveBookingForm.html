@@ -1,0 +1,50 @@
+<div>
+<form action="{{ hybrisUrl }}" id="login-form" method="post">
+	<div class="error-message-section miss-text frow hide">
+		<h3 class="error-message-text">{{ staticDataMap.Manage_My_Booking_Err_Msg1 }}</h3>
+		<h5 class="error-message-subText">{{ staticDataMap.Manage_My_Booking_Err_Msg2 }}</h5>
+	</div>
+	<div class="error-message-section result-not-found frow hide">
+			<h3 class='error-message-text result-not-found'>{{ jsonData.error.errorMessage }}</h3>
+	</div>
+	<div class="frow">
+		<div class="label">
+			<label for="date">{{ staticDataMap.Manage_My_Booking_Dept_Date }}</label>
+		</div>
+		<div class="field date-picker">
+			<input type="text" placeholder="Select a date" id="date" class="textfield" name="departureDate" readonly="readonly" data-dojo-type="tui.widget.amendncancel.AmendDatePicker" data-dojo-attach-point="amendDatePicker"/>
+			<span class="validate-icon"></span>
+			<span class="err-txt hide">Please select a date</span>
+			<input type="hidden" name="sec_departureDay" id="sec_departureDay">
+			<input type="hidden" name="sec_departureMonth" id="sec_departureMonth">
+		</div>
+	</div>
+	<div class="frow">
+		<div class="label">
+			<label for="ref-no">{{staticDataMap.Manage_My_Booking_Booking_Reference}}</label>
+			<a data-dojo-type="tui.widget.amendncancel.refnoPopup" data-dojo-props="modal: 'true', resizeListener:'true'" href="javascript:void(0);" class="help-link">{{staticDataMap.Manage_My_Booking_Booking_Reference_ToolTip_Ques}}</a>
+		</div>
+
+		<div data-dojo-type="tui.widget.amendncancel.retrieveBookingPage.splitter.Splitter" data-dojo-attach-point="bookingReference" data-dojo-props="defaultValue: '{{bookingSearchCriteria.bookingRefereneceId|default:'' }}' "></div>
+	</div>
+	<div class="frow">
+		<div class="label">
+			<label for="lead-passngr">{{staticDataMap.Manage_My_Booking_Lead_Pax_Name}}</label>
+			<span class="ac-info-tooltip-link" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="floatWhere:'position-top-center', text:'{{staticDataMap.Manage_My_Booking_Lead_Pax_ToolTip}}'"></span>
+		</div>
+
+		<div class="field lead-pax">
+			<input class="textfield" data-dojo-type="tui.widget.form.ValidationTextBox"
+			name="sec_passengerName"
+			value="{{bookingSearchCriteria.secPassengerName|default:'' }}"
+			data-dojo-attach-point="lead-pax"
+			data-dojo-props="regExp:'(^[A-Za-z]+(-[A-Za-z]+)?( [A-Za-z]+)?$)|(^[A-Za-z]+( [A-Za-z]+)?(-[A-Za-z]+)?$)', maxLength : 15, required:true,
+								missingMessage:'Please enter the surname of the passenger who received the confirmation email', invalidMessage:'Please enter the correct surname of the passenger who received the confirmation email'" />
+		</div>
+	</div>
+	<div class="frow">
+		<input data-dojo-type="tui.widget.amendncancel.retrieveBookingPage.errorTooltip" data-dojo-attach-point="errorTooltip" type="submit" class="button cta-grey" value="Login"
+				data-dojo-props='floatWhere:"position-top-center", errMsgHdr: "{{staticDataMap.Manage_My_Booking_Err_Msg3}}", errMsgDesc:"{{staticDataMap.Manage_My_Booking_Err_Msg4}}"'>
+	</div>
+</form>
+</div>

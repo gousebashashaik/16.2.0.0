@@ -1,0 +1,30 @@
+<div class="modal hide customerAcPopUp modal-window" id="transCookiePopList">
+	<div class="window">
+		<div class="title">
+				Shortlisted holidays <!--span class="close">y</span-->
+		</div>
+		<div class="modal-content">
+			<div class="transfer-select" id="shortlist">
+				<p>The maximum number of holidays you can shortlist is {% if limit %}{{limit}}{% endif %}.<br>
+					Please select which holidays you want to keep in your shortlist:</p>
+				<div class="maxHolidaysError hide error">Error:</div>
+				<form method="post" id="transferShortListHolyList">
+					<div class="select-container">
+						<ul class="radiolist multiple">
+						 {% for holiday in holidays %}
+							<li class="c caholidaysLi"><input type="checkbox" class="caholidays caholidayschk hide" name="savedHolidays" value="{% if holiday.wishlistEntryId %}{{holiday.wishlistEntryId}}{% endif %}" />
+								<span class="caholidays radio"></span>
+								<span class="caholidays where">{% if holiday.accomName %}{{holiday.accomName}} {% endif %}, {% if holiday.resortName %}{{holiday.resortName}} {% endif %}</span>
+								<span class="caholidays when">{% if holiday.departureDate %}{{holiday.departureDate}}{% endif %}</span>
+								<span class="caholidays nights">{% if holiday.duration %}{{holiday.duration}} nights {% endif %}</span>
+								<span class="caholidays airport">{% if holiday.departureAirport %}{{holiday.departureAirport}}{% endif %}</span>
+							</li>						
+						{% endfor %}							
+						</ul>
+					</div>
+					<input type="submit" value="Add to shortlist" class="button cta-grey ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %}>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

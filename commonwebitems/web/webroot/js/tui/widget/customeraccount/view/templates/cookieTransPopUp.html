@@ -1,0 +1,20 @@
+<div class="modal hide customerAcPopUp modal-window" id="transCookiePop">
+	<div class="window auto-height">
+		<div class="title">
+			Shortlisted holidays <!--span class="close">y</span-->
+		</div>
+		<div class="modal-content sand-bg">
+			<div class="transfer-to-account" id="shortlist">
+				<p>You shortlisted some holidays when you weren't signed into your account.</p>
+				<p>Would you like to transfer these to your account?</p>
+				<form class="commentform" id="transferShortListHoly" action="" method="">			
+				<a class="delete delete-lnk ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %} id="transferDeleteLink">No - delete them</a>
+				<a class="button blue popup-lnk-btn ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %} id="transferLink">Yes - transfer them</a>
+				</form>
+				<p class="transfer-note">Please note - the maximum number of holidays you can shortlist is 10. <br>
+					You'll be able to select which holidays to add.
+				</p>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,22 @@
+<div class="country-list" style="width:75%;position:relative;float:left">
+	<ul class="three-cols cf">
+        <li analytics-text="DListCou" analytics-id="300ab" analytics-instance="1" style="width:33%">
+		{% if countryList %}
+        {% for CountryGroup in countryList %}
+            <h4>{{CountryGroup.name}}</h4>
+            <ul>
+                {% for country in CountryGroup.children %}
+                <li class="country{% if not country.available %} disabled{% endif %}"> <a href="" data-destination-id = "{{country.id}}">{{country.name}}</a><span>{% ifequal country.id "ESP" %} {{" (incl. Balearics, Canaries)"}}{% endifequal %}{% ifequal country.id "GRC" %}{{" (incl. Crete, Aegean Islands)"}} {% endifequal %}</span></li>
+                {% endfor %}
+            </ul>
+            {% ifequal forloop.counter 1 %}
+            </li><li analytics-text="DListCou" analytics-id="300ab" analytics-instance="1" style="width:33.3%">
+            {% endifequal%}
+            {% ifequal forloop.counter 3 %}
+            </li><li analytics-text="DListCou" analytics-id="300ab" analytics-instance="1" style="width:33.3%">
+            {% endifequal%}
+        {% endfor %}
+		{% endif %}
+        </li>
+    </ul>
+</div>

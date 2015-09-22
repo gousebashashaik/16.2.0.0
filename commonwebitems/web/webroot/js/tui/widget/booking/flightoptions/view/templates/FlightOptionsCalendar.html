@@ -1,0 +1,39 @@
+<div class="date-picker">
+	<table class="datepickertable">
+        <thead>
+        <tr class="weekdays">
+            {% for day in days %}
+            <th>{{day}}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody name="calendarDatesRows">
+	        <tr>
+	            {% for predate in predates %}
+	            <td class="premonth">&nbsp;</td>
+	            {% endfor %}
+	            {% for monthdate in monthdates %}
+	            	{% if monthdate.price %}
+	            	<td  class="datepicker-day" id="td{{monthdate.date}}">
+		            	<a  href="javascript:void(0);" id={{monthdate.date}}>
+	            			{{monthdate.date}}
+	            			<br>
+	            			{{monthdate.price}}          		
+		            	</a>
+		            {% else %}
+		            <td  class="datepicker-day" id="td{{monthdate.date}}">
+		            	{{monthdate.date}}
+	            	{% endif %}
+	            </td>
+	            {% if monthdate.newrow %}
+	        </tr><tr>
+	            {% endif %}
+	            {% endfor %}
+	            {% for enddate in enddates %}
+	            <td class="premonth">&nbsp;</td>
+	            {% endfor %}
+	        </tr>
+        </tbody>
+   </table>
+</div>
+

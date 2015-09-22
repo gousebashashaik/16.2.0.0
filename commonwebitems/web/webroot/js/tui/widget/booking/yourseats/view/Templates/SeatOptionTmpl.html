@@ -1,0 +1,312 @@
+<div>
+
+{% if not jsonData.packageViewData.multicomThirdPartyFlight %}
+
+{% ifnotequal jsonData.packageViewData.accomViewData.productRanges[0].code "ALC" %}
+	<p class="standard-seat" id="standardSeat">{{jsonData.flightOptionsStaticContentViewData.flightContentMap.Flight_YourSeats_StandardSeat|default:" "}}  </p>
+{% endifnotequal %}
+	{% if jsonData.baggageSectionDisplayed == "true"%}
+	<p>{{jsonData.flightOptionsStaticContentViewData.flightContentMap.Flight_YourSeats_OnlineCheckin|default:" "}} </p>
+	{% endif %}
+
+{% endif %}
+<div class="clear"></div>
+
+{% if not jsonData.packageViewData.multicomThirdPartyFlight %}
+
+<div class="seat-section-container">
+<div class="bookflow" data-dojo-type="tui.widget.expand.Expandable" data-dojo-props="transitionType: 'WipeInOut'">
+{% for seatExtra in jsonData.extraFacilityViewDataContainer.seatOptions.extraFacilityViewData %}
+
+<!-- 1 reserved seats -->
+
+{% ifequal seatExtra.code "XX1" %}
+
+<a name="SeatExtras"></a>
+<div class="clear"></div>
+<div id="{{seatExtra.code}}" class="item open ">
+  <h3 class="item-toggle">
+    {{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.reserved_seats_displayName|default:" "}}<i></i>
+    {% if seatExtra.limitedAvailability %}
+                   <span class="limitedAvailability">
+                                <label class="hurry-text-color fr"> {{seatExtra.seatWarningMessage|default:" "}}
+                                 <span class="seatquestion" data-dojo-type="tui.widget.popup.Tooltips"
+                data-dojo-props="floatWhere:'position-top-center', text:'{{seatExtra.limitedAvailabilityText}}'"></span>
+                                </label>
+                            </span>
+    {% endif %}
+  </h3>
+  <div class="item-content selectedSection grey_new">
+    <div class="exit-row-section">
+      <div class="exit-seat"><img src="{{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.reserved_seats_Intro_small|default:\' \'}}" /></div>
+      <div class="select-seat-desc">
+       <ul>
+       {% for description in jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.reserved_seats_usp %}
+       <li>{{description|default:" "}}</li>
+          {% endfor %}
+         </ul>
+        <div>
+      <a class="terms" data-dojo-attach-point="termsandconditionsSelectYourSeats">Terms and conditions</a>
+        </div>
+      </div>
+      <div class="fr SelctableSection">
+      {% if seatExtra.limitedAvailability %}
+      <div class="limitedAvailability">
+        <label class="hurry-text-color fr"> {{seatExtra.seatWarningMessage|default:" "}}
+          <!-- <span class="hurry-icon"></span> -->
+          <span class="seatquestion" data-dojo-type="tui.widget.popup.Tooltips"
+                data-dojo-props="floatWhere:'position-top-center', text:'{{seatExtra.limitedAvailabilityText}}'"></span>
+        </label>
+      </div>
+      {% endif %}
+      <p class="price-person {% if seatExtra.selected %} disp-none {% endif %}">
+     <span class="price-perPerson">{{seatExtra.currencyAppendedPerPersonPrice}}</span> per person</p>
+
+      <div class="chooseSeatSection">
+       <!--  <div class="included {% if seatExtra.selected %}  {% else %} disp-none {% endif %}">Included</div> -->
+        {% if seatExtra.selected %}
+		 <button data-dojo-attach-point="seatButton" name="DEF_SEAT" class="button jumbo selected select-seat">
+			 <span class="seat-button-selected">SELECTED</span>
+			 <span class="remove">REMOVE</span>
+		 </button>
+		{% else %}
+        <button  data-dojo-attach-point="seatButton" name="{{seatExtra.code}}" class="button jumbo unselect-seat seatingBtn" id="{{seatExtra.description}}">
+          <span class="withPrice">{{seatExtra.currencyAppendedPrice}}</span>
+          <span class="withoutPrice"></span>
+        </button>
+        {% endif %}
+      </div>
+    </div>
+    <div class="clear"></div>
+    </div>
+
+  </div>
+</div>
+{% endifequal %}
+<!-- 2 extra leg seats -->
+{% ifequal seatExtra.code "XX2" %}
+<a name="SeatExtras"></a>
+<div class="clear"></div>
+<div id="{{seatExtra.code}}" class="item open ">
+  <h3 class="item-toggle">
+    {{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.seat_extra_space_displayName|default:" "}}<i></i>
+    {% if seatExtra.limitedAvailability %}
+                   <span class="limitedAvailability">
+                                <label class="hurry-text-color fr"> {{seatExtra.seatWarningMessage|default:" "}}
+                                 <span class="seatquestion" data-dojo-type="tui.widget.popup.Tooltips"
+                data-dojo-props="floatWhere:'position-top-center', text:'{{seatExtra.limitedAvailabilityText}}'"></span>
+                                </label>
+                            </span>
+    {% endif %}
+  </h3>
+
+  <div class="item-content selectedSection grey_new">
+    <div class="exit-row-section">
+    <div class="exit-seat"><img src="{{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.seat_extra_space_displayName_small|default:\' \'}}" /></div>
+      <div class="select-seat-desc">
+      <!--  {{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.XX2_intro|default:" "}}
+         <span  data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="className:'maxWidth386',floatWhere:'position-top-center', text:'{{jsonData.flightOptionsStaticContentViewData.flightContentMap.SeatsWithExtraSpace_ToolTip|default:\' \'}}'">
+			  <span class="question-book"></span></span> -->
+		  <ul>
+       {% for description in jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.seat_extra_space_usp %}
+       <li>{{description|default:" "}}</li>
+          {% endfor %}
+         </ul>
+      <a class="terms" data-dojo-attach-point="termsandconditionsExtraSpace">Terms and conditions</a>
+      </div>
+      <div class="fr SelctableSection">
+      {% if seatExtra.limitedAvailability %}
+      <div class="limitedAvailability">
+        <label class="hurry-text-color fr">{{seatExtra.seatWarningMessage|default:" "}}
+          <!-- <span class="hurry-icon"></span> -->
+          <span class="seatquestion" data-dojo-type="tui.widget.popup.Tooltips"
+                data-dojo-props="floatWhere:'position-top-center', text:'{{seatExtra.limitedAvailabilityText}}'"></span>
+
+        </label>
+      </div>
+      {% endif %}
+      <p class="price-person {% if seatExtra.selected %} disp-none {% endif %}">
+     <span class="price-perPerson">{{seatExtra.currencyAppendedPerPersonPrice|safe|default:" "}}</span> per person</p>
+
+      <div class="chooseSeatSection">
+    <!--<div class="included {% if seatExtra.selected %}  {% else %} disp-none {% endif %}">Included</div>-->
+         {% if seatExtra.selected %}
+		 <button data-dojo-attach-point="seatButton" name="DEF_SEAT" class="button jumbo selected select-seat">
+			 <span class="seat-button-selected">SELECTED</span>
+			 <span class="remove">REMOVE</span>
+		 </button>
+		{% else %}
+        <button  data-dojo-attach-point="seatButton" name="{{seatExtra.code}}" class="button jumbo unselect-seat seatingBtn" id="{{seatExtra.description}}">
+          <span class="withPrice">{{seatExtra.currencyAppendedPrice}}</span>
+          <span class="withoutPrice"></span>
+        </button>
+        {% endif %}
+      </div>
+    </div>
+    <div class="clear"></div>
+    </div>
+
+  </div>
+</div>
+{% endifequal %}
+
+<!-- 3 extra space seats  -->
+{% ifequal seatExtra.code "XX4" %}
+<a name="SeatExtras"></a>
+<div class="clear"></div>
+<div id="{{seatExtra.code}}" class="item open">
+  <h3 class="item-toggle">
+    {{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.extra_leg_room_displayName|default:" "}}<i></i>
+    {% if seatExtra.limitedAvailability %}
+                   <span class="limitedAvailability">
+                                <label class="hurry-text-color fr"> {{seatExtra.seatWarningMessage|default:" "}}
+                                <span class="seatquestion" data-dojo-type="tui.widget.popup.Tooltips"
+                data-dojo-props="floatWhere:'position-top-center', text:'{{seatExtra.limitedAvailabilityText}}'"></span>
+                                </label>
+                            </span>
+    {% endif %}
+  </h3>
+
+  <div class="item-content selectedSection grey_new">
+    <div class="exit-row-section">
+       <div class="exit-seat">
+       <img src="{{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.extra_leg_room_displayName_small|default:\' \'}}" />
+       </div>
+      <div class="select-seat-desc">
+         <label>{{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.extra_leg_room_StrapLine|default:" "}}</label>
+         <ul>
+       {% for description in jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.extra_leg_room_usp %}
+       <li>{{description|default:" "}}</li>
+          {% endfor %}
+         </ul>
+      </div>
+      <div class="fr SelctableSection" >
+      {% if seatExtra.limitedAvailability %}
+      <div class="limitedAvailability">
+        <label class="hurry-text-color fr"> {{seatExtra.seatWarningMessage|default:" "}}
+          <!-- <span class="hurry-icon"></span> -->
+          <span class="seatquestion" data-dojo-type="tui.widget.popup.Tooltips"
+                data-dojo-props="floatWhere:'position-top-center', text:'{{seatExtra.limitedAvailabilityText}}'"></span>
+
+        </label>
+      </div>
+      {% endif %}
+      <p class="price-person {% if seatExtra.selected %} disp-none {% endif %}">
+     <span class="price-perPerson">{{seatExtra.currencyAppendedPerPersonPrice}}</span> per person</p>
+
+      <div class="chooseSeatSection">
+        <!-- <div class="included {% if seatExtra.selected %}  {% else %} disp-none {% endif %}">Included</div> -->
+         {% if seatExtra.selected %}
+		 <button data-dojo-attach-point="seatButton" name="DEF_SEAT" class="button jumbo selected select-seat">
+			 <span class="seat-button-selected">SELECTED</span>
+			 <span class="remove">REMOVE</span>
+		 </button>
+		{% else %}
+        <button data-dojo-attach-point="seatButton" name="{{seatExtra.code}}" class="button jumbo unselect-seat seatingBtn" id="{{seatExtra.description}}">
+          <span class="withPrice">{{seatExtra.currencyAppendedPrice}}</span>
+          <span class="withoutPrice"></span>
+        </button>
+        {% endif %}
+      </div>
+    </div>
+    <div class="clear"></div>
+    </div>
+
+  </div>
+</div>
+{% endifequal %}
+
+<!-- 4 premium seats-->
+{% ifequal seatExtra.code "XX3" %}
+<a name="SeatExtras"></a>
+<div class="clear"></div>
+<div id="{{seatExtra.code}}" class="item open">
+  <h3 class="item-toggle">
+    {{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.premimum_seats_displayName|default:" "}}<i></i>
+    {% if seatExtra.limitedAvailability %}
+                   <span class="limitedAvailability">
+                                <label class="hurry-text-color fr"> {{seatExtra.seatWarningMessage|default:" "}}
+                                 <span class="seatquestion" data-dojo-type="tui.widget.popup.Tooltips"
+                data-dojo-props="floatWhere:'position-top-center', text:'{{seatExtra.limitedAvailabilityText}}'"></span>
+                                </label>
+                            </span>
+    {% endif %}
+  </h3>
+
+  <div class="item-content  grey_new">
+    <div class="premium-section">
+      <div class="premium-seat"><img src="{{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.premimum_seats_displayName_medium|default:\' \'}}" /></div>
+      <div class="premium-seat-desc">
+        <label>{{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.premimum_seats_StrapLine|default:" "}}</label>
+        <ul>
+           {% for description in jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.premimum_seats_usp %}
+           <li>{{description|default:" "}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="fr SelctableSection">
+      {% if seatExtra.limitedAvailability %}
+      <div class="limitedAvailability">
+        <label class="hurry-text-color fr"> {{seatExtra.seatWarningMessage|default:" "}}
+          <!-- <span class="hurry-icon"></span> -->
+          <span class="seatquestion" data-dojo-type="tui.widget.popup.Tooltips"
+                data-dojo-props="floatWhere:'position-top-center', text:'{{seatExtra.limitedAvailabilityText}}'"></span>
+
+        </label>
+      </div>
+      {% endif %}
+      <p class="price-person {% if seatExtra.selected %} disp-none {% endif %}">
+       <span class="price-perPerson">{{seatExtra.currencyAppendedPerPersonPrice}}</span> per person</p>
+      <div class="chooseSeatSection">
+        <!-- <div class="included {% if seatExtra.selected %}  {% else %} disp-none {% endif %}">Included</div> -->
+         {% if seatExtra.selected %}
+		 <button data-dojo-attach-point="seatButton" name="DEF_SEAT" class="button jumbo selected select-seat">
+			 <span class="seat-button-selected">SELECTED</span>
+			 <span class="remove">REMOVE</span>
+		 </button>
+		{% else %}
+        <button data-dojo-attach-point="seatButton" name="{{seatExtra.code}}" class="button jumbo unselect-seat seatingBtn" id="{{seatExtra.description}}">
+          <span class="withPrice">{{seatExtra.currencyAppendedPrice}}</span>
+          <span class="withoutPrice"></span>
+        </button>
+        {% endif %}
+      </div>
+    </div>
+    <div class="clear"></div>
+    </div>
+
+  </div>
+</div>
+
+{% endifequal %}
+{% endfor %}
+</div>
+</div>
+{% else %}
+
+{% if thirdPartyFlightSelectionFlag == "true" %}
+
+	<div class="threepf-selection">
+		<h3>{{thirdPartyInfo.thirdPartyTitle|default:" "|safe}}</h3>
+		<div class="exit-seat-threepf"></div>
+	  	<div class="threepf-des">
+	  	 	{{thirdPartyInfo.uspKeys|safe}}
+	  	</div>
+	  	<div class="clear"></div>
+	</div>
+
+	<div class="clear"></div>
+	{% else %}
+<div class="threepf-selection">
+	<h3>{{jsonData.flightOptionsStaticContentViewData.flightContentMap.Flight_YourSeats_CompHeader|default:" "}}</h3>
+	<div class="exit-seat-threepf"></div>
+  	<div class="threepf-des">
+	  	 	{{jsonData.flightOptionsStaticContentViewData.flightContentMap.DESK_MIX_Seats_Description|default:" "|safe}}
+  	</div>
+  	<div class="clear"></div>
+</div>
+
+<div class="clear"></div>
+{% endif %}
+{% endif %}
+</div>

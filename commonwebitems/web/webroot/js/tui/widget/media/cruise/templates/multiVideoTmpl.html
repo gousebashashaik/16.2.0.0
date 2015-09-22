@@ -1,0 +1,66 @@
+<div class="popup media-popup video-popup media-promo" style="height: 100%;width: 100%;background:none;">
+
+	<div class='bg-load' style="background:none;box-sizing: border-box;display: block;height: 100%;max-width: 100%;min-height: 320px;overflow-x: hidden;overflow-y: auto;
+    padding-top: 24px;position: relative;text-align: center;top: 0;width: 100%;">
+	<div style="display: inline-block;margin-bottom: 24px;position: relative;text-align: left;background:#1a1a1a;padding-top: 12px;">
+	<div class="container loading">
+		<div class="large-carousel">
+		 <div class="viewport">
+		    <ul class="product-list">
+				{% for galleryVideo in jsonData.galleryVideos %}
+     		  		<li class="{{galleryVideo.code}}" style="position:absolute; z-index: 0; opacity: 1;"
+     		  		{% if galleryVideo.description %} data-location-name="{{galleryVideo.description}}" {% endif %} >
+     		  			<object id="bcp_{{id}}#{{galleryVideo.index}}" class="BrightcoveExperience " >
+							<param name="bgcolor" value="#111111" />
+							<param name="width" value="1080"/>
+							<param name="height" value="540"/>
+							<param name="playerID" value="1757882881001" />
+							<param name="playerKey" value="AQ~~,AAABmOQVOYk~,q6OkGfw0GvdOYQoNUqm6Fn3YnB4Sgdnx" />
+							<param name="isVid" value="true"/>
+							<param name="isUI" value="true"/>
+							<param name="dynamicStreaming" value="true"/>
+							<param name="autoplay" value="true"/>
+							<param name="@videoPlayer" value="ref:{{galleryVideo.code}}"/>
+						</object>
+     		  		</li>
+    		  {% endfor %}
+    		</ul>
+    		<p id="media-popup-caption" class="video" style="display:none; top:11px; left:70px;z-index: 2;"></p>
+		 </div>
+		</div>
+        {% ifnotequal jsonData.galleryVideosCount "1" %}
+    	<div class="thumb-carousel" style="height: 190px;">
+    		<a class="prev" href="javascript:void(0)" style="display: block; top: 85%;">
+				<span class="arrow"></span>
+	   	    </a>
+	    	<a class="next" href="javascript:void(0)" style="display: block; top: 85%;">
+				<span class="arrow"></span>
+			</a>
+    	 	<div class="viewport">
+    	 		<h2><span style="width:100%;color:#fff;font-size:15px;display:inline-block;padding:5px 0px;">Related Videos:</span></h2>
+    			<ul class="plist">
+    			{% for galleryVideo in jsonData.galleryVideos %}
+     		  		<li style="margin-right: 45px;float:left;">
+	     		  		<a href="javascript:void(0)" style="float:left;height: 98px; width: 161px;">
+	     		  			 {# TODO: '/cruise' should be replaced with '{{cdnDomain}}'. cdnDomain variable has been added in the widget js file #}
+	     		  			<img idx=1 src="/cruise/images/cruise/default-small.png" width="160" height="90"
+	     		  			{% if galleryVideo.description %} alt="{{galleryVideo.description}}" data-location-name="{{galleryVideo.description}}" {% endif %}>
+	     			 	<span style="position:relative;display: inline-block;height: 29px; width: 30px;background:url('../../images/cruise/all-page-sprite.png') no-repeat 1px -922px;z-index:10;left: 50px;top: -74px;opacity:0.5;color:#fff;padding-left: 35px;padding-top: 5px;font-size: 17.5px;">PLAY</span>
+						</a>
+						{% if galleryVideo.description %}
+							<span style="display: block;height: auto; width: 160px;color:#fff;">{{galleryVideo.description}} entertainment for families</span>
+						{% endif %}
+     			 	</li>
+    		  	{% endfor %}
+    			</ul>
+    		</div>
+    	</div>
+        {% endifnotequal %}
+	</div>
+	<div class="floater" style=" right: 0px;top: -27px;">
+		<a href="javascript:void(0)" class="close right">Close</a>
+	</div>
+	</div>
+	</div>
+	<p class="load">Loading</p>
+</div>

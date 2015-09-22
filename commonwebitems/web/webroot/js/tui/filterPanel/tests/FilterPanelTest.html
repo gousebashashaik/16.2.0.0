@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+		"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<title>Filter panel tests</title>
+
+	<script src="/js/underscore/underscore-min.js"></script>
+	<!-- required: dojo.js -->
+	<script type="text/javascript" src="/js/dojo/dojo.js"></script>
+
+	<!-- functions to help test -->
+	<script type="text/javascript" src="/js/dijit/tests/helpers.js"></script>
+
+	<script type="text/javascript">
+		dojo.require("dojo.DeferredList");
+		dojo.require("dojo.window");
+		dojo.require("dijit.robotx");
+
+		dojo.ready(function () {
+			doh.robot.initRobot('filterPanel.html');
+			var metaKey = {ctrl: true};
+
+
+			doh.register("Filter Panel Tests", [
+				{
+					name: "Should show All filters",
+					timeout: 6900,
+					runTest: function () {
+						var d = new doh.Deferred();
+						var filterContainer = dojo.query('.filter')[0]
+						doh.robot.sequence(d.getTestCallback(function () {
+							doh.is(true, dojo.query('.item', filterContainer).length == 5)
+						}), 500);
+						return d;
+					}
+				},
+				{
+					name: "Should Reposition the Budget handle when values changes",
+					timeout: 6900,
+					runTest: function () {
+						var d = new doh.Deferred();
+						var budgetSlider = dijit.byId('slider_BUDGETTOTAL');
+						var filterPanelModel = budgetSlider.searchResultsModel.filterPanel;
+						var oldFilterMap = filterPanelModel.filterMap;
+						var newFilterMap = dojo.clone(oldFilterMap);
+						newFilterMap['BUDGETTOTAL']['values'] = [839];
+						filterPanelModel.set('filterMap', newFilterMap);
+
+						doh.robot.sequence(d.getTestCallback(function () {
+							try {
+								doh.is(true, budgetSlider.direction[0] == -1);
+								doh.is(true, budgetSlider.step[0] == 839)
+
+							} catch (e) {
+								d.errback(e);
+							}
+						}), 900);
+						return d;
+					}
+				},
+				{
+					name: "Should Reposition per person budget handle when values changes",
+					timeout: 6900,
+					runTest: function () {
+						var d = new doh.Deferred();
+						var budgetSlider = dijit.byId('slider_BUDGETPP');
+						var filterPanelModel = budgetSlider.searchResultsModel.filterPanel;
+						var oldFilterMap = filterPanelModel.filterMap;
+						var newFilterMap = dojo.clone(oldFilterMap);
+						newFilterMap['BUDGETPP']['values'] = [839];
+
+						filterPanelModel.set('filterMap', newFilterMap);
+						doh.robot.sequence(d.getTestCallback(function () {
+							try {
+								doh.is(true, budgetSlider.direction[0] == -1);
+								doh.is(true, budgetSlider.step[0] == 839)
+
+							} catch (e) {
+								d.errback(e);
+							}
+						}), 900);
+						return d;
+					}
+				},
+				{
+					name: "Should Reposition temperature handles when value changes",
+					timeout: 6900,
+					runTest: function () {
+						var d = new doh.Deferred();
+						var temperatureSlider = dijit.byId('slider_TEMPERATURE');
+						var filterPanelModel = temperatureSlider.searchResultsModel.filterPanel;
+						var oldFilterMap = filterPanelModel.filterMap;
+						var newFilterMap = dojo.clone(oldFilterMap);
+						newFilterMap['TEMPERATURE']['values'] = [22, 24];
+
+						filterPanelModel.set('filterMap', newFilterMap);
+						doh.robot.sequence(d.getTestCallback(function () {
+							try {
+								doh.is(true, temperatureSlider.direction[0] == -1);
+								doh.is(true, temperatureSlider.step[0] == 22)
+								doh.is(true, temperatureSlider.step[1] == 24)
+							} catch (e) {
+								d.errback(e);
+							}
+						}), 900);
+						return d;
+					}
+				},
+				{
+					name: "Should Reposition Ratings handler if value changes",
+					timeout: 6900,
+					runTest: function () {
+						var d = new doh.Deferred();
+						var tripAdvisorRating = dijit.byId('slider_TRIPADVISORRATING');
+						var filterPanelModel = tripAdvisorRating.searchResultsModel.filterPanel;
+						var oldFilterMap = filterPanelModel.filterMap;
+						var newFilterMap = dojo.clone(oldFilterMap);
+						newFilterMap['TRIPADVISORRATING']['values'] = [4];
+
+						filterPanelModel.set('filterMap', newFilterMap);
+						doh.robot.sequence(d.getTestCallback(function () {
+							try {
+								doh.is(true, tripAdvisorRating.direction[0] == 1);
+								doh.is(true, tripAdvisorRating.step[0] == 4);
+							} catch (e) {
+								d.errback(e);
+							}
+						}), 900);
+						return d;
+					}
+				},
+				{
+					name: "Should hide attributes not present in BESTFOR values",
+					timeout: 6900,
+					runTest: function () {
+						var d = new doh.Deferred();
+						var filterPanelWidget = dijit.byId('tui_searchResults_view_SearchFilterPanel_0');
+						var filterPanelModel = filterPanelWidget.searchResultsModel.filterPanel;
+						var oldFilterMap = filterPanelModel.filterMap;
+						var newFilterMap = dojo.clone(oldFilterMap);
+						newFilterMap['P00051'] = null;
+						newFilterMap['P00052'] = null;
+						newFilterMap['P00053'] = null;
+
+
+						filterPanelModel.set('filterMap', newFilterMap);
+						doh.robot.sequence(d.getTestCallback(function () {
+							try {
+								require(["dojo/dom-attr"], function(domAttr){
+									var checks = dojo.query('.checks', filterPanelWidget.domNode)[0];
+									var hiddenElements = 0;
+									dojo.query('li', checks).forEach(function (element) {
+										if (domAttr.has(element, 'hide')) {
+											hiddenElements = hiddenElements + 1;
+										}
+									});
+								});
+							} catch (e) {
+								d.errback(e);
+							}
+						}), 900);
+						return d;
+					}
+				}
+
+			]);
+
+			doh.run();
+		});
+
+
+	</script>
+</head>
+</html>

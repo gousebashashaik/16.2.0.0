@@ -1,0 +1,117 @@
+{% ifequal templateView "initialize" %}
+<div class="atlflight-selection " >
+{% if jsonData.packageViewData.laplandDayTrip %}
+{% else %}
+<ul class="tabs nights-choice-menu">
+
+	{% for tab in durationData %}
+
+    <li class="duration-standard {% ifequal tab selectedDuration %} active {% endifequal %}" data-dojo-value="{{tab}}"><a class="tab-standard" id="{{tab}}{{searchMessaging.night}}" href="javascript:void(0);" >{{tab}} {{searchMessaging.night}}{{tab|pluralize}}</a></li>
+    {% endfor %}
+    <li class="custom-dates" tabindex="0">
+        <span>{{Flight_MoreDurations_Link}}</span>
+        <span class="more-arrow"></span>
+
+        <ul>
+	{% if moreChoices %}
+		{% for choice in moreChoices %}
+            <li class="preset" data-dojo-value="{{choice}}" tabindex="0">{{choice}} {{searchMessaging.night}}{{choice|pluralize}}</li>
+        {% endfor %}
+	{% endif %}
+            <li class="customize">
+                <p>{{selectYourOwnMsg|safe}}</p>
+                 <label><input maxlength="2" id="durationTextBox" class="durationTextBox" placeholder="{{searchMessaging.holidayDuration.placeholder}}" value="" type="text" tabindex="0">
+                  <p class="holder disNone">{{searchMessaging.holidayDuration.placeholder}}</p>
+                 </label>
+                <a class="button" tabindex="0">{{searchMessaging.search}}</a>
+            </li>
+        </ul>
+    </li>
+</ul>
+
+<!-- <div class="dashed-border mb20px mt20px"></div> -->
+{% endif %}
+
+<h2> Select your departure airport </h2>
+<ul class="tabs airport-choice-menu">
+
+	 {% for tab in airportData %}
+    <li class="airport-standard {% ifequal tab.airportName selectedAirport %} active {% endifequal %}" data-dojo-value="{{tab.airportCode}}"><a class="sub-tab" id="{{tab.airportName}}" href="javascript:void(0);" >{{tab.airportName}} </a></li>
+    	{% endfor %}
+    <li class="custom-dates" tabindex="0">
+    	{% if model.calendarViewData.shouldDisplayAirportLink %}
+               <span>{{Flight_MoreAirports_Link}}</span>
+               <span class="more-arrow"></span>
+        {% else %}
+             <span></span>
+        {% endif %}
+
+        <ul>
+		{% if airportChoices %}
+			{% for choice in airportChoices %}
+            <li class="airportpreset" data-dojo-value="{{choice.airportCode}}" tabindex="0">{{choice.airportName}}</li>
+            {% endfor %}
+		{% endif %}
+        </ul>
+    </li>
+</ul>
+
+{% endifequal %}
+
+
+<div class="dashed-border mb20px mt20px"></div>
+
+<h2>{{selectedDuration}}{% if jsonData.packageViewData.laplandDayTrip %} daytrip {% else %} nights {% endif %}  flights from {{dynamicselectedAirport.airportName}}</h2>
+
+<div class="mb20px mt20px"></div>
+<div class="change-duration-section">
+	{% ifequal isCalendarDisplay true %}
+	<div class="calender-section" id="contentExternalNode">
+
+
+		  <div
+		  data-dojo-type="tui.widget.booking.flightoptions.view.FlightOptionDatepicker"
+		  data-dojo-props="calStartDate: '{{model.calendarViewData.startDate}}',
+		  calEndDate: '{{model.calendarViewData.endDate}}',calAvail:'{{calendarAvail}}',price:'{{priceMap}}', selectedDate : '{{selectedDate}}', actualDate : '{{actualDate}}'">
+		  </div>
+
+			<div class="clear"></div>
+		<!--<div class="show-prices pl10px">
+			<h3> Show prices for</h3>
+		 commented it as per tom revies
+			<div class="checkboxes-filter">
+			{% for filterViewData in model.calendarViewData.filterViewData %}
+
+				<div class="checkbox-section">
+
+					<input type="checkbox" class="check-box" id={{filterViewData.filterCode}}
+					{% ifequal filterViewData.selected true %}
+						checked
+					{% endifequal %}
+					 />
+					<label for="{{filterViewData.filterCode}}"> {{filterViewData.filterName}}
+
+						<span class="fl"></span>
+					</label>
+					{% ifequal filterViewData.filterCode "DAYTIME_FLIGHTS_ONLY" %}
+                    <div class="more-info-icon" lang="en" data-dojo-type="tui.widget.popup.Tooltips"
+                         data-dojo-props="floatWhere:'position-bottom-center', text: '{{jsonData.flightOptionsStaticContentViewData.flightContentMap.Alt_DayTimeFlights_ToolTip|default:\' \'}}'" class="">
+                    </div>
+					{% endifequal %}
+					{% ifequal filterViewData.filterCode "DREAM_LINER" %}
+                    <div class="more-info-icon" lang="en" data-dojo-type="tui.widget.popup.Tooltips"
+                         data-dojo-props="floatWhere:'position-bottom-center', text: '{{jsonData.flightOptionsStaticContentViewData.flightContentMap.Alt_787_ToolTip|default:\' \'}}'" class="">
+                    </div>
+					{% endifequal %}
+
+
+				</div>
+				{% endfor %}
+			</div>
+		</div>-->
+	</div>
+	{% endifequal%}
+	<div class="overlay-divider"></div>
+</div>
+
+</div>

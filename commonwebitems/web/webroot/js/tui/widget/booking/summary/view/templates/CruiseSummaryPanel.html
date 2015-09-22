@@ -1,0 +1,64 @@
+<ul class="item-list">
+<li>
+{% if imageDispFlag %}
+	<img src="{{accomViewData.accomImageUrl}}"		width="208" height="108"	class="main-img" />
+{% endif %}
+
+    <div class="hotel-name">{{accomViewData.accomName|default:" "}}</div>
+	<div class="location">{{accomViewData.destinationName|default:" "}}</div>
+	<div class="location">{{accomViewData.duration|default:" "}} night cruise</div>
+
+</li>
+
+
+  {% for numberOfRooms in accomViewData.summaryRoomViewData %}
+    <li><span class="fl"> {{numberOfRooms.description|safe|default:""}}
+     </span>
+      <span class="fr">
+      {% if numberOfRooms.included == "true" %} Included
+      {% else %}
+         {{numberOfRooms.currencyAppendedPrice|default:""}}
+      {% endif %}
+       </span>
+        </li>
+
+       <li>
+
+       <span >
+       {% for deckPlan in numberOfRooms.deckViewData %}
+
+        						{{deckPlan.deckNo}} {% if forloop.last %} {% else %} | {% endif %}
+
+		{% endfor %}
+		</span>
+
+       </li>
+  {% endfor %}
+
+ {% for extras in jsonData.packageViewData.extraFacilityCategoryViewData %}
+
+ 	{% ifequal extras.extraFacilityGroupCode "CRUISE"%}
+      {% for extraFacility in extras.extraFacilityViewData %}
+        {% if extraFacility.selected == "true" %}
+
+        	<li>
+
+              	<span class="fl">{{extraFacility.summaryDescription|safe}}</span>
+
+              <span class="fr">
+            {% ifequal extraFacility.selection "Selectable" %}
+              {{ extraFacility.currencyAppendedPrice }}
+            {% else %}
+              {{ extraFacility.selection }}
+            {% endifequal %}
+          </span><div class="clear"></div></li>
+
+
+        {% endif %}
+      {% endfor %}
+    {% endifequal %}
+
+ {% endfor %}
+ <li><span class="fl">{{accomViewData.boardBasisName|default:""}}</span></span></li>
+
+</ul>

@@ -1,0 +1,195 @@
+<div>
+  <div class="terms-n-conditions">Terms and conditions apply</div>
+  <div class="Seewhatcovered fr" data-dojo-attach-point="Seewhatcovered">
+    <a href="javascript:void(0);">{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_see_whats_covered|default:" "}}</a>
+  </div>
+  <div class="clear"></div>
+  <div id="individual">
+  </div>
+  <div id="family">
+  </div>
+   <!-- Insurance B Start -->
+	<div id="ind-ins" >
+
+	</div>
+	<div id="ind-ins-block"></div>
+	<div id="fam-ins-block"  ></div>
+	<div id="fam-ins">
+
+	</div>
+
+
+
+	<div id="famins_section" >
+		<p class="fam_ins_info">{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Insurance_Restrictions_ToolTip_FA|safe|default:" "}}</p>
+
+	    <div class="termscondition">
+		  <p class="heading"><strong>{{jsonData.extraOptionsStaticContentViewData.genericContentViewData.genericContentMap.Generic_Terms_Conditions|default:" "}}</strong></p>
+	        <p class="tc-point">{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Eligibility|safe|default:" "}}</p>
+
+	            <p class="tc-point">{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_terms_and_conditions2|default:" "}}</p>
+
+	            <p class="tc-point">{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_terms_and_conditions3|default:" "}}</p>
+
+		</div>
+		<div id="healthAndDeclaration" class="familyCover">
+	        	<p class="heading"><strong>Health Declaration</strong></p>
+	        	<p> {{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Health_Declaration1|safe|default:" "}} </p>
+				<p> </p>
+	        	{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Health_Declaration2|safe|default:" "}}
+	        	<ul class="note"><li>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Health_Declaration3|safe|default:" "}}</li></ul>
+
+		</div>
+	    	  <p class="tc-point">{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_terms_and_conditions4|safe|default:" "}}</p>
+
+ 			<input type="checkbox" data-dojo-attach-point="familyconfirmation" id="familyconfirmationid" class="fl"></input>
+          <label name="passengerName" for="familyconfirmationid">
+            <span></span><strong>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Confirm_Agree|safe|default:" "}}</strong></label>
+            <div class="clear"></div>
+			<div id="impCheckbox_Error" class="error-notation-insurance disNone"></div>
+
+
+
+     	<div >
+     		<div class="fr price-section">
+     			<div class="fr">
+						<button data-dojo-attach-point="familygq1" class="button-brand button selected jumbo transfer-select loaded analytics-insur-add" >ADD</button>
+				</div>
+				<div class="fam-ins-text-details">
+					<div class="ins-padding-txt-1"><strong>TOTAL</strong></div>
+					<strong><div class="ins-padding-txt-2" id="getFaminsPrice">{{getFaminsPrice|default:" "}} </div></strong>
+					<div class="ins-padding-txt-3">INSURANCE ONLY</div>
+				</div>
+
+     		</div>
+     		<div class="clear"></div>
+     		<div class="dashed-border mt20px mb10px {% ifequal excessWaiverFlag true %} disNone  {% endifequal %}"></div>
+     		<div class="{% ifequal excessWaiverFlag true %} disNone  {% endifequal %}">
+     		<div class="insexcess">
+				<span>
+				<p> {{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_IndividualIntro1|safe|default:" "}}</p>
+				</span>
+     		</div>
+     		<div class="fr price-section">
+
+				<div class="fr">
+				<span>
+					<button class="button-brand button selected jumbo transfer-select loaded analytics-insur-add" data-dojo-attach-point="familyexcesAdd">ADD</button>
+				</span>
+				</div>
+				<div class="fam-ins-text-details">
+					<div class="exce-padding-txt-1"><strong>TOTAL</strong></div>
+					<strong><div class="exce-padding-txt-2"  id="getFamExcessPrice">{{individualPrice|default:" "}}</div></strong>
+					<div class="exce-padding-txt-3">INSURANCE + EXCESS WAIVER</span></div>
+				</div>
+
+     		</div>
+     		</div>
+     		<div class="clear"></div>
+     		<div class="mt10px">
+     		<p>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_disclaimer|safe|default:" "}}</p>
+			</div>
+     	</div>
+	</div><!-- Insurance B End -->
+	<div class="clear"></div>
+   <div id="resultNode" data-dojo-attach-point="resultDomNode">
+  </div>
+  <div id="insuranceInformation"
+       class="sectional-padding insuranceOverlay insurance-component-details">
+    <div><a href="javascript:void(0);" class="close abs fr">close</a></div><br/>
+    <!-- <h2 class="fs28px">{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.gen_ins_info_displayName|default:" "}}</h2>
+<div class="insurance-logo">
+<div class="incDescription">
+<span></span>
+<p class="companyName">In partnership with AXA</p>
+<p class="companyDec">{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Text2|default:" "}}</p>
+</div>
+<div class="clear"></div>
+</div> -->
+    <strong class="covered">{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_whats_covered|default:" "}}</strong>
+	<strong class="policy-limit">Policy Limit</strong>
+    <div class="clear"></div>
+    <div class="insurance-list">
+    <ul class="coveredList">
+      <li><label>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Medical_Expenses|default:" "}}</label> <span
+          data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Covered_Medical_ToolTip|default:\' \'}}'"
+          data-dojo-type="tui.widget.booking.insuranceB.TouchTooltip"
+          class="questionMark loaded"></span> <label class="price">
+        &pound;{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Medical_Expenses_price|default:" "}}</label></li>
+      <li><label>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Cancellation|default:" "}}</label> <span
+          data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Covered_Cancellation_ToolTip|default:\' \'}}'"
+          data-dojo-type="tui.widget.booking.insuranceB.TouchTooltip"
+          class="questionMark loaded"></span> <label class="price">
+        &pound;{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Cancellation_price|default:" "}}</label></li>
+      <li><label>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Stolen_baggage|default:" "}}</label> <span
+          data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Covered_Lost_ToolTip|default:\' \'}}'"
+          data-dojo-type="tui.widget.booking.insuranceB.TouchTooltip"
+          class="questionMark loaded"></span> <label class="price">
+        &pound;{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Stolen_baggage_price|default:" "}}</label></li>
+      <li><label>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Personal_Money|default:" "}}</label> <span
+          data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Covered_PersonalPassportDoc_ToolTip|safe|default:\' \'}}'"
+          data-dojo-type="tui.widget.booking.insuranceB.TouchTooltip"
+          class="questionMark loaded"></span> <label class="price">
+        &pound;{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Personal_Money_priceUpdated|default:" "}}</label></li>
+        <li><label>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Passport_Money|default:" "}}</label> <span
+          data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Covered_PersonalDoc_ToolTip|safe|default:\' \'}}'"
+          data-dojo-type="tui.widget.booking.insuranceB.TouchTooltip"
+          class="questionMark loaded"></span> <label class="price">
+        &pound;{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Passport_Money_price|default:" "}}</label></li>
+      <li><label>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Delayed_departure|default:" "}}</label> <span
+          data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Covered_Delayed_ToolTip|default:\' \'}}'"
+          data-dojo-type="tui.widget.booking.insuranceB.TouchTooltip"
+          class="questionMark loaded"></span> <label class="price">
+        &pound;{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Delayed_departure_price|default:" "}}</label></li>
+      <li><label>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Missed_departure|default:" "}}</label> <span
+          data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Covered_Missed_ToolTip|default:\' \'}}'"
+          data-dojo-type="tui.widget.booking.insuranceB.TouchTooltip"
+          class="questionMark loaded"></span> <label class="price">
+        &pound;{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Missed_departure_price|default:" "}}</label></li>
+      <li><label>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Catastrophe_cover|default:" "}}</label> <span
+          data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Covered_Catastrophe_ToolTip|default:\' \'}}'"
+          data-dojo-type="tui.widget.booking.insuranceB.TouchTooltip"
+          class="questionMark loaded"></span> <label class="price">
+        &pound;{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Catastrophe_cover_price|default:" "}}</label></li>
+      <li><label>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Personal_accident|default:" "}}</label> <span
+          data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Covered_PersonalAccident_ToolTip|default:\' \'}}'"
+          data-dojo-type="tui.widget.booking.insuranceB.TouchTooltip"
+          class="questionMark loaded"></span> <label class="price">
+        &pound;{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Personal_accident_price|default:" "}}</label></li>
+      <li><label>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_assistance|default:" "}}</label> <span
+          data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Covered_LegalExpenses_ToolTip|default:\' \'}}'"
+          data-dojo-type="tui.widget.booking.insuranceB.TouchTooltip"
+          class="questionMark loaded"></span> <label class="price">
+        &pound;{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_assistance_price|default:" "}}</label></li>
+      <li><label>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Personal_liability|default:" "}}</label> <span
+          data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Covered_PersonalLiability_ToolTip|default:\' \'}}'"
+          data-dojo-type="tui.widget.booking.insuranceB.TouchTooltip"
+          class="questionMark loaded"></span> <label class="price">
+        &pound;{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Personal_liability_price|default:" "}}</label></li>
+      <li><label>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_Text3|default:" "}}</label> <label class="yes">
+      </label></li>
+      <li><label>{{jsonData.extraOptionsStaticContentViewData.insuranceStaticContentViewData.insuranceContentMap.Extra_Insurance_activities|default:" "}}</label> <label
+          class="yes"></label></li>
+    </ul>
+    <div class="benefits-paragraph">
+
+      <p class="fr des">Maximum benefits you can claim for each insured person after deducting the policy excess.</p>
+    </div>
+	  <p class="fr policy-details-link">
+        <span class="docIcon fl"></span><a target="_blank" href="http://www.thomson.co.uk/editorial/editorial-downloads/ACPD0200PG_TUI_UK_Retail_policy.pdf">See full policy details</a>
+      </p>
+    <!--  <div id="whatCoveredindividual" data-dojo-attach-point="whatCoveredindividual2">
+    </div>
+    <div id="WhatCoveredfamily" data-dojo-attach-point="WhatCoveredfamily2">
+    </div>
+
+	  <div id="insuranceIndAdd" class="Family-cover-modal-window sectional-padding insuranceOverlay">
+
+	   <a href="javascript:void(0);" class="close abs fr">close</a>
+        <div class="clear"></div>
+	    <div id="insuranceIndAddOverlay"  >
+	    </div>
+	  </div> -->
+	 </div>
+   </div>
+</div>

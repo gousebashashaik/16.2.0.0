@@ -1,0 +1,66 @@
+<div class="container tui-theme" id="container">
+    <div class="deals-container" id="deals-container">
+        <div class="textContainer" id="textContainer">
+            <div class="calimg1"></div>
+            <label class="flydetails">I CAN FLY OUT :</label>
+            <div class="select1" id="dealsExpandable" tabindex="0" data-dojo-type="tui.widget.form.flights.DealsExpandable">
+                <div class="placeholder" id="flyoutPlaceholder">Please Select</div>
+            </div>
+        </div>
+        <div class="textContainer" id="textContainer1">
+            <div class="calimg2"></div>
+            <label class="flydetails">FLY FROM :</label>
+           <div class="select2" id="FlyFromDealsExpandable" tabindex="0" data-dojo-type ="tui.flightdeals.FlyFromDealsExpandable">
+                <div class="placeholder" id="flyfromPlaceholder">Any airport</div>
+            </div>
+        </div>
+        <div class="textContainer" id="textContainer2">
+            <div class="calimg3"></div>
+            <label class="flydetails">GO TO:</label>
+            <div class="select3" id="GoToDealsExpandable" tabindex="0" data-dojo-type ="tui.flightdeals.GoToDealsExpandable">
+                <div class="placeholder" id="gotoPlaceholder">Any destination</div>
+            </div>
+        </div>
+        <div class="showbutton">
+            <div class="showdetails">
+            </div>
+        </div>
+        <div class="checks">
+            <span class="per-checkbox">
+				<span data-dojo-type="dijit.form.CheckBox" id="dealsOneWay" disabled> </span>
+	            <label for="dealsOneWay" class="labelHover">One way only</label>
+            </span>
+        </div>
+
+    </div>
+    <div class="filter-options">
+        <div id="more-filter">More filter Otions
+            <i class="arrow-down"></i></div>
+        <div id="results">
+            <h3>FLIGHT DEPARTURE TIME | GOING OUT</h3>
+            <span class="night-checkbox"> <span data-dojo-type="dijit.form.CheckBox" id="dept1"></span>
+            <label for="dept1" class="per-checkbox">Morning(06:00-11:59)</label>
+            </span>
+            <span class="night-checkbox"> <span data-dojo-type="dijit.form.CheckBox" id="dept2"></span>
+            <label for="dept2" class="per-checkbox">Afternoon(12:00-17:59)</label>
+            </span>
+            <span class="night-checkbox"> <span data-dojo-type="dijit.form.CheckBox" id="dept3"></span>
+            <label for="dept3" class="per-checkbox">Evening(18:00-20:59)</label>
+            </span>
+            <span class="night-checkbox"> <span data-dojo-type="dijit.form.CheckBox" id="dept4"></span>
+            <label for="dept4" class="per-checkbox">Night(21:00-05:59)</label>
+            </span>
+            <div class="horizantal-line"></div>
+            <span class="less-filter">Less filter options<i class="arrow-up"></i></span>
+        </div>
+        <div id="results">
+            <h3>FLIGHT DEPARTURE TIME | GOING OUT</h3>
+            <span class="night-checkbox"> <input type="checkbox" ><span>Morning(06:00-11:59)</span></span>
+            <span class="night-checkbox"> <input type="checkbox" ><span>Afternoon(12:00-17:59)</span></span>
+            <span class="night-checkbox"> <input type="checkbox" ><span>Evening(18:00-20:59)</span></span>
+            <span class="night-checkbox"> <input type="checkbox" ><span>Night(21:00-05:59)</span></span>
+            <div class="horizantal-line"></div>
+            <span class="less-filter">Less filter options<i class="arrow-up"></i></span>
+        </div>
+    </div>
+</div>

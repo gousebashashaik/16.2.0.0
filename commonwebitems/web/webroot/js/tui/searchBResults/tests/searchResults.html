@@ -1,0 +1,388 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7 ]>
+<html lang="en" class="ie6" id="firstchoice"> <![endif]-->
+<!--[if IE 7 ]>
+<html lang="en" class="ie7" id="firstchoice"> <![endif]-->
+<!--[if IE 8 ]>
+<html lang="en" class="ie8" id="firstchoice"> <![endif]-->
+<!--[if IE 9 ]>
+<html lang="en" class="ie9" id="firstchoice"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="" id="firstchoice"> <!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results Tests</title>
+
+    <link href="/css/main.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script type="text/javascript" src="/js/tui/config/TuiConfigTest.js"></script>
+    <style>
+        .noResults {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<script type="text/javascript">
+	dojoConfig.addModuleName("tui/search/controller/SearchController", "tui/searchResults/model/SearchResultsModel", "tui/searchResults/Mediator", "tui/searchResults/controller/SearchResultsController", "tui/filterPanel/view/FilterController", "tui/filterPanel/view/BudgetToggle", "tui/mvc/Klass", "tui/searchResults/roomEditor/view/RoomsPopup");
+	var searchResponse = {"searchResult":{"durationSelection":{"defaultDisplay":[7,10,14],"moreChoices":[]},"availableDates":{"availableValues":["23-08-2013","24-08-2013","25-08-2013","26-08-2013","27-08-2013","28-08-2013","29-08-2013","30-08-2013","31-08-2013","01-09-2013","02-09-2013","03-09-2013","04-09-2013","05-09-2013","06-09-2013"],"maxValue":"06-09-2013","minValue":"23-08-2013"},"filterPanel":{"totalbudget":{"name":"Budgettotal","filters":[{"id":"budgettotal","name":"budgettotal","range":[1188.0,6140.0],"steps":10,"values":[6140.0],"limit":[1188.0,6140.0],"code":"budgetTotal","type":"slider"}]},"ppbudget":{"name":"BudgetPP","filters":[{"id":"budgetpp","name":"budgetpp","range":[594.0,3070.0],"steps":10,"values":[3070.0],"limit":[594.0,3070.0],"code":"budgetPP","type":"slider"}]},"temperatureOptions":{"name":"temperature","filters":[{"id":"temperature","name":"Temperature","range":[20,30],"steps":4,"values":[27.0,32.0],"code":"AF0005","type":"slider"}]},"rating":{"name":"Ratings","filters":[{"id":"fcRating","name":"Minimum First Choice Rating","range":[1,5],"steps":4,"values":[3.0],"limit":[3.0,5.0],"trackType":"minRange","code":"AF0001","type":"slider"}]},"destinationOptions":{"name":"Destination Options","filters":[{"name":"Destinations","id":"destinations","type":"checkbox","values":[{"children":[{"name":"Andalusia","id":"002894","selected":false,"noAccommodations":"16"},{"name":"Balearic Islands","id":"L00041","selected":false,"noAccommodations":"144"},{"name":"Canary Islands","id":"L00042","selected":false,"noAccommodations":"168"},{"name":"Catalonia","id":"003330","selected":false,"noAccommodations":"16"}],"name":"Spain","id":"ESP","selected":false}]}]},"accommodationOptions":{"name":"Accommodations Options","filters":[{"name":"Features","id":"features","type":"checkbox","values":[{"children":[],"noAccommodations":28,"name":"Kids\u0027 club","selected":false,"id":"ST22","categoryCode":"FT000E"},{"children":[],"noAccommodations":14,"name":"Playground","selected":false,"id":"ST29","categoryCode":"FT000E"},{"children":[],"noAccommodations":28,"name":"Mini-disco","selected":false,"id":"LST51","categoryCode":"FT000E"},{"children":[],"noAccommodations":2,"name":"Games room","selected":false,"id":"ST11","categoryCode":"FT000E"},{"children":[],"noAccommodations":17,"name":"Entertainment programme","selected":false,"id":"ST8","categoryCode":"FT000E"},{"children":[],"noAccommodations":1,"name":"Cinema","selected":false,"id":"ST5","categoryCode":"FT000E"},{"children":[],"noAccommodations":3,"name":"Bingo","selected":false,"id":"LST13","categoryCode":"FT000E"},{"children":[],"noAccommodations":3,"name":"Cabaret","selected":false,"id":"LST20","categoryCode":"FT000E"},{"children":[],"noAccommodations":5,"name":"Disco","selected":false,"id":"ST7","categoryCode":"FT000E"},{"children":[],"noAccommodations":1,"name":"Karaoke","selected":false,"id":"LST43","categoryCode":"FT000E"},{"children":[],"noAccommodations":2,"name":"Theatre","selected":false,"id":"ST43","categoryCode":"FT000E"},{"children":[],"noAccommodations":17,"name":"Boules","selected":false,"id":"LST17","categoryCode":"FT000S"},{"children":[],"noAccommodations":30,"name":"Darts","selected":false,"id":"LST25","categoryCode":"FT000S"},{"children":[],"noAccommodations":39,"name":"Table tennis","selected":false,"id":"LST73","categoryCode":"FT000S"},{"children":[],"noAccommodations":9,"name":"Basketball","selected":false,"id":"LST10","categoryCode":"FT000S"},{"children":[],"noAccommodations":6,"name":"Billiards","selected":false,"id":"LST12","categoryCode":"FT000S"},{"children":[],"noAccommodations":25,"name":"Archery","selected":false,"id":"LST5","categoryCode":"FT000S"},{"children":[],"noAccommodations":17,"name":"Volleyball","selected":false,"id":"LST79","categoryCode":"FT000S"},{"children":[],"noAccommodations":1,"name":"Badminton","selected":false,"id":"LST9","categoryCode":"FT000S"},{"children":[],"noAccommodations":3,"name":"Boccia","selected":false,"id":"LST14","categoryCode":"FT000S"},{"children":[],"noAccommodations":9,"name":"Shuffleboard","selected":false,"id":"LST67","categoryCode":"FT000S"},{"children":[],"noAccommodations":21,"name":"Water polo","selected":false,"id":"LST80","categoryCode":"FT000S"},{"children":[],"noAccommodations":2,"name":"Pool table","selected":false,"id":"LST61","categoryCode":"FT000S"},{"children":[],"noAccommodations":17,"name":"Football","selected":false,"id":"LST29","categoryCode":"FT000S"},{"children":[],"noAccommodations":1,"name":"Bike hire","selected":false,"id":"LST11","categoryCode":"FT000S"},{"children":[],"noAccommodations":1,"name":"Waterslide","selected":false,"id":"ST44","categoryCode":"FT000S"},{"children":[],"noAccommodations":1,"name":"Football pitch","selected":false,"id":"ST10","categoryCode":"FT000S"},{"children":[],"noAccommodations":40,"name":"Kids\u0027 pool","selected":false,"id":"ST23","categoryCode":"FT000P"},{"children":[],"noAccommodations":11,"name":"Indoor pool","selected":false,"id":"ST18","categoryCode":"FT000P"},{"children":[],"noAccommodations":5,"name":"Splash pool","selected":false,"id":"ST38","categoryCode":"FT000P"},{"children":[],"noAccommodations":2,"name":"Infinity pool","selected":false,"id":"ST19","categoryCode":"FT000P"},{"children":[],"noAccommodations":39,"name":"Reception","selected":false,"id":"ST32","categoryCode":"FT000O"},{"children":[],"noAccommodations":29,"name":"Cots","selected":false,"id":"LST23","categoryCode":"FT000O"},{"children":[],"noAccommodations":11,"name":"Gardens","selected":false,"id":"ST12","categoryCode":"FT000O"},{"children":[],"noAccommodations":1,"name":"Lounge","selected":false,"id":"ST24","categoryCode":"FT000O"},{"children":[],"noAccommodations":9,"name":"Luggage store","selected":false,"id":"LST47","categoryCode":"FT000O"},{"children":[],"noAccommodations":1,"name":"Internet","selected":false,"id":"ST20","categoryCode":"FT000O"},{"children":[],"noAccommodations":2,"name":"Sun terrace","selected":false,"id":"LST70","categoryCode":"FT000O"},{"children":[],"noAccommodations":1,"name":"Gift shop","selected":false,"id":"LST33","categoryCode":"FT000O"},{"children":[],"noAccommodations":3,"name":"Supermarket","selected":false,"id":"LST72","categoryCode":"FT000O"},{"children":[],"noAccommodations":1,"name":"Rep service","selected":false,"id":"LST65","categoryCode":"FT000O"},{"children":[],"noAccommodations":33,"name":"Gym","selected":false,"id":"ST14","categoryCode":"FT000H"},{"children":[],"noAccommodations":11,"name":"Sauna","selected":false,"id":"ST34","categoryCode":"FT000H"},{"children":[],"noAccommodations":3,"name":"Steam room","selected":false,"id":"ST40","categoryCode":"FT000H"},{"children":[],"noAccommodations":5,"name":"Aerobics","selected":false,"id":"LST2","categoryCode":"FT000H"},{"children":[],"noAccommodations":2,"name":"Turkish bath","selected":false,"id":"LST76","categoryCode":"FT000H"},{"children":[],"noAccommodations":2,"name":"Spa","selected":false,"id":"ST37","categoryCode":"FT000H"}]},{"name":"Holiday Type","id":"holidayType","type":"checkbox","values":[{"children":[],"noAccommodations":20,"name":"Holiday Village","selected":false,"id":"FHV"},{"children":[],"noAccommodations":72,"name":"Premier","selected":false,"id":"FPR"},{"children":[],"noAccommodations":24,"name":"Premier Families","selected":false,"id":"FPF"},{"children":[],"noAccommodations":24,"name":"Splashworld","selected":false,"id":"FSP"}]},{"name":"Best For","id":"bestfor","type":"checkbox","values":[{"children":[],"noAccommodations":20,"name":"Beach","selected":false,"id":"P00051"},{"children":[],"noAccommodations":18,"name":"Families","selected":false,"id":"P00052"},{"children":[],"noAccommodations":25,"name":"Spa and Relaxation","selected":false,"id":"P00053"},{"children":[],"noAccommodations":7,"name":"Winning Awards","selected":false,"id":"P00056"},{"children":[],"noAccommodations":10,"name":"Weddings","selected":false,"id":"P00054"},{"children":[],"noAccommodations":6,"name":"Luxury","selected":false,"id":"P00050"}]}]},"flightOptions":{"name":"Flight Options","filters":[{"name":"Departure time (coming back )","id":"inslots","type":"checkbox","values":[{"children":[],"noAccommodations":0,"name":"Morning - 06:00-11:59","selected":false,"id":"Ai"},{"children":[],"noAccommodations":0,"name":"Afternoon - 12:00-17:59","selected":false,"id":"Bi"},{"children":[],"noAccommodations":0,"name":"Evening - 18:00-20:59","selected":false,"id":"Ci"},{"children":[],"noAccommodations":0,"name":"Night - 21:00-05:59","selected":false,"id":"Di"}]},{"name":"Departure time (going out )","id":"outslots","type":"checkbox","values":[{"children":[],"noAccommodations":0,"name":"Morning - 06:00-11:59","selected":false,"id":"Ao"},{"children":[],"noAccommodations":0,"name":"Afternoon - 12:00-17:59","selected":false,"id":"Bo"},{"children":[],"noAccommodations":0,"name":"Evening - 18:00-20:59","selected":false,"id":"Co"},{"children":[],"noAccommodations":0,"name":"Night - 21:00-05:59","selected":false,"id":"Do"}]},{"name":"Departure Points","id":"departurePoints","type":"checkbox","values":[{"children":[],"noAccommodations":0,"name":"London Luton","selected":false,"id":"LTN"}]}]}},"sortBy":{},"holidays":[{"accommodation":{"code":"027942","name":"Holiday Village Costa del Sol","imageUrl":"http://newmedia.thomson.co.uk/live/vol/0/1be3458d46df81b0bd95c2b546757933a6030ea7/232x130/web/EUROPE___MEDITERRANEAN_SPAIN_CON_ESP__COSTA_DEL_SOL_DES_000365__BENALMADENA_POLYNESIA_HOTEL_ACC_033828_.jpg","differentiatedProduct":true,"differentiatedType":"Holiday Village","differentiatedCode":"FHV","location":{"destination":{"code":"000365","name":"Costa del Sol"},"resort":{"code":"000366","name":"Benalmadena"}},"ratings":{"officialRating":"4","tripAdvisorRating":"4.0"},"rooms":[{"roomType":"1-bedroom apartment","roomCode":"XB175","sellingout":56,"availability":false,"boardType":"All Inclusive","price":{},"occupancy":{"adults":2,"children":0,"infant":0}}],"tripAdvisorReviewCount":952,"commercialPriority":0,"featureCodesAndValues":{"usps":["Huge pool with pirate ship","Beach club with wave pool","Select apartments available"],"strapline":["The ultimate family holiday"]},"url":"/holiday/bookaccommodation/overview/Benalmadena/Holiday-Village-Costa-del-Sol-027942?productCode\u003d027942\u0026noOfAdults\u003d2\u0026noOfChildren\u003d0\u0026childrenAge\u003d\u0026duration\u003d0\u0026flexibleDays\u003d7\u0026airports[]\u003dLTN\u0026flexibility\u003dtrue\u0026noOfSeniors\u003d0\u0026when\u003d30-08-2013\u0026units[]\u003dESP:COUNTRY\u0026packageId\u003d27942"},"price":{"perPerson":"1102.0","totalParty":"2204.0","discount":"166.0","depositAmount":"2204.0","lowDepositExists":false},"itinerary":{"departureDate":"05-09-2013","departureAirport":"London Luton","dreamlinerLogo":false,"outbounds":[{"departureAirport":"London Luton","departureAirportCode":"LTN","arrivalAirport":"Malaga Pablo Ruiz Picasso","arrivalAirportCode":"AGP","dreamLinerIndicator":false,"haulType":"SH","schedule":{"departureDate":"05-09-2013","departureTime":"0900","departureDateTimeInMilli":1378335600000,"arrivalDate":"05-09-2013","arrivalTime":"1250","arrivalDateTimeInMilli":1378335600000,"overlapDay":false},"carrier":{}}],"inbounds":[{"departureAirport":"Malaga Pablo Ruiz Picasso","departureAirportCode":"AGP","arrivalAirport":"London Luton","arrivalAirportCode":"LTN","dreamLinerIndicator":false,"haulType":"","schedule":{"departureDate":"19-09-2013","departureTime":"1350","departureDateTimeInMilli":1379545200000,"arrivalDate":"19-09-2013","arrivalTime":"1540","arrivalDateTimeInMilli":1379545200000,"overlapDay":false},"carrier":{}}]},"packageId":"27942","tracsUnitCode":"Q020241-Q33","coachTransfer":false,"duration":14,"productCode":"Q","subProductCode":"3","index":1},{"accommodation":{"code":"046925","name":"Holiday Village Majorca","imageUrl":"http://newmedia.thomson.co.uk/live/vol/0/3c51cdf842c3d6d8740919ba0fb59e6555b75ff7/232x130/web/EUROPE___MEDITERRANEAN_SPAIN_CON_ESP__MAJORCA_CALA_MILLOR_HOLIDAY_VILLAGE_MAJORCA.jpg","differentiatedProduct":true,"differentiatedType":"Holiday Village","differentiatedCode":"FHV","location":{"destination":{"code":"000122","name":"Majorca"},"resort":{"code":"000263","name":"Cala Millor"}},"ratings":{"officialRating":"5"},"rooms":[{"roomType":"Twin room","roomCode":"AV175","sellingout":4,"availability":false,"boardType":"All Inclusive","price":{},"occupancy":{"adults":2,"children":0,"infant":0}}],"tripAdvisorReviewCount":0,"commercialPriority":0,"featureCodesAndValues":{"usps":["Swim-up rooms","6 pools","Themed restaurants"],"strapline":["The ultimate family holiday"]},"url":"/holiday/bookaccommodation/overview/Cala-Millor/Holiday-Village-Majorca-046925?productCode\u003d046925\u0026noOfAdults\u003d2\u0026noOfChildren\u003d0\u0026childrenAge\u003d\u0026duration\u003d0\u0026flexibleDays\u003d7\u0026airports[]\u003dLTN\u0026flexibility\u003dtrue\u0026noOfSeniors\u003d0\u0026when\u003d30-08-2013\u0026units[]\u003dESP:COUNTRY\u0026packageId\u003d46925"},"price":{"perPerson":"1501.0","totalParty":"3002.0","discount":"226.0","depositAmount":"3002.0","lowDepositExists":false},"itinerary":{"departureDate":"05-09-2013","departureAirport":"London Luton","dreamlinerLogo":false,"outbounds":[{"departureAirport":"London Luton","departureAirportCode":"LTN","arrivalAirport":"Palma de Mallorca","arrivalAirportCode":"PMI","dreamLinerIndicator":false,"haulType":"SH","schedule":{"departureDate":"05-09-2013","departureTime":"0610","departureDateTimeInMilli":1378335600000,"arrivalDate":"05-09-2013","arrivalTime":"0930","arrivalDateTimeInMilli":1378335600000,"overlapDay":false},"carrier":{}}],"inbounds":[{"departureAirport":"Palma de Mallorca","departureAirportCode":"PMI","arrivalAirport":"London Luton","arrivalAirportCode":"LTN","dreamLinerIndicator":false,"haulType":"","schedule":{"departureDate":"19-09-2013","departureTime":"1035","departureDateTimeInMilli":1379545200000,"arrivalDate":"19-09-2013","arrivalTime":"1200","arrivalDateTimeInMilli":1379545200000,"overlapDay":false},"carrier":{}}]},"packageId":"46925","tracsUnitCode":"Q026969-Q33","coachTransfer":false,"duration":14,"productCode":"Q","subProductCode":"3","index":2},{"accommodation":{"code":"003773","name":"Hotel Taurito Princess","imageUrl":"http://newmedia.thomson.co.uk/live/vol/0/f772207a75ebca92113ef30c1cf4de1a262c4370/232x130/web/EUROPE___MEDITERRANEAN_SPAIN_CON_ESP__GRAN_CANARIA_PLAYA_TAURITO_RES_001266__TAURITO_PRINCESS.jpg","differentiatedProduct":true,"differentiatedType":"Premier","differentiatedCode":"FPR","location":{"destination":{"code":"000318","name":"Gran Canaria"},"resort":{"code":"001266","name":"Playa Taurito"}},"ratings":{"officialRating":"4","tripAdvisorRating":"4.0"},"rooms":[{"roomType":"Twin room with sea view","roomCode":"AQ191","sellingout":2,"availability":true,"boardType":"All Inclusive","price":{},"occupancy":{"adults":2,"children":0,"infant":0}}],"tripAdvisorReviewCount":715,"commercialPriority":0,"featureCodesAndValues":{"usps":["Part of our Premier range from May 2013","On the beach ","2 pools","4 bars"],"strapline":["Stylish 4 and 5–star hotels"]},"url":"/holiday/bookaccommodation/overview/Playa-Taurito/Hotel-Taurito-Princess-003773?productCode\u003d003773\u0026noOfAdults\u003d2\u0026noOfChildren\u003d0\u0026childrenAge\u003d\u0026duration\u003d0\u0026flexibleDays\u003d7\u0026airports[]\u003dLTN\u0026flexibility\u003dtrue\u0026noOfSeniors\u003d0\u0026when\u003d30-08-2013\u0026units[]\u003dESP:COUNTRY\u0026packageId\u003d3773"},"price":{"perPerson":"915.0","totalParty":"1830.0","discount":"138.0","depositAmount":"1830.0","lowDeposit":"100.0","lowDepositExists":true},"itinerary":{"departureDate":"02-09-2013","departureAirport":"London Luton","dreamlinerLogo":false,"outbounds":[{"departureAirport":"London Luton","departureAirportCode":"LTN","arrivalAirport":"Las Palmas","arrivalAirportCode":"LPA","dreamLinerIndicator":false,"haulType":"SH","schedule":{"departureDate":"02-09-2013","departureTime":"1540","departureDateTimeInMilli":1378076400000,"arrivalDate":"02-09-2013","arrivalTime":"2000","arrivalDateTimeInMilli":1378076400000,"overlapDay":false},"carrier":{}}],"inbounds":[{"departureAirport":"Las Palmas","departureAirportCode":"LPA","arrivalAirport":"London Luton","arrivalAirportCode":"LTN","dreamLinerIndicator":false,"haulType":"","schedule":{"departureDate":"16-09-2013","departureTime":"2100","departureDateTimeInMilli":1379286000000,"arrivalDate":"17-09-2013","arrivalTime":"0110","arrivalDateTimeInMilli":1379372400000,"overlapDay":true},"carrier":{}}]},"packageId":"3773","tracsUnitCode":"Q016669-QTT","coachTransfer":false,"duration":14,"productCode":"Q","subProductCode":"T","index":3},{"accommodation":{"code":"009987","name":"Hotel Tabaiba Princess","imageUrl":"http://newmedia.thomson.co.uk/live/vol/0/f7777fd110eb371a4b4b160a54297025031388f0/232x130/web/EUROPEMEDITERRANEANSPAINCON_ESPGRANCANARIAMASPALOMASRES_000322TABAIBAPRINCESS.jpg","differentiatedProduct":true,"differentiatedType":"Premier","differentiatedCode":"FPR","location":{"destination":{"code":"000318","name":"Gran Canaria"},"resort":{"code":"000322","name":"Maspalomas"}},"ratings":{"officialRating":"5","tripAdvisorRating":"4.0"},"rooms":[{"roomType":"Twin room","roomCode":"BC143","sellingout":21,"availability":false,"boardType":"All Inclusive","price":{},"occupancy":{"adults":2,"children":0,"infant":0}}],"tripAdvisorReviewCount":555,"commercialPriority":0,"featureCodesAndValues":{"usps":["Show cooking","Facility use across 2 hotels","Great pool scene"],"strapline":["Stylish 4 and 5–star hotels"]},"url":"/holiday/bookaccommodation/overview/Maspalomas/Hotel-Tabaiba-Princess-009987?productCode\u003d009987\u0026noOfAdults\u003d2\u0026noOfChildren\u003d0\u0026childrenAge\u003d\u0026duration\u003d0\u0026flexibleDays\u003d7\u0026airports[]\u003dLTN\u0026flexibility\u003dtrue\u0026noOfSeniors\u003d0\u0026when\u003d30-08-2013\u0026units[]\u003dESP:COUNTRY\u0026packageId\u003d9987"},"price":{"perPerson":"1017.0","totalParty":"2034.0","discount":"154.0","depositAmount":"2034.0","lowDeposit":"100.0","lowDepositExists":true},"itinerary":{"departureDate":"02-09-2013","departureAirport":"London Luton","dreamlinerLogo":false,"outbounds":[{"departureAirport":"London Luton","departureAirportCode":"LTN","arrivalAirport":"Las Palmas","arrivalAirportCode":"LPA","dreamLinerIndicator":false,"haulType":"SH","schedule":{"departureDate":"02-09-2013","departureTime":"1540","departureDateTimeInMilli":1378076400000,"arrivalDate":"02-09-2013","arrivalTime":"2000","arrivalDateTimeInMilli":1378076400000,"overlapDay":false},"carrier":{}}],"inbounds":[{"departureAirport":"Las Palmas","departureAirportCode":"LPA","arrivalAirport":"London Luton","arrivalAirportCode":"LTN","dreamLinerIndicator":false,"haulType":"","schedule":{"departureDate":"16-09-2013","departureTime":"2100","departureDateTimeInMilli":1379286000000,"arrivalDate":"17-09-2013","arrivalTime":"0110","arrivalDateTimeInMilli":1379372400000,"overlapDay":true},"carrier":{}}]},"packageId":"9987","tracsUnitCode":"Q002474-QTT","coachTransfer":false,"duration":14,"productCode":"Q","subProductCode":"T","index":4},{"accommodation":{"code":"006314","name":"Hotel Calypso","imageUrl":"http://newmedia.thomson.co.uk/live/vol/0/055989a77fcdee1b6601352c1b6641dd5577d446/232x130/web/EUROPE___MEDITERRANEAN_SPAIN_CON_ESP__COSTA_DORADA_DES_000372__SALOU_RES_000374__CALYPSO_HOTEL_ACC_006314_.jpg","differentiatedProduct":false,"location":{"destination":{"code":"000372","name":"Costa Dorada"},"resort":{"code":"000374","name":"Salou"}},"ratings":{"officialRating":"3","tripAdvisorRating":"3.5"},"rooms":[{"roomType":"Twin room","roomCode":"BC045","sellingout":71,"availability":false,"boardType":"All Inclusive","price":{},"occupancy":{"adults":2,"children":0,"infant":0}}],"tripAdvisorReviewCount":797,"commercialPriority":0,"featureCodesAndValues":{"usps":["Centrally located","Air-conditioning","Themed events"]},"url":"/holiday/bookaccommodation/overview/Salou/Hotel-Calypso-006314?productCode\u003d006314\u0026noOfAdults\u003d2\u0026noOfChildren\u003d0\u0026childrenAge\u003d\u0026duration\u003d0\u0026flexibleDays\u003d7\u0026airports[]\u003dLTN\u0026flexibility\u003dtrue\u0026noOfSeniors\u003d0\u0026when\u003d30-08-2013\u0026units[]\u003dESP:COUNTRY\u0026packageId\u003d6314"},"price":{"perPerson":"720.0","totalParty":"1440.0","discount":"110.0","depositAmount":"1440.0","lowDepositExists":false},"itinerary":{"departureDate":"27-08-2013","departureAirport":"London Luton","dreamlinerLogo":false,"outbounds":[{"departureAirport":"London Luton","departureAirportCode":"LTN","arrivalAirport":"Reus","arrivalAirportCode":"REU","dreamLinerIndicator":false,"haulType":"SH","schedule":{"departureDate":"27-08-2013","departureTime":"0550","departureDateTimeInMilli":1377558000000,"arrivalDate":"27-08-2013","arrivalTime":"0855","arrivalDateTimeInMilli":1377558000000,"overlapDay":false},"carrier":{}}],"inbounds":[{"departureAirport":"Reus","departureAirportCode":"REU","arrivalAirport":"London Luton","arrivalAirportCode":"LTN","dreamLinerIndicator":false,"haulType":"","schedule":{"departureDate":"10-09-2013","departureTime":"1010","departureDateTimeInMilli":1378767600000,"arrivalDate":"10-09-2013","arrivalTime":"1125","arrivalDateTimeInMilli":1378767600000,"overlapDay":false},"carrier":{}}]},"packageId":"6314","tracsUnitCode":"Q011950-QFF","coachTransfer":false,"duration":14,"productCode":"Q","subProductCode":"F","index":5},{"accommodation":{"code":"012816","name":"Hotel Barcelo Fuerteventura Thalasso Spa","imageUrl":"http://newmedia.thomson.co.uk/live/vol/0/1c7b20f94fd582390636b51fbd011dd7b26c72aa/232x130/web/EUROPE___MEDITERRANEAN_SPAIN_CON_ESP__FUERTEVENTURA_COSTA_CALETA_BARCELO_HOTEL_FUERTEVENTURA.jpg","differentiatedProduct":true,"differentiatedType":"Premier","differentiatedCode":"FPR","location":{"destination":{"code":"000312","name":"Fuerteventura"},"resort":{"code":"001253","name":"Costa Caleta"}},"ratings":{"officialRating":"4 plus","tripAdvisorRating":"4.0"},"rooms":[{"roomType":"Twin room","roomCode":"BD175","sellingout":78,"availability":false,"boardType":"All Inclusive","price":{},"occupancy":{"adults":2,"children":0,"infant":0}}],"tripAdvisorReviewCount":2057,"commercialPriority":0,"featureCodesAndValues":{"usps":["Central location ","On the beach ","2 pools"],"strapline":["Stylish 4 and 5–star hotels"]},"url":"/holiday/bookaccommodation/overview/Costa-Caleta/Hotel-Barcelo-Fuerteventura-Thalasso-Spa-012816?productCode\u003d012816\u0026noOfAdults\u003d2\u0026noOfChildren\u003d0\u0026childrenAge\u003d\u0026duration\u003d0\u0026flexibleDays\u003d7\u0026airports[]\u003dLTN\u0026flexibility\u003dtrue\u0026noOfSeniors\u003d0\u0026when\u003d30-08-2013\u0026units[]\u003dESP:COUNTRY\u0026packageId\u003d12816"},"price":{"perPerson":"1027.0","totalParty":"2054.0","discount":"156.0","depositAmount":"2054.0","lowDeposit":"100.0","lowDepositExists":true},"itinerary":{"departureDate":"28-08-2013","departureAirport":"London Luton","dreamlinerLogo":false,"outbounds":[{"departureAirport":"London Luton","departureAirportCode":"LTN","arrivalAirport":"Fuerteventura","arrivalAirportCode":"FUE","dreamLinerIndicator":false,"haulType":"SH","schedule":{"departureDate":"28-08-2013","departureTime":"1435","departureDateTimeInMilli":1377644400000,"arrivalDate":"28-08-2013","arrivalTime":"1845","arrivalDateTimeInMilli":1377644400000,"overlapDay":false},"carrier":{}}],"inbounds":[{"departureAirport":"Fuerteventura","departureAirportCode":"FUE","arrivalAirport":"London Luton","arrivalAirportCode":"LTN","dreamLinerIndicator":false,"haulType":"","schedule":{"departureDate":"11-09-2013","departureTime":"2000","departureDateTimeInMilli":1378854000000,"arrivalDate":"12-09-2013","arrivalTime":"0005","arrivalDateTimeInMilli":1378940400000,"overlapDay":true},"carrier":{}}]},"packageId":"12816","tracsUnitCode":"Q029626-QTT","coachTransfer":false,"duration":14,"productCode":"Q","subProductCode":"T","index":6},{"accommodation":{"code":"006955","name":"ClubHotel Riu Paraiso Lanzarote Resort","imageUrl":"http://newmedia.thomson.co.uk/live/vol/0/543a77ecb0c58acd01f3f762a8ab32d96f471ef3/232x130/web/EUROPE___MEDITERRANEAN_SPAIN_CON_ESP__LANZAROTE_DES_000329__PLAYA_DE_LOS_POCILLOS_CLUBHOTEL_RIU_PARAISO_LANZAROTE.jpg","differentiatedProduct":true,"differentiatedType":"Premier","differentiatedCode":"FPR","location":{"destination":{"code":"000329","name":"Lanzarote"},"resort":{"code":"000333","name":"Playa des los Pocillos"}},"ratings":{"officialRating":"4","tripAdvisorRating":"4.0"},"rooms":[{"roomType":"Twin room with pool view","roomCode":"BP141","sellingout":3,"availability":false,"boardType":"All Inclusive","price":{},"occupancy":{"adults":2,"children":0,"infant":0}}],"tripAdvisorReviewCount":1039,"commercialPriority":0,"featureCodesAndValues":{"usps":["Next to the beach ","4 pools ","4 restaurants"],"strapline":["Stylish 4 and 5–star hotels"]},"url":"/holiday/bookaccommodation/overview/Playa-des-los-Pocillos/ClubHotel-Riu-Paraiso-Lanzarote-Resort-006955?productCode\u003d006955\u0026noOfAdults\u003d2\u0026noOfChildren\u003d0\u0026childrenAge\u003d\u0026duration\u003d0\u0026flexibleDays\u003d7\u0026airports[]\u003dLTN\u0026flexibility\u003dtrue\u0026noOfSeniors\u003d0\u0026when\u003d30-08-2013\u0026units[]\u003dESP:COUNTRY\u0026packageId\u003d6955"},"price":{"perPerson":"1171.0","totalParty":"2342.0","discount":"156.0","depositAmount":"2342.0","lowDeposit":"100.0","lowDepositExists":true},"itinerary":{"departureDate":"01-09-2013","departureAirport":"London Luton","dreamlinerLogo":false,"outbounds":[{"departureAirport":"London Luton","departureAirportCode":"LTN","arrivalAirport":"Arrecife","arrivalAirportCode":"ACE","dreamLinerIndicator":false,"haulType":"SH","schedule":{"departureDate":"01-09-2013","departureTime":"1530","departureDateTimeInMilli":1377990000000,"arrivalDate":"01-09-2013","arrivalTime":"1945","arrivalDateTimeInMilli":1377990000000,"overlapDay":false},"carrier":{}}],"inbounds":[{"departureAirport":"Arrecife","departureAirportCode":"ACE","arrivalAirport":"London Luton","arrivalAirportCode":"LTN","dreamLinerIndicator":false,"haulType":"","schedule":{"departureDate":"15-09-2013","departureTime":"2055","departureDateTimeInMilli":1379199600000,"arrivalDate":"16-09-2013","arrivalTime":"0045","arrivalDateTimeInMilli":1379286000000,"overlapDay":true},"carrier":{}}]},"packageId":"6955","tracsUnitCode":"Q006548-QTT","coachTransfer":false,"duration":14,"productCode":"Q","subProductCode":"T","index":7},{"accommodation":{"code":"007289","name":"Hotel Club Jandia Princess","imageUrl":"http://newmedia.thomson.co.uk/live/vol/0/bfc01d3643eea7dfb63d5532549e604e81e2a138/232x130/web/EUROPE___MEDITERRANEAN_SPAIN_CON_ESP__FUERTEVENTURA_JANDIA_RES_000315__CLUB_JANDIA_PRINCESS_HTL.jpg","differentiatedProduct":true,"differentiatedType":"Premier","differentiatedCode":"FPR","location":{"destination":{"code":"000312","name":"Fuerteventura"},"resort":{"code":"000315","name":"Jandia"}},"ratings":{"officialRating":"5","tripAdvisorRating":"4.0"},"rooms":[{"roomType":"Family room","roomCode":"AJ141","sellingout":3,"availability":false,"boardType":"All Inclusive","price":{},"occupancy":{"adults":2,"children":0,"infant":0}}],"tripAdvisorReviewCount":674,"commercialPriority":0,"featureCodesAndValues":{"usps":["Newly refurbished","Adult-only areas available","5 pools"],"strapline":["Stylish 4 and 5–star hotels"]},"url":"/holiday/bookaccommodation/overview/Jandia/Hotel-Club-Jandia-Princess-007289?productCode\u003d007289\u0026noOfAdults\u003d2\u0026noOfChildren\u003d0\u0026childrenAge\u003d\u0026duration\u003d0\u0026flexibleDays\u003d7\u0026airports[]\u003dLTN\u0026flexibility\u003dtrue\u0026noOfSeniors\u003d0\u0026when\u003d30-08-2013\u0026units[]\u003dESP:COUNTRY\u0026packageId\u003d7289"},"price":{"perPerson":"1018.0","totalParty":"2036.0","discount":"154.0","depositAmount":"2036.0","lowDeposit":"100.0","lowDepositExists":true},"itinerary":{"departureDate":"28-08-2013","departureAirport":"London Luton","dreamlinerLogo":false,"outbounds":[{"departureAirport":"London Luton","departureAirportCode":"LTN","arrivalAirport":"Fuerteventura","arrivalAirportCode":"FUE","dreamLinerIndicator":false,"haulType":"SH","schedule":{"departureDate":"28-08-2013","departureTime":"1435","departureDateTimeInMilli":1377644400000,"arrivalDate":"28-08-2013","arrivalTime":"1845","arrivalDateTimeInMilli":1377644400000,"overlapDay":false},"carrier":{}}],"inbounds":[{"departureAirport":"Fuerteventura","departureAirportCode":"FUE","arrivalAirport":"London Luton","arrivalAirportCode":"LTN","dreamLinerIndicator":false,"haulType":"","schedule":{"departureDate":"11-09-2013","departureTime":"2000","departureDateTimeInMilli":1378854000000,"arrivalDate":"12-09-2013","arrivalTime":"0005","arrivalDateTimeInMilli":1378940400000,"overlapDay":true},"carrier":{}}]},"packageId":"7289","tracsUnitCode":"Q012892-QTT","coachTransfer":false,"duration":14,"productCode":"Q","subProductCode":"T","index":8},{"accommodation":{"code":"033745","name":"Viva Ca\u0027n Picafort","imageUrl":"http://newmedia.thomson.co.uk/live/vol/0/da949f3e52f9141e6c6529f0dd9b26104c40ec8f/232x130/web/EUROPE___MEDITERRANEAN_SPAIN_CON_ESP__MAJORCA_CA_N_PICAFORT_HOLIDAY_VILLAGE_VIVA__FC_.jpg","differentiatedProduct":true,"differentiatedType":"Premier Families","differentiatedCode":"FPF","location":{"destination":{"code":"000122","name":"Majorca"},"resort":{"code":"000272","name":"Ca\u0027n Picafort"}},"ratings":{"officialRating":"4"},"rooms":[{"roomType":"1 bedroom apartment","roomCode":"XB175","sellingout":13,"availability":false,"boardType":"All Inclusive","price":{},"occupancy":{"adults":2,"children":0,"infant":0}}],"tripAdvisorReviewCount":0,"commercialPriority":0,"featureCodesAndValues":{"usps":["Select and Privilege rooms","A la carte dining","Splash park"],"strapline":["Stylish 4 and 5–star hotels"]},"url":"/holiday/bookaccommodation/overview/Can-Picafort/Viva-Can-Picafort-033745?productCode\u003d033745\u0026noOfAdults\u003d2\u0026noOfChildren\u003d0\u0026childrenAge\u003d\u0026duration\u003d0\u0026flexibleDays\u003d7\u0026airports[]\u003dLTN\u0026flexibility\u003dtrue\u0026noOfSeniors\u003d0\u0026when\u003d30-08-2013\u0026units[]\u003dESP:COUNTRY\u0026packageId\u003d33745"},"price":{"perPerson":"1142.0","totalParty":"2284.0","discount":"174.0","depositAmount":"2284.0","lowDeposit":"100.0","lowDepositExists":true},"itinerary":{"departureDate":"27-08-2013","departureAirport":"London Luton","dreamlinerLogo":false,"outbounds":[{"departureAirport":"London Luton","departureAirportCode":"LTN","arrivalAirport":"Palma de Mallorca","arrivalAirportCode":"PMI","dreamLinerIndicator":false,"haulType":"SH","schedule":{"departureDate":"27-08-2013","departureTime":"2245","departureDateTimeInMilli":1377558000000,"arrivalDate":"28-08-2013","arrivalTime":"0205","arrivalDateTimeInMilli":1377644400000,"overlapDay":true},"carrier":{}}],"inbounds":[{"departureAirport":"Palma de Mallorca","departureAirportCode":"PMI","arrivalAirport":"London Luton","arrivalAirportCode":"LTN","dreamLinerIndicator":false,"haulType":"","schedule":{"departureDate":"11-09-2013","departureTime":"0315","departureDateTimeInMilli":1378854000000,"arrivalDate":"11-09-2013","arrivalTime":"0440","arrivalDateTimeInMilli":1378854000000,"overlapDay":false},"carrier":{}}]},"packageId":"33745","tracsUnitCode":"Q028648-QTT","coachTransfer":false,"duration":14,"productCode":"Q","subProductCode":"T","index":9},{"accommodation":{"code":"028988","name":"Hotel Lagotel","imageUrl":"http://newmedia.thomson.co.uk/live/vol/0/db5b3e5bdb1c206103566b597f6fadc0fb0cc61f/232x130/web/EUROPE___MEDITERRANEAN_SPAIN_CON_ESP__MAJORCA_PLAYA_DE_MURO_RES_002358__LAGOTEL__FC__-_DO_NOT_USE.jpg","differentiatedProduct":false,"location":{"destination":{"code":"000122","name":"Majorca"},"resort":{"code":"002358","name":"Playa de Muro"}},"ratings":{"officialRating":"3 plus","tripAdvisorRating":"4.0"},"rooms":[{"roomType":"Twin room","roomCode":"BD047","sellingout":27,"availability":false,"boardType":"All Inclusive","price":{},"occupancy":{"adults":2,"children":0,"infant":0}}],"tripAdvisorReviewCount":682,"commercialPriority":0,"featureCodesAndValues":{"usps":["Free kids’ places","First Choice Kids’ Club","Free bus to the beach"]},"url":"/holiday/bookaccommodation/overview/Playa-de-Muro/Hotel-Lagotel-028988?productCode\u003d028988\u0026noOfAdults\u003d2\u0026noOfChildren\u003d0\u0026childrenAge\u003d\u0026duration\u003d0\u0026flexibleDays\u003d7\u0026airports[]\u003dLTN\u0026flexibility\u003dtrue\u0026noOfSeniors\u003d0\u0026when\u003d30-08-2013\u0026units[]\u003dESP:COUNTRY\u0026packageId\u003d28988"},"price":{"perPerson":"770.0","totalParty":"1540.0","discount":"118.0","depositAmount":"1540.0","lowDepositExists":false},"itinerary":{"departureDate":"27-08-2013","departureAirport":"London Luton","dreamlinerLogo":false,"outbounds":[{"departureAirport":"London Luton","departureAirportCode":"LTN","arrivalAirport":"Palma de Mallorca","arrivalAirportCode":"PMI","dreamLinerIndicator":false,"haulType":"SH","schedule":{"departureDate":"27-08-2013","departureTime":"2245","departureDateTimeInMilli":1377558000000,"arrivalDate":"28-08-2013","arrivalTime":"0205","arrivalDateTimeInMilli":1377644400000,"overlapDay":true},"carrier":{}}],"inbounds":[{"departureAirport":"Palma de Mallorca","departureAirportCode":"PMI","arrivalAirport":"London Luton","arrivalAirportCode":"LTN","dreamLinerIndicator":false,"haulType":"","schedule":{"departureDate":"11-09-2013","departureTime":"0315","departureDateTimeInMilli":1378854000000,"arrivalDate":"11-09-2013","arrivalTime":"0440","arrivalDateTimeInMilli":1378854000000,"overlapDay":false},"carrier":{}}]},"packageId":"28988","tracsUnitCode":"Q027866-QFF","coachTransfer":false,"duration":14,"productCode":"Q","subProductCode":"F","index":10}],"holidaysList":[],"endecaResultsCount":86,"prioritizedDuration":14},"userData":{"shortlistedPackages":[]},"searchRequest":{"airports":[{"id":"LTN","name":"London Luton","synonym":"LTN","children":[],"group":["SE","LN"],"available":true}],"units":[{"id":"ESP","name":"Spain","type":"COUNTRY","synonym":"","parent":"null","available":false}],"until":"06-09-2013","when":"23-08-2013","flexibility":true,"noOfAdults":2,"noOfSeniors":0,"noOfChildren":0,"childrenAge":[],"flexibleDays":7,"first":0,"last":10,"duration":0,"infantCount":0,"departureDate":"30-08-2013","childCount":0,"searchRequestType":"ins","rooms":[],"page":1,"offset":0,"count":1,"isBreadCrumbRequired":false,"tabbedResult":false}};
+</script>
+
+<body>
+    <div id="wrapper">
+	    <div id="header">
+		    <span class="hide" data-klass-id="searchConfig" data-dojo-type="tui.mvc.Klass" data-dojo-props="PAGE: 0"></span>
+		    <span class="hide" id="mediator" data-dojo-type="tui.searchResults.Mediator" data-dojo-props="model:searchResponse, saveStateKey:'searchResults'"></span>
+
+		    <div class="search controller loading" data-klass-id="searchController" data-dojo-type="tui.mvc.Klass" data-dojo-props="jsonData:searchResponse,locationData:null">
+			    <form  class="search-form" method="post" action="/js/tui/searchResults/tests/searchResults.html"></form>
+			    <div class="col from">
+				    <label class="icon" for="where-from">Where from?</label>
+				    <input type="text" data-klass-id="airportMultiFieldList" data-dojo-type="tui.mvc.Klass" data-dojo-props="maxTextboxes:6, duration:500" class="textfield multifield where-from" placeholder="Any UK Airport" tabindex="0" id="where-from"/>
+				    <p><a href="#"  id="airport-guide" data-klass-id="airportGuide" data-dojo-type="tui.mvc.Klass" data-dojo-props="fromLimit:6"  class="related airport airport-guide" tabindex="-1">Airport List <span class="load"></span></a></p>
+			    </div>
+			    <div class="col to">
+				    <label for="where-to">Where to? <span>(Destination, Hotel or Type)</span></label>
+				    <input type="text" data-klass-id="destinationMultiFieldList" data-dojo-type="tui.mvc.Klass" data-dojo-props="duration:500" class="textfield multifield where-to" placeholder="Anywhere" tabindex="0" id="where-to"/>
+				    <p><a href="#" data-klass-id="destinationGuide" data-dojo-type="tui.mvc.Klass"  class="related destination destination-guide" tabindex="-1">Destination List <span class="load"></span></a></p>
+			    </div>
+			    <div class="col">
+				    <label for="when">When?</label>
+				    <div class="when" tabindex="0" id="when" data-klass-id="searchDatePicker" data-dojo-type="tui.mvc.Klass" data-dojo-props="seasonLength:18">Select a date</div>
+				    <p>
+					    <label class="related give-take"><span data-klass-id="flexibleView" data-dojo-type="tui.mvc.Klass"><input type="checkbox" class="flexible" checked="checked" /></span>I'm flexible</label>
+					    <span class="flexible-tooltip" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="text: 'We\'ll search for holidays 7 days before and after your selected date.', floatWhere: 'position-right-center'">?</span>
+				    </p>
+			    </div>
+			    <div class="col">
+				    <div class="rooms">
+					    <div class="labels">
+						    <label for="totalAdults" class="icon">Adults</label>
+						    <label for="totalSeniors" class="icon">Seniors <span>(65+)</span></label>
+						    <label for="totalChildren" class="icon">Children <span>(0-17)</span></label>
+					    </div>
+					    <div class="item">
+                            <span class="acol">
+                                <select id="totalAdults" name="totalAdults" data-klass-id="adultSelectionOption" data-dojo-type="tui.mvc.Klass"  class="dropdown totalAdults" tabindex="-1">
+	                                <option value="0">0</option>
+	                                <option value="1">1</option>
+	                                <option value="2" selected>2</option>
+	                                <option value="3">3</option>
+	                                <option value="4">4</option>
+	                                <option value="5">5</option>
+	                                <option value="6">6</option>
+	                                <option value="7">7</option>
+	                                <option value="8">8</option>
+	                                <option value="9">9</option>
+                                </select>
+                            </span>
+                            <span class="scol">
+                                <select id="totalSeniors" name="totalSeniors" data-klass-id="seniorsSelectOption" data-dojo-type="tui.mvc.Klass"  class="dropdown totalSeniors" tabindex="-1">
+	                                <option value="0">0</option>
+	                                <option value="1">1</option>
+	                                <option value="2">2</option>
+	                                <option value="3">3</option>
+	                                <option value="4">4</option>
+	                                <option value="5">5</option>
+	                                <option value="6">6</option>
+	                                <option value="7">7</option>
+	                                <option value="8">8</option>
+	                                <option value="9">9</option>
+                                </select>
+                            </span>
+                            <span class="ccol">
+                                <select id="totalChildren" name="totalChildren" data-klass-id="childSelectOption" data-dojo-type="tui.mvc.Klass"   class="dropdown totalChildren" tabindex="-1">
+	                                <option value="0">0</option>
+	                                <option value="1">1</option>
+	                                <option value="2">2</option>
+	                                <option value="3">3</option>
+	                                <option value="4">4</option>
+	                                <option value="5">5</option>
+	                                <option value="6">6</option>
+	                                <option value="7">7</option>
+	                                <option value="8">8</option>
+	                                <option value="9">9</option>
+                                </select>
+                            </span>
+					    </div>
+				    </div>
+				    <div class="search-col">
+					    <a href="#" data-klass-id="submitButton" data-dojo-type="tui.mvc.Klass" class="button search-submit" tabindex="0">Search</a>
+				    </div>
+			    </div>
+		    </div>
+		    <div class="search-summary closed" data-klass-id="searchSummary" data-dojo-type="tui.mvc.Klass">
+			    <div class="col">
+				    <label class="icon" for="where-from-summary">Where from?</label>
+				    <p class="where-from-summary" id="where-from-summary"></p>
+			    </div>
+			    <div class="col">
+				    <label for="where-to-summary">Where to?</label>
+				    <p class="where-to-summary" id="where-to-summary"></p>
+			    </div>
+			    <div class="col">
+				    <label for="when-summary">When?</label>
+				    <p class="when-summary" id="when-summary"></p>
+			    </div>
+			    <div class="col">
+				    <div class="rooms">
+					    <div class="labels">
+						    <label for="total-adults" class="icon">Adults</label>
+						    <label for="total-seniors" class="icon">Seniors (65+)</label>
+						    <label for="total-children" class="icon">Children (0-17)</label>
+					    </div>
+					    <div class="item">
+						    <span class="acol-summary total-adults" id="total-adults"></span>
+						    <span class="scol-summary total-seniors" id="total-seniors"></span>
+						    <span class="ccol-summary total-children" id="total-children"></span>
+					    </div>
+				    </div>
+			    </div>
+			    <div class="col no-margin">
+				    <input type="submit" class="button search-edit" value="Edit search">
+			    </div>
+		    </div>
+	    </div>
+        <div id="content">
+	        <div class="top controller" data-klass-id="searchResultsController" data-dojo-type="tui.mvc.Klass" data-dojo-props='jsonData:searchResponse, viewMode:"list", searchResultsPage:true'>
+		        <div class="search-results updating">
+			        <!-- Single Accommodation result details & Filter Panel -->
+			        <div class="span-quarter">
+				        <!-- Single Accommodation result details -->
+				        <div class="single-accommodation-details"></div>
+				        <div class="filter" data-klass-id="filterController" data-dojo-type="tui.mvc.Klass">
+					        <div class="mask-interactivity"></div>
+					        <div class="item">
+						        <h3 class='item-toggle'>
+							        <a href="#">
+								        <span class="title">General Options</span>
+								        <span class="selection">0</span>
+							        </a>
+						        </h3>
+						        <div class="item-content" id="budgets">
+							        <div class="item-content-section border-bottom-dotted">
+								        <h4>Price display</h4>
+								        <ul class="price-toggle" data-klass-id="budgetToggle" data-dojo-type="tui.mvc.Klass">
+									        <li class="total active">&pound; Total</li>
+									        <li class="perperson">&pound; Per Person</li>
+								        </ul>
+								    </div>
+							        <div class="item-content-section border-bottom-dotted js-budget-total">
+								        <h4>Budget (total party)</h4>
+								        <div class="slider" id="slider_totalBudget" dojoType="tui.filterPanel.view.sliders.TotalBudget">
+									        <div class="track">
+										        <div class="elapse"></div>
+										        <div class="handle"><span class="slider-value"></span><span class="slider-groove"></span></div>
+									        </div>
+								        </div>
+							        </div>
+							        <div class="item-content-section border-bottom-dotted js-budget-pp">
+								        <h4>Budget (per person)</h4>
+								        <div class="slider" id="slider_perPerson" dojoType="tui.filterPanel.view.sliders.PerPersonBudget">
+									        <div class="track">
+										        <div class="elapse"></div>
+										        <div class="handle"><span class="slider-value"></span><span class="slider-groove"></span></div>
+									        </div>
+								        </div>
+							        </div>
+							        <div class="js-rooms-editor item-content-section">
+								        <h4 class="room-editor-title">Number of rooms <span class="hide edit-rooms"><a href="#">Edit this</a></span></h4>
+								        <ul class="list room-editor-summary default">
+									        <li>Cheapest room for your party</li>
+									        <li><a href="#" id="edit-rooms" class="edit-rooms icon round-arrow-right" data-klass-id="roomsPopup" data-dojo-type="tui.mvc.Klass">Choose number of rooms</a></li>
+								        </ul>
+								    </div>
+						        </div>
+					        </div>
+					        <div class="item">
+						        <h3 class='item-toggle'>
+							        <a href="#">
+								        <span class="title">RATINGS</span>
+								        <span class="selection">0</span>
+							        </a>
+						        </h3>
+						        <div class="item-content">
+							        <div class="item-content-section">
+								        <h4>Minimum First Choice rating</h4>
+								        <div class="slider" id="slider_rating" dojoType="tui.filterPanel.view.sliders.Rating">
+									        <div class="track">
+										        <div class="elapse"></div>
+										        <div class="handle"><span class="slider-value"></span><span class="slider-groove"></span></div>
+									        </div>
+								        </div>
+							        </div>
+						        </div>
+					        </div>
+					        <!--<div class="item">
+					        <h3 class='item-toggle'>
+						        <a href="#">
+							        <span class="title">TEMPERATURE</span>
+							        <span class="selection">0</span>
+						        </a>
+					        </h3>
+					        <div class="item-content">
+						        <div class="slider double" id="slider_temperature" dojoType="tui.filterPanel.view.sliders.Temperature">
+							        <div class="track">
+								        <div class="elapse"></div>
+								        <div class="handle"><span class="slider-value"></span><span class="slider-groove"></span></div>
+								        <div class="handle"><span class="slider-value"></span><span class="slider-groove"></span></div>
+							        </div>
+						        </div>
+					        </div>
+				        </div>-->
+					        <div class="item">
+						        <h3 class='item-toggle'>
+							        <a href="#">
+								        <span class="title">FLIGHT OPTIONS</span>
+								        <span class="selection">0</span>
+							        </a>
+						        </h3>
+						        <div class="item-content" data-dojo-type="tui.filterPanel.view.options.Flight">
+
+						        </div>
+					        </div>
+					        <div class="item">
+						        <h3 class='item-toggle'>
+							        <a href="#">
+								        <span class="title">HOTEL OPTIONS</span>
+								        <span class="selection">0</span>
+							        </a>
+						        </h3>
+						        <div class="item-content" data-dojo-type="tui.filterPanel.view.options.Hotel">
+
+						        </div>
+					        </div>
+					        <div class="item">
+						        <h3 class='item-toggle'>
+							        <a href="#">
+								        <span class="title">DESTINATION OPTIONS</span>
+								        <span class="selection">0</span>
+							        </a>
+						        </h3>
+						        <div class="item-content" data-dojo-type="tui.filterPanel.view.options.Destination">
+
+						        </div>
+					        </div>
+
+					        <p>
+						        <a href="#" class="icon round-arrow-right" data-dojo-type="tui.searchResults.view.ClearFilters">Clear all filters</a>
+					        </p>
+				        </div>
+			        </div>
+			        <!-- Holiday Duration Selection & Shortlist summary -->
+			        <div class="span-three-quarter no-bottom-margin">
+				        <!-- Shortlist summary-->
+				        <div class="shortlisted" data-klass-id="shortlistSummary" data-dojo-type="tui.mvc.Klass">
+					        <a href="#" id="shortlist" class="" data-dojo-props="floatWhere:'position-bottom-center', text:'Save holidays for comparing and viewing later, and sign up for email updates of any price changes.'" data-dojo-type="tui.searchResults.view.Tooltips">
+						        <span class="icon"><i></i></span>
+						        <span class="count">0</span>
+						        <span class="text">holidays saved</span>
+					        </a>
+				        </div>
+				        <div class="duration-selection">
+					        <div class="mask-interactivity"></div>
+					        <!-- Holiday Duration Selection -->
+					        <h2 class="step-1"><span class="steps">1</span> Select duration for your holiday</h2>
+					        <div id="duration-tab" class="tabs-container" data-klass-id="holidayDuration" data-dojo-type="tui.mvc.Klass" data-dojo-props="maxDuration: 28">
+						        <ul class="tabs nights-choice-menu">
+							        <li class="duration-standard active" data-dojo-value="7">
+								        <a href="#" >7 nights</a>
+							        </li>
+							        <li class="duration-standard" data-dojo-value="10">
+								        <a href="#" >10 nights</a>
+							        </li>
+							        <li class="duration-standard" data-dojo-value="14">
+								        <a href="#" >14 nights</a>
+							        </li>
+							        <li class="custom-dates" tabindex="0">
+								        <span>More Durations</span>
+								        <span class="more-arrow"></span>
+								        <ul>
+									        <li class="customize">
+										        <p>Or select your own <small>(up to 28 nights)</small></p>
+										        <label><input maxlength="2" placeholder="e.g 22" value="" type="text" tabindex="0"> nights</label>
+										        <a class="button cta" tabindex="0">Search</a>
+									        </li>
+								        </ul>
+							        </li>
+						        </ul>
+						    </div>
+					    </div>
+				    </div>
+			        <!-- Refine Dates & Adjust Departure Dates -->
+			        <div class="span-three-quarter no-bottom-margin">
+				        <div class="refine-dates">
+					        <div class="mask-interactivity"></div>
+					        <h2><span class="steps">2</span> What dates can you depart?</h2>
+					        <div class="slidey-calendar">
+						        <div id="dateAvailabilitySlider" class="slider" data-klass-id="dateSlider" data-dojo-type="tui.mvc.Klass" data-dojo-props="flexibleDays: 7">
+							        <div class="track">
+								        <div class="elapse"></div>
+								        <div class="handle left"><span></span></div>
+								        <div class="handle right"><span></span></div>
+							        </div>
+						        </div>
+					        </div>
+				        </div>
+			        </div>
+			        <!-- Search Results count & sorting -->
+			        <div class="span-three-quarter results-container">
+				        <script type="text/javascript">
+					        dojoConfig.addModuleName("tui/searchResults/view/HolidayCount");
+				        </script>
+				        <div class="mask-interactivity"></div>
+				        <div class="inline-header-view">
+					        <h3 class="holiday-count"><span class="steps">3</span> We've found <span id="holiday-count" data-dojo-type="tui.searchResults.view.HolidayCount">86 Holidays</span></h3>
+					        <ul class="view-style" id="view-style" data-klass-id="viewMode" data-dojo-type="tui.mvc.Klass">
+						        <li class="title">View</li>
+						        <li class="view-mode list active" lang="en">List</li>
+						        <li class="view-mode gallery" lang="en">Gallery</li>
+						        <li class="sorted">
+							        <span class="dropdown-title">Sort by</span>
+							        <select class="dropdown" id="search-result-sortfilter" data-klass-id="sortResults" data-dojo-type="tui.mvc.Klass">
+								        <option value="default">Our Recommended</option>
+								        <option value="tripAdvisorRatingDesc">TripAdvisor Rating</option>
+								        <option value="priceAsc">Price - low to high</option>
+								        <option value="priceDesc">Price - high to low</option>
+								        <option value="discount">Saving Amount</option>
+								        <option value="departureDate">Departure Date</option>
+								        <option value="hotelName">A-Z</option>
+							        </select>
+						        </li>
+					        </ul>
+				        </div>
+				        <div class="result-view list">
+					        <div class="product-list">
+						        <div class="viewport">
+							        <ul class="plist total" id="searchResults" data-klass-id="searchResultsComponentTest" data-dojo-type="tui.mvc.Klass">
+
+							        </ul>
+							    </div>
+						    </div>
+				        </div>
+			        </div>
+		        </div>
+		    </div>
+        </div>
+    </div>
+
+    <footer id="footer"></footer>
+    <script type="text/javascript" src="/js/underscore/underscore-min.js"></script>
+    <script type="text/javascript" src="/js/dojo/dojo.js"></script>
+    <script type="text/javascript">
+        dojoConfig.init();
+        require(["dojo"], function (dojo) {
+            dojo.ready(function () {
+                dojo.subscribe("tui:channel=validSearchModel", function () {
+                    setTimeout(function () {
+                        location.reload();
+                    }, 600);
+                });
+            })
+        })
+    </script>
+</body>
+</html>

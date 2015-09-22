@@ -1,0 +1,43 @@
+<div class="book divider">
+    <div class="cf border-bottom">
+        <div class="price-wrapper">
+            <p class="price">
+                <span class="price-info uc">Per Person {% if cruiseandstay %}<span class="from"><br/>from</span>{% endif %}</span>
+                <span class="currency">&pound;</span> <span class="price-value">{{pp}}</span>
+            </p>
+            {% if cruiseandstay %}
+                {% if stayandcruise %}
+                    <span class="uc variant" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{scTooltip}}'">Stay &amp; Cruise</span>
+                {% else  %}
+                    <span class="uc variant" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{csTooltip}}'">Cruise &amp; Stay</span>
+                {% endif %}
+            {% endif %}
+            <div class="price-discount">
+                <span class="uc totalPrice" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{summaryPrice}}'">&pound;{{total}} Total Price</span>
+                {% if discount > 0 %}
+                <span class="discount highlight discount-e">Includes &pound;{{discount}}&nbsp;Total Discount</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% if not summary %}
+    <div>
+        <p class="party-price">
+            <span class="party-composition"> {{adults}} Adult{{adults|pluralize}} {% if showChild %}{{children}} {% ifequal children  1 %}Child{% else %}Children{% endifequal %} {% endif %}&nbsp;{% if not hideLink %}<a lang="en" href="javascript:void(0);" class="change-pax loaded uc"  data-dojo-type="tui.searchGetPrice.view.GetPriceModal"
+					data-dojo-props="widgetId:'get-price-modal', modal: true, resizeListener: true">Change</a>{% endif %}</span>
+        </p>
+    </div>
+    {% endif %}
+</div>
+<div class="charges divider">
+    {% if lowDepositExists %}
+       <span class="uc deposit"><b>Pay only &pound;{{lowDeposit}}<sup class="lc">pp</sup> low Deposit today</b></span>
+    {% endif %}
+	{% if depositExists %}
+       <span class="uc deposit"><b>Pay only &pound;{{lowDeposit}}<sup class="lc">pp</sup> Deposit today</b></span>
+    {% endif %}
+    <p class="inc-info">
+        Includes all applicable taxes and charges. Credit card payments will incur a surcharge
+        <span lang="en"  class="question" data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '{{ccChargesText}}'"></span>
+    </p>
+</div>

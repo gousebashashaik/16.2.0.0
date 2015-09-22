@@ -1,0 +1,74 @@
+
+<div class="temp">
+  <div id="carHireViewInfo">
+
+
+    <!-- Villa content start-->
+    <div id="car_hire_main_div">
+	{% for carHire in carHireModelObj %}
+
+
+            {% for carHireFacility in carHire.extraFacility %}
+
+            	<div class="cartype">
+
+            <div class="cartype_details">
+                <div class="cartype_childdiv" >
+                    <div class="carhire_img" >
+                        <img src="../images/thomson/bookflow/carhire_img.png" />
+                    </div>
+                    <div class="carhire_details" >
+                        <span class="car_type_name">{{carHire.description}}</span>
+                        <span class="car_desc"><br />UK equivalent: Ford Focus</span><br />
+                        <span class="car_desc"><img src="../images/thomson/bookflow/des.png" />1 |</span><span class="car_desc"><img src="../images/thomson/bookflow/des.png" />1 |</span>
+                        <span class="car_desc"><img src="../images/thomson/bookflow/des.png" />1 |</span><span class="car_desc"><img src="../images/thomson/bookflow/des.png" />1 </span>
+                    </div>
+                </div>
+            </div>
+            <div class="ins_details">
+
+            </div>
+            <div class="ins_details">
+
+            </div>
+            <div class="ins_details" name="{{carHireFacility.code}}" class="insurance_details {% if carHireFacility.free %} default {% endif %}">
+
+                  <div class="clear"></div>
+						<span class="insurance_desc">{{carHireFacility.carDescription}}<span><br />
+					  {% if carHireFacility.free %}
+                      {% if carHireFacility.selected %}
+                      <label><span class="textCenter inc_pad_overlay fl">
+                      included
+                        </span><br/></label><br/>
+                      {% else %}
+
+							<span class="rate_cls">{{carHireFacility.carCurrencyAppendedPrice}}</span><br />
+							<span class="rate_small_cls">({{carHireFacility.carPerPersonPrice}} per day)</span><br />
+                      {% endif %}
+                      {% else %}
+                      {% if carHireFacility.selected %}
+                      		<span class="rate_cls"></span><br />
+							<span class="rate_small_cls"></span><br />
+                      {% else %}
+
+							<span class="rate_cls">{{carHireFacility.carCurrencyAppendedPrice}}</span><br />
+							<span class="rate_small_cls">({{carHireFacility.carPerPersonPrice}} per day)</span><br />
+                      {% endif %}
+                      {% endif %}
+
+							<button id="{{carHireFacility.code}}|{{carHire.description}}" class="button jumbo sel_btn carhireSelect {% if carHireFacility.selected %} selected {% endif %}" name="">
+
+        					</button>
+             </div>
+
+
+        </div>
+		{% endfor %}
+        {% endfor %}
+
+    </div>
+
+    <!-- Villa content end -->
+</div>
+
+    </div>

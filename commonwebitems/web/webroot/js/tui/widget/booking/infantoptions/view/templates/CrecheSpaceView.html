@@ -1,0 +1,111 @@
+<div class="prebook-modal-window infant-creche-overlay">
+
+	<div class="clear"></div>
+	<h2 class="creche-overlay">{{infantContent.descriptionTitle|default:" "}}
+	<a href="javascript:void(0);" class="close abs fr">Close</a>
+	</h2>
+	<div class="clear"></div>
+	<div class="creche-details">
+		<div class="left-details">
+			<div class="creche-img">
+				<img src="{{infantContent.imageSrc|default:\' \'}}" />
+			</div>
+			<div class="crechespace-description">
+				<p>{{infantContent.descriptionIntro|safe|default:" "}}</p>
+			</div>
+		</div>
+		<div class="right-details">
+			<div class="duration-details">
+				{% if crecheOptionsData.extrasToPassengerMapping %}
+					<div class="selecting-section" id="selecting-section">
+						{% for crecheSpace in crecheOptionsData.extrasToPassengerMapping %}
+
+								<div class="child-details" data-dojo-attach-point="crecheDiv{{crecheSpace.passenger.identifier}}">
+									<label class="age disBlock textBold">Child
+										{{forloop.counter}} ({{crecheSpace.passenger.age}} yrs)</label>
+									<div class="package-selection-section">
+										{% ifnotequal crecheOptionsData.extrasToPassengerMapping.length  0 %}
+											{% ifequal crecheOptionsData.extrasToPassengerMapping.length 1 %}
+												{% for extras in crecheSpace.extras %}
+												<span class="custom-radio" id="creche{{extras.code}}{{crecheSpace.passenger.identifier}}0_span"
+												{%if extras.selected %}
+													class="custom-radio selected"
+												{% else %}
+													class="custom-radio"
+												{% endif %}	>
+													<input type="radio" id="creche{{extras.code}}|{{crecheSpace.passenger.identifier}}0"
+														name="creche{{crecheSpace.passenger.identifier}}"  style="opacity: 0;filter: alpha(opacity = 0); display: block; margin-top: 3px ;" value = {{extras.childPrice}}
+														{%if extras.selected %}
+																checked
+															{% endif %}/>
+													<label for="creche{{extras.code}}|{{crecheSpace.passenger.identifier}}0" style="display:inline-block;"><span
+														for="creche{{extras.code}}|{{crecheSpace.passenger.identifier}}0" class="mt10px">{{extras.description}}</span></label>
+													<span class="fr price-package">{{extras.currencyAppendedPrice}}</span>
+												</span>
+
+													<div class="clear"></div>
+												{% endfor %}
+											{% else %}
+												<span class="custom-radio selected" id="crecheNone{{extras.code}}{{crecheSpace.passenger.identifier}}{{forloop.counter}}_span"  >
+													<input type="radio" id="crecheNone{{extras.code}}|{{crecheSpace.passenger.identifier}}{{forloop.counter}}"
+														name="creche{{crecheSpace.passenger.identifier}}"  style="opacity: 0;filter: alpha(opacity = 0); display: block; margin-top: 3px; " value="0" checked/>
+													<label class="disBlock" for="crecheNone{{extras.code}}|{{crecheSpace.passenger.identifier}}{{forloop.counter}}" style="display:inline-block;"><span
+														for="crecheNone{{extras.code}}|{{crecheSpace.passenger.identifier}}{{forloop.counter}}" >None</span></label>
+													</span>
+
+													<div class="clear"></div>
+													{% for extras in crecheSpace.extras %}
+														<span id="creche{{extras.code}}{{crecheSpace.passenger.identifier}}{{forloop.counter}}_span"
+														{%if extras.selected %}
+															class="custom-radio selected"
+														{% else %}
+															class="custom-radio"
+														{% endif %}	>
+														<input type="radio"
+															id="creche{{extras.code}}|{{crecheSpace.passenger.identifier}}{{forloop.counter}}"
+															name="creche{{crecheSpace.passenger.identifier}}"
+															value="{{extras.childPrice}}"  style="opacity: 0;filter: alpha(opacity = 0); display: block; margin-top: 3px; "
+															{%if extras.selected %}n
+																checked
+															{% endif %}/>
+														<label for="creche{{extras.code}}|{{crecheSpace.passenger.identifier}}{{forloop.counter}}" style="display:inline-block;"><span
+															for="creche{{extras.code}}|{{crecheSpace.passenger.identifier}}" >{{extras.description}}</span></label>
+														<span class="fr price-package">{{extras.currencyAppendedPrice}}</span>
+															</span>
+
+														<div class="clear"></div>
+													{% endfor %}
+												{% endifequal %}
+											<div class="border-divider"></div>
+										{% endifnotequal %}
+									</div>
+								</div>
+						{% endfor %}
+						<div class="clear"></div>
+
+						<div class="clear"></div>
+						<div class="final-calculation">
+							<h5 class="total-cost">Total cost</h5>
+							<span class="price-package fr" data-dojo-attach-point="totalCalculatedPrice" id="totalpricelabel">£0</span>
+						</div>
+						<div class="clear"></div>
+						<div class="price-information-section">
+						<div id="error-mgs" class="fl error-notation disNone"></div>
+							<a href="javascript:void(0);" class="button selected fr" data-dojo-attach-point="addButton">Add</a>
+						</div>
+					</div>
+				{% endif %}
+			</div>
+			<div class="clear"></div>
+			<div class="points-glance">
+				<h6>At a glance</h6>
+				<ul>
+				{% for description in infantContent.usp %}
+					<li>{{description|default:" "}}</li>
+					{% endfor %}
+
+				</ul>
+			</div>
+		</div>
+		</div>
+</div>

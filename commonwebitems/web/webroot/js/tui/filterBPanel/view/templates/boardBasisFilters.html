@@ -1,0 +1,66 @@
+<i class="close"></i>
+<li class="item-content-section">
+
+{% if id %}
+<ul class="board-basis checks">
+	<li class="headings">
+		<div class="col title"><h3>Board basis</h3></div>
+		<div class="col cooking">Cooking facilities</div>
+		<div class="col">Breakfast</div>
+		<div class="col">Lunch</div>
+		<div class="col">Evening meal</div>
+		<div class="col">Drinks</div>
+		<div class="col">Snacks</div>
+	</li>
+	{% for check in values %}
+	<li id="check_{{check.id}}" class="{{check.id}} {% ifnotequal check.children.length 0 %} multi-level{% endifnotequal %}">
+		<div class="col title">
+			 <span class="checkbox cf {{check.id}}"
+				  id="{{check.id}}"
+				  data-dojo-type="tui.filterBPanel.view.options.CheckBox"
+				  data-dojo-props='{% if filterType %} filterType: "{{filterType}}" {% endif %} {% if id %}, filterId: "{{id}}" {% endif %} {% if check.name %}, name: "{{check.name}}" {% endif %}'> 
+				<span class="checkbox-bg"></span>
+				<input type="checkbox"
+				   id="field_{{check.id}}"
+				   value="{{check.value}}"
+				   class="check parent-check" {% if check.selected %} checked="{{check.selected}}" {% endif %}/>
+
+				{% if check.name %}
+				<label for="field_{{check.id}}">{% ifequal check.name|safe|lower 'couples' %}{{check.name|safe|lower}}/Sensimar{% else %}{{check.name|safe|lower}}{% endifequal %}
+					{% if check.noAccommodations %} <span class="package-count">({{check.noAccommodations}})</span> {% endif %}
+				</label>
+				{% endif %}
+			</span>
+		</div> 
+		{% ifequal check.id 'AI' %}
+			<div class="col cooking"></div>
+			<div class="col"><i class="tick"></i></div>
+			<div class="col"><i class="tick"></i></div>
+			<div class="col"><i class="tick"></i></div>
+			<div class="col"><i class="tick"></i></div>
+			<div class="col"><i class="tick"></i></div>
+		{% endifequal %}
+		{% ifequal check.id 'SC' %}
+			<div class="col cooking"><i class="tick"></i></div>
+		{% endifequal %}
+		{% ifequal check.id 'BB' %}
+			<div class="col cooking"></div>
+			<div class="col"><i class="tick"></i></div>
+		{% endifequal %}
+		{% ifequal check.id 'FB' %}
+			<div class="col cooking"></div>
+			<div class="col"><i class="tick"></i></div>
+			<div class="col"><i class="tick"></i></div>
+			<div class="col"><i class="tick"></i></div>
+		{% endifequal %}
+		{% ifequal check.id 'HB' %}
+			<div class="col cooking"></div>
+			<div class="col"><i class="tick"></i></div>
+			<div class="col"></div>
+			<div class="col"><i class="tick"></i></div>
+		{% endifequal %}
+	</li>{% endfor %}
+</ul>
+{% endif%}
+</li>
+<div class="filter-mask-interactivity"></div>

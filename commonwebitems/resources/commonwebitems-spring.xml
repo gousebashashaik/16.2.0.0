@@ -1,0 +1,1832 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2011 hybris AG All rights reserved.
+	This software is the confidential and proprietary information of hybris ("Confidential
+	Information"). You shall not disclose such Confidential Information and shall
+	use it only in accordance with the terms of the license agreement you entered
+	into with hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util-3.0.xsd
+           ">
+
+	<bean name="searchFacade" class="uk.co.portaltech.tui.facades.impl.DefaultSearchFacade"
+		scope="tenant">
+		<property name="configurationService" ref="configurationService" />
+	</bean>
+
+	<bean name="carouselFacade"
+		class="uk.co.portaltech.tui.facades.impl.DefaultCarouselFacade" scope="tenant" />
+	<bean name="componentFacade"
+		class="uk.co.portaltech.tui.facades.impl.DefaultComponentFacade"
+		scope="tenant" />
+	<bean name="accomodationFacade"
+		class="uk.co.portaltech.tui.facades.impl.DefaultAccomodationFacade"
+		scope="tenant">
+
+
+		<property name="accommodationInfoPopulator" ref="accommodationLocationInfoPopulator" />
+	</bean>
+	<bean name="mobileComponentFacade"
+		class="uk.co.portaltech.tui.facades.impl.DefaultComponentTHMobileFacade"
+		scope="tenant" />
+
+
+	<bean name="alertFacade" class="uk.co.portaltech.tui.facades.impl.DefaultAlertFacade"
+		scope="tenant" />
+
+	<bean name="productRangeFacade"
+		class="uk.co.portaltech.tui.facades.impl.ProductRangeFacadeImpl"
+		scope="tenant">
+		<property name="productRangeBasicPopulator" ref="productRangeBasicPopulator" />
+		<property name="productRangeHighlightsPopulator" ref="productRangeHighlightsPopulator" />
+		<property name="productRangeUspsPopulator" ref="productRangeUspsPopulator" />
+	</bean>
+<bean id="cruiseProductUrlResolver" class="uk.co.portaltech.tui.resolvers.CruiseProductUrlResolver"
+		scope="tenant">
+		<property name="pattern"
+			value="/accommodation/{subPageType}/{category-path}/{product-name}-{product-code}" />
+		<property name="defaultSubPageType" value="overview" />
+	</bean>
+	<alias name="defaultProductRangeCategoryFacade" alias="productRangeCategoryFacade" />
+	<bean id="defaultProductRangeCategoryFacade"
+		class="uk.co.portaltech.tui.facades.impl.DefaultProductRangeCategoryFacade"
+		scope="tenant" />
+
+	<bean name="navigationComponentFacade"
+		class="uk.co.portaltech.tui.facades.impl.DefaultNavigationComponentFacade"
+		scope="tenant" />
+	<bean id="facilityFacade" class="uk.co.portaltech.tui.facades.impl.DefaultFacilityFacade"
+		scope="tenant">
+		<property name="facilityConfiguredPopulator" ref="facilityConfiguredPopulator" />
+	</bean>
+	<bean name="SocialMediaFacade"
+		class="uk.co.portaltech.tui.facades.impl.SocialMediaFacadeImpl" scope="tenant">
+	</bean>
+	<alias name="defaultLocationFacade" alias="locationFacade" />
+	<bean id="defaultLocationFacade" class="uk.co.portaltech.tui.facades.impl.DefaultLocationFacade"
+		scope="tenant">
+		<property name="locationBasicPopulator" ref="locationBasicPopulator" />
+	</bean>
+
+	<alias name="defaultAttractionFacade" alias="attractionFacade" />
+	<bean id="defaultAttractionFacade"
+		class="uk.co.portaltech.tui.facades.impl.DefaultAttractionFacade"
+		scope="tenant">
+		<property name="attractionConfiguredPopulator" ref="attractionConfiguredPopulator"></property>
+		<property name="excursionConfiguredPopulator" ref="excursionConfiguredPopulator"></property>
+		<property name="attractionEditorialContentPopulator" ref="attractionEditorialContentPopulator"></property>
+	</bean>
+	<alias name="defaultExcursionFacade" alias="excursionFacade" />
+	<bean id="defaultExcursionFacade"
+		class="uk.co.portaltech.tui.facades.impl.DefaultExcursionFacade"
+		scope="tenant">
+		<property name="excursionConfiguredPopulator" ref="excursionConfiguredPopulator"></property>
+		<property name="attractionConfiguredPopulator" ref="attractionConfiguredPopulator"></property>
+	</bean>
+	<bean id="blogFacade" class="uk.co.portaltech.tui.facades.impl.DefaultBlogFacade"
+		scope="tenant">
+		<property name="blogDataPopulator" ref="blogDataPopulator"></property>
+	</bean>
+	<bean name="promoImageFacade"
+		class="uk.co.portaltech.tui.facades.impl.DefaultPromoImageFacade"
+		scope="tenant" />
+
+	<bean name="promoComponentFacade"
+		class="uk.co.portaltech.tui.facades.impl.DefaultPromoComponentFacade"
+		scope="tenant" />
+
+	<bean name="geographicalNavigationComponentFacade"
+		class="uk.co.portaltech.tui.facades.impl.DefaultGeographicalNavigationComponentFacade"
+		scope="tenant" />
+
+<bean id="baynoteRESTConverter" class="uk.co.portaltech.tui.converters.BaynoteRESTConverter"
+		scope="tenant">
+	<property name="baynoteMarshallerBrowse" ref="baynoteMarshallerBrowse" />
+	</bean>
+
+	<bean id="baynoteConnector" class="uk.co.portaltech.tui.connections.BaynoteConnector"
+		scope="tenant">
+	</bean>
+
+<bean id=" baynoteMarshallerBrowse " class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="classesToBeBound">
+			<list>
+			<value> uk.co.portaltech.tui.thirdparty.baynote.client.RecResult </value>
+			</list>
+		</property>
+	</bean>
+
+
+	<bean name="weatherComponentFacade"
+		class="uk.co.portaltech.tui.facades.impl.DefaultWeatherComponentFacade"
+		scope="tenant" />
+	<bean name="abTestFacade" class="uk.co.portaltech.tui.facades.impl.DefaultABTestFacade"
+		scope="prototype" />
+
+	<bean name="genericEditorialFacade"
+		class="uk.co.portaltech.tui.facades.impl.GenericEditorialFacadeImpl"
+		scope="tenant" />
+
+	<alias name="defaultSeoEditorialTemplateFacade" alias="seoEditorialTemplateFacade" />
+	<bean name="defaultSeoEditorialTemplateFacade"
+		class="uk.co.portaltech.tui.facades.impl.DefaultSEOEditorialTemplateFacade"
+		scope="tenant" />
+
+	<alias name="defaultMetaDataFacade" alias="metaDataFacade" />
+	<bean name="defaultMetaDataFacade"
+		class="uk.co.portaltech.tui.facades.impl.DefaultMetaDataFacade" scope="tenant" />
+
+	<bean name="mapFacade" class="uk.co.portaltech.tui.facades.impl.DefaultMapFacade"
+		scope="tenant">
+		<property name="inspirationMapPopulator" ref="inspirationMapPopulator"></property>
+		<property name="inspirationMapPopulatorForAccom" ref="inspirationMapPopulatorForAccom"></property>
+	</bean>
+
+	<bean name="airportFacade" class="uk.co.portaltech.tui.facades.impl.AirportFacade"
+		scope="tenant" />
+
+	<bean name="flightRouteFacade" class="uk.co.portaltech.tui.facades.impl.FlightRouteFacade"
+		scope="tenant" />
+
+	<bean name="analyticsFacade"
+		class="uk.co.portaltech.tui.facades.impl.DefaultAnalyticFacade" scope="tenant" />
+
+	<bean name="thAnalyticsFacade"
+		class="uk.co.portaltech.tui.th.facades.impl.DefaultAnalyticFacade"
+		scope="tenant" />
+
+	<bean name="foAnalyticsFacade"
+		class="uk.co.portaltech.tui.flights.facades.impl.DefaultAnalyticFacade"
+		scope="tenant" />
+
+    <bean name="flightSearchResultsFacade"
+        class="uk.co.portaltech.tui.flights.facades.impl.DefaultFlightSearchResultsFacade"
+        scope="tenant" />
+
+    <bean name="flightSearchPanelFacade"
+        class="uk.co.portaltech.tui.flights.facades.impl.DefaultFlightSearchPanelFacade"
+        scope="tenant" />
+
+    <bean id="itineraryViewDataPopulator"
+        class="uk.co.tui.flights.populators.ItineraryViewDataPopulator"
+        scope="prototype" />
+
+    <bean id="dreamLinerToolTipDataPopulator"
+        class="uk.co.tui.flights.populators.DreamLinerToolTipDataPopulator"
+        scope="prototype" />
+
+    <bean id="flightSearchResultDecorator"
+        class="uk.co.tui.flights.decorator.FlightSearchResultDecorator"
+        scope="prototype" />
+
+	<!-- =============================== Non Geo Item ================================ -->
+	<bean name="nonGeoItemFacade"
+		class="uk.co.portaltech.tui.facades.impl.NonGeoItemFacadeImpl" scope="tenant" />
+
+	<!-- ======================= Converters for our Carousel DTOs. ======================= -->
+	<!-- productConverter does not need to be wired at this point... -->
+	<bean id="carouselDataPopulator" class="uk.co.portaltech.tui.populators.CarouselDataPopulator"
+		scope="tenant" />
+	<bean id="mediaDataPopulator" class="uk.co.portaltech.tui.populators.MediaDataPopulator"
+		scope="tenant" />
+	<bean id="searchPanelDataPopulator"
+		class="uk.co.portaltech.tui.populators.SearchPanelDataPopulator"
+		scope="tenant" />
+	<!-- <bean id="locationKeyPartsDataPopulator" class="uk.co.portaltech.tui.populators.LocationKeyPartsDataPopulator"
+		scope="tenant" /> -->
+
+	<!-- Added for AmendandCanacel -->
+
+
+	<bean id="managePropertyUrls" class="uk.co.tui.book.utils.PropertyReader"
+		scope="tenant">
+		<constructor-arg value="/manageRnPUrls.properties" />
+	</bean>
+	<bean name="manageHomePageFacade"
+		class="uk.co.tui.manage.facade.impl.DefaultManageHomePageFacade"
+		scope="tenant" />
+
+
+	<bean name="displayBookingFacade"
+		class="uk.co.tui.manage.facade.impl.DefaultDisplayBookingFacade"
+		scope="tenant" />
+
+
+	<bean name="manageNavigationFacade"
+		class="uk.co.tui.manage.facade.impl.ManageNavigationFacadeImpl" scope="tenant" />
+
+	<bean name="managePaymentFacade" class="uk.co.tui.manage.facade.impl.DefaultPaymentFacade"
+		scope="tenant" />
+
+	<bean name="bookingSearchFacade"
+		class="uk.co.tui.manage.facade.impl.DefaultBookingSearchFacade" scope="tenant" />
+	<bean name="actuiConfigService"
+		class="uk.co.portaltech.travel.services.config.impl.TUIConfigServiceImpl"
+		scope="tenant" />
+
+	<bean id="bookingResultsPopulator"
+		class="uk.co.tui.manage.populators.BookingResultsViewDataPopulator"
+		scope="tenant" />
+	<bean id="bookingSummaryPopulator"
+		class="uk.co.tui.manage.populators.BookingSummaryResultsViewDataPopulator"
+		scope="tenant" />
+	<bean id="costofHolidaySummaryPopulator"
+		class="uk.co.tui.manage.populators.CostofHolidaySummaryPanelContentViewDataPopulator"
+		scope="tenant" />
+
+	<bean id="paymentConfirmationPopulator"
+		class="uk.co.tui.manage.populators.PaymentConfirmationViewDataPopulator"
+		scope="tenant" />
+
+
+
+
+	<bean id="availAccommViewDataPopulator"
+		class="uk.co.tui.manage.populators.AccommodationViewDataPopulator"
+		scope="tenant" />
+
+	<bean id="extraFacilityCategoryViewDataPopulator"
+		class="uk.co.tui.manage.populators.ExtraFacilityCategoryViewDataPopulator"
+		scope="tenant" />
+
+	<bean id="packagePriceViewDataPopulator"
+		class="uk.co.tui.manage.populators.PackagePriceViewDataPopulator"
+		scope="tenant" />
+
+	<bean id="manageFlightViewDataPopulator" class="uk.co.tui.manage.populators.FlightViewDataPopulator"
+		scope="tenant" />
+
+	<bean name="paymentConfirmationFacade"
+		class="uk.co.tui.manage.facade.impl.PaymentConfirmationFacadeImpl"
+		scope="tenant" />
+
+	<!-- ======================= Recommendation Engine BayNote Converters======================= -->
+
+
+	<bean id="recommendationsRESTConnector"
+		class="uk.co.portaltech.tui.services.RecommendationsRESTConnector"
+		scope="tenant" />
+
+	<!-- =============================== Product Finders. ================================ -->
+	<bean id="productFinder_MANUAL"
+		class="uk.co.portaltech.tui.services.productfinder.ExplicitProductFinder"
+		scope="prototype" />
+	<bean id="productFinder_ENDECA_PRODUCT"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaProductFinder"
+		scope="prototype" />
+	<bean id="productFinder_ENDECA_THINGS_TO_DO"
+		class="uk.co.portaltech.tui.services.productfinder.ThingsToDoProductFinder"
+		scope="prototype" />
+	<bean id="mediaFinder_MANUAL"
+		class="uk.co.portaltech.tui.services.mediafinder.ExplicitMediaFinder"
+		scope="prototype" />
+	<bean id="mediaFinder_AUTOMATIC"
+		class="uk.co.portaltech.tui.services.mediafinder.AutomaticMediaFinder"
+		scope="prototype" />
+	<bean id="productFinder_ENDECA_PLACES_TO_STAY"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaPlacesToStayFinder"
+		scope="prototype" />
+	<bean id="productFinder_ENDECA_TOP_PLACES_TO_STAY"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaTopPlacesToStayFinder"
+		scope="prototype" />
+	<bean id="productFinder_ENDECA_ATTRACTION_RESULT"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaAttractionResultProductFinder"
+		scope="prototype" />
+	<bean id="productFinder_ENDECA_DEAL"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaDealsProductFinder"
+		scope="prototype" />
+	<bean id="productFinder_ENDECA_ACCOMMODATIONS_RESULTS"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaAccommodationsResultFinder"
+		scope="prototype" />
+	<bean id="productFinder_ENDECA_ACCOMMODATIONS_FILTER"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaAccommodationFilterFinder"
+		scope="prototype" />
+	<bean id="productFinder_ENDECA_PRODUCT_CROSS_SELL"
+		class="uk.co.portaltech.tui.services.productfinder.ProductCrossSellCarouselFinder"
+		scope="prototype" />
+	<bean id="productFinder_ENDECA_DESTINATION_QUICK_SEARCH"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaQuickSearchResultDataFinder"
+		scope="prototype" />
+	<bean id="productFinder_ENDECA_LOCATION_PLACES_TO_STAY"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaPlacesToStayLocationFinder"
+		scope="prototype" />
+	<bean id="productFinder_ENDECA_GET_PRICE"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaGetPriceFinder"
+		scope="prototype" />
+	<bean id="productFinder_ENDECA_INTERACTIVE_MAP"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaInteractiveMapFinder"
+		scope="prototype" />
+	<bean id="productFinder_ENDECA_CROSS_SELL"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaCrossSellFinder"
+		scope="prototype" />
+
+	<!-- New Entry For Cruise Start -->
+	<bean id="productFinder_CR_STAY_ENDECA_CROSS_SELL"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaCrossSellFinder"
+		scope="prototype" />
+
+	<bean id="productFinder_CR_STAY_ENDECA_THINGS_TO_DO"
+		class="uk.co.portaltech.tui.services.productfinder.ThingsToDoProductFinder"
+		scope="prototype" />
+
+	<bean id="productFinder_CR_STAY_ENDECA_PLACES_TO_STAY"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaPlacesToStayFinder"
+		scope="prototype" />
+	<bean id="productFinder_CR_STAY_ENDECA_TOP_PLACES_TO_STAY"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaTopPlacesToStayFinder"
+		scope="prototype" />
+	<bean id="productFinder_CR_STAY_ENDECA_LOCATION_PLACES_TO_STAY"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaPlacesToStayLocationFinder"
+		scope="prototype" />
+	<bean id="productFinder_CR_STAY_ENDECA_INTERACTIVE_MAP"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaInteractiveMapFinder"
+		scope="prototype" />
+	<!-- New Entry For Cruise End -->
+
+	<bean id="productFinder_ENDECA_HOLIDAY_PACKAGES"
+		class="uk.co.portaltech.tui.services.productfinder.HolidayPackagesFinder"
+		scope="prototype" />
+	<bean id="productFinder_ENDECA_VILLA_AVAILABILITY"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaVillaAvailabilityFinder"
+		scope="prototype" />
+	<bean id="productFinder_ENDECA_FLIGHT_AVAILABILITY"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaFlightAvailabilityFinder"
+		scope="prototype" />
+	<bean id="productFinder_ENDECA_ACCOMMODATION_STANDARD"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaAccommodationStandardFinder"
+		scope="prototype" />
+	<bean id="productFinder_ENDECA_DAY_TRIP_PLACES_TO_STAY"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaDayTripLocationFinder"
+		scope="prototype" />
+	<bean id="productFinder_ENDECA_HOLIDAY_UPSELL"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaUpsellHolidayFinder"
+		scope="prototype" />
+	<bean id="productFinder_ENDECA_PRODUCT_LEAD_PRICE"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaProductLeadPriceFinder"
+		scope="prototype" />
+	<bean id="productFinder_ENDECA_ADD_A_STAY"
+		class="uk.co.portaltech.tui.services.productfinder.EndecaAddAStayFinder"
+		scope="prototype" />
+
+	<!-- =============================== Attribute Handlers. ================================ -->
+
+	<bean id="locationsHandler" class="uk.co.portaltech.tui.attributehandlers.LocationHandler"
+		scope="prototype" />
+	<bean id="categoriesHandler"
+		class="uk.co.portaltech.tui.attributehandlers.CategoriesHandler"
+		scope="prototype" />
+	<bean id="accomodationsHandler"
+		class="uk.co.portaltech.tui.attributehandlers.LocationsByTypeHandler"
+		scope="prototype" />
+	<bean id="durationHandler"
+		class="uk.co.portaltech.tui.attributehandlers.DurationsTypeHandler"
+		scope="prototype" />
+
+
+
+	<!-- =================================== View Wrapper Populator ==================================== -->
+	<bean id="viewWrapperPopulator"
+		class="uk.co.portaltech.tui.web.view.data.wrapper.ViewWrapperPopulator"
+		scope="prototype" />
+
+	<!-- ============================= Url .. =============================== -->
+
+	<bean id="excursionUrlResolverForLegacyStstem"
+		class="uk.co.portaltech.tui.resolvers.ExcursionURLResolverForLegacySystems"
+		scope="tenant">
+		<!-- <property name="externalURLLink" value="#{configurationService.configuration.getProperty('fc.excursion.baseURL')}"
+			/> -->
+		<property name="suffixUrlString" value=".aspx#cost" />
+		<property name="pattern"
+			value="{domain-url}/{country-code}/{country-name}/{resort-code}/{region-name}/{excursion-code}/{excursion-name}{suffix-url}" />
+	</bean>
+
+	<bean id="excursionUrlResolver" class="uk.co.portaltech.tui.resolvers.ExcursionURLResolver"
+		scope="tenant">
+		<!-- <property name="suffixUrlString" value=".aspx#cost" /> -->
+		<property name="pattern"
+			value="{domain-url}/{currency}/details/{atlas-id}-{excursion-name}" />
+	</bean>
+
+	<alias name="tuiCategoryModelUrlResolver" alias="defaultCategoryModelUrlResolver" />
+	<bean id="tuiCategoryModelUrlResolver" class="uk.co.portaltech.tui.resolvers.TuiCategoryUrlResolver"
+		scope="tenant">
+		<property name="pattern"
+			value="/location/{subPageType}/{category-name}-{category-code}" />
+		<property name="defaultSubPageType" value="overview" />
+	</bean>
+
+	<alias name="tuiProductUrlResolver" alias="defaultProductModelUrlResolver" />
+	<bean id="tuiProductUrlResolver" class="uk.co.portaltech.tui.resolvers.TuiProductUrlResolver"
+		scope="tenant">
+		<property name="pattern"
+			value="/accommodation/{subPageType}/{category-path}/{product-name}-{product-code}" />
+		<property name="defaultSubPageType" value="overview" />
+	</bean>
+
+	<alias name="bookAccommodationUrlResolver" alias="defaultProductModelUrlResolver" />
+	<bean id="bookAccommodationUrlResolver"
+		class="uk.co.portaltech.tui.resolvers.BookAccommodationUrlResolver"
+		scope="tenant">
+		<property name="pattern" value="/bookaccommodation" />
+		<property name="defaultSubPageType" value="overview" />
+	</bean>
+	<bean id="backToSearchResultsUrlResolver"
+		class="uk.co.portaltech.tui.resolvers.BackToSearchResultsUrlResolver"
+		scope="tenant">
+	</bean>
+	<bean id="attractionUrlResolver" class="uk.co.portaltech.tui.resolvers.AttractionUrlResolver"
+		scope="tenant">
+		<property name="pattern"
+			value="/attraction/{category-path}/{attraction-name}-{attraction-code}" />
+		<property name="defaultSubPageType" value="overview" />
+	</bean>
+
+	<bean id="tuiPageModelUrlResolver" class="uk.co.portaltech.tui.resolvers.TuiPageModelUrlResolver"
+		scope="tenant" />
+
+	<!-- =================================== Facades. ==================================== -->
+
+
+
+	<!-- =============================== Rule Engine Duration Priority ================================ -->
+
+	<bean name="ruleEngineFacade" class="uk.co.portaltech.tui.services.RuleEngineFacade"
+		scope="tenant" />
+
+	<bean name="durationPriorityRuleService"
+		class="uk.co.portaltech.tui.services.DurationPriorityRuleService"
+		scope="tenant" />
+	<bean name="holidayTypeService" class="uk.co.portaltech.tui.services.HolidayTypeService"
+		scope="tenant">
+	</bean>
+
+	<bean name="iscapeShortlistClient" class="com.tui.uk.shortlist.impl.ShortlistResourceClientImpl"
+		scope="tenant">
+	</bean>
+
+<bean name="dealCalculationService" class="uk.co.portaltech.tui.services.DealCalculationService"
+		scope="tenant">
+	</bean>
+
+	<bean name="deepLinkFacade" class="uk.co.portaltech.tui.facades.impl.DeepLinkFacadeImpl"
+		scope="prototype">
+		<property name="routeValidator" ref="routeValidator" />
+		<property name="travelDatesPopulator" ref="travelDatesPopulator" />
+	</bean>
+
+	<!-- =============================== Drools Offer Priority ================================ -->
+	<bean name="droolsPriorityProviderService"
+		class="uk.co.portaltech.tui.services.DroolsPriorityProviderServiceImpl"
+		scope="tenant" />
+
+
+	<!-- =============================== Non Core Products ================================ -->
+	<bean name="nonCoreProductsService"
+		class="uk.co.portaltech.tui.services.NonCoreProductsServiceImpl"
+		scope="tenant" />
+
+	<!-- =============================== Pagination ================================ -->
+
+	<bean name="pagination" class="uk.co.portaltech.tui.helper.Pagination"
+		scope="tenant" />
+
+	<!-- =============================== Search Criteria Enrichment ================================ -->
+
+	<bean name="enrichmentService"
+		class="uk.co.portaltech.tui.web.search.impl.SearchCriteriaEnrichmentService"
+		scope="tenant" />
+	<bean name="criteriaWidenService"
+		class="uk.co.portaltech.tui.web.search.impl.CriteriaWidenServiceImpl"
+		scope="tenant">
+		<property name="configurationService" ref="configurationService" />
+	</bean>
+
+	<bean name="scEnrichmentForSearch"
+		class="uk.co.portaltech.tui.web.search.impl.SCEnrichmentForSearchImpl"
+		scope="tenant" />
+
+
+	<!-- =============================== Location Finders. ================================ -->
+	<bean id="locationFinder_ACCOMMDATION"
+		class="uk.co.portaltech.tui.services.locationfinder.ExplicitLocationFinder"
+		scope="prototype" />
+	<bean id="locationFinder_ENDECA_CROSS_SELL"
+		class="uk.co.portaltech.tui.services.locationfinder.EndecaCrossSellLocationFinder"
+		scope="prototype" />
+
+	<!-- ========================= CMS Page Service Extension ============================ -->
+	<bean id="tuiPageService" class="uk.co.portaltech.tui.services.TuiPageService"
+		scope="tenant" />
+	<bean id="categoryCMSHelper" class="uk.co.portaltech.tui.services.CategoryCMSHelper"
+		scope="tenant" />
+	<bean id="tuiUtilityService" class="uk.co.portaltech.tui.services.TuiUtilityServiceImpl"
+		scope="tenant" />
+	<!-- ============================= Restriction Services. =============================== -->
+	<alias alias="cmsRestrictionService" name="tuiCMSRestrictionService" />
+	<bean id="tuiCMSRestrictionService"
+		class="uk.co.portaltech.tui.services.restriction.TuiRestrictionService"
+		parent="abstractCMSService" scope="tenant">
+		<property name="cmsRestrictionDao" ref="cmsRestrictionDao" />
+		<property name="evaluatorRegistry" ref="cmsRestrictionEvaluatorRegistry" />
+	</bean>
+
+	<!-- ========================= A/B Test Component Service ========================= -->
+	<bean id="abTestComponentService"
+		class="uk.co.portaltech.tui.services.ABTestComponentServiceImpl"
+		scope="tenant" />
+
+	<!-- The hybris platform provides one single Spring application context
+		for beans located at the jalo layer. Each extension can add beans to this
+		context by specifying them at this configuration file. You can use and/or
+		redefine beans defined at configuration files of other extensions as well
+		as adding new one. If you want to locate this file at a different location
+		or want to use several files for better, structuring, please use the '<yourextension>.application-context'
+		property at your project.properties file. There you can specify a comma separated
+		list of files where first is tried to find a file per classpath and then
+		per file system. Please be aware of the special 'tenant' scope. If you have
+		a multi tenant system you mostly have to use this scope instead of the default
+		Spring 'singleton' scope. If you want to configure beans for your web module
+		please have a look at your web/webroot/WEB-INF/<extname>-web-spring.xml. -->
+
+	<!-- Example how to override a manager -->
+	<!-- <bean id="core.productManager" class="uk.co.portaltech.tui.jalo.TuiwebProductManager"
+		init-method="init" destroy-method="destroy" scope="tenant" /> -->
+
+
+	<!-- Example how to configure the class to use for jalo session creation -->
+	<!-- <bean id="jalosession" class="de.hybris.platform.jalo.JaloSessionFactory">
+		<property name="targetClassName" value="uk.co.portaltech.tui.jalo.TuiwebJaloSession"/>
+		</bean> -->
+	<!-- Example how to override an item -->
+	<!-- <bean id="de.hybris.platform.jalo.product.Product" class="uk.co.portaltech.tui.jalo.TuiwebProduct"
+		scope="prototype" /> -->
+
+	<!-- Example how to register and use an AOP aspect Also see http://static.springframework.org/spring/docs/2.5.x/reference/aop.html -->
+
+	<!-- <bean id="tuiwebProfBean" class="uk.co.portaltech.tui.aop.TuiwebProfilingAspect"/>
+		<aop:config proxy-target-class="true"> <aop:aspect id="tuiwebProfAspect"
+		ref="tuiwebProfBean" > <aop:pointcut id="profiledMethods" expression="execution(*
+		getModificationTime(..))" /> <aop:around pointcut-ref="profiledMethods" method="profile"
+		/> </aop:aspect> </aop:config> -->
+
+
+	<!-- some other examples of a pointcut that matches everything: <aop:pointcut
+		id="profiledMethods" expression="bean(de.hybris.platform.jalo.user.Customer)
+		&amp;&amp; !execution(* getPK(..))" /> <aop:pointcut id="profiledMethods"
+		expression="execution(* *(..))" /> -->
+
+	<!-- Anite feed cron job -->
+
+
+	<!-- Need to Move this Job to tuiFeeds in Sprint 23 BAU -->
+
+	<bean id="tripAdvisorFeedProcessor"
+		class="uk.co.portaltech.tui.services.common.TripAdvisorFeedProcessor"
+		scope="tenant">
+		<property name="flexibleSearchService" ref="flexibleSearchService"></property>
+		<property name="modelService" ref="modelService"></property>
+	</bean>
+
+
+	<bean id="tripAdvisorJobPerformable"
+		class="uk.co.portaltech.tui.services.common.TripAdvisorJobPerformable"
+		parent="abstractJobPerformable" scope="tenant" />
+
+	<!-- Need to Move this Job to tuiFeeds in Sprint 23 BAU -->
+
+
+
+
+	<!-- ============================= Breadcrumb =============================== -->
+
+	<bean id="BreadCrumbFilter" class="uk.co.portaltech.tui.breadcrumb.BreadCrumbFilter"
+		scope="tenant">
+		<property name="allowedURLMatchingStrings">
+			<list>
+				<value>product</value>
+				<value>category</value>
+				<value>attraction</value>
+				<value>accommodation</value>
+				<value>location</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean name="browseHistory"
+		class="uk.co.portaltech.tui.breadcrumb.impl.DefaultBrowseHistory"
+		scope="tenant">
+		<!-- <property name="sessionService" ref="sessionService" /> -->
+		<property name="capacity" value="10" />
+	</bean>
+
+	<alias name="defaultBreadcrumbBuilder" alias="breadcrumbBuilder" />
+	<bean id="defaultBreadcrumbBuilder" class="uk.co.portaltech.tui.breadcrumb.impl.BreadcrumbBuilder"
+		scope="tenant">
+		<property name="browseHistory" ref="browseHistory" />
+	</bean>
+
+	<!-- ============================= Converters. =============================== -->
+	<bean id="facilityConverter" class="uk.co.portaltech.tui.converters.FacilityConverter"
+		scope="tenant" />
+
+	<bean id="productRangeConverter" class="uk.co.portaltech.tui.converters.ProductRangeConverter"
+		scope="tenant" />
+
+	<bean id="productRangeCategoryConverter"
+		class="uk.co.portaltech.tui.converters.ProductRangeCategoryConverter"
+		scope="tenant" />
+
+	<bean id="locationConverter" class="uk.co.portaltech.tui.converters.LocationConverter"
+		scope="tenant" />
+
+	<alias name="defaultAccommodationConverter" alias="accommodationConverter" />
+	<bean id="defaultAccommodationConverter" class="uk.co.portaltech.tui.converters.AccommodationConverter"
+		scope="tenant">
+		<property name="productBasicPopulator" ref="productBasicPopulator"></property>
+	</bean>
+
+	<bean id="accommodationAttractionExcursionConverter"
+		class="uk.co.portaltech.tui.converters.AccommodationAttractionExcursionConverter"
+		scope="tenant" />
+
+	<bean id="itineraryConverter" class="uk.co.portaltech.tui.converters.ItineraryConverter"
+		scope="tenant" />
+
+	<alias name="defaultAccommodationRoomConverter" alias="accommodationRoomConverter" />
+	<bean id="defaultAccommodationRoomConverter"
+		class="uk.co.portaltech.tui.converters.AccomodationRoomConverter"
+		scope="tenant" />
+
+	<alias name="defaultMediaModelConverter" alias="mediaModelConverter" />
+	<bean id="defaultMediaModelConverter" class="uk.co.portaltech.tui.converters.MediaModelConverter"
+		scope="tenant" />
+
+	<bean id="defaultBenefitConverter" class="uk.co.portaltech.tui.converters.BenefitConverter"
+		scope="tenant">
+		<property name="accommodationBenefitImageDataPopulator" ref="accommodationBenefitImageDataPopulator"></property>
+	</bean>
+
+	<bean id="defaultProductRangeCollectionConverter"
+		class="uk.co.portaltech.tui.converters.ProductRangeCollectionConverter"
+		scope="tenant">
+		<property name="productRangeImageDataPopulator" ref="productRangeImageDataPopulator"></property>
+		<property name="mediaViewDataPopulator" ref="mediaViewDataPopulator"></property>
+		<property name="mediaModelConverter" ref="mediaModelConverter"></property>
+	</bean>
+
+	<bean id="defaultProductRangeProductConverter"
+		class="uk.co.portaltech.tui.converters.ProductRangeProductConverter"
+		scope="tenant">
+		<property name="productRangeImageDataPopulator" ref="productRangeImageDataPopulator"></property>
+		<property name="mediaViewDataPopulator" ref="mediaViewDataPopulator"></property>
+		<property name="mediaModelConverter" ref="mediaModelConverter"></property>
+	</bean>
+
+	<alias name="defaultNavigationBarComponentConverter" alias="navigationBarComponentConverter" />
+	<bean id="defaultNavigationBarComponentConverter"
+		class="uk.co.portaltech.tui.converters.NavigationBarComponentConverter"
+		scope="tenant" />
+
+	<alias name="defaultNavigationComponentConverter" alias="navigationComponentConverter" />
+	<bean id="defaultNavigationComponentConverter"
+		class="uk.co.portaltech.tui.converters.NavigationComponentConverter"
+		scope="tenant" />
+
+	<alias name="defaultGeographicalNavigationComponentConverter"
+		alias="geographicalNavigationComponentConverter" />
+	<bean id="defaultGeographicalNavigationComponentConverter"
+		class="uk.co.portaltech.tui.converters.GeographicalNavigationComponentConverter"
+		scope="tenant" />
+	<alias name="defaultCMSNavigationNodeConverter" alias="cmsNavigationNodeConverter" />
+	<bean id="defaultCMSNavigationNodeConverter"
+		class="uk.co.portaltech.tui.converters.CMSNavigationNodeConverter"
+		scope="tenant" />
+
+	<alias name="defaultCMSLinkComponentConverter" alias="cmsLinkComponentConverter" />
+	<bean id="defaultCMSLinkComponentConverter"
+		class="uk.co.portaltech.tui.converters.CMSLinkComponentConverter"
+		scope="tenant" />
+
+	<bean id="blogConverter" class="uk.co.portaltech.tui.converters.BlogConverter"
+		scope="tenant" />
+
+
+
+	<bean id="attractionEditorialContentConverter"
+		class="uk.co.portaltech.tui.converters.AttractionEditorialContentConverter"
+		scope="tenant" />
+
+	<alias name="defaultAttractionConverter" alias="attractionConverter" />
+	<bean id="defaultAttractionConverter" class="uk.co.portaltech.tui.converters.AttractionConverter"
+		scope="tenant" />
+
+	<bean id="promoComponentConverter" class="uk.co.portaltech.tui.converters.PromoComponentConverter"
+		scope="tenant" />
+
+	<alias name="defaultExcursionConverter" alias="excursionConverter" />
+	<bean id="defaultExcursionConverter" class="uk.co.portaltech.tui.converters.ExcursionConverter"
+		scope="tenant" />
+
+	<alias name="defaultTUICategoryDataConverter" alias="tuiCategoryDataConverter" />
+	<bean id="defaultTUICategoryDataConverter"
+		class="uk.co.portaltech.tui.converters.TUICategoryDataConverter"
+		scope="tenant" />
+	<bean id="weatherViewDataConverter"
+		class="uk.co.portaltech.tui.converters.WeatherViewDataConverter"
+		scope="tenant" />
+	<bean id="weatherTypeViewDataConverter"
+		class="uk.co.portaltech.tui.converters.WeatherTypeViewDataConverter"
+		scope="tenant" />
+	<bean id="weatherTypeValueViewDataConverter"
+		class="uk.co.portaltech.tui.converters.WeatherTypeValueViewDataConverter"
+		scope="tenant" />
+	<bean id="articleConverter" class="uk.co.portaltech.tui.converters.ArticleConverter"
+		scope="tenant" />
+	<bean id="abTestDataConverter" class="uk.co.portaltech.tui.converters.ABTestDataConverter"
+		scope="tenant" />
+
+	<alias name="defaultProductRangeUspsConverter" alias="productRangeUspsConverter" />
+	<bean id="defaultProductRangeUspsConverter"
+		class="uk.co.portaltech.tui.converters.ProductRangeUspsConverter"
+		scope="tenant" />
+
+
+	<alias name="inspirationMapConverterForAccom" alias="inspirationMapConverterForAccom" />
+	<bean id="inspirationMapConverterForAccom"
+		class="uk.co.portaltech.tui.converters.AccommodationInspirationMapConverter"
+		scope="tenant" />
+
+	<alias name="defaultInspirationMapConverter" alias="inspirationMapConverter" />
+	<bean id="defaultInspirationMapConverter" class="uk.co.portaltech.tui.converters.InspirationMapConverter"
+		scope="tenant" />
+
+	<bean id="destinationConverter" class="uk.co.portaltech.tui.converters.DestinationConverter"
+		scope="tenant" />
+	<bean id="countryViewDataConverter"
+		class="uk.co.portaltech.tui.converters.CountryViewDataConverter"
+		scope="tenant" />
+	<bean id="prodToDestConverter"
+		class="uk.co.portaltech.tui.converters.ProductToDestinationConverter"
+		scope="tenant" />
+	<bean id="searchResultsRequestDataConverter"
+		class="uk.co.portaltech.tui.converters.SearchResultsRequestDataConverter"
+		scope="tenant" />
+	<bean id="deepLinkRequestConverter"
+		class="uk.co.portaltech.tui.converters.HttpRequestToDeepLinkRequestConverter"
+		scope="prototype" />
+	<bean id="smerchConfigurationConverter"
+		class="uk.co.portaltech.tui.converters.SmerchConfigurationToDeepLinkRequestConverter"
+		scope="tenant" />
+	<bean id="airportDataConverter" class="uk.co.portaltech.tui.converters.AirportDataConverter"
+		scope="tenant" />
+	<bean id="flightOptionsRequestDataConverter"
+		class="uk.co.portaltech.tui.converters.FlightOptionsRequestDataConverter"
+		scope="tenant" />
+	<bean id="productRangeToCollectionDataConverter"
+		class="uk.co.portaltech.tui.converters.ProductRangeToCollectionDataConverter"
+		scope="tenant" />
+	<bean id="collectionGroupConverter"
+		class="uk.co.portaltech.tui.converters.CollectionGroupConverter"
+		scope="tenant" />
+	<bean id="converter"
+		class="uk.co.portaltech.tui.converters.ProductDestinationConverter"
+		scope="tenant" />
+	<bean id="mostPopularMultipleDestinationConverter"
+		class="uk.co.portaltech.tui.converters.MostPopularMultipleDestinationConverter"
+		scope="tenant" />
+	<bean id="mostPopularSingleDestinationConverter"
+		class="uk.co.portaltech.tui.converters.MostPopularSingleDestinationConverter"
+		scope="tenant" />
+
+	<!-- ============================= Populator Options. =============================== -->
+
+	<alias name="defaultAccommodationConfiguredPopulator" alias="accommodationConfiguredPopulator" />
+	<bean id="defaultAccommodationConfiguredPopulator"
+		class="de.hybris.platform.commercefacades.converter.impl.DefaultConfigurablePopulator"
+		scope="prototype">
+		<property name="populators">
+			<map key-type="uk.co.portaltech.tui.converters.AccommodationOption">
+				<entry key="PRICE" value-ref="productPricePopulator" />
+				<entry key="GALLERY" value-ref="productGalleryImagesPopulator" />
+				<entry key="SUMMARY" value-ref="productSummaryPopulator" />
+				<entry key="DESCRIPTION" value-ref="productDescriptionPopulator" />
+				<entry key="CATEGORIES" value-ref="productCategoriesPopulator" />
+				<entry key="VARIANT_FULL" value-ref="variantFullPopulator" />
+				<entry key="BASIC" value-ref="accommodationBasicPopulator" />
+				<entry key="LOCATION_KEYFACTS" value-ref="accommodationKeyfactsPopulator" />
+				<entry key="LOCATION_INFO" value-ref="accommodationLocationInfoPopulator" />
+				<entry key="PRIMARY_IMAGE" value-ref="productPrimaryImagePopulator" />
+				<entry key="GALLERY_IMAGE" value-ref="productGalleryImagesPopulator" />
+				<entry key="EDITORIAL_INFO" value-ref="accommodationEditorialPopulator" />
+
+				<entry key="DISCLAIMER" value-ref="accommodationDisclaimerPopulator" />
+				<entry key="FACILITIES" value-ref="accommodationFacilitiesPopulator" />
+				<entry key="EDITORIAL_INTRO" value-ref="accommodationEditorialIntroPopulator" />
+				<entry key="HEALTHANDSAFETY" value-ref="accommodationHealthAndSafetyPopulator" />
+				<entry key="ALL_INCLUSIVE" value-ref="accommodationAllInclusivePopulator" />
+				<entry key="PASSPORTANDVISA" value-ref="accommodationPassportsAndVisasPopulator" />
+				<entry key="PRODUCTRANGE" value-ref="accommodationProductRangePopulator" />
+				<entry key="GETTINGAROUND" value-ref="accommodationGettingAroundEditorialPopulator" />
+				<entry key="WHEN_TO_GO" value-ref="accommodationWhenToGoEditorialPopulator" />
+				<entry key="T_RATING" value-ref="accommodationTRatingPopulator" />
+				<entry key="THUMBNAILMAP" value-ref="accommodationThumbnailMapPopulator" />
+				<entry key="NAME" value-ref="accommodationNamePopulator" />
+				<entry key="AT_A_GLANCE" value-ref="accommodationAtAGlancePopulator" />
+				<entry key="ENTERTAINMENT" value-ref="accommodationEntertainmentPopulator" />
+				<entry key="ENRICH" value-ref="accommodationEnrichPopulator" />
+				<entry key="HIGHLIGHTS" value-ref="accommodationHighlightsPopulator" />
+				<entry key="ROOMS" value-ref="accomodationRoomPopulator" />
+				<entry key="AWARD_INFO" value-ref="accomTravelLifePopulator" />
+				<entry key="INTRODUCTION" value-ref="accommodationIntroductionPopulator" />
+				<entry key="ACCOM_LOCATION_DATA" value-ref="accommodationLocationDataPopulator" />
+				<entry key="SPECIALOFFER" value-ref="accommodationSpecialOfferPopulator" />
+				<!-- <entry key="BOARDBAIS_DATA" value-ref="boardBasisDataPopulator"
+					/> -->
+				<entry key="FULLDATA" value-ref="accommodationFullDataPopulator" />
+				<entry key="ACCOM_GEO" value-ref="accommodationGeoHeirarchyPopulator" />
+				<entry key="ACCOM_INFO" value-ref="accommodationLocationInfoPopulator" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="accommodationAttractionExcursionConfiguredPopulator"
+		class="de.hybris.platform.commercefacades.converter.impl.DefaultConfigurablePopulator"
+		scope="prototype">
+		<property name="populators">
+			<map key-type="uk.co.portaltech.tui.converters.AccommodationOption">
+				<entry key="THUMBNAILMAP" value-ref="accommodationThumbnailMapPopulator" />
+			</map>
+		</property>
+	</bean>
+	<!-- <alias name="defaultAccommodationRoomConfiguredPopulator" alias="accommodationRoomConfiguredPopulator"
+		/> <bean id="defaultAccommodationRoomConfiguredPopulator" parent="defaultProductConfiguredPopulator"
+		scope="prototype"> <property name="populators"> <map key-type="uk.co.portaltech.tui.converters.AccommodationRoomOption">
+		<entry key="BASIC" value-ref="accomodationRoomPopulator" /> </map> </property>
+		</bean> -->
+
+	<alias name="defaultAccommodationBenefitConfiguredPopulator"
+		alias="accommodationBenefitConfiguredPopulator" />
+	<bean id="defaultAccommodationBenefitConfiguredPopulator" parent="defaultProductConfiguredPopulator"
+		scope="prototype">
+		<property name="populators">
+			<map key-type="uk.co.portaltech.tui.converters.AccommodationBenefitOption">
+				<entry key="BASIC" value-ref="defaultBenefitConverter" />
+			</map>
+		</property>
+	</bean>
+	<alias name="defaultCrGlobalNavigationPopulator" alias="crGlobalNavigationPopulator" />
+	<bean id="defaultCrGlobalNavigationPopulator"
+		class="de.hybris.platform.commercefacades.converter.impl.DefaultConfigurablePopulator"
+		scope="tenant">
+		<property name="populators">
+			<map key-type="uk.co.portaltech.tui.converters.GlobalNavigationOption">
+				<entry key="DESTINATION_NAVIGATION" value-ref="crDestinationNavigationPopulator" />
+				<entry key="PORTOFCALL_NAVIGATION" value-ref="crPortOfCallNavigationPopulator" />
+				<entry key="CR_NAVIGATION_LINKS" value-ref="crNavigationLinksPopulator" />
+				<entry key="TH_NAVIGATION_LINKS" value-ref="thGlobalHeaderNavigationPopulator" />
+			</map>
+		</property>
+	</bean>
+	<alias name="defaultLocationConfiguredPopulator" alias="locationConfiguredPopulator" />
+	<bean id="defaultLocationConfiguredPopulator"
+		class="de.hybris.platform.commercefacades.converter.impl.DefaultConfigurablePopulator"
+		scope="tenant">
+		<property name="populators">
+			<map key-type="uk.co.portaltech.tui.converters.LocationOption">
+				<entry key="BASIC" value-ref="locationBasicPopulator" />
+				<entry key="GALLERY" value-ref="locationImageDataPopulator" />
+				<entry key="KEY_FACTS" value-ref="locationKeyfactsPopulator" />
+				<entry key="HEALTHANDSAFETY" value-ref="locationHealthAndSafetyPopulator" />
+				<entry key="PASSPORTANDVISA" value-ref="locationPassportAndVisasPopulator" />
+				<entry key="WHENTOGO" value-ref="locationWhenToGoEditorialPopulator" />
+				<entry key="GETTINGAROUND" value-ref="locationGettingAroundEditorialPopulator" />
+				<entry key="WHERE_TO_GO" value-ref="locationWhereToGoPopulator" />
+				<entry key="THUMBNAILMAP" value-ref="locationThumbnailMapPopulator" />
+				<entry key="CONTENT" value-ref="locationContentPopulator" />
+				<entry key="HIGHLIGHTS" value-ref="locationHighlightsPopulator" />
+				<entry key="SUBCATEGORIES" value-ref="locationSubCategoriesPopulator" />
+				<entry key="THINGSTOSEEANDDO" value-ref="locationThingsToSeeAndDoPopulator" />
+				<entry key="WEATHER" value-ref="weatherViewDataPopulator" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="facilityConfiguredPopulator" parent="defaultProductConfiguredPopulator"
+		scope="prototype">
+		<property name="populators">
+			<map key-type="uk.co.portaltech.tui.converters.FacilityOption">
+				<entry key="FACILITY_BASIC" value-ref="facilityBasicPopulator" />
+			</map>
+		</property>
+	</bean>
+
+	<alias name="defaultAttractionConfiguredPopulator" alias="attractionConfiguredPopulator" />
+	<bean id="defaultAttractionConfiguredPopulator" parent="defaultProductConfiguredPopulator"
+		scope="prototype">
+		<property name="populators">
+			<map key-type="uk.co.portaltech.tui.converters.AttractionOption">
+				<entry key="USPS" value-ref="attractionUspsPopulator" />
+				<entry key="BASIC" value-ref="attractionBasicPopulator" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="attractionUspsPopulator" class="uk.co.portaltech.tui.populators.AttractionUspsPopulator"
+		scope="prototype" />
+	<bean id="attractionBasicPopulator"
+		class="uk.co.portaltech.tui.populators.AttractionBasicPopulator"
+		scope="prototype" />
+<bean id="crDestinationNavigationPopulator" class="uk.co.portaltech.tui.populators.CRdestinationNavigationPopulator"
+		scope="prototype" />
+	 <bean id="crPortOfCallNavigationPopulator" class="uk.co.portaltech.tui.populators.CRPortOfCallNavigationPopulator"
+		scope="prototype" />
+	  <bean id="crNavigationLinksPopulator" class="uk.co.portaltech.tui.populators.CRNavigationLinksPopulator"
+		scope="prototype" />
+  <bean id="thGlobalHeaderNavigationPopulator" class="uk.co.portaltech.tui.populators.TuiGlobalHeaderNavigationPopulator"
+		scope="prototype" />
+			<bean name="globalNavigationFacade"
+		class="uk.co.portaltech.tui.facades.impl.GlobalNavigationFacadeImpl" scope="tenant"
+		>
+		</bean>
+	<bean id="holidaySearchResultsPopulator"
+		class="uk.co.portaltech.tui.populators.HolidaySearchResultsPopulator"
+		scope="prototype" />
+	<bean id="singleAccomSearchResultsPopulator"
+		class="uk.co.portaltech.tui.populators.SingleAccomSearchResultsPopulator"
+		scope="prototype" />
+	<bean id="dateSelectorResultsPopulator"
+		class="uk.co.portaltech.tui.populators.DateSelectorResultsPopulator"
+		scope="prototype" />
+	<bean id="searchResultsAccomPopulator"
+		class="uk.co.portaltech.tui.populators.SearchResultAccomPopulator"
+		scope="prototype" />
+	<bean id="searchResultLowDepositPopulator"
+		class="uk.co.portaltech.tui.populators.SearchResultLowDepositPopulator"
+		scope="prototype" />
+	<bean id="durationSearchResultsPopulator"
+		class="uk.co.portaltech.tui.populators.DurationSearchResultsPopulator"
+		scope="prototype" />
+	<bean id="filterPopulator" class="uk.co.portaltech.tui.populators.FilterSelectorPopulator"
+		scope="prototype" />
+	<bean id="backToSearchFilterPopulator"
+		class="uk.co.portaltech.tui.populators.BackToSearchFilterPopulator"
+		scope="prototype" />
+
+	<alias name="defaultExcursionConfiguredPopulator" alias="excursionConfiguredPopulator" />
+	<bean id="defaultExcursionConfiguredPopulator" parent="defaultProductConfiguredPopulator"
+		scope="prototype">
+		<property name="populators">
+			<map key-type="uk.co.portaltech.tui.converters.ExcursionOption">
+				<entry key="BASIC" value-ref="excursionBasicPopulator" />
+				<entry key="USPS" value-ref="excursionUspsPopulator" />
+				<entry key="RESTRICTION" value-ref="excursionRestrictionPopulator" />
+				<entry key="EXCURSIONPRICE" value-ref="excursionPricePopulator" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="excursionBasicPopulator" class="uk.co.portaltech.tui.populators.ExcursionBasicPopulator"
+		scope="prototype" />
+	<bean id="excursionUspsPopulator" class="uk.co.portaltech.tui.populators.ExcursionUspsPopulator"
+		scope="prototype" />
+	<bean id="excursionPricePopulator" class="uk.co.portaltech.tui.populators.ExcursionPricePopulator"
+		scope="prototype" />
+	<bean id="weatherViewDataPopulator"
+		class="uk.co.portaltech.tui.populators.WeatherViewDataPopulator"
+		scope="prototype">
+		<property name="weatherTypeViewDataPopulator" ref="weatherTypeViewDataPopulator" />
+	</bean>
+	<bean id="weatherTypeViewDataPopulator"
+		class="uk.co.portaltech.tui.populators.WeatherTypeViewDataPopulator"
+		scope="prototype">
+		<property name="weatherTypeValueViewDataPopulator" ref="weatherTypeValueViewDataPopulator" />
+	</bean>
+	<bean id="weatherTypeValueViewDataPopulator"
+		class="uk.co.portaltech.tui.populators.WeatherTypeValueViewDataPopulator"
+		scope="prototype" />
+
+	<bean id="abTestDataPopulatorFromABTestComponent"
+		class="uk.co.portaltech.tui.populators.ABTestDataPopulatorFromABTestComponent"
+		scope="prototype" />
+
+	<bean id="abTestDataPopulatorFromCMSComponent"
+		class="uk.co.portaltech.tui.populators.ABTestDataPopulatorFromCMSComponent"
+		scope="prototype" />
+
+	<!-- ============================= Image Populators. =============================== -->
+
+	<alias name="defaultImageDataPopulator" alias="imageDataPopulator" />
+	<bean id="defaultImageDataPopulator" class="uk.co.portaltech.tui.populators.ImageDataPopulator"
+		scope="prototype">
+		<property name="imageConverter" ref="imageConverter" />
+		<property name="imageFormatMapping" ref="imageFormatMapping" />
+		<property name="mediaService" ref="mediaService" />
+		<property name="mediaContainerService" ref="mediaContainerService" />
+	</bean>
+
+	<alias name="defaultRoomImageDataPopulator" alias="roomImageDataPopulator1" />
+	<bean id="defaultRoomImageDataPopulator" parent="imageDataPopulator"
+		scope="prototype">
+		<property name="imageFormats">
+			<list>
+				<value>thumbnail</value>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultProductRangeImageDataPopulator" alias="productRangeImageDataPopulator" />
+	<bean id="defaultProductRangeImageDataPopulator" parent="imageDataPopulator"
+		scope="prototype">
+		<property name="imageFormats">
+			<list>
+				<value>thumbnail</value>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultLocationImageDataPopulator" alias="locationImageDataPopulator" />
+	<bean id="defaultLocationImageDataPopulator" parent="imageDataPopulator"
+		scope="prototype">
+		<property name="imageFormats">
+			<list>
+				<value>thumbnail</value>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultBenefitImageDataPopulator" alias="accommodationBenefitImageDataPopulator" />
+	<bean id="defaultBenefitImageDataPopulator" parent="imageDataPopulator"
+		scope="prototype">
+		<property name="imageFormats">
+			<list>
+				<value>thumbnail</value>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultFacilityImageDataPopulator" alias="facilityImageDataPopulator" />
+	<bean id="defaultFacilityImageDataPopulator" parent="imageDataPopulator"
+		scope="prototype">
+		<property name="imageFormats">
+			<list>
+				<value>thumbnail</value>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="tuiProductPrimaryImagePopulator" alias="productPrimaryImagePopulator" />
+	<bean id="tuiProductPrimaryImagePopulator" parent="defaultProductPrimaryImagePopulator">
+		<property name="imageFormats">
+			<list>
+				<value>Main Pic</value>
+				<value>thumbnail</value>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="tuiProductGalleryImagesPopulator" alias="productGalleryImagesPopulator" />
+	<bean id="tuiProductGalleryImagesPopulator" parent="defaultProductGalleryImagesPopulator">
+		<property name="imageFormats">
+			<list>
+				<value>Main Pic</value>
+				<value>thumbnail</value>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultProductUspImageDataPopulator" alias="productUspImageDataPopulator" />
+	<bean id="defaultProductUspImageDataPopulator" parent="imageDataPopulator"
+		scope="prototype">
+		<property name="imageFormats">
+			<list>
+				<value>thumbnail</value>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="tuiHeroCarouselImagesPopulator" alias="heroImagesPopulator" />
+	<bean id="tuiHeroCarouselImagesPopulator" parent="mediaPopulator">
+		<property name="imageFormats">
+			<list>
+				<value>Main Pic</value>
+				<value>Small</value>
+				<value>Medium</value>
+				<value>Very Large</value>
+				<value>Large</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- <alias name="featureListImagesPopulator" alias="featureListImagesPopulator"
+		/> -->
+	<bean id="featureListImagesPopulator" parent="mediaPopulator">
+		<property name="imageFormats">
+			<list>
+				<value>Main Pic</value>
+				<value>thumbnail</value>
+				<value>Very Large</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="galleryVideosPopulator"
+		class="uk.co.portaltech.tui.populators.BrightCoveVideoPopulator"
+		scope="prototype" />
+
+	<alias name="defaultInspirationMapImageDataPopulator" alias="inspirationMapImageDataPopulator" />
+	<bean id="defaultInspirationMapImageDataPopulator" parent="imageDataPopulator"
+		scope="prototype">
+		<property name="imageFormats">
+			<list>
+				<value>thumbnail</value>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultItineraryMediaPopulator" alias="itineraryMediaPopulator" />
+	<bean id="defaultItineraryMediaPopulator" parent="imageDataPopulator"
+		scope="prototype">
+		<property name="imageFormats">
+			<list>
+				<value>thumbnail</value>
+				<value>Main Pic</value>
+				<value>Very Large</value>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultItineraryPopulator" alias="itineraryPopulator" />
+	<bean id="defaultItineraryPopulator" class="uk.co.portaltech.tui.populators.ItineraryPopulator"
+		scope="prototype">
+		<property name="itineraryMediaPopulator" ref="itineraryMediaPopulator"></property>
+	</bean>
+
+	<alias name="defaultEssentialInfoPopulator" alias="essentialInfoPopulator" />
+	<bean id="defaultEssentialInfoPopulator" class="uk.co.portaltech.tui.populators.EssentialInfoPopulator"
+		scope="prototype">
+	</bean>
+
+	<!-- ============================= Other Populators. =============================== -->
+
+	<alias name="defaultAccommodationBasicPopulator" alias="accommodationBasicPopulator" />
+	<bean id="defaultAccommodationBasicPopulator"
+		class="uk.co.portaltech.tui.populators.DefaultAccommodationBasicPopulator"
+		scope="prototype">
+		<property name="productRangeBasicPopulator" ref="productRangeBasicPopulator" />
+	</bean>
+
+	<bean id="locationSubCategoriesPopulator"
+		class="uk.co.portaltech.tui.populators.LocationSubCategoriesPopulator"
+		scope="prototype" />
+	<bean id="accomSubCategoriesPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationSubCategoriesPopulator"
+		scope="prototype" />
+
+
+	<bean id="accommodationInteractiveMapPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationInteractiveMapPopulator"
+		scope="prototype" />
+
+
+	<bean id="locationHealthAndSafetyPopulator"
+		class="uk.co.portaltech.tui.populators.LocationHealthAndSafetyPopulator"
+		scope="prototype" />
+
+	<bean id="productRangeCategoryCarouselOverviewPopulator"
+		class="uk.co.portaltech.tui.populators.ProductRangeCategoryCarouselOverviewPopulator"
+		scope="prototype" />
+
+	<bean id="tripAdvisorPopulator" class="uk.co.portaltech.tui.populators.TripAdvisorPopulator"
+		scope="prototype" />
+
+	<bean id="locationPassportAndVisasPopulator"
+		class="uk.co.portaltech.tui.populators.LocationPassportAndVisasPopulator"
+		scope="prototype" />
+
+	<bean id="locationWhereToGoPopulator"
+		class="uk.co.portaltech.tui.populators.LocationWhereToGoPopulator"
+		scope="prototype" />
+
+	<bean id="accommodationHealthAndSafetyPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationHealthAndSafetyEditorialPopulator"
+		scope="prototype" />
+
+	<bean id="accommodationPassportsAndVisasPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationPassportsAndVisasPopulator"
+		scope="prototype" />
+
+	<bean id="locationWhenToGoEditorialPopulator"
+		class="uk.co.portaltech.tui.populators.LocationWhenToGoEditorialPopulator"
+		scope="prototype" />
+
+	<bean id="locationGettingAroundEditorialPopulator"
+		class="uk.co.portaltech.tui.populators.LocationGettingAroundEditorialPopulator"
+		scope="prototype" />
+
+	<bean id="accommodationGettingAroundEditorialPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationGettingAroundEditorialPopulator"
+		scope="prototype" />
+
+	<bean id="accommodationAtAGlancePopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationAtAGlancePopulator"
+		scope="prototype" />
+
+	<bean id="accommodationEntertainmentPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationEntertainmentPopulator"
+		scope="prototype" />
+
+	<bean id="accommodationEnrichPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationEnrichPopulator"
+		scope="prototype" />
+
+	<bean id="locationBasicPopulator" class="uk.co.portaltech.tui.populators.LocationBasicPopulator"
+		scope="prototype" />
+
+	<bean id="locationContentPopulator"
+		class="uk.co.portaltech.tui.populators.LocationContentPopulator"
+		scope="prototype" />
+
+	<bean id="locationThingsToSeeAndDoPopulator"
+		class="uk.co.portaltech.tui.populators.LocationThingsToSeeAndDoPopulator"
+		scope="prototype" />
+
+	<bean id="locationThumbnailMapPopulator"
+		class="uk.co.portaltech.tui.populators.LocationThumbnailMapPopulator"
+		scope="prototype" />
+
+	<bean id="accommodationThumbnailMapPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationThumbnailMapPopulator"
+		scope="prototype" />
+
+	<bean id="accommodationWhenToGoEditorialPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationWhenToGoEditorialPopulator"
+		scope="prototype" />
+	<bean id="accommodationTRatingPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationTRatingPopulator"
+		scope="prototype" />
+
+	<bean id="accommodationIntroductionPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationIntroductionPopulator"
+		scope="prototype" />
+	<bean id="accommodationNamePopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationNamePopulator"
+		scope="prototype" />
+
+	<alias name="defaultAccomodationRoomPopulator" alias="accomodationRoomPopulator" />
+	<bean id="defaultAccomodationRoomPopulator"
+		class="uk.co.portaltech.tui.populators.AccomodationRoomPopulator"
+		scope="prototype" />
+
+
+	<alias name="defaultMediaViewDataPopulator" alias="mediaViewDataPopulator" />
+	<bean id="defaultMediaViewDataPopulator" class="uk.co.portaltech.tui.populators.MediaViewDataPopulator"
+		scope="prototype">
+	</bean>
+
+	<bean id="mediaPopulator" class="uk.co.portaltech.tui.populators.MediaPopulator"
+		scope="prototype">
+	</bean>
+
+	<alias name="defaultAccommodationProductRangePopulator" alias="accommodationProductRangePopulator" />
+	<bean id="defaultAccommodationProductRangePopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationProductRangePopulator"
+		scope="prototype">
+		<property name="productRangeImageDataPopulator" ref="productRangeImageDataPopulator" />
+		<property name="mediaViewDataPopulator" ref="mediaViewDataPopulator" />
+		<property name="productRangeUspsPopulator" ref="productRangeUspsPopulator" />
+	</bean>
+
+
+	<bean id="accommodationFacilitiesPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationFacilitiesPopulator"
+		scope="prototype">
+		<property name="facilityConfiguredPopulator" ref="facilityConfiguredPopulator" />
+	</bean>
+
+	<bean id="facilityBasicPopulator" class="uk.co.portaltech.tui.populators.FacilityBasicPopulator"
+		scope="prototype" />
+	<bean id="flightOptionRequestPopulator"
+		class="uk.co.portaltech.tui.populators.FlightOptionRequestPopulator"
+		scope="prototype" />
+
+
+
+	<alias name="accommodationKeyFactsPopulator" alias="accommodationKeyfactsPopulator" />
+	<bean id="accommodationKeyFactsPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationKeyFactsPopulator"
+		scope="prototype" />
+
+	<bean id="blogDataPopulator" class="uk.co.portaltech.tui.populators.BlogDataPopulator"
+		scope="prototype" />
+
+	<bean id="bookFlowAccommodationPopulator"
+		class="uk.co.portaltech.tui.populators.BookFlowAccommodationPopulator"
+		scope="prototype" />
+	<bean id="thBookFlowAccommodationPopulator"
+		class="uk.co.portaltech.tui.populators.ThBookFlowAccommodationPopulator"
+		scope="prototype" />
+	<bean id="priceOverlayViewDataPopulator"
+		class="uk.co.portaltech.tui.populators.PriceOverlayViewDataPopulator"
+		scope="prototype" />
+
+	<bean id="accommodationAllInclusivePopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationAllInclusivePopulator"
+		scope="prototype" />
+
+	<alias name="locationKeyFactsPopulator" alias="locationKeyfactsPopulator" />
+	<bean id="locationKeyFactsPopulator"
+		class="uk.co.portaltech.tui.populators.LocationKeyFactsDataPopulator"
+		scope="prototype" />
+
+	<alias name="accommodationLocationInfoPopulator" alias="accommodationLocationInfoPopulator" />
+	<bean id="accommodationLocationInfoPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationInfoPopulator"
+		scope="prototype" />
+
+	<alias name="accommodationEditorialPopulator" alias="accommodationEditorialPopulator" />
+	<bean id="accommodationEditorialPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationEditorialPopulator"
+		scope="prototype" />
+
+	<alias name="excursionRestrictionPopulator" alias="excursionRestrictionPopulator" />
+	<bean id="excursionRestrictionPopulator"
+		class="uk.co.portaltech.tui.populators.ExcursionRestrictionPopulator"
+		scope="prototype" />
+
+
+	<alias name="accommodationDisclaimerPopulator" alias="accommodationDisclaimerPopulator" />
+	<bean id="accommodationDisclaimerPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationDisclaimerPopulator"
+		scope="prototype" />
+
+	<alias name="accommodationSpecialOfferPopulator" alias="accommodationSpecialOfferPopulator" />
+	<bean id="accommodationSpecialOfferPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationSpecialOfferPopulator"
+		scope="prototype" />
+
+	<bean id="accommodationFullDataPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationFullDataPopulator"
+		scope="prototype" />
+
+	<bean id="accommodationGeoHeirarchyPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationGeoHeirarchyPopulator"
+		scope="prototype" />
+
+	<alias name="accommodationEditorialIntroductionPopulator" alias="accommodationEditorialIntroPopulator" />
+	<bean id="accommodationEditorialIntroductionPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationEditorialIntroductionPopulator"
+		scope="prototype" />
+	<bean id="newFacilityPopulator" class="uk.co.portaltech.tui.populators.NewFacilityPopulator"
+		scope="prototype" />
+
+	<alias name="defaultNavigationBarComponentPopulator" alias="navigationBarComponentPopulator" />
+	<bean id="defaultNavigationBarComponentPopulator"
+		class="uk.co.portaltech.tui.populators.NavigationBarComponentPopulator"
+		scope="prototype">
+		<property name="cmsNavigationNodePopulator" ref="cmsNavigationNodePopulator" />
+		<property name="cmsLinkComponentPopulator" ref="cmsLinkComponentPopulator" />
+	</bean>
+
+	<alias name="defaultNavigationComponentPopulator" alias="navigationComponentPopulator" />
+	<bean id="defaultNavigationComponentPopulator"
+		class="uk.co.portaltech.tui.populators.NavigationComponentPopulator"
+		scope="prototype">
+		<property name="navigationBarComponentPopulator" ref="navigationBarComponentPopulator" />
+	</bean>
+
+	<alias name="defaultGeographicalNavigationComponentPopulator"
+		alias="geographicalNavigationComponentPopulator" />
+	<bean id="defaultGeographicalNavigationComponentPopulator"
+		class="uk.co.portaltech.tui.populators.GeographicalNavigationComponentPopulator"
+		scope="prototype">
+		<property name="tuiCategoryDataPopulator" ref="tuiCategoryDataPopulator" />
+		<property name="tuiCategoryDataPopulatorWithDepth" ref="tuiCategoryDataPopulatorWithDepth" />
+	</bean>
+
+	<alias name="defaultCMSNavigationNodePopulator" alias="cmsNavigationNodePopulator" />
+	<bean id="defaultCMSNavigationNodePopulator"
+		class="uk.co.portaltech.tui.populators.CMSNavigationNodePopulator"
+		scope="prototype">
+		<property name="cmsLinkComponentPopulator" ref="cmsLinkComponentPopulator" />
+	</bean>
+
+	<alias name="defaultTUICategoryDataPopulator" alias="tuiCategoryDataPopulator" />
+	<bean id="defaultTUICategoryDataPopulator"
+		class="uk.co.portaltech.tui.populators.TUICategoryDataPopulator"
+		scope="prototype">
+	</bean>
+
+	<bean id="tuiCategoryDataPopulatorWithDepth"
+		class="uk.co.portaltech.tui.populators.TUICategoryDataPopulatorWithDepth"
+		scope="tenant">
+	</bean>
+
+	<alias name="defaultCMSLinkComponentPopulator" alias="cmsLinkComponentPopulator" />
+	<bean id="defaultCMSLinkComponentPopulator"
+		class="uk.co.portaltech.tui.populators.CMSLinkComponentPopulator"
+		scope="prototype">
+		<property name="productConfiguredPopulator" ref="productConfiguredPopulator" />
+	</bean>
+
+	<bean id="attractionEditorialContentPopulator"
+		class="uk.co.portaltech.tui.populators.AttractionEditorialContentPopulator"
+		scope="prototype" />
+	<bean id="articlePopulator" class="uk.co.portaltech.tui.populators.ArticlePopulator"
+		scope="prototype">
+		<property name="mediaViewDataPopulator" ref="mediaViewDataPopulator" />
+	</bean>
+
+	<bean id="locationHighlightsPopulator"
+		class="uk.co.portaltech.tui.populators.LocationHighlightsPopulator"
+		scope="prototype" />
+	<bean id="accommodationHighlightsPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationHighlightsPopulator"
+		scope="prototype" />
+
+	<bean id="productRangeBasicPopulator"
+		class="uk.co.portaltech.tui.populators.ProductRangeBasicPopulator"
+		scope="prototype" />
+	<bean id="productRangeHighlightsPopulator"
+		class="uk.co.portaltech.tui.populators.ProductRangeHighlightsPopulator"
+		scope="prototype" />
+
+	<bean id="productRangeCategoryBasicPopulator"
+		class="uk.co.portaltech.tui.populators.ProductRangeCategoryBasicPopulator"
+		scope="prototype">
+		<property name="productRangeFacade" ref="productRangeFacade" />
+	</bean>
+
+	<alias name="defaultProductRangeUspsPopulator" alias="productRangeUspsPopulator" />
+	<bean id="defaultProductRangeUspsPopulator"
+		class="uk.co.portaltech.tui.populators.ProductRangeUspsPopulator"
+		scope="prototype">
+		<property name="productUspImageDataPopulator" ref="productUspImageDataPopulator"></property>
+	</bean>
+
+	<alias name="defaultInspirationMapPopulator" alias="inspirationMapPopulator" />
+	<bean id="defaultInspirationMapPopulator" class="uk.co.portaltech.tui.populators.InspirationMapPopulator"
+		scope="prototype" />
+
+	<alias name="accomInspirationMapPopulator" alias="inspirationMapPopulatorForAccom" />
+	<bean id="accomInspirationMapPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationInspirationMapPopulator"
+		scope="prototype" />
+	<bean id="accomTravelLifePopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationTravelLifePopulator"
+		scope="prototype"></bean>
+	<bean id="searchResultsAnalyticsPopulator"
+		class="uk.co.portaltech.tui.populators.SearchResultsAnalyticsPopulator"
+		scope="prototype" />
+	<bean id="flightOptionsAnalyticsPopulator"
+		class="uk.co.portaltech.tui.populators.FlightOptionsAnalyticsPopulator"
+		scope="prototype" />
+	<bean id="accommodationAnalyticsPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationAnalyticsPopulator"
+		scope="prototype" />
+	<bean id="displayBookingAnalyticsPopulator"
+		class="uk.co.tui.manage.populators.DisplayBookingAnalyticsPopulator"
+		scope="prototype" />
+	<bean id="managePaymentConfirmationAnalyticsPopulator"
+		class="uk.co.tui.manage.populators.ManagePaymentConfirmationAnalyticsPopulator"
+		scope="prototype" />
+	<bean id="dealsCategoryPopulator" class="uk.co.portaltech.tui.populators.DealsCategoryPopulator"
+		scope="prototype">
+		<property name="mediaViewDataPopulator" ref="mediaViewDataPopulator"></property>
+	</bean>
+
+	<bean id="productPromoPopulator" class="uk.co.portaltech.tui.populators.ProductPromoPopulator"
+		scope="prototype">
+		<property name="mediaViewDataPopulator" ref="mediaViewDataPopulator"></property>
+	</bean>
+
+	<bean id="accommodationLocationDataPopulator"
+		class="uk.co.portaltech.tui.populators.AccommodationLocationDataPopulator"
+		scope="prototype" />
+
+	<!-- ============================= Image Formatting. =============================== -->
+
+	<alias name="tuiImageFormatMapping" alias="imageFormatMapping" />
+	<bean id="tuiImageFormatMapping" parent="defaultImageFormatMapping">
+		<property name="mapping">
+			<map>
+				<entry key="carousel" value="232x130" />
+
+				<entry key="Main Pic" value="658x370" />
+				<entry key="Small" value="232x130" />
+				<entry key="Medium" value="488x274" />
+				<entry key="Large" value="658x370" />
+				<entry key="Very Large" value="1080x608" />
+				<entry key="thumbnail" value="232x130" />
+
+
+
+				<entry key="zoom" value="658x370" />
+				<entry key="store" value="488x274" />
+				<entry key="product" value="488x274" />
+				<entry key="cartIcon" value="232x130" />
+				<entry key="styleSwatch" value="232x130" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- ============================= Interceptor. =============================== -->
+
+	<bean id="locationInterceptor"
+		class="uk.co.portaltech.tui.interceptor.GeographyHierarchyInterceptor"
+		scope="tenant" autowire="byName" />
+
+	<bean id="locationInterceptorMapping" scope="tenant"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="locationInterceptor" />
+		<property name="typeCode" value="Location" /> <!-- Here you specify what type you want to intercept before it is been persisted -->
+		<property name="replacedInterceptors" ref="uniqueCatalogItemValidator" />
+		<property name="order" value="5000" />
+	</bean>
+
+	<bean id="contentPageInterceptor" class="uk.co.portaltech.tui.interceptor.ContentPageInterceptor"
+		scope="tenant" autowire="byName" />
+
+	<bean id="contentPageInterceptorMapping" scope="tenant"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="contentPageInterceptor" />
+		<property name="typeCode" value="ContentPage" />
+	</bean>
+
+	<bean id="analyticsHelper" class="uk.co.portaltech.tui.helper.AnalyticsHelper"
+		scope="prototype" />
+	<bean id="airportHelper" class="uk.co.portaltech.tui.helper.AirportHelper"
+		scope="prototype" />
+	<bean id="villaAvailabilityHelper" class="uk.co.portaltech.tui.helper.VillaAvailabilityHelper"
+		scope="prototype" />
+	<bean id="deepLinkRequestTestData" class="uk.co.portaltech.tui.utils.DeepLinkRequestTestData"
+		scope="prototype" />
+	<bean id="deepLinkRequestData" class="uk.co.portaltech.tui.web.view.data.DeepLinkRequestData"
+		scope="prototype" />
+	<bean id="viewSelector" class="uk.co.portaltech.tui.utils.ViewSelector"
+		scope="prototype" />
+
+
+	<!-- Added for BookFlow Page URL builder -->
+	<alias name="bookFlowAccomPageUrlBuilder" alias="bookFlowAccomPageUrlBuilder" />
+	<bean id="bookFlowAccomPageUrlBuilder"
+		class="uk.co.portaltech.tui.web.url.builders.BookFlowAccomPageUrlBuilder"
+		scope="tenant" />
+	<bean id="bookFlowFlightOptionUrlBuilder"
+		class="uk.co.portaltech.tui.web.url.builders.BookFlowFlightOptionUrlBuilder"
+		scope="tenant" />
+	<bean id="holidayOptionsPageUrlBuilder"
+		class="uk.co.portaltech.tui.web.url.builders.HolidayOptionsRequestBuilder"></bean>
+	<bean id="iscapeflightOptionsUrlBuilder"
+		class="uk.co.portaltech.tui.web.url.builders.FlightOptionRequestBuilder"></bean>
+
+	<bean id="holidayFacade" class="uk.co.portaltech.tui.facades.impl.DefaultHolidayFacade"
+		scope="tenant" />
+	<bean id="filterSectionService" class="uk.co.portaltech.tui.services.FilterSectionService"
+		scope="tenant" />
+
+	<!-- ====================================Inventory Groups =========================== -->
+	<bean id="merchandiserFacade"
+		class="uk.co.portaltech.tui.facades.impl.DefaultMerchandiserFacade"
+		scope="tenant">
+		<property name="configurationService" ref="configurationService" />
+	</bean>
+	<bean id="merchandiserResultsPopulator"
+		class="uk.co.portaltech.tui.populators.MerchandiserResultsPopulator"
+		scope="prototype" />
+	<bean id="dealsCollectionMerchandiserPopulator"
+		class="uk.co.portaltech.tui.populators.DealsCollectionMerchandiserResultsPopulator"
+		scope="prototype" />
+	<bean id="invfilterPopulator"
+		class="uk.co.portaltech.tui.populators.InvGroupsFilterSelectorPopulator"
+		scope="prototype" />
+	<bean id="merchandisedRequestPopulator"
+		class="uk.co.portaltech.tui.populators.MerchandisedRequestPopulator"
+		scope="prototype" />
+
+	<bean id="durationHowLongService"
+		class="uk.co.portaltech.tui.services.DurationHowLongServiceImpl"
+		scope="tenant" />
+
+	<!-- The below beans are added as part of performance fix -->
+
+	<bean id="travelDatesPopulator" class="uk.co.portaltech.tui.populators.TravelDatesPopulator"
+		scope="tenant">
+		<property name="routeValidator" ref="routeValidator" />
+		<property name="flightRouteFacade" ref="flightRouteFacade" />
+	</bean>
+
+	<bean id="deepLinkRequestViewDataPopulator"
+		class="uk.co.portaltech.tui.populators.DeepLinkRequestViewDataPopulator"
+		scope="prototype" />
+
+
+	<bean id="routeValidator" class="uk.co.portaltech.tui.utils.RouteValidator"
+		scope="tenant">
+		<property name="airportFacade" ref="airportFacade" />
+		<property name="locationFacade" ref="locationFacade" />
+	</bean>
+
+	<bean id="configurationUtils" class="uk.co.portaltech.tui.utils.ConfigurationUtils"
+		scope="singleton">
+		<property name="configurationService" ref="configurationService" />
+		<property name="tuiConfigService" ref="tuiConfigService" />
+		<property name="tuiUtilityService" ref="tuiUtilityService" />
+	</bean>
+
+	<bean id="cacheUtil" class="uk.co.portaltech.tui.utils.CacheUtil">
+	<property name="locationDataCacheWrapper" ref="locationDataCacheWrapper" />
+		<property name="locationListCacheWrapper" ref="locationListCacheWrapper" />
+		<property name="fragmentCacheWrapper" ref="fragmentCacheWrapper" />
+		<property name="accommodationDataCacheWrapper" ref="accommodationDataCacheWrapper" />
+		<property name="accommodationListCacheWrapper" ref="accommodationListCacheWrapper" />
+		<property name="destGuideLocationsCacheWrapper" ref="destGuideLocationsCacheWrapper" />
+		<property name="searchResultsRoomsDetailsCacheWrapper" ref="searchResultsRoomsDetailsCacheWrapper" />
+		<property name="accomFeaturesInSearchCacheWrapper" ref="accomFeaturesInSearchCacheWrapper" />
+		<property name="accomImageUrlInSearchCacheWrapper" ref="accomImageUrlInSearchCacheWrapper" />
+		<property name="accomImageUrlMapInSearchCacheWrapper" ref="accomImageUrlMapInSearchCacheWrapper" />
+		<property name="interactiveMapCacheWrapper" ref="interactiveMapCacheWrapper" />
+		<property name="itinearyImageUrlCacheWrapper"	ref="itinearyImageUrlCacheWrapper" />
+		<property name="globalNavigationComponentViewDataCacheWrapper" ref="globalNavigationComponentViewDataCacheWrapper"></property>
+		<property name="globalNavigationCacheWrapper" ref="globalNavigationCacheWrapper"></property>
+	        <property name="continentAndCountryHierarchyCacheWrapper" ref="continentAndCountryHierarchyCacheWrapper" />
+		<property name="destinationGuideCollectionDataCacheWrapper" ref="destinationGuideCollectionDataCacheWrapper" />
+		<property name="mostPopularDestinationdataCacheWrapper" ref="mostPopularDestinationdataCacheWrapper" />
+		<property name="regionDestinationDataCacheWrapper" ref="regionDestinationDataCacheWrapper" />
+		<property name="addShortlistCacheWrapper" ref="addShortlistCacheWrapper" />
+		<property name="existShortlistCacheWrapper" ref="existShortlistCacheWrapper" />
+		<property name="removeShortlistCacheWrapper" ref="removeShortlistCacheWrapper" />
+
+
+	</bean>
+
+	<bean id="webCacheHelper" class="uk.co.portaltech.tui.helper.WebCacheHelper"
+		scope="tenant" />
+	<bean id="deepLinkHelper" class="uk.co.portaltech.tui.helper.DeepLinkHelper"
+		scope="tenant">
+		<property name="airportsService" ref="airportsService" />
+		<property name="accommodationService" ref="accommodationService" />
+		<property name="productRangeService" ref="productRangeService" />
+	</bean>
+	<bean name="accommodationStandardFacade"
+		class="uk.co.portaltech.tui.facades.impl.AccommodationStandardFacade"
+		scope="tenant" />
+
+	<bean name="linkedItemService" class="uk.co.portaltech.tui.services.LinkedItemServiceImpl"
+		scope="prototype" />
+
+	<!-- Added for bookflow -->
+	<bean id="extraFacilityStroreUtil" class="uk.co.tui.util.ExtraFacilityStoreUtils"
+		scope="tenant" />
+	<!-- Added for Eptica -->
+	<bean id="faqFacade" class="uk.co.portaltech.tui.facades.impl.FAQFacade"
+		scope="tenant" />
+	<!-- <bean id="uk.co.portaltech.tui.baynoteRESTConverter" class="uk.co.portaltech.tui.converters.BaynoteRESTConverter"
+		scope="tenant">
+		<property name="uk.co.portaltech.tui.baynoteMarshallerHome" ref="uk.co.portaltech.tui.baynoteMarshallerHome" />
+		<property name="uk.co.portaltech.tui.baynoteMarshallerBrowse" ref="uk.co.portaltech.tui.baynoteMarshallerBrowse" />
+	</bean> -->
+
+	<bean name="recommendationsFacade"
+		class="uk.co.portaltech.tui.facades.impl.RecommendationsFacadeImpl"
+		scope="tenant" />
+
+		<bean name="baynoteRecommendationFacade"
+		class="uk.co.portaltech.tui.facades.impl.BaynoteRecommendationFacadeImpl"
+		scope="tenant" />
+
+	<bean id="recommendationsPopulator"
+		class="uk.co.portaltech.tui.populators.RecommendationsPopulator"
+		scope="prototype" />
+	<bean id="recommendationsService" class="uk.co.portaltech.tui.services.RecommendationsService"
+		scope="tenant" />
+
+	<bean id="uk.co.portaltech.tui.baynoteMarshallerHome" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<!-- <property name="packagesToScan"> <list> <value>atcomres.*</value>
+			</list> </property> -->
+		<property name="classesToBeBound">
+			<list>
+				<value>uk.co.portaltech.tui.thirdparty.baynote.client.Guides</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="uk.co.portaltech.tui.baynoteMarshallerBrowse" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<!-- <property name="packagesToScan"> <list> <value>atcomres.*</value>
+			</list> </property> -->
+		<property name="classesToBeBound">
+			<list>
+				<value>uk.co.portaltech.tui.thirdparty.baynote.client.Guideset
+				</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean name="thPromoComponentFacade"
+		class="uk.co.tui.th.book.facade.impl.DefaultPromoComponentFacade"
+		scope="tenant" />
+
+
+	<alias name="defaultTHComponentFacade" alias="thComponentFacade" />
+	<bean name="defaultTHComponentFacade"
+		class="uk.co.portaltech.tui.facades.impl.DefaultTHComponentFacade"
+		scope="tenant">
+		<property name="mainStreamTravelLocationService" ref="mainStreamTravelLocationService"></property>
+	</bean>
+
+	<bean name="crdToUrlMapFacade"
+		class="uk.co.portaltech.tui.facades.impl.DefaultCrdToUrlMappingFacade"
+		scope="tenant" />
+
+	<!-- BoardBasis..start -->
+	<bean id="boardBasisDataPopulator" class="uk.co.portaltech.tui.populators.BoardBasisDataPopulator"
+		scope="prototype" />
+	<!-- BoardBasis..end -->
+	<alias name="genericContentPopulator" alias="genericContentPopulator" />
+	<bean id="genericContentPopulator" class="uk.co.portaltech.tui.populators.GenericContentPopulator"
+		scope="prototype" />
+
+	<!-- MEGA MENU -->
+
+	<bean name="jsonTripadvisorResults"
+		class="uk.co.portaltech.tui.web.view.data.JsonTripadvisorFetchResults"
+		scope="tenant" />
+
+	<bean id="crProductUrlResolver" class="uk.co.tui.cr.resolvers.impl.CRProductUrlResolver"
+		scope="tenant">
+		<property name="pattern"
+			value="/accommodation/{subPageType}/{category-path}/{product-name}-{product-code}" />
+		<property name="defaultSubPageType" value="overview" />
+	</bean>
+
+	<bean name="storeFinderFacade"
+		class="uk.co.portaltech.tui.facades.impl.DefaultStoreLocatorFacade"
+		scope="tenant" />
+
+	<alias alias="pointOfServiceDao" name="defaultPointOfServiceDao" />
+
+
+	<bean id="thingToSeeAndDoDataPopulator"
+		class="uk.co.portaltech.tui.populators.ThingToSeeAndDoDataPopulator"
+		scope="prototype" />
+
+	<!-- BAU shortlist start -->
+
+	<bean id="defaultShortlistFacade"
+		class="uk.co.tui.shortlist.facade.impl.DefaultShortlistFacadeImpl"
+		scope="tenant">
+		<property name="defaultShortlistService" ref="defaultShortlistService" />
+		<property name="savedHolidayViewDataPopulator" ref="savedHolidayViewDataPopulator" />
+		 <property name="cookieManagementService" ref="cookieManagementService" />
+         <property name="sessionService" ref="sessionService" />
+         <property name="shortlistHolidayPackagePopulator" ref="shortlistHolidayPackagePopulator" />
+
+	</bean>
+
+	<!-- BAU shortlist End -->
+
+	<bean id="shortlistHolidayPopulator"
+		class="uk.co.portaltech.tui.populators.ShortlistHolidayPopulator"
+		scope="prototype" />
+	<bean id="iscapeShortlistHolidayPopulator"
+		class="uk.co.portaltech.tui.populators.IscapeShortlistHolidayPopulator"
+		scope="prototype" />
+<bean id="shortlistHolidayPackagePopulator"
+		class="uk.co.tui.shortlist.populators.ShortlistHolidayPackagePopulator"
+		scope="prototype" />
+		<bean id="shortlistHolidayDepositComponentPopulator"
+		class="uk.co.tui.shortlist.populators.ShortlistHolidayDepositComponentPopulator"
+		scope="prototype" />
+		<bean id="addShortlistedToPIMJobPerformable"
+		class="uk.co.tui.feeds.services.jobs.AddShortlistedToPIMJobPerformable"
+		parent="abstractJobPerformable" scope="tenant" />
+		<bean id="removeShortlistedFromPIMJobPerformable"
+		class="uk.co.tui.feeds.services.jobs.RemoveShortlistedFromPIMJobPerformable"
+		parent="abstractJobPerformable" scope="tenant" />
+
+    <bean id="flightsS2SearchUrlBuilder"
+        class="uk.co.tui.flights.url.builder.FlightsS2SearchUrlBuilder"/>
+
+    <bean id="globalNavigationService"
+        class="uk.co.portaltech.tui.services.GlobalNavigationServiceImpl"/>
+    <bean id="thIntrasiteNavigationService"
+        class="uk.co.portaltech.tui.services.THIntrasiteNavigationService"/>
+      <bean id="crIntrasiteNavigationService"
+        class="uk.co.portaltech.tui.services.CRIntrasiteNavigationService"/>
+      <bean id="fcIntrasiteNavigationService"
+        class="uk.co.portaltech.tui.services.FCIntrasiteNavigationService"/>
+
+    <util:map id="intrasiteNavigationService">
+        <entry key="cr_content" value-ref="crIntrasiteNavigationService" />
+        <entry key="th_content" value-ref="thIntrasiteNavigationService" />
+        <entry key="fc_content" value-ref="fcIntrasiteNavigationService" />
+    </util:map>
+	<bean id="mediaPopulatorLite" class="uk.co.portaltech.tui.populators.MediaPopulatorLite" scope="prototype"/>
+</beans>

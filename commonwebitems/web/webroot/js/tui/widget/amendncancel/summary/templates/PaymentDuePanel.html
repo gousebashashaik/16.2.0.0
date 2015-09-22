@@ -1,0 +1,57 @@
+<div>
+	<div class="total-pay btm-dashed">
+			<span class="fl">{% if jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.totalPaidToDate %}{{jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.totalPaidToDate}}{% endif %}</span>
+			<!-- <div class="in-tooltip-wrap" data-dojo-type="tui.widget.amendncancel.tooltipInline" data-dojo-props="floatWhere: 'position-top-center',text:'{% if jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.CreditChargesText %}{{jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.CreditChargesText}}{% endif %}'">
+			 -->	
+			 <div class="in-tooltip-wrap" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="floatWhere: 'position-top-center',text:'{% if jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.CreditChargesText %}{{jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.CreditChargesText}}{% endif %}'">
+			
+			 <span class="ac-ques-tooltip-link trigger"></span>
+			</div>
+			<span class="fr">{{jsonData.packageViewData.bookingDetails.currencyAppendedAmountPaid}}</span>
+			<div class="clear"></div>
+	</div>
+	<div class="total-due">
+		{% if jsonData.packageViewData.makePaymentButtonStatus %}
+		<div class="total-pay btm-dashed">
+			<div class="padding-bot-6">
+				<span class="fl">{{jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.paymentsDue }}</span>
+				<div class="clear"></div>
+			</div>
+
+			{% if jsonData.packageViewData.deposits %}
+				{% for deposit in jsonData.packageViewData.deposits %}
+				<div class="padding-bot-6">
+					{% ifequal deposit.depositType 'LOW_DEPOSIT' %}
+							<span class="fl"><b>{{deposit.depositDueDate}}</b></span>
+							<span class="fr"><b>{{deposit.currencyAppendedDepositPrice}}</b></span>
+					{% else %}
+							<span class="fl">{{deposit.depositDueDate}}</span>
+							<span class="fr">{{deposit.currencyAppendedDepositPrice}}</span>
+					{% endifequal %}
+					<div class="clear"></div>
+				</div>
+				{% endfor %}
+			{% else %}
+				<div class="padding-bot-6">
+					<span class="fl">{{jsonData.packageViewData.bookingDetails.dueDate}}</span>
+					<span class="fr">{{jsonData.packageViewData.bookingDetails.currencyAppendedAmountDue}}</span>
+					<div class="clear"></div>
+				</div>
+			{% endif %}
+		</div>
+		{% endif %}
+		<div class="due-big">
+		<div class="due-label">
+			<span class="lable">{% if jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.totalDue %}TOTAL OUTSTANDING{% endif %}</span>
+			<div class="in-tooltip-wrap" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props='floatWhere: "position-top-center",text:"{% if jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.AmountLeft %}{{jsonData.packageViewData.summaryPanelStaticContentViewData.summaryContentMap.AmountLeft}}{% endif %}"'>
+				<span class="ac-ques-tooltip-link trigger"></span>
+			</div>
+		</div>
+		<span class="due" id="newpricedue">
+			{{jsonData.packageViewData.bookingDetails.currencyAppendedAmountDue}}
+		</span>
+
+		<div class="clear"></div>
+		</div>
+	</div>
+</div>

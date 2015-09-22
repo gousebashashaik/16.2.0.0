@@ -1,0 +1,42 @@
+<div class="popup modal-window choose-rooms" style="display: none;">
+    <div class="header">
+		<h2>{{messages.roomeditorheading|safe}}</h2>
+        <div class="choose-rooms-num-rooms">
+            <label class="label" for="num-rooms">Number of {{messages.units|safe}}</label>
+            <select id="num-rooms" class="dropdown">
+                <option value="0">Select</option>
+                <option value="1">1 {{messages.unit|safe}}</option>
+                <option value="2">2 {{messages.units|safe}}</option>
+                <option value="3">3 {{messages.units|safe}}</option>
+                <option value="4">4 {{messages.units|safe}}</option>
+                <option value="5">5 {{messages.units|safe}}</option>
+            </select>
+        </div>
+	</div>
+    <div class="scroller">
+        <div class="holiday-rooms clearfix"></div>
+    </div>
+    <div class="errors invisible">
+<span class="sprite-img-grp-1"></span>
+</div>
+    <p class="notice">{{messages.notice|safe}}</p>
+	<div class="button-container">
+	    <a class="button cta super-jumbo disabled" id="search-again">Search Again</a>
+	</div>
+	<div class="mask-interactivity"></div>
+	<div class="no-results-options">
+		<div class="header">
+			<h1>{{searchMessaging.filterNoResults.title|safe}}</h1>
+			<h2>{{searchMessaging.filterNoResults.subtitle|safe}}</h2>
+			<p>{{searchMessaging.filterNoResults.noHolidays|safe}}</p>
+		</div>
+		<div class="options">
+			<p>{{searchMessaging.filterNoResults.whatToDo|safe}}</p>
+			<ul>
+                <li  class="sprite-img-grp-1"><a href="javascript:void(0);" class="undo uc">{{searchMessaging.filterNoResults.undo}}</a></li>
+                <li  class="sprite-img-grp-1"><a href="javascript:void(0);" class="reset uc">{{searchMessaging.filterNoResults.remove}}</a></li>
+			</ul>
+		</div>
+	</div>
+	<a href="javascript:void(0);" class="close close-large sprite-img-grp-1">x</a>
+</div>

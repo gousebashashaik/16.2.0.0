@@ -1,0 +1,203 @@
+
+<div class="excursion-room-modal-window dolphin-encounter-overlay">
+
+	<h2 class="fs28px">{{categoryCodes|default:" "|safe}}
+
+		<a href="javascript:void(0);" class="abs fr close">close</a>
+	</h2>
+	<div class="dolphin-encounter">
+		<div class="clear"></div>
+		<div class="dolphinEncounter-details">
+			<div class="no-bottom-margin page-tabs">
+				<ul  class="tabs loaded">
+					<li class="active" data-dojo-attach-point="overView"><a class="overview-tab" href="javascript:void(0);" >Overview</a></li>
+					{% if extraContent.extraFacilityContent.itinerary %}
+					<li class="" data-dojo-attach-point="itinerary"><a class="itinerary-tab" href="javascript:void(0);" >Itinerary</a></li>
+					{% endif %}
+					<li class="" data-dojo-attach-point="location"><a class="location-tab" href="javascript:void(0);" >Location</a></li>
+				</ul>
+			</div>
+			<div class="clear"></div>
+			<div class="dottedline"></div>
+			<div class="clear"></div>
+
+			<div class="left-details">
+				<div class="span-two-third " id="m365" data-dojo-attach-point="overViewData">
+					<div class="product-list slideshow" data-dojo-attach-point="excursionCarousel">
+							<div class="viewport">
+								<ul class="plist">
+
+								{% for image in extraContent.galleryImages %}
+								 {% ifequal image.size 'medium' %}
+								    <li style="z-index: 0; opacity: 1;"><img alt="Image" width="50px" src="{{image.mainSrc}}" /></li>
+								  {% endifequal %}
+				            	 {% endfor %}
+				                </ul>
+							</div>
+
+					 </div>
+				</div>
+				{% if extraContent.extraFacilityContent.itinerary %}
+				<div data-dojo-attach-point="itineraryData" class="itineraryData disNone">
+					{{extraContent.extraFacilityContent.itinerary|default:" "|safe}}
+				</div>
+				{% endif %}
+				<div id="excursionmap"  data-dojo-attach-point="locationData" class="excursion-map disNone ">
+				</div>
+				<div class="dolphinEncounter-description" data-dojo-attach-point="description">
+							<p>
+									{{extraContent.extraFacilityContent.editorialContent|default:" "|safe}}
+							</p>
+
+				</div>
+
+			</div>
+			<div class="right-details">
+				<div class="duration-details">
+					<div class="selecting-section">
+						<!-- <h5 class="total-cost">When do you want to go?</h5>
+
+						<ul class="dateStructure">
+							<li class="wheretoGo"><label>Date</label>
+								<div class="infant-count custom-dropdown dropdown loaded">
+									<ul class="dateyear">
+										<li class="current-monthyear">
+											<div class="custom-dropdown dropdown loaded" id=""
+												widgetid="">
+												<a tabindex="" data-dojo-attach-point="selectDropdown"
+													class="dropdown" href="javascript:void(0);"> <span
+													data-dojo-attach-point="selectDropdownLabel" class="value"></span>
+													<span class="arrow"><span></span></span>
+												</a> <select class="dropdown" data-dojo-type="" tabindex="-1">
+													<option value="9/2013">September 2013</option>
+													<option value="10/2013">October 2013</option>
+													<option value="11/2013">November 2013</option>
+													<option value="12/2013">December 2013</option>
+													<option value="1/2014">January 2014</option>
+													<option value="2/2014">February 2014</option>
+													<option value="3/2014">March 2014</option>
+													<option value="4/2014">April 2014</option>
+													<option value="5/2014">May 2014</option>
+													<option value="6/2014">June 2014</option>
+													<option value="7/2014">July 2014</option>
+													<option value="8/2014">August 2014</option>
+													<option value="9/2014">September 2014</option>
+													<option value="10/2014">October 2014</option>
+													<option value="11/2014">November 2014</option>
+													<option value="12/2014">December 2014</option>
+													<option value="1/2015">January 2015</option>
+													<option value="2/2015">February 2015</option>
+												</select>
+											</div>
+
+										</li>
+									</ul>
+									Evening
+									<div class="clear"></div>
+								</div></li>
+						</ul>
+						<ul class="dateStructure">
+							<li class="pickUp"><label>Pick up <span
+									data-dojo-props="floatWhere:'position-top-center', text:'Pickup: 08:00- 09:00 Drop off: 17:00- 18:00'"
+									data-dojo-type="tui.widget.popup.Tooltips"
+									class="question loaded posRel"> ?</span>
+							</label>
+								<div class="infant-count">21:00 - 22:00</div>
+								<div class="clear"></div></li>
+							<li class="pickUp"><label>Drop off</label>
+								<div class="infant-count">23:00 - 24:00</div>
+								<div class="clear"></div></li>
+
+						</ul>
+						<div class="border-divider"></div> -->
+						{% for excursionObject in excursionsOptionsData %}
+						<ul class="dateStructure">
+						  {% ifequal excursionObject.paxType 'Adult' %}
+							<li class="gender"><label>Adults </label>
+								<div class="infant-count custom-dropdown dropdown loaded" id={{excursionObject.paxType}}>
+									<select name="selectDropdownLabel" data-dojo-type="tui.widget.form.SelectOption" class="dropdown"
+									data-dojo-attach-point="{{excursionObject.code}}SelectionBox" id={{excursionObject.paxType}}>
+										{% for qty in excursionObject.selectionData %}
+										<option	{% ifequal excursionObject.selectedQuantity qty %} selected {% endifequal %} >
+								 		 {{qty}}
+										</option>
+										{% endfor %}
+							</select>
+								</div>
+								<div class="priceperinfant"><span
+										class="price-package">{{ excursionObject.currencyAppendedPrice}}</span> <span class="perperson">per
+										adult</span>
+								</div>
+								<div class="clear"></div></li>
+							{% endifequal %}
+
+							{% ifequal excursionObject.paxType 'Child' %}
+							 	{% ifnotequal excursionObject.quantity '0' %}
+							<li class="gender"><label>Children ({{excursionObject.minAge}} -{{excursionObject.maxAge}})</label>
+								<div class="infant-count custom-dropdown dropdown loaded" id={{excursionObject.paxType}}>
+									<select name="selectDropdownLabel" data-dojo-type="tui.widget.form.SelectOption" class="dropdown"
+									data-dojo-attach-point="{{excursionObject.code}}SelectionBox" id={{excursionObject.paxType}}>
+										{% for qty in excursionObject.selectionData %}
+										<option	{% ifequal excursionObject.selectedQuantity qty %} selected {% endifequal %} >
+								 		 {{qty}}
+										</option>
+										{% endfor %}
+									</select>
+								</div>
+								<div class="priceperinfant">
+									<span
+										class="price-package">{{ excursionObject.currencyAppendedPrice}}</span> <span class="perperson">per
+										child</span>
+								</div>
+								<div class="clear"></div></li>
+							 {% endifnotequal %}
+							{% endifequal %}
+						</ul>
+
+						{% endfor %}
+						<br/>
+					<div id="impInfoCheckbox_Error" class="error-notation-excursion disNone">An adult must accompany a child on an excursion</div>
+					<br/>
+						<div class="border-divider"></div>
+						<div class="final-calculation">
+							<h5 class="total-cost">TOTAL PRICE</h5>
+							<p class="fr">
+								<span class="currency-indicator">&pound;</span> <span
+									class="price-package"  data-dojo-attach-point="totalCalculatedPrice"></span>
+							</p>
+							<div class="clear"></div>
+						</div>
+
+
+						<button id= "disbutton"  data-dojo-attach-point= "addButton" class="button  addedbutton selected fr mt5px ml10px">Add</button>
+						<div class="clear"></div>
+					</div>
+				</div>
+				<div class="points-glance">
+					{% if include %}
+					<div class="fl includes">
+						<h6>Includes</h6>
+						<ul>
+						{% for include in include %}
+							<li>{{include|default:" "}}</li>
+					    {% endfor %}
+						</ul>
+					</div>
+					{% endif %}
+					{% if notinclude %}
+					<div class="fl includes">
+						<h6>Doesn't include</h6>
+						<ul>
+						{% for notinclude in notinclude %}
+							<li>{{notinclude|default:" "}}</li>
+						{% endfor %}
+						</ul>
+				</div>
+					{% endif %}
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>

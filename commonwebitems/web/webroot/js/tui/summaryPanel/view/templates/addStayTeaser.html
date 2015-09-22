@@ -1,0 +1,21 @@
+<div style="  display: inline-block;background: #fff;width: 318px;margin-left: -24px;  border-top: 2px solid #d9e4ed;">&nbsp;</div>
+<div class="stay-duration" style="border: 1px solid #a1c8e7;">
+	<span class="duration" style=" margin-right: 18px;width: 19%;background-color: #F6FAFD;padding-top: 62px;height: 43px;"><i style="top: 20px;"></i>{{stayDuration}} nights Stay</span>
+	<div class="duration-info" style="width: 65%;">
+						<span class="uc stay">Add {{stayDuration}} Nights in
+						<br/>{{location}}
+						</span>
+		<span class="from-price">From only <b>+&pound;{{amount}}pp</b></span>
+		<span class="hotel-info">*You'll choose your hotel later</span>
+		<a lang="en" class="button search-alt ensLinkTrack loaded addStay" href="javascript:void(0);">Add <span style="position: absolute;margin-top: -1px;">{{stayDuration}}</span>  &nbsp;&nbsp;&nbsp;nights Stay</a>
+	</div>
+</div>
+<div class="clear"></div>
+{% if footerStayTeaserFlag %}
+<div class="addAStayFooter">
+		<p></p>
+     	<span class="from-price" style="padding-bottom: 5px; display: block;width:100%;">From only <b>+&pound;{{amount}}pp</b></span>
+     	<a lang="en" style="color: #666; font-size: 11.5px;" class="button ensLinkTrack loaded addStay" href="javascript:void(0);">Add <span style="position: absolute;margin-top: -1px;">{{stayDuration}}</span>  &nbsp;&nbsp;&nbsp;nights Stay</a>
+     	<span class="hotel-info">&nbsp;&nbsp;*You'll choose your hotel later</span>
+</div>
+{% endif %}

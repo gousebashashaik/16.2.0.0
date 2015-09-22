@@ -1,0 +1,171 @@
+<div id="temp">
+
+ <h2 id="sectionheading" class="underline">ROOM OPTIONS</h2>
+
+  {% for roomoptionsview in jsonData.roomOptionsViewData %}
+                <div class="roomTypes select-room-section bookflow" data-klass-id="roomOptionsButtonToggler"
+                     data-dojo-type="tui.mvc.Klass" data-dojo-props="jsonData:jsonData" >
+        <h2 id="{{forloop.counter0}}" class="adults-logo fs32px">
+            {{jsonData.roomOptionsStaticContentViewData.roomContentMap.Room_SelectRooms_CompHeader|default:" "}}
+            {{forloop.counter}}
+		<span id="room_{{forloop.counter0}}"></span><!-- This span using for focus the room section once rooms get upgrade-->
+        </h2>
+        <!-- <p class="room-sub-heading">Select a room type from options below.
+            You can upgrade each room separately.</p> -->
+
+	{% for roomview in roomoptionsview.listOfRoomViewData %}
+
+            <div id="{{forloop.counter}}" class="item open {% if roomview.selected %} selected {% endif %}">
+            <h3 class="item-toggle">
+            <span class="roomHeaderSelected">{{roomview.roomTitle|default:" "|safe}}</span>
+            {% if roomview.selected %}
+                <span class="selectedRoom"> {{jsonData.roomOptionsStaticContentViewData.genericContentViewData.genericContentMap.Generic_Selected_Button|default:" "}}</span>
+                {% endif %}
+
+                <div class="text_container fr {% if roomview.selected %} displayNone {% endif %}">
+
+ <span class="PPPerNight {% if roomview.selected %} displayNone {% endif %}">{{roomview.currencyAppendedPerPersonPrice}} per person per night</span>
+               <span class="curVal">{{roomview.differencePrice}}</span>
+
+                <div class="total-label {% if roomview.selected %} displayNone {% endif %}">TOTAL</div>
+               </div>
+               <i></i>
+            {% if roomview.limitedAvailability %}
+                   <span class="limitedAvailability" id="limitedAvailabilityId">
+                                <label class="fl"> <span class="room-alert"></span> Hurry - only {{roomview.quantity|default:" "}}
+                                {% ifequal roomview.quantity 1 %}
+                                 room
+                                 {% else %}
+                                 rooms
+                                 {% endifequal %}
+                                 of this type left!
+                                <span class="loaded room-tooltip" data-dojo-props="floatWhere:'position-top-center', text:'{{roomview.limitedAvailabilityText}}'" data-dojo-type="tui.widget.popup.Tooltips"></span>
+                                </label>
+
+                            </span>
+
+             {% endif %}
+
+            </h3>
+
+            <div class="item-content  {% if roomview.selected %} selectedSection {% endif %}">
+            <div class="room-type-description">
+                <div class="room-type-img {{roomview.roomImage.length}}">
+                {% ifnotequal roomview.roomImage.length 0 %}
+                   {% for image in roomview.roomImage %} {% if forloop.first %}
+					<img src="{{image.url}}" alt="Image Not Available" width="215px" height="110px" /> {% endif%} {% endfor %}
+					{% ifnotequal roomview.roomImage.length 4 %}
+					<div class="gallery" data-dojo-type="tui.widget.media.MediaPopupSwipe" data-dojo-props="jsonData:{{roomview.stringifiedView|default:\' \'}}">
+							<i class="icon camera"></i>
+						<span class="label fl">Gallery</span>
+					</div>
+					{% endifnotequal %}
+					{% else %}
+						<img src="{{dojoConfig.paths.cdnDomain}}/images/{{dojoConfig.site}}/default-rooms.jpg" width="215px" height="110px" />
+
+				{% endifnotequal %}
+                </div>
+				{% if roomview.roomPlanImage %}
+                {% ifnotequal roomview.roomPlanImage null %}
+                <div class="roomPlanSection"><a class="uppercase" href="#" data-dojo-type="tui.widget.RoomPlansOverlay" data-dojo-props="title:'{{roomview.modifiedRoomTitle|default:\' \'}}', imageSrc:'{{roomview.roomPlanImage|default:\' \'}}', idx:'{{forloop.counter0}}'">Room plans <i class="arrow-right"></i></a></div>
+                {% endifnotequal %}
+                {% endif %}
+                <div class="room-type-features">
+                	{% if roomview.minOccupancy 0 and roomview.maxOccupancy 0 %}
+				 	<p class="roomoccupany">Sleeps: min {{roomview.minOccupancy}}, max {{roomview.maxOccupancy}}</p>
+					{% endif %}
+                    <p class="room-description">{{roomview.description|safe}}</p>
+                    <div class="room-type-available-features" >
+                       <p class="featuresHeader">Facilities:</p>
+	                    <div class="featuresTable">
+	                    {% for roomFeatures in roomview.roomFeatures %}
+	                          {% if forloop.counter0|divisibleby:"2" %}
+	                            <ul class="featureRow">
+	                            	<li class="featureCell"><span class="sprite-img-grp-1 square"></span>{{roomFeatures|safe}}</li>
+	                            {% else %}
+	                            	<li class="featureCell"><span class="sprite-img-grp-1 square"></span>{{roomFeatures|safe}}</li>
+   	                            </ul>
+	                          {% endif %}
+	                    {% endfor %}
+                    </div>
+                            </div>
+
+
+                    <div class="room-type-button-section">
+
+                   <div class="priceTextSection">
+
+                      {% if roomview.defaultRoom %}
+                      {% if roomview.selected %}
+	                     <label class="includedLable fr textCenter priceLabel">included</label>
+                      {% else %}
+	                      <label class="fr priceLabel">{{roomview.currencyAppendedPerPersonPrice}} per person per night</label>
+                      {% endif %}
+                      {% else %}
+                      {% if roomview.selected %}
+                      {% else %}
+	                      <label class="fr priceLabel">{{roomview.currencyAppendedPerPersonPrice}} per person per night</label>
+                      {% endif %}
+                      {% endif %}
+						<div class="clear"></div>
+				        <!-- CONDITION FOR LIMITED AVAILABILITY -->
+                        {% if roomview.limitedAvailability %}
+                         <div class="limitedAvailability fr" >
+                         <label class="hurry-text-color"> Hurry - only {{roomview.quantity}} left!  <!-- <span class="hurry-icon"></span> -->
+                          <span class="roomquestion" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="floatWhere:'position-top-center', text:'{{roomview.limitedAvailabilityText}}'"></span>
+
+                                </label>
+                            </div>
+
+
+                         {% endif %}
+
+
+						</div>
+                        <div class="chooseSection">
+                        {% if roomview.selected %}
+		 					<button class="button jumbo selected select-seat">
+			 					<span class="button-selected"></span>
+		 					</button>
+						{% else %}
+                            <button  id="{{forloop.counter0}}"class="button jumbo unselect-seat seatingBtn">
+									<span class="withPrice">
+
+
+                                        {% if roomview.selected %}
+                                            FREE
+                                       {% else %}
+                                            <!--  delta price needs to be displayed -->
+                                            {{roomview.differencePrice}}
+                                       {% endif %}
+                                        </span>
+
+                            <span class="withoutPrice"></span>
+                            </button>
+                        {% endif %}
+                        </div>
+
+                    </div>
+
+                </div>
+
+    		<div class="clear"></div>
+            </div>
+</div>
+
+</div>
+
+
+
+{% endfor %}
+                    <div class="btnRight fr">
+                        <button class="button large mt10px mb10px  showAll">show all
+                            available rooms</button>
+                        <button class="button large mt10px mb10px  hideAll">SHOW LESS</button>
+                    </div>
+                    <div class="clear"></div>
+            </div><div class="dashed-border mt15px mb15px"></div>
+
+{% endfor %}
+
+    </div>

@@ -1,0 +1,341 @@
+
+
+	<div class="temp">
+	<div class="dashed-border mb15px mt15px"></div>
+        <div class="{% if displayFlag %}  {% else %} disNone {% endif %}">
+        <div id="insurancedetail_section">
+            <h2 class="underline fs28px ">CAR HIRE</h2>
+                <div class="insurancoffer_name">{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.alamo_Intro|default:" "}}</div>
+				<span class="insurancedetail_logo"><img  src="../images/thomson/bookflow/aloma.gif" /></span>
+				<span class="carhire-text fl">{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.alamo_extra_detail_2|default:" "}}</span>
+
+
+
+              <div class="iDontNeedTransfer fl {% if checkBoxStatus %} {% else %} disNone {% endif %}">
+                <p class="fl">
+                    <span class="fl">
+                      <strong class="info">i</strong>
+                    </span>
+                  <span class="iDNTransferText fl "> Just so you know, you won't be able to book a  Car hire transfer when you arrive at your destination airport.</span>
+                </p>
+
+              </div>
+         <div class="insurancedetail_desc">
+               {{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.CG_intro1|default:" "}}
+            </div>
+        </div>
+        <div class="clear"><br /></div>
+
+        {% if carHireDesc.selected%}
+
+       {% else %}
+
+        <div id="upgrade_section">
+            <div>
+                <span class="upgrade_header">{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.GOLD_PACKAGE_displayName|default:" "}} {{carHireDesc.desc}} per day</span>
+                <!-- <span class="offer_section">Now with 30% off!</span> -->
+            </div>
+            <div class="upgrade_desc">
+                {{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.GOLD_PACKAGE_Intro|default:""}}
+            </div>
+        </div>
+
+        {% endif %}
+        <div class="clear"><br /></div>
+
+		<div class="car_hire_main_div">
+			<div class="header_div">
+				<div class="desc" ></div>
+				<div  class="basic ">Basic</div>
+				<div  class="FullyInclusive" >Fully inclusive<!-- <br /><span class="offer_desc">Now with 30% off!</span> --></div>
+				<div  class="GoldPackage">Gold<!-- <br /><span class="offer_desc">Now with 30% off!</span> --></div>
+			</div>
+			<div class="carhire_gridcontent">
+				<div class="carhire_details">
+					<div class="desc">Unlimited mileage
+					<!-- <span class="loaded" lang="en" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.extraContentMap.Car_UnlimitedMileage_ToolTip|default:\' \'}}'" ></span> -->
+					</div>
+	                <div  class="basic"><img src="../images/thomson/bookflow/bullot.png" /></div>
+	                <div  class="FullyInclusive" ><img src="../images/thomson/bookflow/bullot.png" /></div>
+	                <div  class="GoldPackage"><img src="../images/thomson/bookflow/bullot.png" /></div>
+				</div>
+				<div class="makeborder"></div>
+				<div class="carhire_details">
+					<div class="desc">3rd party liability protection
+					<span class="loaded" lang="en" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.extraContentMap.Car_ThirdParty_ToolTip|default:\' \'}}'" ></span>
+					</div>
+	                <div  class="basic"><img src="../images/thomson/bookflow/bullot.png" /></div>
+	                <div  class="FullyInclusive" ><img src="../images/thomson/bookflow/bullot.png" /></div>
+	                <div  class="GoldPackage"><img src="../images/thomson/bookflow/bullot.png" /></div>
+				</div>
+				<div class="makeborder"></div>
+				<div class="carhire_details">
+					<div class="desc">Local road maps & information
+					<!-- <span class="loaded" lang="en" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.extraContentMap.Car_Localroadmaps_ToolTip|default:\' \'}}'" >?</span> -->
+					</div>
+	                <div  class="basic"><img src="../images/thomson/bookflow/bullot.png" /></div>
+	                <div  class="FullyInclusive" ><img src="../images/thomson/bookflow/bullot.png" /></div>
+	                <div  class="GoldPackage"><img src="../images/thomson/bookflow/bullot.png" /></div>
+				</div>
+				<div class="makeborder"></div>
+				<div class="carhire_details">
+					<div class="desc">Collision damage waiver
+					<span  class="loaded" lang="en" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.extraContentMap.Car_CollisionDamage_ToolTip|default:\' \'}}'" ></span>
+					</div>
+	                <div  class="basic"></div>
+	                <div  class="FullyInclusive" ><img src="../images/thomson/bookflow/bullot.png" /></div>
+	                <div  class="GoldPackage"><img src="../images/thomson/bookflow/bullot.png" /></div>
+				</div>
+				<div class="makeborder"></div>
+				<div class="carhire_details">
+					<div class="desc">Liability cover
+					<span  class="loaded" lang="en" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.extraContentMap.Car_LiabilityCover_ToolTip|default:\' \'}}'" ></span>
+					</div>
+	                <div  class="basic"></div>
+	                <div  class="FullyInclusive" ><img src="../images/thomson/bookflow/bullot.png" /></div>
+	                <div  class="GoldPackage"><img src="../images/thomson/bookflow/bullot.png" /></div>
+				</div>
+				<div class="makeborder"></div>
+				<div class="carhire_details">
+					<div class="desc">Uninsured driver protection
+					<span  class="loaded" lang="en" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.extraContentMap.Car_UninsuredDriver_ToolTip|default:\' \'}}'" ></span>
+					</div>
+	                <div  class="basic"></div>
+	                <div  class="FullyInclusive" ><img src="../images/thomson/bookflow/bullot.png" /></div>
+	                <div  class="GoldPackage"><img src="../images/thomson/bookflow/bullot.png" /></div>
+				</div>
+				<div class="makeborder"></div>
+				<div class="carhire_details">
+					<div class="desc">State / local taxes & charges
+					<span  class="loaded" lang="en" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.extraContentMap.Car_StateTaxes_ToolTip|default:\' \'}}'" ></span>
+					</div>
+	                <div  class="basic">Pay on arrival</div>
+	                <div  class="FullyInclusive" ><img src="../images/thomson/bookflow/bullot.png" /></div>
+	                <div  class="GoldPackage"><img src="../images/thomson/bookflow/bullot.png" /></div>
+				</div>
+				<div class="makeborder"></div>
+				<div class="carhire_details">
+					<div class="desc">Airport operating fee
+					</div>
+	                <div  class="basic">Pay on arrival</div>
+	                <div  class="FullyInclusive" ><img src="../images/thomson/bookflow/bullot.png" /></div>
+	                <div  class="GoldPackage"><img src="../images/thomson/bookflow/bullot.png" /></div>
+				</div>
+				<div class="makeborder"></div>
+				<div class="carhire_details">
+					<div class="desc">Additional drivers
+					<span  class="loaded" lang="en" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.extraContentMap.Car_AdditionalDrivers_ToolTip|default:\' \'}}'" ></span>
+					</div>
+	                <div  class="basic">$70 per driver<br /><span class="requireCls">(If required)</span></div>
+	                <div  class="FullyInclusive" >$70 per driver<br /><span class="requireCls">(If required)</span></div>
+	                <div  class="GoldPackage">3 FREE</div>
+				</div>
+				<div class="makeborder"></div>
+				<div class="carhire_details">
+					<div class="desc">Tank of fuel
+					<span  class="loaded" lang="en" data-dojo-type="tui.widget.popup.Tooltips" data-dojo-props="floatWhere:'position-top-center', text:'{{jsonData.extraOptionsStaticContentViewData.extraContentMap.Car_TankOfFuel_ToolTip|default:\' \'}}'" ></span>
+					</div>
+	                <div  class="basic">Pay on arrival</div>
+	                <div  class="FullyInclusive" >Pay on arrival</div>
+	                <div  class="GoldPackage">FREE</div>
+				</div>
+				<div class="makeborder"></div>
+				{% for carHire in carHireModelObj %}
+				<div class="cartype">
+
+					<div class="cartype_details">
+					{% ifnotequal carHire.extraFalicityCode 'BASIC' %}
+						<div class="cartype_childdiv" >
+							<span class="car_type_name">{{carHire.description|default:' '}}</span>
+							<span class="car_desc"><br />{{carHire.equivalent|default:' '}}</span><br />
+							<div class="carhire_img {% ifequal carHire.extraFalicityCode '8 SEATER VAN' %} eightSeatVan {% else %} {% ifequal carHire.extraFalicityCode '15 SEAT VAN' %} fifteenSeatVan {% else %} {{carHire.extraFalicityCode|cut:' '|lower}} {% endifequal %} {% endifequal %}" ></div>
+							    <span class="carhire_detailslink">View Details
+							     <span class="loaded" lang="en"
+	                              data-dojo-props="floatWhere:'position-top-center', text:'<ul class=\'item-list\'>{% for usp in carHire.uspContent %}<li>{{usp|default:\' \'}}</li>{% endfor %}</ul>'"
+	                              data-dojo-type="tui.widget.popup.Tooltips"></span>
+	                                </span>
+						</div>
+						{% else %}
+						<div class="cartype_childdiv" >
+							<span class="car_type_name">Basic Car Hire</span>
+							<span class="car_desc"><br /></span><br />
+							<div class="carhire_img carhire" ></div>
+						</div>
+						{% endifnotequal %}
+					</div>
+
+					{% ifnotequal carHire.extraFalicityCode 'BASIC' %}
+					{% for carHireFacility in carHire.extraFacility %}
+					{% ifequal carHireFacility.cartypeInsurance "nobasic" %}
+					<div class="insurance_details">
+
+						{{carHireFacility.carDescription}} not included<br />
+
+					</div>
+
+					{% else %}
+
+					<div id="{{carHireFacility.cartypeInsurance}}" name="{{carHireFacility.code}}" class="insurance_details {% if carHireFacility.free %} default {% endif %} ">
+								<span class="insurance_desc">{{carHireFacility.carDescription}}<span><br />
+						  {% if carHireFacility.free %}
+	                      {% if carHireFacility.selected %}
+	                      <label><span class="textCenter  fs14px">
+	                      Included
+	                        </span><br/></label><br/>
+	                      {% else %}
+
+								<span class="rate_cls">{{carHireFacility.carCurrencyAppendedPrice}}</span><br />
+								<span class="rate_small_cls">({{carHireFacility.carPerPersonPrice}} per day)</span><br />
+	                      {% endif %}
+	                      {% else %}
+	                      {% if carHireFacility.selected %}
+	                      		<span class="rate_cls"></span><br />
+								<span class="rate_small_cls"></span><br />
+	                      {% else %}
+
+								<span class="rate_cls">{{carHireFacility.carCurrencyAppendedPrice}}</span><br />
+								<span class="rate_small_cls">({{carHireFacility.carPerPersonPrice}} per day)</span><br />
+	                      {% endif %}
+	                      {% endif %}
+	                      </span>
+								<button id="{{carHireFacility.code}}|{{carHire.description|default:' '}}" class="button jumbo sel_btn carhireSelect {% if carHireFacility.selected %} selected {% endif %}" name=".{{carHireFacility.cartypeInsurance}}">
+
+	        					</button>
+
+
+					</div>
+
+					{% endifequal %}
+					{% endfor %}
+
+					{% else %}
+						<div class="insurance_details  default ">
+								<span class="insurance_desc">Basic Car Hire<span><br />
+							                      <label><span class="textCenter inc_pad fl fs14px">
+	                      Included
+	                        </span><br/></label><br/>
+
+	                    <button  class="button jumbo sel_btn carhireSelect selected " name=".basic" >
+
+	        					</button>
+
+
+					</div>
+					{% endifnotequal %}
+
+				</div>
+					{% for carHireFacility in carHire.extraFacility %}
+						{% ifequal carHireFacility.cartypeInsurance "basic" %}
+							{% if carHireFacility.selected %}
+					<div class="basic_info"><span class="arrow"></span>
+						Please note your car hire only includes
+						 <span class="loaded" lang="en"
+	                              data-dojo-props="floatWhere:'position-bottom-center', text:{refId:'carHire-toolTip'}"
+	                              data-dojo-type="tui.widget.popup.Tooltips"><span class="liability_txt"> Basic Liability Cover</span></span>
+						 . We strongly recommend that you add either Fully inclusive or Gold Insurance.
+					</div>
+					{% endif %}
+				{% else %}
+
+				{% endifequal %}
+				{% endfor %}
+				<div class="makeborder"></div>
+
+				{% endfor %}
+
+				{% if not basicFlag %}
+	            <div class="bottom_container fl">
+	                <div class="carHire_ins fl">
+	                    <a class="ins_Link termsAndConditions" href="javascript:void(0);" data-dojo-attach-point="termsAndConditions">Full car hire terms & conditions</a>
+	                </div>
+	                {% if carhireUpgradesAvailable %}
+	                <div class="carHire_viewAll fr">
+	                    <button class="button fr jumbo sel_btn carhireSelect" data-dojo-props="widgetId:'carHireViewInfoOverlay', modal: true, jsonData: jsonData" data-dojo-type="tui.widget.booking.carhire.florida.view.CarHireViewAllOverlay">
+	                        View all available cars
+	                    </button>
+
+	                </div>
+	                {% endif %}
+
+	            </div>
+				{% else %}
+				<div class="bottom_container fl termsAndConditions"></div>
+	            {% endif %}
+			</div>
+		</div>
+		<div class="clear"></div>
+
+
+		{% if extraAvailabilityFlag %}
+
+		<div id="carhire_extramain">
+		<h2>What else do you need?</h2>
+		<div class="carhire_info">
+			<span class="info1">Remember,child car seats are compulsory for children under 6 years</span><br/>
+			<span class="info2">You can add below</span>
+		</div>
+		<div class="carhireextra_content">
+			<div class="carhireextra_img">
+				<img src="../images/thomson/bookflow/infant.png" />
+			</div>
+			<div class="carhireoption_desc">
+				<span class="desc_heading">Infant Seats</span><br />
+				<span class="desc_cond1">
+					Provided 9kgs to 18kgs (Usually 9months to 4 years).
+				</span><br />
+				<span class="desc_cond2">
+					Provided easy to follow fitting instructions.
+				</span>
+			</div>
+			<div class="carhireoption_value"><br />
+				<div class="money"><span class="pound_cls">&#163;</span>20 each<br/>
+					<span class="money_per">(&#163;2.86 per day)</span>
+				</div>
+				<div class="infant-count custom-dropdown dropdown loaded">
+					<select name="selectDropdownLabel" data-dojo-type="tui.widget.form.SelectOption" class="dropdown"
+							data-dojo-attach-point="SelectionBox">
+						<option> 0</option>
+						<option> 1</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="break_div">&nbsp;</div>
+		<div class="clear"></div>
+		<div class="carhireextra_content">
+			<div class="carhireextra_img">
+				<img src="../images/thomson/bookflow/navi.png" />
+			</div>
+			<div class="carhireoption_desc">
+				<span class="desc_heading">Satellite navigation unit</span><br />
+				<span class="desc_cond1">
+					Hire Satellite navigation unit so that you can always find
+				</span><br />
+				<span class="desc_cond2">
+					where you're going.
+				</span>
+			</div>
+			<div class="carhireoption_value"><br />
+				<div class="money"><span class="pound_cls">&#163;</span>20<br/>
+					<span class="money_per">(&#163;2.86 per day)</span>
+				</div>
+				<div class="sel_option">
+ 					<a href="javascript:void(0);" class="button selected">Add</a>
+				</div>
+			</div>
+
+			<div class="carHire_extraview">
+                <button class="button fr jumbo sel_btn carhireSelect" data-dojo-props="widgetId:'carHireViewInfoOverlay', modal: true, jsonData: jsonData" data-dojo-type="tui.widget.booking.carhire.florida.view.CarHireViewAllOverlay">
+                    Show all car hire extras
+                </button>
+
+             </div>
+
+		</div>
+	</div>
+	{% endif %}
+	</div>
+	</div>
+
+
+

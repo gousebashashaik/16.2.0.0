@@ -1,0 +1,30 @@
+<div class="modal hide" id="GotoCompareAddHoliday">
+	<div class="window auto-height">
+		<div class="title">
+			Compare holidays <span class="close">y</span>
+		</div>
+		<div class="modal-content">
+			<div id="compare-view">
+				<p>Select a shortlisted holiday to compare:</p>
+				<form action="">
+					<div class="addHolidaysPopupSelect select fixed-width blue">
+						<span class="text">Select holiday</span>
+						<span class="arrow"><span></span></span>
+						<input type="hidden" id="currentWishListEntryIdHidden" name="currentWishListEntryIdHidden" value="" />
+						<select id="AddHolidayId">
+							<option value="">Select Holiday</option>							
+							{% if options %}
+							{% for i in options %}
+							{% if i.id %}
+							<option value="{% if i.id %}{{i.id}}{% endif %}">{% if i.text %}{{i.text}}{% endif %}</option>
+							{% endif %}
+							{% endfor %}
+							{% endif %}
+						</select>
+					</div>
+					<input id="addHolidaysPopupSelectButton" type="button" value="Compare" class="button cta-grey  ensLinkTrack" {% if componentUid %}data-componentid="{{componentUid}}"{% endif %}>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

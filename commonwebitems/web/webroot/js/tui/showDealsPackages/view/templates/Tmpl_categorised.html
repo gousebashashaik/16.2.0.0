@@ -1,0 +1,68 @@
+
+  {% for holiday in holidays %}
+  <li class="search-result-item" data-package-id="{{holiday.packageId}}">
+    <div class="product  inventory-deals-collection {% if holiday.accommodation.differentiatedProduct %} special {{holiday.accommodation.differentiatedCode|lower}}{% endif %}">
+	
+	<div class="image-container">
+ {% if holiday.accommodation.differentiatedProduct %}
+				<span class="diff-label {% ifequal holiday.accommodation.differentiatedCode|lower 'smr' %}cou-sensimar{% else %}{{holiday.accommodation.differentiatedModifiedCode|lower}}{% endifequal %}"></span>
+			{% endif %}
+	        <a class="url ensLinkTrack" data-componentId="{{holiday.componentId}}" href="{{holiday.accommodation.url}}">
+	        	<img src="{{holiday.accommodation.imageUrlsMap.small.0}}" alt="{{holiday.accommodation.name}}">
+	        </a>
+        </div>
+		
+		<div class="details-wrap">
+		<div class="main-details">
+		{% ifequal  holiday.accommodation.brand.code 'FJ' %} 	
+			<span class="falcon">
+		{% else %} 	
+		<span class="thomson">
+		{% endifequal %} 		
+		 <h4><a class="url ensLinkTrack" data-componentId="{{holiday.componentId}}" href="{{holiday.accommodation.url}}">{{holiday.accommodation.name}}</a></h4>
+		 
+		 {% if holiday.accommodation.ratings.officialRating %}
+                <p class="rating t{{holiday.accommodation.ratings.officialRating|cut:' '}}{% if holiday.accommodation.differentiatedProduct %} {{holiday.accommodation.differentiatedCode|lower}}{% endif %}">Rating: {{holiday.accommodation.ratings.officialRating}}</p>
+                {% endif %}
+			</span>	
+				    {% if holiday.accommodation.locationMap %}
+        <p class="where">in {% for loc in holiday.accommodation.locationMap %}{{loc}}{% if not forloop.last %},&nbsp;{% endif %}{% endfor %} </p>
+        {% endif %}
+					<div class='box-out floater'>
+				<div class='prices left'>
+				<!--<div><fmt:formatDate value="{{holiday.availbleFrom}}" type="date" pattern="dd MMM yyyy"></fmt:formatDate></div>-->
+				<div>{{holiday.availbleFrom|date:"d M Y"}}</div>
+				<div class="airport">{{holiday.itinerary.departureAirport|lower}}</div>
+				<div>{{holiday.duration}} nights</div>
+
+{% if  holiday.accommodation.rooms and holiday.accommodation.rooms.0.boardType %}
+													   
+													    <div>
+													     {{holiday.accommodation.rooms.0.boardType}}  </div>
+													 {% endif %}
+					</div>
+ 		   			<div class='price right'>
+					<div><strong>{{currency}}<span class="price-value pp-price">{{holiday.price.perPerson|floatformat:"0"}}</span></strong></div> 
+					<div class="per">per person</div>
+ 		   			<div>
+                       		<a  class="button right ensLinkTrack" data-componentId="{{holiday.componentId}}" href="{{holiday.accommodation.url}}" data-id="{{holiday.accommodation.code}}"><span class="text">View Details</span></a>
+                   </div>	
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		</li>
+		
+		
+		{% if forloop.counter|divisibleby:"4" %}{% if not forloop.last %}<li class="clear-it"></li>{% endif %}{% endif %}
+{% endfor %}
+
+
+
+
+
+
+		
+		
+		

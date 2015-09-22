@@ -1,0 +1,88 @@
+{% ifequal templateview "datepicker" %}
+<div class="calendar ms {{floatWhere}} {{calClass}}">
+    <ul class="cal-nav cal-row">
+        <li class="prev cal-prev cal-nav-item"><a href="javascript:void(0);" title="Previous" class="date-prev arrow-main arrow-left arrow-left-link arrow-lrg ir">&larr;</a></li>
+        <li class="cal-month-selector cal-nav-item">
+            <select data-dojo-type="tui.widget.datepicker.DateSelectOption" class="dropdown">
+                {% for month in monthsAndYears %}
+                <option value="{{month.value}}" {% ifequal monthAndYearTxt month.label %} selected="selected"{% endifequal %}>{{month.label}}</option>
+                {% endfor %}
+            </select>
+        </li>
+        <li class="next cal-next cal-nav-item"><a href="javascript:void(0);" title="Next" class="date-next arrow-main arrow-right arrow-right-link arrow-lrg ir">&rarr;</a></li>
+    </ul>
+    <p class="route-message cal-row cal-msg"></p>
+    <table class="datepickertable cal-table">
+        <thead>
+        <tr class="weekdays">
+            {% for day in days %}
+            <th class="text-center cal-cell cal-cell-head">{{day}}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for predate in predates %}
+            <td class="premonth text-center cal-cell">&nbsp;</td>
+            {% endfor %}
+            {% for monthdate in monthdates %}
+            <td class="datepicker-day text-center cal-cell"><a href="javascript:void(0);">{{monthdate.date}}</a></td>
+            {% if monthdate.newrow %}
+        </tr><tr>
+            {% endif %}
+            {% endfor %}
+            {% for enddate in enddates %}
+            <td class="premonth text-center cal-cell">&nbsp;</td>
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+    {% ifequal floatWhere 'position-right-center' %}<span class="arrow-main arrow-left arrow-left-bg"></span>{% endifequal %}
+    {% ifequal floatWhere 'position-bottom-left' %}<span class="arrow-main arrow-top arrow-top-bg"></span>{% endifequal %}
+    {% ifequal floatWhere 'position-top-left' %}<span class="arrow-main arrow-bottom arrow-bottom-bg"></span>{% endifequal %}
+</div>
+{% endifequal %}
+
+{% ifequal templateview "datepickercells" %}
+<table class="datepickertable cal-table">
+    <thead>
+    <tr class="weekdays">
+        {% for day in days %}
+        <th class="text-center cal-cell cal-cell-head">{{day}}</th>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        {% for predate in predates %}
+        <td class="premonth text-center cal-cell">&nbsp;</td>
+        {% endfor %}
+        {% for monthdate in monthdates %}
+        <td class="datepicker-day text-center cal-cell"><a href="javascript:void(0);">{{monthdate.date}}</a></td>
+        {% if monthdate.newrow %}
+    </tr><tr>
+        {% endif %}
+        {% endfor %}
+        {% for enddate in enddates %}
+        <td class="premonth text-center cal-cell">&nbsp;</td>
+        {% endfor %}
+    </tr>
+    </tbody>
+</table>
+{% endifequal %}
+
+{% ifequal templateview "noavailability" %}
+   <div class="available-message cal-msg" analytics-id="300" analytics-instance="1" analytics-text="datepicker no available dates"  >
+       <p><span class='sprite-img-grp-1 icon-warning'></span>{{searchMessaging.date.noAvailability}} {{monthAndYearTxt}}</p>
+       <ul class="available-date-links">
+           <li class="left {% if not prevAvailableMonth %}disabled{% endif %}">
+               <a href="javascript:void(0);" class="sprite-img-grp-1 availability-link date-prev-available{% if not prevAvailableMonth %} disabled{% endif %}"{% if prevAvailableLink %} data-link="{{prevAvailableLink}}"{% endif %}>
+               {{searchMessaging.date.prevAvailable}}</a>
+           </li>
+           <li class="right {% if not nextAvailableMonth %}disabled{% endif %}">
+               <a href="javascript:void(0);" class="sprite-img-grp-1 availability-link date-next-available{% if not nextAvailableMonth %} disabled{% endif %}"{% if nextAvailableLink %} data-link="{{nextAvailableLink}}"{% endif %}>
+               {{searchMessaging.date.nextAvailable}}</a>
+           </li>
+       </ul>
+   </div>
+{% endifequal %}

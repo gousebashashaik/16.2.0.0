@@ -1,0 +1,10 @@
+{% ifequal code "NOMATCH" %}
+<span class="sprite-img-grp-1"></span>
+No matches found<br/>
+{% endifequal %}
+
+{% ifequal code "INVALID_ROUTE_FROM" %}
+<span class="sprite-img-grp-1"></span>
+We don't offer this itinerary/port of call from the airport(s) you’ve selected.<br/>
+<a href="javascript:void(0);" class="airport-guide sticky">See the available airports for {% for entry in entry %}{{entry.name}}{% if not forloop.last%}, {% endif %}{% endfor %}</a><strong></strong> or choose from the cruise regions shown.
+{% endifequal %}

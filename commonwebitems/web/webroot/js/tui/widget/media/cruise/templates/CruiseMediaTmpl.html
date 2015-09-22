@@ -1,0 +1,43 @@
+<div class="popup media-popup">
+	<div class="floater">
+		<a href="javascript:void(0)" class="close right">Close</a>
+	</div>
+	<div class='bg-load'>
+	<div class="container loading">
+		<div class="large-carousel">
+		 <div class="viewport">
+		 	<a class="prev-large" href="javascript:void(0)" style="display: block;">
+				<span class="arrow"></span>
+		    </a>
+			<a class="next-large" href="javascript:void(0)" style="display: block;">
+				<span class="arrow"></span>
+			</a>
+		    <ul class="product-list">
+		      {% for galleryImage in jsonData.galleryImages %}
+     		  <li style="position:absolute; z-index: 0; opacity: 1;" {% if galleryImage.xlarge.description %} data-location-name="{{galleryImage.xlarge.description}}" {% endif %}><img src="{{galleryImage.xlarge.mainSrc}}"></li>
+    		  {% endfor %}
+    		</ul>
+    		<p id="media-popup-caption" style="display:none; z-index: 2;"></p>
+		 </div>
+		</div>
+        {% ifnotequal jsonData.galleryImagesLength "1" %}
+    	<div class="thumb-carousel">
+    		<a class="prev" href="javascript:void(0)" style="display: block;">
+				<span class="arrow"></span>
+	   	    </a>
+	    	<a class="next" href="javascript:void(0)" style="display: block;">
+				<span class="arrow"></span>
+			</a>
+    	 	<div class="viewport">
+    			<ul class="plist">
+    			{% for galleryImage in jsonData.galleryImages %}
+     			 <li><a href="javascript:void(0)"><img idx=1 src="{{galleryImage.xlarge.mainSrc}}" width="90" height="60" {% if galleryImage.xlarge.description %} alt="{{galleryImage.xlarge.description}}" data-location-name="{{galleryImage.xlarge.description}}" {% endif %}></a></li>
+    			{% endfor %}
+    			</ul>
+    		</div>
+    	</div>
+        {% endifnotequal %}
+	</div>
+	</div>
+	<p class="load">Loading</p>
+</div>

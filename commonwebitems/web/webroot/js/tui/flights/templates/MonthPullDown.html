@@ -1,0 +1,12 @@
+<div id="months-pull-down">
+	<ul>
+		{% for month in months %}
+			{% ifequal month.available true%}
+				<li data-mon="{{month.mon}}" data-yr="{{month.year}}">{{month.month}}</li>
+			{% endifequal %}
+			{% ifequal month.available false%}
+				<li class="disable-list-select">{{month.month}} <span> - <i>No Flights</i></span></li>
+			{% endifequal%}
+		{% endfor %}
+	</ul>
+</div>

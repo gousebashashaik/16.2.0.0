@@ -1,0 +1,28 @@
+{% ifequal error.code "NO_MATCH_FOUND" %}
+<div class="tooltip error medium nomatch {{floatWhere}}">
+	<h4><span class='sprite-img-grp-1'></span>No matches found</h4>
+	<p>Can't find what you're looking for? <a href="javascript:void(0);" class="airport-guide">See all airports</a></p>
+	<span class="arrow"></span>
+</div>
+{% endifequal %}
+
+{% ifequal error.code "INVALID_ROUTE_TO" %}
+<div class="tooltip error large nomatch {{floatWhere}}">
+	<h4>We don't fly this route</h4>
+	<p>We don't fly from <strong>{% for entry in error.entry %}{{entry.name}}{% if not forloop.last%}, {% endif %}{% endfor %}</strong> to your selected destination.<br />
+		<a href="javascript:void(0);" class="airport-guide">See departure airports for {% for match in error.matches%}{{match.name}}{% if not forloop.last%}, {% endif %}{% endfor %}</a> or <br />
+		<a href="javascript:void(0);" class="destination-guide sticky">See destinations from {% for entry in error.entry %}{{entry.name}}{% if not forloop.last%}, {% endif %}{% endfor %}</a>
+	</p>
+	<span class="arrow"></span>
+</div>
+{% endifequal %}
+
+{% ifequal error.code "INVALID_ROUTE_ON" %}
+<div class="tooltip error large nomatch {{floatWhere}}">
+	<h4>We don't fly on your selected date</h4>
+	<p>We don't fly from {% for entry in error.entry %}{{entry.name}}{% if not forloop.last%}, {% endif %}{% endfor %} to your selected destination on your chosen date.<br />
+		<a href="javascript:void(0);" class="datepicker">See what dates we fly this route</a>
+	</p>
+	<span class="arrow"></span>
+</div>
+{% endifequal %}

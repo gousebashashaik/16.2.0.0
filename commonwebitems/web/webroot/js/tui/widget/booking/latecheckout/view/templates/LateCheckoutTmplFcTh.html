@@ -1,0 +1,128 @@
+{% if jsonData.extraFacilityViewDataContainer.lateCheckOut.available %}
+<div id="late-checkout-Container">
+  <div class="item open LateCheckoutTmpl">
+    <h3 class="item-toggle">
+   		<span class="latecheckoutHeaderSelected">{{jsonData.roomOptionsContentViewData.roomContentViewData.contentMap.late_check_out_displayName|default:" "}}</span><i></i>
+      {% for lateCheckOut in jsonData.extraFacilityViewDataContainer.lateCheckOut.extraFacilityViewData %}
+      {% if lateCheckOut.limitedAvailability %}
+		 <span class="limitedLCDAvailabilityAccordian">
+             <label class="hurry-text-color fr"> <span class="room-alert"></span>Hurry - only {{lateCheckOut.availableQuantity}}
+               {% ifequal lateCheckOut.availableQuantity 1 %}
+               room
+               {% else %}
+               rooms
+               {% endifequal %}
+               of this type left!
+               <span class="loaded room-tooltip" data-dojo-type="tui.widget.popup.Tooltips"
+                    data-dojo-props="floatWhere:'position-top-center', text:'{{lateCheckOut.limitedAvailabilityText}}'"></span>
+             </label>
+             </span>
+      {% endif %}
+      {% endfor %}
+    </h3>
+    <c:set var="roomlist"
+           value="{{viewData.packageViewData.accomViewData.roomViewData}}"/>
+    <div class="item-content">
+       {% ifequal lateCheckoutRoomsLength "1" %}
+      <div class="late-checkout-section">         
+        {% for lateCheckOut in jsonData.extraFacilityViewDataContainer.lateCheckOut.extraFacilityViewData %}
+		<div class="hotel-image" data-dojo-type="tui.widget.media.AnalogClock" data-dojo-props='time:"{% if jsonData.packageViewData.flightViewData.0.inboundSectors.0.schedule.depTime %}{{jsonData.packageViewData.flightViewData.0.inboundSectors.0.schedule.depTime}}{% endif %}"'></div>
+        <div class="late-header-description-fcth">
+		YOUR RETURN FLIGHT DEPARTS AT <span class="time">{% if timeDisplay %}{{timeDisplay}}{% endif %}</span>
+	   </div>
+	   <div class="late-co-description-fcth">
+          <h5>{{jsonData.roomOptionsContentViewData.roomContentViewData.contentMap.late_check_out_Intro|default:" "}} </h5>
+        </div>					
+        <div class="addbutton" align="center">
+          <div class="textWrapper">	
+            <label class="hurry-text-color">&nbsp;{% if lateCheckOut.limitedAvailability %}{% if lateCheckOut.availableQuantity %} Hurry - only {{lateCheckOut.availableQuantity}} left!
+              <span class="lcdquestion" data-dojo-type="tui.widget.popup.Tooltips"
+                    data-dojo-props="floatWhere:'position-top-center', text:'{{lateCheckOut.limitedAvailabilityText}}'"></span>{% endif %} {% endif %}
+            </label>
+          <div class="clear"></div>
+		  <label class="priceLabel"><span class="price">{% if lateCheckOut.currencyAppendedPerPersonPriceWithoutDecimal %}{{ lateCheckOut.currencyAppendedPerPersonPriceWithoutDecimal }}{% endif %}</span>  per room</label>		  
+		  </div>		
+          {% if lateCheckOut.selected %}		  
+		  <button class="button jumbo select-lcd sigleroom" value="disable" disabled><span class="withoutPrice"></span></button>
+          {% else %}		  
+		 <a href="javascript:void(0);" class="changeqty">
+            <button class="button jumbo singleroombutton large sigleroom" data-dojo-attach-point="lcdAddSingleRooomButton">ADD LATE CHECK-OUT ROOM</button>
+          </a>
+          {% endif %}
+        </div>		
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="late-checkout-section">
+        {% for lateCheckOut in jsonData.extraFacilityViewDataContainer.lateCheckOut.extraFacilityViewData %}
+		<div class="hotel-image" data-dojo-type="tui.widget.media.AnalogClock" data-dojo-props='time:"{% if jsonData.packageViewData.flightViewData.0.inboundSectors.0.schedule.depTime %}{{jsonData.packageViewData.flightViewData.0.inboundSectors.0.schedule.depTime}}{% endif %}"'></div>
+       <div class="late-header-description-fcth">
+		YOUR RETURN FLIGHT DEPARTS AT <span class="time">{% if timeDisplay %}{{timeDisplay}}{% endif %}</span>
+	   </div>
+	   <div class="late-co-description-fcth">
+          <h5>{{jsonData.roomOptionsContentViewData.roomContentViewData.contentMap.late_check_out_Intro|default:" "}} </h5>
+        </div>
+        <div class="addbutton" align="center">
+          <div class="textWrapper">
+            <label class="hurry-text-color">&nbsp;{% if lateCheckOut.limitedAvailability %}{% if lateCheckOut.availableQuantity %}Hurry - only {{lateCheckOut.availableQuantity}} left!
+              <span class="lcdquestion" data-dojo-type="tui.widget.popup.Tooltips"
+                    data-dojo-props="floatWhere:'position-top-center', text:'{{lateCheckOut.limitedAvailabilityText}}'"></span>{% endif %}{% endif %}
+            </label>
+          <div class="clear"></div>
+		  <label class="priceLabel"><span class="price">{% if lateCheckOut.currencyAppendedPerPersonPriceWithoutDecimal %}{{ lateCheckOut.currencyAppendedPerPersonPriceWithoutDecimal }}{% endif %}</span> per room</label>		  
+		  </div>		
+          {% if lateCheckOut.selected %}		  
+		  <button class="button jumbo select-lcd sigleroom" value="disable" disabled><span class="withoutPrice"></span></button>
+          {% else %}		  
+		 <a href="javascript:void(0);" class="changeqty">
+            <button class="button jumbo singleroombutton large sigleroom" data-dojo-attach-point="lcdDetailsButton">ADD LATE CHECK-OUT ROOM</button>
+          </a>
+          {% endif %}
+        </div>
+      </div>
+	   {% endfor %}
+      {% endifequal %}
+      <div class="clear"></div>
+      {% for lateCheckOut in jsonData.extraFacilityViewDataContainer.lateCheckOut.extraFacilityViewData %}
+      {% if lateCheckOut.selected %}
+      <div class="feedback-text">
+        <div class="lateco-confirmation">
+          {% ifequal lateCheckOut.selectedQuantity 1 %}
+          <h5 class="laterooms-qty">Late Checkout room x
+            {{ lateCheckOut.selectedQuantity }}</h5>
+          {% else %}
+          <h5 class="laterooms-qty">Late Checkout rooms x
+            {{ lateCheckOut.selectedQuantity }}</h5>
+          {% endifequal %}
+          {% for viewDatas in jsonData.packageViewData.extraFacilityCategoryViewData %}
+          {% ifequal viewDatas.extraFacilityGroupCode|lower "accommodation" %}
+          {% for numberOfLCDRooms in viewDatas.extraFacilityViewData %}
+          <h4 class="price-laterooms-qty">          
+            <label>{{ numberOfLCDRooms.currencyAppendedPriceWithoutDecimals }}</label>
+            {% endfor %}
+            {% endifequal %}
+            {% endfor %}
+            <a class="removeqty">remove x</a>
+          </h4>
+        </div>
+        <div class="clear"></div>
+        {% ifnotequal lateCheckoutRoomsLength "1" %}
+        <a href="javascript:void(0);" class="changeqty" data-dojo-attach-point="lcdChangeButton">Change quantity</a>
+        {% endifnotequal %}
+      </div>
+      {%endif%}
+      {% endfor %}
+      <div class="cb"></div>
+      <div class="lateco-removed fl disNone">
+        <h5 class="laterooms-qty fl">Late checkout rooms have been removed</h5>
+        <h4 class="closeLink fr">
+          <a id="lcdCloseLink">Close X</a>
+        </h4>
+      </div>
+    </div>
+  </div>
+</div>
+{% else %}
+<div id="late-checkout-Container">
+</div>
+{% endif %}

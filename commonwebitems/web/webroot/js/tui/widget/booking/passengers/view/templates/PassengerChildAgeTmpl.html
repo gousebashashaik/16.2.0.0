@@ -1,0 +1,32 @@
+<div class="childvalidation-modal-window sectional-padding">
+<div class="childvalidationDiv">
+	<div class="alert-message centre">
+	  <h2 class="underline" >Date of birth doesn't match age</h2>
+
+	 <p> The date of birth you have entered <strong>({{dobTextBoxValue}}) </strong>doesn't match the <br>child's age on the holiday
+	 return date <strong>({{childage}} 
+	 {% ifequal childage 1 %}
+	 year)
+	 {% else %}
+	 years)
+	 {% endifequal %}
+	 </strong>.
+     </p>
+	</div>	
+	<div class="dobsection">
+	<div class="clear"></div>
+	<div class="fl dobleft" >
+
+		 <a href="javascript:void(0);" class="button selected fl cancel">RE-ENTER DATE OF BIRTH</a>
+	</div>
+	<div class="fr dob-button">
+		<button class="button selected submit fl alertMesg" data-dojo-attach-point="childOkButton">SEARCH AGAIN</button>
+		<br>
+		<p>(We'll take you back to do <br>a new search. You'll need <br>to let us know your new <br>party details to make sure <br>you see accurate prices <br>and availability) </p>
+	</div>
+	<div class="clear"></div>
+
+
+	</div>
+</div>
+</div>

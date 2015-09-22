@@ -1,0 +1,28 @@
+<div class="guide destination">
+	<span class="arrow"></span>
+	<div class="floater">
+		<h3 class="fl">Select a Destination</h3>
+		<p class="notice fl">
+			We don't fly to all the destinations from all airports all year round.
+		</p>
+		<p class="fr">
+			<a href="#" class="close">Close<span class='icon-close icon sprite-img-grp-1'></span></a>
+		</p>
+	</div>
+	{% for destination in destinationData %}
+	<div class="col">
+		{% for country in destination%}
+		<div class="group dg" data-dataid="{{country.cN}}" id="dg-{{country.cI}}" >
+			<h4><a href="#">{{country.cN}}</a></h4>
+			<ul>
+				{% for countryDes in country.dL %}
+				<li>
+					<a href="#" data-dataid="{{countryDes.dN}}" id="dg-{{countryDes.dI}}" class="dg">{{countryDes.dN}}</a>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+		{% endfor %}
+	</div>
+	{% endfor %}
+</div>

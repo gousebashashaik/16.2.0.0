@@ -1,0 +1,97 @@
+<div class="transfer-section-conatiner">
+<div class="bookflow">
+  <div id="{{transferOption.code}}"
+       class="item taxiTransfer {% if transferOption.selected %} active {% endif %} default">
+    <div class="section-header ">
+      <h3><span class="return_coach">
+      {% ifequal inboundFlag true %}
+     {{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.fo_coach_transfer_Key_Value_One_Title|default:" "}}
+
+      {% else %}
+	{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.fo_coach_transfer_key_value_pair_2_title|default:" "}}
+
+      {% endifequal %}
+					</span>
+      </h3>
+    </div>
+
+    <div class="parent" >
+      <span class="coachImage"></span>
+      <div class="section-img fl"></div>
+      <div class="padding54">
+        <div class="time-img-desc">
+          <div class="time-desc ">
+          </div>
+        </div>
+       <div>
+      {% if transferFlag %}
+      <div class="transfer-desc">
+               <div class="custom-dropdown dropdown fr afterSelecting disabled" disabled="disabled">
+              <select name="resortDropdown"
+                      data-dojo-type="tui.widget.form.SelectOption" class="dropdown"
+                      data-dojo-attach-point="resortDropdown" value=""  disabled="disabled">
+
+                        <option value="{{ transferDescription }}" disabled>{{ transferDescription }}</option>
+
+              </select>
+               </div>
+
+             {% ifequal inboundFlag true %}
+             {{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.fo_coach_transfer_Key_Value_One_Body|default:" "}}
+
+             {% else %}
+             	{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.fo_coach_transfer_key_value_pair_2_body|default:" "}}
+              {% endifequal %}
+
+              </div>
+     {% else %}
+      <div class="transfer-desc">
+      <div class="custom-dropdown dropdown fr">
+               <select name="resortDropdown"
+                      data-dojo-type="tui.widget.form.SelectOption" class="dropdown"
+                      data-dojo-attach-point="resortDropdown" value="">
+                       <option value="default" >Select resort to see price</option>
+                         {% for transfer in jsonData.extraFacilityViewDataContainer.transferOptions.extraFacilityViewData %}
+                        <option id="{{forloop.counter0}}" value="{{ transfer.description }}">{{ transfer.description }}</option>
+                          {% endfor %}
+              </select>
+              </div>
+
+                {% ifequal inboundFlag true %}
+             {{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.fo_coach_transfer_Key_Value_One_Body|default:" "}}
+
+             {% else %}
+             	{{jsonData.extraOptionsContentViewData.extraContentViewData.contentMap.fo_coach_transfer_key_value_pair_2_body|default:" "}}
+              {% endifequal %}
+     </div>
+ {% endif %}
+              </div>
+
+      <div class=" button-cont disNone">
+        {% if transferFlag %}
+       <div class="def">
+          <button data-dojo-attach-point="removeDisplay" id="remove" name="DEF_SEAT" class="button jumbo fr selected transfer-select">
+			 <span class="separator-right">SELECTED</span>
+			 <span class="remove">REMOVE</span>
+		 </button>
+		 </div>
+		{% else %}
+	 <div data-dojo-attach-point="priceDisplay" class=" priceDisplay price-desc fr  {% if transferFlag %} disNone {% endif %} ">
+        </div>
+		<div class="abc  {{selectTrue xdfhf}}">
+        <button data-dojo-attach-point="selectDisplay" id="addselect"  class="button jumbo fr transfer-select">
+          <span class="withPrice separator-right" data-dojo-attach-point="selectDisplayInSpan"></span>
+           <span class="withoutPrice">Select</span>
+        </button>
+        </div>
+         {% endif %}
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+

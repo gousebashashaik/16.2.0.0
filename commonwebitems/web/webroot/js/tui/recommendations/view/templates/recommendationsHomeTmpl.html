@@ -1,0 +1,65 @@
+{% for accomData in accomAry %}
+		{% if accomData.endecaResultFlag %} 
+        <div class="homepage_three">
+			<div class="{% ifequal forloop.counter 3 %} grid-block-noborder {% endifequal %}  grid-block">
+            <div class="grid-component-media promo-prod">
+                <a href="{{accomData.DEEPLINK_URL}}" class="ensLinkTrack" 
+                enslinktrackattached ="true"
+				data-componentId="{{compUid}}"  
+				baynote_bnrank='{{accomData.baynote_bnrank}}' 
+				baynote_req='{{accomData.baynote_req}}' 
+				baynote_guide='{{accomData.baynote_guide}}' 
+				baynote_pid='{{accomData.baynote_pid}}'
+				>
+                    <img class="promo-prod-image" src="{{cdnDomain}}/images/b.gif" data-dojo-type="tui.widget.LazyLoadImage" data-dojo-props="source:'{{accomData.FEATURED_IMAGE}}'" />
+                </a>
+                
+                <a href="{{accomData.DEEPLINK_URL}}"  style="display:block" class="ensLinkTrack" 
+                enslinktrackattached ="true"
+				data-componentId="{{compUid}}" 
+				baynote_bnrank='{{accomData.baynote_bnrank}}' 
+				baynote_req='{{accomData.baynote_req}}' 
+				baynote_guide='{{accomData.baynote_guide}}' 
+				baynote_pid='{{accomData.baynote_pid}}' 
+				>
+                <div class="promo-prod-desc promo-prod-desc-accom homepageRecomm" >
+                
+                
+                 <div class="recs-strip">RECOMMENDED FOR YOU</div>
+                    <h4 class="promo-prod-title">
+                            <span class="ellipsis">{{accomData.NAME}}</span>&nbsp;
+                    </h4>
+                    {% if accomData.featureCodesAndValues.tRating %}
+                    	{% ifnotequal accomData.featureCodesAndValues.tRating '' %}
+                        	<span class="rating rating-mdHomepage rating-block   t{{accomData.featureCodesAndValues.tRating.0|safe|cut:" " }} "></span>
+                   		{% endifnotequal %}
+                   	{% endif %}
+					
+					<p class="promo-prod-location link">
+						{% ifequal accomData.RESORT '' %}
+							in {{accomData.COUNTRY|safe}}
+						{% endifequal %}
+						
+						{% ifnotequal accomData.RESORT '' %}
+							in {{accomData.RESORT|safe}}{% ifnotequal accomData.COUNTRY '' %}
+							, {{accomData.COUNTRY|safe}}
+							{% endifnotequal %}
+						{% endifnotequal %}
+					</p>
+                           
+                </div>
+                </a>
+				{% if accomData.productRanges %}
+                	{% ifnotequal accomData.productRanges '' %}
+                    	<span class="diff-label {% ifequal accomData.productRanges.0.code|lower 'smr' %}cou-sensimar{% else %}{{accomData.productRanges.0.code|lower|safe}}{% endifequal %}">
+						{% ifequal siteName "firstchoice" %}
+                    	<h4>{{accomData.productRanges.0.featureCodesAndValues.name.0|safe}}</h4>
+                    	{% endifequal %}</span>
+                	{% endifnotequal %}
+                {% endif %}
+
+            </div>
+			</div>
+        </div>
+		{% endif %}
+ {% endfor %}

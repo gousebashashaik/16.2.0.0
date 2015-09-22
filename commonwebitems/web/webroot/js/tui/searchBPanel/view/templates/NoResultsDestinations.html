@@ -1,0 +1,52 @@
+{% ifequal error.code "NO_MATCH_FOUND" %}
+<div class="tooltip error medium nomatch {{floatWhere}}">
+	<h4><span class='sprite-img-grp-1'></span>No matches found</h4>
+	<p>Can't find what you're looking for?
+		<!-- <a href="javascript:void(0);" class="destination-guide">See all destinations</a> -->
+	</p>
+    <span class="arrow"></span>
+</div>
+{% endifequal %}
+
+{% ifequal error.code "INVALID_ROUTE_FROM" %}
+<div class="tooltip error large nomatch {{floatWhere}}">
+	<h4><span class='sprite-img-grp-1'></span>We don't fly this route</h4>
+		<p>We don't fly to <strong>{% for entry in error.entry %}{{entry.name}}{% if not forloop.last%}, {% endif %}{% endfor %}</strong> from your selected airport.<br />
+            <a href="javascript:void(0);" class="airport-guide sticky">See departure airports for {% for entry in error.entry %}{{entry.name}}{% if not forloop.last%}, {% endif %}{% endfor %}</a>
+           	<!-- <p class="or">or </p><br />
+             		<a href="javascript:void(0);" class="destination-guide">See destinations from {% for match in error.matches %}{{match.name}}{% if not forloop.last%}, {% endif %}{% endfor %}</a>
+        		</p> -->
+        </p>
+    <span class="arrow"></span>
+</div>
+{% endifequal %}
+
+{% ifequal error.code "INVALID_ROUTE_ON" %}
+<div class="tooltip error large nomatch {{floatWhere}}">
+    <h4><span class='sprite-img-grp-1'></span>We don't fly on your selected date</h4>
+    <p>We don't fly to {% for entry in error.entry %}{{entry.name}}{% if not forloop.last%}, {% endif %}{% endfor %} from your selected airport on your chosen date.<br />
+        <a href="javascript:void(0);" class="datepicker">See what dates we fly this route</a>
+    </p>
+	<span class="arrow"></span>
+</div>
+{% endifequal %}
+{% ifequal error.code "MULTI_SELECT_FALSE" %}
+{% comment %}
+Searching for multiSelect = true holidays when a multiSelect = false holiday is already selected
+{% endcomment %}
+<div class="tooltip error medium nomatch multi-select {{floatWhere}}">
+    <h4><span class='sprite-img-grp-1'></span>Sorry - you can't search for Lapland holidays with other locations.</h4>
+    <p><a href="javascript:void(0);" class="multi-select">Remove Lapland holidays</a></p>
+    <span class="arrow"></span>
+</div>
+{% endifequal %}
+{% ifequal error.code "MULTI_SELECT_TRUE" %}
+{% comment %}
+Searching for multiSelect = false holidays when a multiSelect = true holiday is already selected
+{% endcomment %}
+<div class="tooltip error medium nomatch multi-select {{floatWhere}}">
+    <h4><span class='sprite-img-grp-1'></span>Sorry - you can't search for Lapland holidays with other locations.</h4>
+    <p><a href="javascript:void(0);" class="multi-select">Remove your other options</a></p>
+    <span class="arrow"></span>
+</div>
+{% endifequal %}

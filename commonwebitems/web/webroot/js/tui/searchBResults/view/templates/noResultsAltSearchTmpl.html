@@ -1,0 +1,66 @@
+{% ifequal widenType "WHEN" %}
+<li class="when">
+	<div class="title">
+		<p>Flexible<br> <span class="highlight-alt uc"><strong>when</strong></span> you go?</p>
+	</div>
+	<div class="details">
+		<div class="from-to">
+			<span class="from">{{from|safe}}</span>
+			<span class="to">{{to|safe}}</span>
+		</div>
+		<div class="date">
+			<span class="day">{{date}}</span>
+			{% if flexible %}
+			<span class="flex"><strong>Flexible by +/- {{flexibleDays}} days</strong></span>
+			{% endif %}
+		</div>
+		<div class="cta-container">
+			<a href="{{url}}" class="button cta jumbo">Show Results</a>
+		</div>
+	</div>
+</li>
+{% endifequal %}
+{% ifequal widenType "WHERETO" %}
+<li class="where">
+	<div class="title">
+        <p>Flexible<br> <span class="highlight-alt uc"><strong>where</strong></span> you go?</p>
+	</div>
+	<div class="details">
+		<div class="from-to">
+			<span class="from">{{from|safe}}</span>
+			<span class="to"><strong>{{to|safe}}</strong></span>
+		</div>
+		<div class="date">
+			<span class="day">{{date}}</span>
+			{% if flexible %}
+			<span class="flex">Flexible by +/- {{flexibleDays}} days</span>
+			{% endif %}
+		</div>
+		<div class="cta-container">
+			<a href="{{url}}" class="button cta jumbo">Show Results</a>
+		</div>
+	</div>
+</li>
+{% endifequal %}
+{% ifequal widenType "WHEREFROM" %}
+<li class="from">
+	<div class="title">
+        <p>Flexible<br> where you <span class="highlight-alt uc"><strong>fly from</strong></span>?</p>
+	</div>
+	<div class="details">
+		<div class="from-to">
+			<span class="from"><strong>{{from|safe}}</strong></span>
+			<span class="to">{{to|safe}}</span>
+		</div>
+		<div class="date">
+			<span class="day">{{date}}</span>
+			{% if flexible %}
+			<span class="flex">Flexible by +/- {{flexibleDays}} days</span>
+			{% endif %}
+		</div>
+		<div class="cta-container">
+			<a href="{{url}}" class="button cta jumbo">Show Results</a>
+		</div>
+	</div>
+</li>
+{% endifequal %}

@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>Hybrissearch</title>
+
+    <script src="/js/underscore/underscore-min.js"></script>
+    <!-- required: dojo.js -->
+    <script type="text/javascript" src="/js/dojo/dojo.js"></script>
+
+    <!-- functions to help test -->
+    <script type="text/javascript" src="/js/dijit/tests/helpers.js"></script>
+
+    <script type="text/javascript">
+        dojo.require("dojo.DeferredList");
+        dojo.require("dojo.window");
+        dojo.require("dojo.query");
+        dojo.require("dojo.date.locale");
+        dojo.require("dojo.NodeList-manipulate");
+        dojo.require("dijit.robotx");
+
+        dojo.ready(function () {
+            doh.robot.initRobot('search.html');
+            var metaKey = {ctrl:true};
+            doh.register("Search tests", [{
+                name:"Search datepicker should open",
+                timeout:8400,
+                runTest:function () {
+                    var d = new doh.Deferred();
+                    searchDatePicker = dijit.byId("when");
+                    doh.robot.mouseMoveAt(searchDatePicker.domNode, 500);
+                    doh.robot.mouseClick({left:true}, 700);
+                    doh.robot.sequence(d.getTestCallback(function () {
+                        try {
+                            doh.is(true, dojo.style(searchDatePicker.datepickerDOM, "display") == 'block');
+                        } catch (e) {
+                            d.errback(e);
+                        }
+                    }), 1200);
+                    return d;
+                }
+            },
+            {
+                name:"Search datepicker selected date should be saved to searchPanelModel",
+                timeout:8400,
+                runTest:function () {
+                    var d = new doh.Deferred();
+                    var now = new Date();
+                    searchDatePicker = dijit.byId("when");
+                    doh.robot.mouseMoveAt(searchDatePicker.daycells[now.getDate() + 1], 500);
+                    doh.robot.mouseClick({left:true}, 700);
+                    doh.robot.sequence(d.getTestCallback(function () {
+                        try {
+                            doh.is(true, dojo.style(searchDatePicker.datepickerDOM, "display") == 'none');
+                            var showDate = dojo.date.locale.parse(searchDatePicker.getFieldValue(), {
+                                selector:"date",
+                                datePattern:searchDatePicker.datePattern
+                            });
+                            showDate = new Date(showDate.getFullYear(), showDate.getMonth(), showDate.getDate())
+                            var modelDate = dojo.date.locale.parse(searchDatePicker.searchPanelModel.get("date"), {
+                                selector:"date",
+                                datePattern:searchDatePicker.datePattern
+                            });
+                            modelDate = new Date(modelDate.getFullYear(), modelDate.getMonth(), modelDate.getDate())
+                            doh.is(true, showDate.toString() == searchDatePicker.selectedDate.toString());
+                            doh.is(true, showDate.toString() == modelDate.toString());
+                            doh.is(true, searchDatePicker.selectedDate.toString() == modelDate.toString());
+                        } catch (e) {
+                            d.errback(e);
+                        }
+                    }), 1200);
+                    return d;
+                }
+            },
+            {
+                name:"Uneligible dates should not be selectable",
+                timeout:8400,
+                runTest:function () {
+                    var d = new doh.Deferred();
+                    var now = new Date();
+                    searchDatePicker = dijit.byId("when");
+                    searchDatePicker.searchPanelModel.set("date", null);
+                    dojo.query(searchDatePicker.domNode).text('Select a date');
+                    doh.robot.mouseMoveAt(searchDatePicker.domNode, 500);
+                    doh.robot.mouseClick({left:true}, 700);
+                    doh.robot.mouseMoveAt(searchDatePicker.daycells[22], 500);
+                    doh.robot.mouseClick({left:true}, 700);
+                    doh.robot.sequence(d.getTestCallback(function () {
+                        try {
+                            doh.is(true, searchDatePicker.searchPanelModel.get("date") === null);
+                            doh.is(true, dojo.hasClass(dojo.query(searchDatePicker.daycells[22])[0], "unavailable"));
+                        } catch (e) {
+                            d.errback(e);
+                        }
+                    }), 1200);
+                    return d;
+                }
+            },
+            {
+                name:"Closing date picker",
+                timeout:8400,
+                runTest:function () {
+                    var d = new doh.Deferred();
+                    var now = new Date();
+                    searchDatePicker = dijit.byId("when");
+                    doh.robot.mouseMoveAt(document.body, 300);
+                    doh.robot.mouseClick({left:true}, 500);
+                    doh.robot.sequence(d.getTestCallback(function () {
+                        try {
+
+                        } catch (e) {
+                            d.errback(e);
+                        }
+                    }), 1200);
+                    return d;
+                }
+            },
+            {
+                name:"If entire month is unavailable, message should display",
+                timeout:8400,
+                runTest:function () {
+                    var d = new doh.Deferred();
+                    var now = new Date();
+                    searchDatePicker = dijit.byId("when");
+                    searchDatePicker.dateSelectOption[0].setSelectedValue([searchDatePicker.endDate.getMonth() + 1, '/' ,searchDatePicker.endDate.getFullYear()].join(''));
+                    doh.robot.mouseMoveAt(searchDatePicker.domNode, 500);
+                    doh.robot.mouseClick({left:true}, 700);
+                    doh.robot.sequence(d.getTestCallback(function () {
+                        try {
+                            doh.is(true, dojo.query('.available-message', searchDatePicker.datepickerDOM)[0] !== "undefined");
+                        } catch (e) {
+                            d.errback(e);
+                        }
+                    }), 1200);
+                    return d;
+                }
+            }
+            ]);
+
+            doh.run();
+        });
+
+
+    </script>
+</head>
+</html>

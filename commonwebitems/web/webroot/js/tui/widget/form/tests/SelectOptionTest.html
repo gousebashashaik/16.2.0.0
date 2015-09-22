@@ -1,0 +1,217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>Popup tests</title>
+
+    <script src="/js/underscore/underscore-min.js"></script>
+    <!-- required: dojo.js -->
+    <script type="text/javascript" src="/js/dojo/dojo.js"></script>
+
+    <!-- functions to help test -->
+    <script type="text/javascript" src="/js/dijit/tests/helpers.js"></script>
+
+    <script type="text/javascript">
+        dojo.require("dojo.DeferredList");
+        dojo.require("dojo.window");
+        dojo.require("dojo.query");
+        dojo.require("dojo.NodeList-manipulate");
+        dojo.require("dijit.robotx");
+
+        dojo.ready(function () {
+        	var selectOption;
+            doh.robot.initRobot('SelectOption.html');
+			var metaKey = {ctrl:true};
+            doh.register("SelectOption tests", [{
+            	name:"on mouse click select option should display list",
+           		timeout:6900,
+            	runTest:function () {
+                	var d = new doh.Deferred();
+                	selectOption = dijit.byId("selectOption1");
+                	doh.robot.mouseMoveAt(selectOption.selectDropdown, 500);
+               		doh.robot.mouseClick({left:true}, 700);
+              		doh.robot.sequence(d.getTestCallback(function() {
+            			try {
+    						doh.is(true, dojo.style(selectOption.listElement, "display") == 'block');
+    						doh.is(true, selectOption.listShowing === true);
+						} catch (e) {
+							d.errback(e);
+						}
+                    }), 900);
+					return d;
+                }
+            },{
+            	name:"click selectOption handle, should hide list",
+           		timeout:6900,
+            	runTest:function () {
+                	var d = new doh.Deferred();
+                	selectOption = dijit.byId("selectOption1");
+               		doh.robot.mouseClick({left:true}, 500);
+              		doh.robot.sequence(d.getTestCallback(function() {
+            			try {
+    						doh.is(true, dojo.style(selectOption.listElement, "display") == 'none');
+    						doh.is(true, selectOption.listShowing === false);
+						} catch (e) {
+							d.errback(e);
+						}
+                    }), 900);
+                    
+					return d;
+                }
+            },{
+            	name:"on mouse click outside of selectOption handle, should hide list",
+           		timeout:6900,
+            	runTest:function () {
+                	var d = new doh.Deferred();
+                	selectOption = dijit.byId("selectOption1");
+                	doh.robot.mouseClick({left:true}, 500);
+                	doh.robot.mouseMoveAt(dojo.byId("selectOptionTitle"), 500);
+               		doh.robot.mouseClick({left:true}, 500);
+              		doh.robot.sequence(d.getTestCallback(function() {
+            			try {
+    						doh.is(true, dojo.style(selectOption.listElement, "display") == 'none');
+						} catch (e) {
+							d.errback(e);
+						}
+                    }), 900);
+					return d;
+                }
+            },{
+            	name:"selecting the second item from list, should change the value to 1",
+           		timeout:6900,
+            	runTest:function () {
+                	var d = new doh.Deferred();
+                	selectOption = dijit.byId("selectOption1");
+                	doh.robot.mouseMoveAt(selectOption.selectDropdown, 500);
+                	doh.robot.mouseClick({left:true}, 500);
+          			doh.robot.mouseMoveAt(dojo.query("li", selectOption.listElement)[1], 500);
+               		doh.robot.mouseClick({left:true}, 500);
+               		
+              		doh.robot.sequence(d.getTestCallback(function() {
+            			try {
+    						doh.is(true, dojo.style(selectOption.listElement, "display") == 'none');
+    						// select data should be 1
+    						var selectData = selectOption.getSelectedData();
+    						doh.is(true, parseInt(selectData.value, 10) === 1);
+    						doh.is(true, dojo.query(selectOption.selectDropdownLabel).text() === "1");
+						} catch (e) {
+							d.errback(e);
+						}
+                    }), 900);
+					return d;
+                }
+            },{
+            	name: "unselecting selectOption should reset to default values and state",
+           		timeout: 6900,
+            	runTest: function () {
+                	var d = new doh.Deferred();
+                	selectOption = dijit.byId("selectOption1");
+                	doh.robot.mouseMoveAt(dojo.byId("selectOptionTitle"), 500);
+              		doh.robot.sequence(d.getTestCallback(function() {
+            			try {
+            				selectOption.unSelect();
+            				var selectData = selectOption.getSelectedData();
+    						doh.is(true, parseInt(selectData.value, 10) === 0);
+    						doh.is(true, dojo.query(selectOption.selectDropdownLabel).text() === "0");
+    						doh.is(true, dojo.hasClass(selectOption.listItems[0], "active") === true);
+						} catch (e) {
+							d.errback(e);
+						}
+                    }), 900);
+					return d;
+                }
+            },{
+            	name: "select option, when selected should highlight down, when the down arrow keys is pressed",
+           		timeout: 6900,
+            	runTest: function () {
+                	var d = new doh.Deferred();
+                	selectOption = dijit.byId("selectOption1");
+                	doh.robot.mouseMoveAt(selectOption.selectDropdown, 500);
+                	doh.robot.mouseClick({left:true}, 500);
+                	doh.robot.keyPress(dojo.keys.DOWN_ARROW, 500);
+                	doh.robot.keyPress(dojo.keys.DOWN_ARROW, 500);
+              
+              		doh.robot.sequence(d.getTestCallback(function() {
+            			try {
+            				var selectData = selectOption.getSelectedData();
+    						doh.is(true, parseInt(selectData.value, 10) === 2);
+    						doh.is(true, dojo.hasClass(selectOption.listItems[2], "active") === true);
+						} catch (e) {
+							d.errback(e);
+						}
+                    }), 900);
+					return d;
+                }
+            },{
+            	name: "select option, when selected should highlight up, when up arrow keys is pressed",
+           		timeout: 6900,
+            	runTest: function () {
+                	var d = new doh.Deferred();
+                	selectOption = dijit.byId("selectOption1");
+                	doh.robot.mouseMoveAt(selectOption.selectDropdown, 500);
+                	doh.robot.mouseClick({left:true}, 500);
+                	doh.robot.keyPress(dojo.keys.UP_ARROW, 500);
+                	doh.robot.keyPress(dojo.keys.UP_ARROW, 500);
+              
+              		doh.robot.sequence(d.getTestCallback(function() {
+            			try {
+            				var selectData = selectOption.getSelectedData();
+    						doh.is(true, parseInt(selectData.value, 10) === 0);
+    						doh.is(true, dojo.hasClass(selectOption.listItems[0], "active") === true);
+						} catch (e) {
+							d.errback(e);
+						}
+                    }), 900);
+					return d;
+                }
+            },{
+            	name: "select option1, should be scrollable",
+           		timeout: 6900,
+            	runTest: function () {
+                	var d = new doh.Deferred();
+                	selectOption = dijit.byId("selectOption1");
+                	doh.robot.mouseMoveAt(selectOption.selectDropdown, 500);
+                	doh.robot.mouseClick({left:true}, 500);
+               		var track = dojo.query(".track", selectOption.listElement)[0];
+               		doh.robot.mouseMoveAt(track, 500);
+               		doh.robot.mousePress({left:true, middle:false, right:false}, 1000);
+               		doh.robot.mouseMoveAt(selectOption.listItems[10], 500);
+               		doh.robot.mouseRelease({left:true, middle:false, right:false}, 1000);
+              		doh.robot.sequence(d.getTestCallback(function() {
+            			try {
+            				doh.is(true, dojo.hasClass(selectOption.listElement, "scroller") === true);
+            				doh.is(true, selectOption.scrollPanels[0].viewport.scrollTop > 0);
+						} catch (e) {
+							d.errback(e);
+						}
+                    }), 900);
+					return d;
+                }
+            },{
+            	name: "select option3, should containing the correct data in list",
+           		timeout: 6900,
+            	runTest: function () {
+                	var d = new doh.Deferred();
+                	doh.robot.mouseMoveAt(dojo.byId("selectOptionTitle"), 500);
+               		doh.robot.mouseClick({left:true}, 500);
+               		selectOption = dijit.byId("selectOption3");
+              		doh.robot.sequence(d.getTestCallback(function() {
+            			try {
+            				doh.is(true, selectOption.listData.length === 2);
+            				doh.is(true, selectOption.listData[0].text === "long text 1");
+            				doh.is(true, selectOption.listData[1].text === "long text 2");
+            				doh.is(true, selectOption.listData[0].value === "0");
+            				doh.is(true, selectOption.listData[1].value === "1");
+						} catch (e) {
+							d.errback(e);
+						}
+                    }), 900);
+					return d;
+                }
+            }]);
+
+            doh.run();
+        });
+    </script>
+</head>
+</html>

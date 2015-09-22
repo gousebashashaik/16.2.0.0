@@ -1,0 +1,10 @@
+{% for data in crStaticDataList %}
+  <a href="{{data.url}}">
+    <span class="map-circle {{data.divClassName}} {{isHomePage}}" data-index="{{data.index}}" data-region-code="{{data.crCode}}" style="top: {{data.topPOS}}; right: {{data.rightPOS}};">
+		<span class="{{data.spanClassName}}">
+			<span class="cruise-area-name">{{data.cruiseAreaName}}</span>
+			<span class="pointerPos"></span>
+		</span>
+	</span>
+	{% ifequal isHomePage false %} </a> {% endifequal %}
+{% endfor %}

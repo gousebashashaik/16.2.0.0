@@ -1,0 +1,26 @@
+{% for sailingData in sailingDatas %}
+<li class="striped-row {% if forloop.last %} last {% endif %}" data-index="{{forloop.counter}}" style="">
+	<span class="background" style=""></span>
+	<span class="content" style="">
+		<span class="date">{{sailingData.fromDate}}</span>
+		<span class="duration" style="">
+		{{sailingData.duration}}<br/>
+		{% if sailingData.cruiseThemes %}
+		{% for theme in sailingData.cruiseThemes %}{{theme}}<br/>{% endfor %}
+		{% endif %}
+		</span>
+		{% if sailingData.variationFlag %}
+		<span class="indicator" style="">
+			Itinerary variation
+			<span class="question" style="position: relative;display: inline-block;" data-dojo-props=" floatWhere:'position-top-center', text:'{% if sailingData.variationFlag %}<b>Variations to itinerary:</b><br/>{{sailingData.toolTipData.variation}}{% endif %}'"
+		       			data-dojo-type="tui.widget.popup.Tooltips" ></span>
+	    </span>
+		{% endif %}
+		<span class="shipname uc" style="">{{sailingData.shipName}}</span>
+	</span>
+	<span class="price" style="">
+		<span>From</span> &pound;{{sailingData.fromPrice|floatformat:"0"}}<span>pp</span>
+		<a href="javascript:void(0);" class="button cta small right loaded" style="">Check prices</a>
+	</span>
+</li>
+{% endfor %}

@@ -1,0 +1,38 @@
+{% if error %}
+  <p>There was a problem<br/>
+    retrieving your<br/>
+    shortlist
+  </p>
+  <p><a href="/fcsun/page/shortlist/shortlist.page" class="ensLinkTrack" data-componentId="WF_COM_909.1">Go to your shortlist<span class="link-arrow">&nbsp;</span></a></p>
+{% else %}
+  <h3>You saved {{ holidayNumber }} holidays</h3>
+  {% ifequal holidayNumber 0 %}
+    <p>You have no shortlisted holidays.</p>
+  {% else %}
+    <ul>
+      {% for holiday in data %}
+        <li>
+          <a href="{{ holiday.url }}" class="ensLinkTrack" data-componentId="WF_COM_909.1">
+            <div class="image-container">
+              <span class="mask"><span class="mask-title">View<span class="mask-arrow"></span></span></span>
+              <img src="{{ holiday.imageURL }}" alt="{{ holiday.name }}" title="{{ holiday.name }}" width="100" height="60" />
+            </div>
+          </a>
+          {% ifequal holiday.type 'soldOut' %}
+            <div class="sold-out"><span>&nbsp;</span>Sold out</div>
+          {% endifequal %}
+          {% ifequal holiday.type 'noChange' %}
+            <div><span>&nbsp;</span>&pound;{{ holiday.price }}</div>
+          {% endifequal %}
+          {% ifequal holiday.type 'decrease' %}
+            <div class="price-decrease">&pound;{{ holiday.price }}<span>?-&pound;{{ holiday.difference }}</span></div>
+          {% endifequal %}
+          {% ifequal holiday.type 'increase' %}
+            <div class="price-increase">&pound;{{ holiday.price }}<span>?+&pound;{{ holiday.difference }}</span></div>
+          {% endifequal %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endifequal %}
+  <a href="/fcsun/page/shortlist/shortlist.page" class="ensLinkTrack" data-componentId="WF_COM_909.1">view your shortlist<span class="link-arrow">&nbsp;</span></a>
+{% endif %}

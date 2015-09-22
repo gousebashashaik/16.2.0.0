@@ -1,0 +1,46 @@
+<div class="item newroom" data-roomid="{{roomSlotNo}}">
+	<span class="rcol">Room {{roomSlotNo}}</span>
+	<span class="acol">
+		<select name="totalAdultsInRoom" class="dropdown" data-dojo-type="tui.widget.form.SelectOption">
+			<option value="0" selected>0</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value="9">9</option>
+		</select> 
+	</span>
+	<span class="scol">
+		<select name="totalSeniorsInRoom" class="dropdown" data-dojo-type="tui.widget.form.SelectOption">
+			<option value="0" selected>0</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value="9">9</option>
+		</select> 
+	</span>
+	<span class="ccol">
+		<select name="search-children" class="dropdown child" data-dojo-type="tui.widget.search.ChildrenSelectOption">
+			<option value="0" selected>0</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+		</select> 
+	</span>
+	<span class="remove"><a href="#">Remove</a></span>
+	<p><a href="#" data-dojo-type="tui.widget.search.SearchChildPopup" data-dojo-props="roomNumber:{{roomSlotNo}}, roomId:'room{{roomSlotNo}}', usecookie:{{usecookie}}" style="display: none" >Edit ages</a></p>
+</div>

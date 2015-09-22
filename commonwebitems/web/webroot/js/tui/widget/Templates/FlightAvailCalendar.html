@@ -1,0 +1,32 @@
+<div class="calendar">
+	<ul>
+		<li class="prev"><a href="#" title="Previous">&larr;</a></li>
+		<li class="current-month">{{monthTxt}} {{year}}</li>
+		<li class="next"><a href="#" title="Next">&rarr;</a></li>
+	</ul>
+	<table>
+		<thead>							
+			<tr class="weekdays">
+				{% for day in days %}								
+					<th>{{day}}</th>								
+				{% endfor %}			
+			</tr>						
+		</thead>
+		<tbody>
+			<tr>
+				{% for predate in predates %}
+					<td class="premonth">&nbsp;</td>
+				{% endfor %}
+				{% for monthdate in monthdates %}
+					<td class="datepicker-day {% if monthdate.disable %} disabled {% endif %}"> <a href="#">{{monthdate.date}}</a></td>
+					{% if monthdate.newrow %}
+						</tr><tr>
+					{% endif %}
+				{% endfor %}
+				{% for enddate in enddates %}
+					<td class="premonth">&nbsp;</td>
+				{% endfor %}
+			</tr>
+		</tbody>
+	</table>
+</div>

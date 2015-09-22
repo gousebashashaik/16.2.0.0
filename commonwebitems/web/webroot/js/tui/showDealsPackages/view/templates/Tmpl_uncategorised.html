@@ -1,0 +1,53 @@
+
+  {% for holiday in holidays %}
+  <li class="search-result-item" data-package-id="{{holiday.packageId}}">
+    <div class="product  deals-collection{% if holiday.accommodation.differentiatedProduct %} special {{holiday.accommodation.differentiatedCode|lower}}{% endif %}">
+	<div class="image-container">
+	        <a class="url ensLinkTrack" data-componentId="{{holiday.componentId}}" href="{{holiday.accommodation.url}}">
+	        <img  src="{{holiday.accommodation.imageUrlsMap.small.0}}" alt="{{holiday.accommodation.name}}" />
+	        </a>
+        </div>
+		
+		<div class="details-wrap">
+		<div class="main-details">
+		{% ifequal  holiday.accommodation.brand.code 'FJ' %} 	
+			<span class="falcon">
+		{% else %} 	
+		<span class="thomson">
+		{% endifequal %} 
+		
+		 <h4><a class="url ensLinkTrack" data-componentId="{{holiday.componentId}}" href="{{holiday.accommodation.url}}">{{holiday.accommodation.name}}</a></h4>
+		 
+		 {% if holiday.accommodation.ratings.officialRating %}
+                <p class="rating t{{holiday.accommodation.ratings.officialRating|cut:' '}}{% if holiday.accommodation.differentiatedProduct %} {{holiday.accommodation.differentiatedCode|lower}}{% endif %}">Rating: {{holiday.accommodation.ratings.officialRating}}</p>
+                {% endif %}
+         </span>
+					<div class='box-out floater'>
+				<div class='price left'>
+				<!-- <div><fmt:formatDate value="{{holiday.availbleFrom}}" type="date" pattern="dd MMM yyyy"></fmt:formatDate></div> -->
+				<div>{{holiday.availbleFrom}}</div>
+				<div>{{holiday.itinerary.departureAirport}}</div>
+				<div>{{holiday.duration}} nights</div>
+				</div>
+				<div class='boxout floater'>
+     
+ 		   			<p class='price right'><strong><span>{{currency}}</span> <span class="price-value pp-price">{{holiday.price.perPerson|floatformat:"0"}}</span></strong> per person</p>
+ 		   			<div class="cta-buttons">
+                       		<a href="{{holiday.accommodation.url}}" class="button right ensLinkTrack" data-componentId="{{holiday.componentId}}" data-id="{{holiday.accommodation.code}}"><span class="text">View Details</span></a>
+                     </div>
+		
+		
+		</div>
+		</div>
+		</div>
+		{% if forloop.counter|divisibleby:"4" %}{% if not forloop.last %}<li class="clear-it"></li>{% endif %}{% endif %}
+{% endfor %}
+
+
+
+
+
+
+		
+		
+		

@@ -1,0 +1,8 @@
+<div class="popup info-popup villa-availability-popup{% if modClass %} {{modClass}}{% endif %}" id="{{ id }}">
+	<p class="text{% ifequal promoText '' %} divider{% endifequal %}">{{text|safe}}</p>
+	{% ifnotequal promoText "" %}
+	<p class="promo-offer divider"><i class="sprite-img-grp-1"></i>{{ promoText|safe }}</p>
+	{% endifnotequal %}
+	<p class="btn-container"><a class="cta-dark cta small button" id="{{ id }}_button">{{btnText}}</a></p>
+	<span class="arrow-main arrow-bottom arrow-bottom-bg arrow-bottom-center"></span>
+</div>

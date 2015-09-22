@@ -1,0 +1,14 @@
+<div class="popup modal-window filter-no-results" style="display: none;" id="filterNoResults">
+	<div class="header">
+		<h1>{{title|safe}}</h1>
+		<h2>{{subtitle|safe}}</h2>
+		<h3>{{noHolidays|safe}}</h3>
+	</div>
+	<div class="options">
+		<p>{{whatToDo|safe}}</p>
+		<ul>
+			<li class="{% ifequal dojoConfig.site 'thomson' %}sprite-img-grp-1 {% endifequal %}"><a href="javascript:void(0);" class="undo hide-modal uc">{{undo}}</a></li>
+			<li class="{% ifequal dojoConfig.site 'thomson' %}sprite-img-grp-1 {% endifequal %}"><a href="javascript:void(0);" class="reset hide-modal uc">{{remove}}</a></li>
+		</ul>
+	</div>
+</div>

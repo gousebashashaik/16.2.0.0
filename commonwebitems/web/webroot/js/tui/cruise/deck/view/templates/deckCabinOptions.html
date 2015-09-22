@@ -1,0 +1,16 @@
+{% if deckData.items.length > 0 %}
+<div class= "cabin-options">
+	<h3>CABIN OPTIONS</h3>
+	<ul class="cabin-type-list">
+		{% for  key, val  in  deckData.cabinTypeMap.items %}
+			<li><label class="">
+				<input type="checkbox" class="cabin-checkBox" data-option-name="{{key}}">
+				<div class="tooltip-info">
+			        {{key}} <!--<div class="question"></div>-->
+			     </div>
+				<span class="checkbox check-box"></span></label>
+			</li>
+		{% endfor %}
+	</ul>
+</div>
+{% endif %}

@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>SearchResultController tests</title>
+
+    <script src="/js/underscore/underscore-min.js"></script>
+    <!-- required: dojo.js -->
+    <script type="text/javascript" src="/js/dojo/dojo.js"></script>
+    <!-- functions to help test -->
+    <script type="text/javascript" src="/js/dijit/tests/helpers.js"></script>
+    
+    <script type="text/javascript">
+        dojo.require("dojo.DeferredList");
+        dojo.require("dojo.window");
+        dojo.require("dojo.query");
+        dojo.require("dojo.NodeList-manipulate");
+        dojo.require("dijit.robotx");
+
+        dojo.ready(function () {
+            doh.robot.initRobot('SearchResultController.html');
+			doh.register("SearchResultController test", [{
+            	name: "autocomplete, should display on 3 or more chars",
+           		timeout: 6900,
+            	runTest: function () {
+                	var d = new doh.Deferred();
+              
+              		doh.robot.sequence(d.getTestCallback(function() {
+            			try {
+            				//doh.is(true, dojo.style(autocomplete.listElement, "display") == 'block');
+    						//doh.is(true, autocomplete.listShowing === true);
+						} catch (e) {
+							d.errback(e);
+						}
+                    }), 900);
+					return d;
+                }
+             }]);
+
+            doh.run();
+        });
+    </script>
+</head>
+</html>

@@ -1,0 +1,13 @@
+{
+    "name":         "Google Maps",
+    "version":      "0.0.1",
+    "directories":  {
+        "lib": "."
+    },
+    "dependencies": {
+        "tui":   "~0.0.1",
+        "dojo":  "~1.7.3",
+        "dijit": "~1.7.3",
+        "dojox": "~1.7.3"
+    }
+}

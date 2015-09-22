@@ -1,0 +1,9 @@
+<div id="overseas-auto-suggest-filter" style="margin-left:0px;">
+<ul>
+{% for airport in airports %}
+	<li data-country-code="{{airport.countryCode}}"
+		data-airport-id="{{airport.id}}"
+		data-country-name="{{airport.countryName}}">{{airport.name}} ({{airport.id}})</li>
+{% endfor %}
+</ul>
+</div>

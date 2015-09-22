@@ -1,0 +1,72 @@
+<!-- Collections list-->
+<div class="collection-list cf">
+    <ul class="three-cols cf" analytics-text="DListColl" analytics-id="300ab" analytics-instance="1">
+        {% for collection in children%}
+        <li class="collection {% if not collection.available %} disabled{% else %}{% for to in toData %}{% ifequal to.id collection.id %} selected{% endifequal %}{% endfor %}{% endif %}">
+            <div class="panel cf">
+                <div class="top-part">
+                	{% ifequal collection.id 'FAM'%}
+                	   {% ifequal dualBrandSwitch  true %}
+	                	<span class="label product-colour-label FAM">Family Resorts</span>
+	                	<span class="label product-colour-label VIL">Family Life</span>
+	                	{%else%}
+	                	<span class="label product-colour-label FAM">Family Resorts</span>
+	                	{%endifequal%}
+                	{%else%}
+                    <span class="label product-colour-label {{collection.id}}">{% if collection.name %}{{collection.name}}{% endif %}</span>
+                    {%endifequal%}
+                    <div class="image-container">
+                        <img src="{% if collection.collectionImage %}{{collection.collectionImage}}{% endif %}" alt="image">
+                    </div>
+												<span class="checkbox loaded {% if not collection.available %} disabled{% else %}{% for to in toData %}{% ifequal to.id collection.id %} selected{% endifequal %}{% endfor %}{% endif %}">
+													<span class="checkbox-bg"></span>
+                                                    <input type="checkbox"
+                                                           data-destination-id="{{collection.id}}"
+                                                           data-destination-name="{{collection.name}}"
+                                                           data-destination-type="{% if collection.type %}{{collection.type}}{% endif %}"
+                                                           data-destination-multiselect="{{collection.multiSelect}}"
+                                                           data-destination-multiple= "false"
+                                                           data-destination-available="{{collection.available}}"
+                                                           data-destination-fewdays="{{collection.fewDaysFlag}}"
+                                                           name="{{collection.id}}"
+                                                           id="collection-{{collection.id}}"
+                                                           value="{{collection.id}}"
+                                                           class="{{collection.id}} check child-check"
+                                                           {% for to in toData %}
+                                                           {% ifequal to.id destination.id %}
+                                                           checked=checked
+                                                           {% endifequal %}
+                                                           {% endfor %}
+                                                            >
+                                                    <label for="" class="hidden-label">{% if collection.name %}{{collection.name}}{% endif %}</label>
+												</span>
+                    <p class="inspireTextPara">{% if collection.inspireText %}{{collection.inspireText}}{% endif %}</p>
+                </div>
+
+                <div class="best-for">
+                    {% ifnotequal collection.bestFor '' %}
+                    <span class="label">Best&nbsp;for</span>
+                    <ul class="b">
+                        {% for bestForValue in collection.bestFor %}
+                            <li>{{bestForValue.name}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endifnotequal %}
+                </div>
+
+            </div>
+        </li>
+        {% if forloop.counter|divisibleby:3 %}
+        {% if not forloop.last%}
+        <li class="row-controller"></li>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+    </ul>
+    <!-- CTA -->
+    <div class="cta-container center">
+        <p>Want to know more?</p>
+        <a class="button" href="{{url}}" analytics-text="ExploreColl" analytics-id="300ab" analytics-instance="1" style="margin-left:65px;">Explore our collections</a>
+        <a class="button cta close-popup" analytics-text="DLDoneColl" analytics-id="300ab" analytics-instance="1">Done</a>
+    </div>
+</div>

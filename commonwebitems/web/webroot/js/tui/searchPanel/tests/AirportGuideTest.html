@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>Hybrissearch</title>
+
+    <script src="/js/underscore/underscore-min.js"></script>
+    <!-- required: dojo.js -->
+    <script type="text/javascript" src="/js/dojo/dojo.js"></script>
+
+    <!-- functions to help test -->
+    <script type="text/javascript" src="/js/dijit/tests/helpers.js"></script>
+
+    <script type="text/javascript">
+        dojo.require("dojo.DeferredList");
+        dojo.require("dojo.window");
+        dojo.require("dojo.query");
+        dojo.require("dijit.robotx");
+
+
+        dojo.ready(function() {
+            doh.robot.initRobot('search.html');
+            var metaKey = {ctrl: true};
+            doh.register("destination guide test", [
+                {
+                    name:    "open expandable clicking on Airport Guide link",
+                    timeout: 69000,
+                    runTest: function() {
+                        var d = new doh.Deferred();
+                        airportGuide = dijit.byId("airport-guide");
+                        doh.robot.mouseMoveAt(airportGuide.domNode, 3000);
+                        doh.robot.mouseClick({left: true}, 100);
+                        doh.robot.sequence(d.getTestCallback(function() {
+                            try {
+                                doh.is(true, dojo.style(airportGuide.expandableDom, "display") == 'block');
+                            } catch (e) {
+                                d.errback(e);
+                            }
+                        }), 2000);
+
+                        return d;
+                    }
+                },
+                {
+                    name:    "unfold expandable clicking on close link",
+                    timeout: 69000,
+                    runTest: function() {
+                        var d = new doh.Deferred();
+                        airportGuide = dijit.byId("airport-guide");
+                        doh.robot.mouseMoveAt(dojo.query(".close", airportGuide.expandableDom)[0], 100);
+                        doh.robot.mouseClick({left: true}, 300);
+                        doh.robot.sequence(d.getTestCallback(function() {
+                            try {
+                                doh.is(true, dojo.style(airportGuide.expandableDom, "display") == 'none');
+                            } catch (e) {
+                                d.errback(e);
+                            }
+                        }), 2000);
+
+                        return d;
+                    }
+                },
+                {
+                    name:    "unfold expandable clicking outside of the guide",
+                    timeout: 69000,
+                    runTest: function() {
+                        var d = new doh.Deferred();
+                        airportGuide = dijit.byId("airport-guide");
+                        // Open the guide
+                        doh.robot.mouseMoveAt(airportGuide.domNode, 100);
+                        doh.robot.mouseClick({left: true}, 500);
+                        // Click on the document body.
+                        doh.robot.mouseMoveAt(document.body, 1000, 10, 10, 10);
+                        doh.robot.mouseClick({left: true}, 200);
+                        doh.robot.sequence(d.getTestCallback(function() {
+                            try {
+                                doh.is(true, dojo.style(airportGuide.expandableDom, "display") == 'none');
+                            } catch (e) {
+                                d.errback(e);
+                            }
+                        }), 2000);
+
+                        return d;
+                    }
+                },
+                {
+                    name:    "Test airport selection",
+                    timeout: 69000,
+                    runTest: function() {
+                        var d = new doh.Deferred();
+                        airportGuide = dijit.byId("airport-guide");
+                        var airportMultiFieldList = dijit.byId("tui_searchPanel_view_AirportMultiFieldList_0");
+                        // Open the guide
+                        doh.robot.mouseMoveAt(airportGuide.domNode, 100);
+                        doh.robot.mouseClick({left: true}, 600);
+                        // Click on Luton.
+                        doh.robot.mouseMoveAt(dojo.byId('LTN'), 2000);
+                        doh.robot.mouseClick({left: true}, 500);
+                        doh.robot.sequence(d.getTestCallback(function() {
+                            try {
+                                doh.is(true, dojo.hasClass(dojo.query('label[for="LTN"]')[0], 'selected'));
+                                doh.is(true, airportGuide.searchPanelModel.from.query().total > 0);
+                                doh.is(true, typeof airportGuide.searchPanelModel.from.get('LTN') === 'object');
+                                doh.is(true, dojo.query('input[value="LTN"]', airportMultiFieldList.domNode).length === 1);
+                            } catch (e) {
+                                d.errback(e);
+                            }
+                        }), 1000);
+
+                        return d;
+                    }
+                }
+            ]);
+
+            doh.run();
+        });
+
+
+    </script>
+</head>
+</html>

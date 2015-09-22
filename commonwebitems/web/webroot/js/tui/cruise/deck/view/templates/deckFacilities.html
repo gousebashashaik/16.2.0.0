@@ -1,0 +1,11 @@
+{% ifnotequal deckData.facilities null %}
+<div class="underline-gray" style="padding-bottom:12px;"></div>
+{% if flag %}
+	<h3>facilities on deck {{deckNo}}</h3>
+{% endif %}
+<ul class="square">
+	{% for facility in deckData.facilities %}
+	<li class="cabin-facilites-label">{{facility}}</li>
+	{% endfor %}
+</ul>
+{% endifnotequal %}

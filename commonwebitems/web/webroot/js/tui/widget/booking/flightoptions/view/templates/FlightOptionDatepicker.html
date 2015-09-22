@@ -1,0 +1,17 @@
+<div class= "alt-flight-calendar">
+    <ul class="dateyear">
+        <li class="prev">
+        	<a data-dojo-attach-point= "prevButton" href="javascript:void(0);" class="date-prev">&lt;&lt; Earlier flights</a>
+        </li>
+        <li class="current-monthyear" data-dojo-attach-point="monthYearLabel">
+
+        </li>
+        <li class="next"><a data-dojo-attach-point= "nextButton" href="javascript:void(0);" class="date-next">Later flights &gt;&gt;</a></li>
+    </ul>
+    <div data-dojo-type="tui.widget.booking.flightoptions.view.FlightOptionsCalendar" data-dojo-attach-point="calendar"
+    data-dojo-props="calStartDate: '{{calStartDate}}',  calAvail:'{{calAvail}}', price:'{{price}}', selectedDate : '{{selectedDate}}', actualDate: '{{actualDate}}'">
+    </div>
+
+</div>
+
+

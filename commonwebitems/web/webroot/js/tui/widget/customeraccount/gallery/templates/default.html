@@ -1,0 +1,19 @@
+<div class="image-title">
+    <p>Image title here</p>
+    <a href="#" class="close"><span>close</span>&times;</a>
+</div>
+<ul>
+    {% for image in images %}
+    <li style="position: relative">
+        <div style="position:absolute;z-index: 10;width:100%;height:100%;left:0;top:0;background-color: rgba(0,0,0,0); margin: 50px 0"></div>
+        <img src="{{image.url}}" alt=""/>
+    </li>
+    {% endfor %}
+</ul>
+<div class="controls">
+    <div class="play-button start"><span></span></div>
+    <ul>
+        <li class="prev"><span></span></li>
+        <li class="next"><span></span></li>
+    </ul>
+</div>

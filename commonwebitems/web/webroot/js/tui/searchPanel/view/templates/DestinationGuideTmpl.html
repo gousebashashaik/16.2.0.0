@@ -1,0 +1,21 @@
+<div class="guide destination {{expandableProp}}" tabindex="0">
+    <span class="arrow"></span>
+    <div class="wrapper">
+        <div class="title-bar">
+            <h3 class="destination-guide-title"><i class="icon icon-guide icon-guide-dest icon-20"></i>{{destinationGuideTitle}}</h3>
+            <p class="notice">
+	            <span class="notice-title">See destinations in</span>
+                <span class="destinationlist-dropdown"></span>
+                <a href="javascript:void(0);" class="empty-destination-model{% ifequal searchPanelModel.to.data.length 0 %} inactive{% endifequal %}">{{searchMessaging.unselect}}</a>
+            </p>
+        </div>
+        <div id="dg-items">
+            {% include recDestTmpl %}
+        </div>
+        <div class="browse">
+            {% include inspireTmpl %}
+        </div>
+        <div class="loading-overlay"></div>
+	    <a href="javascript:void(0);" class="close close-hide">{{searchMessaging.close}}<i class="icon icon-arrow"></i></a>
+    </div>
+</div>

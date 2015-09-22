@@ -1,0 +1,28 @@
+<div>
+{% if not multicomThridParty and not tracThirdParty %}
+	<h2 class="underline fs28px">{{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.flight_meal_displayName|default:" "}}</h2>
+	<div class=" bookflow">
+		<div class="item open" >
+			<h3 class="item-toggle">{{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.flight_meal_StrapLine|default:" "}}</h3>
+			<div class="item-content selectedSection">
+			 <div class="inflight-img fl">
+				 <img 	src="{{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.flight_meal_Key_Value_One_Title_small|default:\' \ '}}">
+				</div>
+				<div class="meal-description">
+					<p class="inflight-desc-text">{{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.flight_meal_Key_Value_One_Body|default:" "|safe}}</p>
+					<p class="more-details-meals fr">
+						<span 
+							data-dojo-props="floatWhere:'position-top-center',text:'<ul class=\'header-meal\'><li><h4>{{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.food_drink_Key_Value_One_Title|default:\' \'}}</h4></li><li>{{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.food_drink_Key_Value_One_Body|default:\' \'}}</li></ul><ul class=\'header-meal\'><li><h4>{{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.food_drink_key_value_pair_2_title|default:\' \'}}</h4></li><li>{{ jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.food_drink_key_value_pair_2_body|default:\' \'}}</li></ul><ul class=\'header-meal\'><li><h4>{{ jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.food_drink_key_value_pair_3_title|default:\' \'}}</h4></li><li>{{jsonData.flightOptionsContentViewData.flightContentViewData.contentMap.food_drink_key_value_pair_3_body|default:\' \'}}</li></ul>'"
+							data-dojo-type="tui.widget.popup.Tooltips" class="loaded">
+						 <img width="10px" height="11px" src="../images/{{siteObj}}/bookflow/i.png"> 
+							{{jsonData.flightOptionsStaticContentViewData.flightContentMap.Flight_InflightMeals_Text3|default:" "|safe}}
+							</span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+<div class="clear"></div>
+<div class="dashed-border mb20px mt20px"></div>
+{% endif %}
+</div>

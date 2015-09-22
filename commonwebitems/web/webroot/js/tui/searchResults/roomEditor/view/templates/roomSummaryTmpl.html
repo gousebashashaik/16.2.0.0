@@ -1,0 +1,6 @@
+<ul class="list room-editor-summary">
+{% for room in rooms %}<li class="list-item room-summary">{{room.id|capfirst}} &ndash; <span class="room-summary-pax">{% if room.noOfAdults > 0 %}{{room.noOfAdults}} adult{{room.noOfAdults|pluralize}}{% if room.noOfSeniors > 0 or room.noOfChildren > 0 %}, {% endif %}{% endif %}
+		{% if room.noOfSeniors > 0 %}{{room.noOfSeniors}} senior{{room.noOfSeniors|pluralize}}{% if room.noOfChildren > 0 %}, {% endif %}{% endif %}
+		{% if room.noOfChildren > 0 %}{{room.noOfChildren}} child{% ifnotequal room.noOfChildren 1 %}ren{% endifnotequal %} (age{{room.noOfChildren|pluralize}} {% for age in room.childrenAge %}{{age}}{% if not forloop.last %}, {% endif %}{% endfor %}){% endif %}</span></li>{% endfor %}
+	<li class="list-item reset-rooms"><a href="javascript:void(0);">Revert to cheapest allocation for my party</a></li>
+</ul>

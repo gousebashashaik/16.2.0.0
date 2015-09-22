@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 7 ]>
+<html lang="en" class="ie6" id="firstchoice"> <![endif]-->
+<!--[if IE 7 ]>
+<html lang="en" class="ie7" id="firstchoice"> <![endif]-->
+<!--[if IE 8 ]>
+<html lang="en" class="ie8" id="firstchoice"> <![endif]-->
+<!--[if IE 9 ]>
+<html lang="en" class="ie9" id="firstchoice"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="" id="firstchoice"> <!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <title>DatePicker Tests</title>
+
+
+    <link href="/css/main.css" rel="stylesheet" type="text/css">
+
+    <script src="/js/underscore/underscore-min.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script type="text/javascript" src="/js/tui/config/TuiConfigTest.js"></script>
+    <style>
+        .ie-search-storage {display: none; behavior:url(#default#userData);}
+
+        .datepicker-wrap {
+            margin: 22px 0;
+            float: left;
+            width: 50%;
+        }
+        .datepicker {
+            border: 1px solid #999999;
+            width: 180px;
+            height: 36px;
+            padding: 2px;
+            background: #f5f5f5;
+            font-size: 12px;
+            line-height: 36px;
+            text-align: center;
+            border-radius: 4px;
+        }
+
+    </style>
+
+</head>
+
+<script type="text/javascript">
+    dojoConfig.addModuleName("tui/widget/datepicker/DatePicker");
+</script>
+
+<body>
+<div id="wrapper">
+    <div id="content">
+        <div class="span">
+            <h1>Datepicker tests</h1>
+
+            <div class="datepicker-wrap">
+                <h2>DIV</h2>
+                <div data-dojo-type="tui.widget.datepicker.DatePicker" class="datepicker" id="datePicker1">Select a date</div>
+            </div>
+
+            <div class="datepicker-wrap">
+                <h2>INPUT</h2>
+                <input type="text" data-dojo-type="tui.widget.datepicker.DatePicker" class="datepicker" placeholder="Select a date" id="datePicker2" />
+            </div>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+</footer>
+<script type="text/javascript" src="/js/underscore/underscore-min.js"></script>
+<script type="text/javascript" src="/js/dojo/dojo.js"></script>
+<script type="text/javascript">
+    dojoConfig.init();
+    //document.getElementsByTagName('html')[0].className = [HTMLClass].join("");
+</script>
+</body>
+
+
+</html>

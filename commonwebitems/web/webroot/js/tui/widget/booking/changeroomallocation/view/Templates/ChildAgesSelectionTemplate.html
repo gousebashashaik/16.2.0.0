@@ -1,0 +1,27 @@
+{% ifequal templateView "true" %}
+<span class="children_age_content {{templateView}}">
+						<div class="checkBox_container fl">
+						<div class="selectAge custom-dropdown dropdown fl {{childAges}}" >
+                        		{% for age in childAges %}
+						<span class="select_field fl">
+							 <span class="selectAge custom-dropdown dropdown fl" >
+                        		<select id =""name="Option" data-dojo-type="tui.widget.booking.changeroomallocation.view.ChildAgesSelectOption" class="dropdown child-age">
+                            		{% for age in jsonData.packageViewData.paxViewData.childAges %}
+                            		<option value="{{forloop.parentloop.counter0}}"
+									{% ifequal age "-" %}
+									selected="selected"{% endifequal %}>
+											{{age}}
+									</option>
+									{% endfor %}
+                        		</select>
+                    		</span>
+                    		<span class="child_no"> child {{forloop.counter}} </span>
+							 </span>
+                        {% endfor %}
+                    		</div>
+						</div>
+				</span>
+				{% else %}
+				<span class="children_age_content {{templateView}}">
+				</span>
+{% endifequal %}
