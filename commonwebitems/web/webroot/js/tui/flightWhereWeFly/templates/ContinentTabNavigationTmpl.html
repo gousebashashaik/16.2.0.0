@@ -1,0 +1,13 @@
+	<!--  Tab Start -->
+	{% if continentList %}
+	<div class="page-tabs">
+	<ul class="tabs">
+				{% for continent in continentList %}
+				<li  id="{{continent.code}}" class="continentTabs"  data-continent="{{continent.name}}" >
+                    <a href="return javascript:void(0)" class="ensLinkTrack tabNavigation"  data-continent="{{continent.name}}"  data-longitude="{{continent.longitude}}" data-latitude="{{continent.latitude}}"   analytics-id="COM_FO_SEARCH_RESULTS_PRICE_GRID" analytics-instance="1" analytics-text="{{continent.name}}" >{{continent.name}}</a>
+				</li>
+				{% endfor %}
+		</ul>
+	</div>
+	{% endif %}
+	<!--  Tab End class="activeTab"-->

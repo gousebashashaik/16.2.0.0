@@ -277,8 +277,8 @@ define('tui/widget/TagMappingTable', [ 'dojo' ], function (dojo) {
       'tui.widget.booking.passengers.view.PassengerDetailsView' : 'PAS_DETAILS_SIGNED_IN',
       'tui.widget.booking.passengers.view.DiscountCode': 'PAS_DISCOUNT',
       'tui.widget.booking.passengers.view.PassengerDetailsView': 'PAS_DETAILS',
-      
-      // Flights widgets tagging codes  	
+
+      // Flights widgets tagging codes
 	'tui.searchPanel.view.flights.AirportMultiFieldList' : 'COM_FO_SEARCH_PANEL',
 	'tui.searchPanel.view.flights.DestinationMultiFieldList' : 'COM_FO_SEARCH_PANEL',
 	'tui.searchPanel.view.flights.ArrivalAirportMultiFieldList' : 'COM_FO_SEARCH_PANEL',
@@ -296,7 +296,14 @@ define('tui/widget/TagMappingTable', [ 'dojo' ], function (dojo) {
 	'tui.searchPanel.view.flights.ArrivalFlightSearchMonthBar' : 'COM_FO_SEARCH_PANEL',
 	'tui.searchResults.view.flights.FlightSearchResultController' : ' COM_FO_SEARCH_RESULTS_PRICE_GRID',
 	'tui.searchResults.view.flights.NoSearchResultsController' : 'COM_FO_NO_RESULTS_PAGE',
-	'tui.searchResults.view.PriceToggle' : ' COM_FO_SEARCH_RESULTS_INDIVIDUAL'	
+	'tui.searchResults.view.PriceToggle' : 'COM_FO_SEARCH_RESULTS_INDIVIDUAL',
+	'tui.flightdeals.DealsExpandable' : 'COM_FO_DEALS_SEARCH',
+	'tui.flightdeals.FlyFromDealsExpandable' : 'COM_FO_DEALS_SEARCH',
+	'tui.flightdeals.GoToDealsExpandable' : 'COM_FO_DEALS_SEARCH',
+	'tui.flightdeals.FlightDealsResultsController': 'COM_FO_FLIGHT_DEALS_RESULTS',
+	'tui.widget.form.flights.DealsTitlePane'	:	'COM_FO_FLIGHT_DEALS_RESULTS',
+	'tui.flightdeals.FlightDealsPax':	'COM_FO_FLIGHT_DEALS_RESULTS',
+	'tui.widget.pagination.Pagination' : 'COM_FO_FLIGHT_DEALS_RESULTS'
 
 
     }

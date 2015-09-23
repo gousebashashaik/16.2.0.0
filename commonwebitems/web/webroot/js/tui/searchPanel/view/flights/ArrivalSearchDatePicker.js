@@ -124,7 +124,7 @@ define("tui/searchPanel/view/flights/ArrivalSearchDatePicker", [
           arrivalSearchDatePicker.close();
         }
       });
-      arrivalSearchDatePicker.tagElement(arrivalSearchDatePicker.domNode, "Return-Date");
+      arrivalSearchDatePicker.tagElement(arrivalSearchDatePicker.domNode, "Returning");
       dojo.global.isReturnErrorMessageNew=true;
       arrivalSearchDatePicker.watchCallback();
     },
@@ -137,7 +137,7 @@ define("tui/searchPanel/view/flights/ArrivalSearchDatePicker", [
 
     resetPlaceHolder: function () {
       var arrivalSearchDatePicker = this;
-      dojo.query(arrivalSearchDatePicker.domNode).innerHTML = "<span style='font-style:italic'>" + arrivalSearchDatePicker.searchMessaging.date.arrplaceholder + "</span>";
+      dojo.query(arrivalSearchDatePicker.domNode)[0].innerHTML = "<span style='font-style:italic'>" + arrivalSearchDatePicker.searchMessaging.date.arrplaceholder + "</span>";
     },
 
     setReturnFormatedDate: function (name, oldvalue, newvalue) {

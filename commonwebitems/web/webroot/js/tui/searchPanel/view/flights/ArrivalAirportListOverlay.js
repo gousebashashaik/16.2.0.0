@@ -54,16 +54,18 @@ define("tui/searchPanel/view/flights/ArrivalAirportListOverlay", [
                  	if (arrivalAirportListOverlay.expandableDom === null || !arrivalAirportListOverlay.isShowing(arrivalAirportListOverlay.expandableDom)) {
                  		arrivalAirportListOverlay.closeExpandable();
  	                }
-
+                 	try{
                  	console.log(document.activeElement.id)
                  	console.log(arrivalAirportListOverlay.id)
-
-                 	if (document.activeElement.id === arrivalAirportListOverlay.id) {
+                 	var activeClosest=dojo.query(document.activeElement).closest("#where-to-text")[0];
+                 	if (activeClosest && activeClosest.id === arrivalAirportListOverlay.id) {
                  			if(arrivalAirportListOverlay.expandableDom){
                  				if(arrivalAirportListOverlay.isShowing(arrivalAirportListOverlay.expandableDom)){
                  					arrivalAirportListOverlay.setHeight();
                  				}
+                 				if(event.target.id === "ukairports-arrival" || event.target.id === "overseasairports-arrival"){
                  				setTimeout(function(){arrivalAirportListOverlay.highlightTabs()},1000);
+                 				}
                  			}
                  		return;
                  	}
@@ -74,6 +76,10 @@ define("tui/searchPanel/view/flights/ArrivalAirportListOverlay", [
                  	else {
                  		arrivalAirportListOverlay.closeExpandable();
                  	}
+                 	} catch(err) {
+                 		console.log(err);
+                 	}
+
 
                  });
 
@@ -100,19 +106,29 @@ define("tui/searchPanel/view/flights/ArrivalAirportListOverlay", [
             			dojo.style(dojo.query(".guide .wrapper .ukairports-container-arrival")[0], {
             				"display":"block"
             			});
+
+            			dojo.query(".ArrivalsUKAiportCnt").removeClass('hide').addClass('show');
+            			dojo.query(".ArrivalsOverseasairportsCnt").removeClass('show').addClass('hide');
+
             			dojo.addClass("ukairports-arrival","ukairports-arrival-selected");
             			dojo.addClass("overseasairports-arrival","overseasairports-arrival-notselected");
             			dojo.removeClass("ukairports-arrival","ukairports-arrival-notselected");
             			dojo.removeClass("overseasairports-arrival","overseasairports-arrival-selected");
 
 
-            		} else {
+            		} else if(evt.target.id == "overseasairports-arrival"){
             			dojo.style(dojo.query(".guide .wrapper .ukairports-container-arrival")[0], {
             				"display":"none"
             			});
             			dojo.style(dojo.query(".guide .wrapper .overseas-container-arrival")[0], {
             				"display":"block"
             			});
+
+            			dojo.query(".ArrivalsUKAiportCnt").removeClass('show').addClass('hide');
+            			dojo.query(".ArrivalsOverseasairportsCnt").removeClass('hide').addClass('show');
+
+
+
             			dojo.addClass("ukairports-arrival","ukairports-arrival-notselected");
             			dojo.addClass("overseasairports-arrival","overseasairports-arrival-selected");
 
@@ -142,11 +158,22 @@ define("tui/searchPanel/view/flights/ArrivalAirportListOverlay", [
                 // Remove inactive class if we have airports which we can remove.
                 //console.dir(dojo.query(".empty-airport-model")[0]);
                 var emptyAirportModel = dojo.query(".empty-airport-model", arrivalAirportListOverlay.expandableDom)[0];
-                if (arrivalAirportListOverlay.searchPanelModel.to.data.length > 0) {
+                var clearSelection=dojo.query(".empty-airport-model", arrivalAirportListOverlay.expandableDom)[1];
+                if (arrivalAirportListOverlay.searchPanelModel.to.data.length > 0 && arrivalAirportListOverlay.searchPanelModel.to.data[0].countryCode == 'GBR' ) {
                     dojo.removeClass(emptyAirportModel, "inactive");
+
                 } else {
                     dojo.addClass(emptyAirportModel, "inactive");
                 }
+
+                //clear  selection overseas
+                if (arrivalAirportListOverlay.searchPanelModel.to.data.length > 0 && arrivalAirportListOverlay.searchPanelModel.to.data[0].countryCode != 'GBR') {
+                    dojo.removeClass(clearSelection, "inactive");
+
+                } else {
+                    dojo.addClass(clearSelection, "inactive");
+                }
+
                 // update airport guide selected count.
                 console.log(arrivalAirportListOverlay.searchPanelModel.to.selectedSize + "!!");
                 //dojo.query(".airport-guide-count", arrivalAirportListOverlay.expandableDom).text(arrivalAirportListOverlay.searchPanelModel.to.selectedSize);
@@ -154,8 +181,7 @@ define("tui/searchPanel/view/flights/ArrivalAirportListOverlay", [
                 	dojo.query("#wheretoPlaceholder").style("display","block");
                 	dojo.query("#wheretoValue").style("display","none");
                 }else if(arrivalAirportListOverlay.searchPanelModel.to.selectedSize > 0 ){
-                	arrivalAirportListOverlay.closeExpandable();
-                	arrivalAirportListOverlay.updatePillText(arrivalAirportListOverlay.searchPanelModel.to.data[0]);
+                	arrivalAirportListOverlay.updatePillText();
                 }
             },
 

@@ -9,7 +9,7 @@ define("tui/searchResults/view/flights/NoSearchResultsController", [
 
 		 postCreate:function(){
 		    	var NoSearchResultsController = this;
-		    		if(!NoSearchResultsController.jsonData.flightSearchCriteria) return;
+		    		if(!NoSearchResultsController.jsonData) return;
 		    		NoSearchResultsController.reGenerateSavedSearchObject();
 
 		    		NoSearchResultsController.searchPanelModel.prePopulateSearchCriteria(NoSearchResultsController.jsonData.flightSearchCriteria);

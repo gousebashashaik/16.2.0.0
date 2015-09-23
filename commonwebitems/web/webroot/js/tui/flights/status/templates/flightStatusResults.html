@@ -1,0 +1,45 @@
+<div class="flight-statresult">
+	{% if flightData %}
+
+			<div class="stat-text">
+				<span class="{% ifequal isArrival true %}flightTodayImg-arrival{% else %} flightTodayImg {% endifequal %}"></span>
+				<span class="flightlabel">{{ flightResultHeading }}</span>
+			</div>
+
+			{% for flights in flightData %}
+			<div class="stat-results">
+			{%ifnotequal  flights.flightStatusData.length 0 %}
+				<span class="flight-date"> {{flights.title}}</span>
+				<table class="stat-table">
+					<thead class="labels-header">
+						<tr>
+							<th>FLIGHT NO.</th>
+							<th>DEPARTING FROM</th>
+							<th>DEPARTURE TIME</th>
+							<th>ARRIVING TO</th>
+							<th>ARRIVAL TIME</th>
+							<th>STATUS</th>
+						</tr>
+					</thead>
+					<tbody class="flight-data">
+					{%for flight in flights.flightStatusData %}
+						<tr>
+							<td class="flight-num">{{flight.flightnr}}</td>
+							<td class="from-airport">{{flight.depAirportName}} ({{flight.depAirportCode}})<br>{{flight.depAirCountryName}}</td>
+							<td class="dep-time {% ifequal flight.isDepartureTimeBold true %} boldText {% endifequal %}">{{flight.schdeptm}}
+							 {%if flight.showEstimatedDepTime %}<span id='estimate'>Estimated {{flight.expdeptm}}</span>{% endif %}<input type="hidden" value="{{flight.schdeptm}}"/></td>
+							<td class="to-airport">{{flight.arrAirportName}} ({{flight.arrAirportCode}})<br>{{flight.arrAirCountryName}}</td>
+							<td class="arr-time {% ifequal flight.isArrivalTimeBold true %} boldText {% endifequal %}">{{flight.scharrtm}}
+							{% if flight.showEstimatedArrTime %}<span id='estimate'>Estimated {{flight.exparrtm}}</span> {% endif %}<input type="hidden" value="{{flight.scharrtm}}"/></td>
+							<td class="{{flight.statusColor}}"><span class="{{flight.imgClass}}"></span>{{flight.flightStatus}}</td>
+
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% endifnotequal %}
+			</div>
+			{% endfor %}
+
+	{% endif %}
+</div>

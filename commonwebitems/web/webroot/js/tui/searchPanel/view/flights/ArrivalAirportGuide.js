@@ -12,10 +12,12 @@ define("tui/searchPanel/view/flights/ArrivalAirportGuide", [
     "tui/searchPanel/view/SearchGuide",
     "dojo/store/Observable",
     "tui/utils/TuiAnimations",
-    "tui/search/model/flights/SearchModel"],
+    "tui/search/model/flights/SearchModel",
+    "tui/searchPanel/view/flights/AirportListGrouping"
+    ],
     function (dojo, on, has, domAttr, query, domStyle, arrivalAirportGuideTmpl, AirportModel, Toggler, searchGuide ) {
 
-        dojo.declare("tui.searchPanel.view.flights.ArrivalAirportGuide", [tui.searchPanel.view.SearchGuide, tui.search.model.flights.SearchModel], {
+        dojo.declare("tui.searchPanel.view.flights.ArrivalAirportGuide", [tui.searchPanel.view.SearchGuide, tui.search.model.flights.SearchModel, tui.searchPanel.view.flights.AirportListGrouping], {
 
             // ----------------------------------------------------------------------------- properties
 
@@ -27,7 +29,7 @@ define("tui/searchPanel/view/flights/ArrivalAirportGuide", [
 
             targetSelector: null,
 
-            fromLimit: 6,
+            fromLimit: 4,
 
             destinationFieldProps: {},
 
@@ -71,8 +73,9 @@ define("tui/searchPanel/view/flights/ArrivalAirportGuide", [
                     }
                     // update views
                     arrivalAirportGuide.updateGuide(airportModel, (add > -1));
-                   // arrivalAirportGuide.disableGuideItems();
+                    arrivalAirportGuide.disableGuideItems();
                     arrivalAirportGuide.updateGuideCount();
+                    arrivalAirportGuide.updatedOverlyText();
                 });
                 arrivalAirportGuide.tagElement(arrivalAirportGuide.domNode, "Flying-To");
 
@@ -169,6 +172,11 @@ define("tui/searchPanel/view/flights/ArrivalAirportGuide", [
                         return;
                     }
 
+                    if(!arrivalAirportGuide.multiSelect){
+                    	arrivalAirportGuide.searchPanelModel.to.emptyStore();
+                    }
+
+
                     // Start the orange pulse on the field.
                     dojo.publish("tui.searchPanel.view.flights.ArrivalAirportMultiFieldList.pulse", [arrivalAirportGuide.widgetController]);
                     //arrivalAirportGuide.selectAirports(checkbox);
@@ -181,7 +189,10 @@ define("tui/searchPanel/view/flights/ArrivalAirportGuide", [
                     }
                    // arrivalAirportGuide.cancelBlur();
 
-                    arrivalAirportGuide.closeExpandable(arrivalAirportGuide.expandableDom);
+                    //arrivalAirportGuide.closeExpandable(arrivalAirportGuide.expandableDom);
+
+                    arrivalAirportGuide.updatedOverlyText();
+
                     window.scrollTo(0,0);
                     if(dijit.byId("where-to").id == "where-to"){
                     	dijit.byId("where-to").searchPanelModel.searchErrorMessages.set("to", {})
@@ -223,7 +234,7 @@ define("tui/searchPanel/view/flights/ArrivalAirportGuide", [
                     	arrivalAirportGuide.closeExpandable();
                     }
                   });*/
-
+                arrivalAirportGuide.updatedOverlyText();
             },
 
             openExpandable: function () {
@@ -235,7 +246,7 @@ define("tui/searchPanel/view/flights/ArrivalAirportGuide", [
                 dojo.addClass(arrivalAirportGuide.domNode, "loading");
 
 
-                if(arrivalAirportGuide.searchPanelModel.to.data.length >0){
+                if(arrivalAirportGuide.searchPanelModel.to.data.length >0 && arrivalAirportGuide.searchPanelModel.to.data[0].countryCode !== "GBR"){
                 	arrivalAirportGuide.overseasSwapElement = arrivalAirportGuide.searchPanelModel.to.data[0].id;
                 }
 
@@ -244,210 +255,15 @@ define("tui/searchPanel/view/flights/ArrivalAirportGuide", [
                 dojo.when(arrivalAirportGuide.arrivalAirportGuideStore.requestData(arrivalAirportGuide.searchPanelModel.generateQueryObject(), false), function (responseData) {
                     dojo.removeClass(arrivalAirportGuide.domNode, "loading");
 
-                    var airportsListKeys = Object.keys(responseData);
-                    var  airportTempList= [];
-                    var	 airportSwapList = [];
-                    _.each(airportsListKeys, function(countryKey){
-                    	airportTempList = responseData[countryKey];
-                    	var checkCName = "";
-                    	_.each(airportTempList, function(airport){
+                arrivalAirportGuide = arrivalAirportGuide.airportMap(responseData);
 
-                    		if(!airport.countryName){
-                    			airport.countryName ="Finland";
-                    		}
-
-                    		if(airport.countryName == checkCName){
-                    			airport.cFlag = false;
-                    		}else{
-                    			airport.cFlag = true;
-
-                    		}
-                    		checkCName = airport.countryName;
-                    		airportSwapList.push(airport);
-
-                    	});
-
-                     });
-                    //console.log(airportTempList);
-
-
-                    arrivalAirportGuide.airportList = airportSwapList;
-                    arrivalAirportGuide.ukColumnLength = Math.ceil(_.size(responseData["GBR"]) / arrivalAirportGuide.columns);
-                   //arrivalAirportGuide.columnLength = Math.ceil(_.size(arrivalAirportGuide.airportList) / arrivalAirportGuide.columns);
-                    arrivalAirportGuide.columnLength = Math.ceil((_.size(arrivalAirportGuide.airportList) - _.size(responseData["GBR"])) / 3);
-                   arrivalAirportGuide.overseasColumnLength =  arrivalAirportGuide.columnLength -  arrivalAirportGuide.ukColumnLength;
-
-                    //arrivalAirportGuide.columnLength = Math.ceil((_.size(arrivalAirportGuide.airportList) - _.size(responseData["GBR"])) / arrivalAirportGuide.columns);
-                    //arrivalAirportGuide.overseasColumnLength =  arrivalAirportGuide.columnLength -  arrivalAirportGuide.ukColumnLength
-                    //arrivalAirportGuide.ukairportList=responseData["GBR"];
-
-                   	var tempUkairportList=[],
-                   		tempUkairportList_0=[],
-                   		tempUkairportList_1=[],
-                   		counrtyGP=['LN','SE','SW','MD','NE','NW','SC','NI'],
-                   		counrtyGPNames=['LONDON','SOUTH EAST', 'SOUTH WEST', 'MIDLANDS','NORTH EAST', 'NORTH WEST' , 'SCOTLAND', 'NORTHERN IRELAND'];
-
-                    _.each(arrivalAirportGuide.airportList, function(airport,i){
-                    	if(airport.countryCode == "GBR"){
-                    		//_.each(airport.group, function(group,j){
-                        		if(airport.id === 'LGW'){
-                        			arrivalAirportGuide.airportList[i].group[0] ='LN';
-                        		}
-                        		if(airport.id === 'LTN'){
-                        			arrivalAirportGuide.airportList[i].group[0] ='LN';
-                        		}
-                        		if(airport.id === 'STN'){
-                        			arrivalAirportGuide.airportList[i].group[0] ='LN';
-                        		}
-
-                        		if(airport.id === 'SEN'){
-                        			arrivalAirportGuide.airportList[i].group[0] ='SE';
-                    			}
-                        		if(airport.id === 'NWI'){
-                        			arrivalAirportGuide.airportList[i].group[0] ='SE';
-                    			}
-                        		if(airport.id === 'SOU'){
-                        			arrivalAirportGuide.airportList[i].group[0] ='SE';
-                    			}
-
-                        		if(airport.id === 'BOH'){
-                        			arrivalAirportGuide.airportList[i].group[0] ='SW';
-                    			}
-                        		if(airport.id === 'BRS'){
-                        			arrivalAirportGuide.airportList[i].group[0] ='SW';
-                    			}
-                        		if(airport.id === 'CWL'){
-                        			arrivalAirportGuide.airportList[i].group[0] ='SW';
-                    			}
-                        		if(airport.id === 'EXT'){
-                        			arrivalAirportGuide.airportList[i].group[0] ='SW';
-                    			}
-
-                        		if(airport.id === 'BHX'){
-                        			arrivalAirportGuide.airportList[i].group[0] ='MD';
-                    			}
-                        		if(airport.id === 'EMA'){
-                        			arrivalAirportGuide.airportList[i].group[0] ='MD';
-                    			}
-
-                        		if(airport.id === 'DSA'){
-                        			arrivalAirportGuide.airportList[i].group[0] ='NE';
-                    			}
-                        		if(airport.id === 'NME'){
-                        			arrivalAirportGuide.airportList[i].group[0] ='NE';
-                    			}
-                        		if(airport.id === 'HUY'){
-                        			arrivalAirportGuide.airportList[i].group[0] ='NE';
-                    			}
-                        		if(airport.id === 'LBA'){
-                        			arrivalAirportGuide.airportList[i].group[0] ='NE';
-                    			}
-                        		if(airport.id === 'NCL'){
-                        			arrivalAirportGuide.airportList[i].group[0] ='NE';
-                    			}
-
-
-                        		if(airport.id === 'MAN'){
-                        			arrivalAirportGuide.airportList[i].group[0] ='NW';
-                    			}
-
-                        		if(airport.id === 'ABZ'){
-                        			arrivalAirportGuide.airportList[i].group[0] ='SC';
-                    			}
-                        		if(airport.id === 'EDI'){
-                        			arrivalAirportGuide.airportList[i].group[0] ='SC';
-                    			}
-                        		if(airport.id === 'GLA'){
-                        			arrivalAirportGuide.airportList[i].group[0] ='SC';
-                    			}
-
-                        		if(airport.id === 'BFS'){
-                        			arrivalAirportGuide.airportList[i].group[0] ='NI';
-                    			}
-
-                        //});
-                    		// null groups
-                    		if(airport.id === 'BHD'){
-                    			arrivalAirportGuide.airportList[i].group[0] ='NI';
-                			}
-                    		if(airport.id === 'LDY'){
-                    			arrivalAirportGuide.airportList[i].group[0] ='NI';
-                			}
-                    		if(airport.id === 'LPL'){
-                    			arrivalAirportGuide.airportList[i].group[0] ='NW';
-                			}
-
-
-                    		tempUkairportList.push(airport);
-                    	}
-                    });
-
-                	var checkCName = "";
-                    _.each(counrtyGP, function(tempGP, i){
-                    	_.each(tempUkairportList, function(airport ,j){
-                    		if(airport.group[0] === tempGP){
-	                			airport.countryName = counrtyGPNames[i];
-	                			airport.nextCol = false;
-	                			if(airport.id =="EXT" || airport.id =="MAN"){
-                    				airport.nextCol = true;
-                    			}
-	                			if(airport.countryName == checkCName){
-	                    			airport.cFlag = false;
-	                    		}else{
-	                    			airport.cFlag = true;
-	                    		}
-	                    		checkCName = airport.countryName;
-	                			tempUkairportList_0.push(airport);
-	                		}
-                    	});
-                    })
-
-                    arrivalAirportGuide.ukairportList = tempUkairportList_0;
-
-                   //Chiranjeevi: Commenting this as we dont need Any London grouping for may release.
-                  /* var tempJSON ={
-                               "name": "Any London ",
-                               "id": "ANY",
-                               "available": true,
-                               "group": [
-                                   "SE",
-                                   "LN"
-                               ],
-                               "children": [],
-                               "countryCode": "GBR",
-                               "countryName": "United Kingdom",
-                               "synonym": ""
-                   }
-                   tempUkairportList_0.push(tempJSON);
-
-                   _.each(arrivalAirportGuide.airportList, function(airport){
-                   	if(airport.countryCode == "GBR" && airport.group == "SE,LN"){
-                   		tempUkairportList_0.push(airport);
-                   	}else if(airport.countryCode == "GBR"){
-                   		tempUkairportList_1.push(airport);
-                   	}
-                   });
-
-                   tempUkairportList = tempUkairportList_0.concat(tempUkairportList_1);
-
-                   arrivalAirportGuide.ukairportList = tempUkairportList;
-                   */
-                    var overseasairportList=[];
-                    _.each(arrivalAirportGuide.airportList, function(airport){
-                    	if(airport.countryCode !== "GBR"){
-                    		airport.nextCol = false;
-                    		if(airport.id =="RVN" || airport.id =="MRU"){
-                				airport.nextCol = true;
-                			}
-                    		overseasairportList.push(airport);
-                    	}
-                    });
-
-                    arrivalAirportGuide.airportList = arrivalAirportGuide.sortByName(overseasairportList);
+                arrivalAirportGuide.multiSelect =arrivalAirportGuide.searchPanelModel.tracsDate;
 
 
                 arrivalAirportGuide.inherited(args);
                 arrivalAirportGuide.showTabs();
+                //update the guide count once user opens expandable dom
+                arrivalAirportGuide.updateGuideCount();
                     //Update the view to conform to the latest datafeed.
                     _.each(arrivalAirportGuide.airportList, function(item){
                     	arrivalAirportGuide.updateAirportCheckboxes(item);
@@ -456,26 +272,15 @@ define("tui/searchPanel/view/flights/ArrivalAirportGuide", [
                     	arrivalAirportGuide.updateAirportCheckboxes(item);
             		});
                     // Disable airports selection if saved search has MAX_AIRPORTS_SELECTABLE items selected.
-                   // arrivalAirportGuide.disableGuideItems();
-
+                    arrivalAirportGuide.disableGuideItems();
+                    var clearSelection=dojo.query(".empty-airport-model", arrivalAirportGuide.expandableDom)[1];
                     var emptyAirportModel = dojo.query(".empty-airport-model", arrivalAirportGuide.expandableDom)[0];
-                    if (arrivalAirportGuide.searchPanelModel.to.data.length > 0) {
-                    		dojo.removeClass(emptyAirportModel, "inactive");
-                    }else{
-                    	dojo.addClass(emptyAirportModel, "inactive");
-                    }
-
                     if (arrivalAirportGuide.widgetController.searchApi === "getPrice") {
                         dojo.addClass(arrivalAirportGuide.widgetController.domNode, "open-guide");
                     }
 
 
                 });
-            },
-
-
-            sortByName :  function(array){
-                return _.sortBy(array, "countryName");
             },
 
             showTabs : function(){
@@ -485,29 +290,55 @@ define("tui/searchPanel/view/flights/ArrivalAirportGuide", [
             		toAirport = SearchModel.to.data[0],
             		airportTabs = dojo.byId("arrivalAirportTabs"),
             		ukairportsContainer =dojo.byId("arrivalUkairportsContainer"),
-            		overseasContainer = dojo.byId("arrivalOverseasContainer");
+            		overseasContainer = dojo.byId("arrivalOverseasContainer"),
+            		ukTextContainer=dojo.query(".ArrivalsUKAiportCnt"),
+            		overseasTextContainer=dojo.query(".ArrivalsOverseasairportsCnt");
 
 	         	if(fromAirport && fromAirport.countryCode === "GBR"){
 	         		domStyle.set(airportTabs, "display", "none");
-	         		domStyle.set(ukairportsContainer, "display", "none");
-	         		domStyle.set(overseasContainer,  "display", "block");
-
+	         		arrivalAirportGuide.showOverseasContainer(ukairportsContainer, overseasContainer);
+	         		arrivalAirportGuide.showOverseasTextContainer(ukTextContainer,overseasTextContainer);
 	         	} else  if(fromAirport && fromAirport.countryCode !== "GBR"){
 	         		domStyle.set(airportTabs, "display", "none");
-	         		domStyle.set(ukairportsContainer, "display", "block");
-	         		domStyle.set(overseasContainer, "display", "none");
+	         		arrivalAirportGuide.showUKAirportsContainer(ukairportsContainer, overseasContainer);
+	         		arrivalAirportGuide.showUKAirportsTextContainer(ukTextContainer,overseasTextContainer);
+
 	         	} else{
-	         		if(toAirport && toAirport.countryCode == "GBR"){
-	         			domStyle.set(ukairportsContainer, "display", "block");
-		         		domStyle.set(overseasContainer, "display", "none");
-	         		} else if(toAirport && toAirport.countryCode !== "GBR") {
-	         			domStyle.set(ukairportsContainer, "display", "none");
-		         		domStyle.set(overseasContainer, "display", "block");
+	         		if(toAirport){
+		         			if(toAirport.countryCode == "GBR"){
+		         				arrivalAirportGuide.showUKAirportsContainer(ukairportsContainer, overseasContainer);
+			         			arrivalAirportGuide.showUKAirportsTextContainer(ukTextContainer,overseasTextContainer);
+		         			}
+		         			else{
+		         				arrivalAirportGuide.showOverseasContainer(ukairportsContainer, overseasContainer);
+			         			arrivalAirportGuide.showOverseasTextContainer(ukTextContainer,overseasTextContainer);
+		         			}
+
+	         		}else{
+	         			arrivalAirportGuide.showOverseasContainer(ukairportsContainer, overseasContainer);
+	         			arrivalAirportGuide.showOverseasTextContainer(ukTextContainer,overseasTextContainer);
 	         		}
+
 	         		domStyle.set(airportTabs, "display", "block");
 	         	}
-
+	         	arrivalAirportGuide.highlightTabs();
 	         	arrivalAirportGuide.setHeight();
+            },
+            showUKAirportsContainer: function(ukairportsContainer, overseasContainer){
+            	domStyle.set(ukairportsContainer, "display", "block");
+         		domStyle.set(overseasContainer, "display", "none");
+            },
+            showOverseasContainer: function(ukairportsContainer, overseasContainer){
+            	domStyle.set(ukairportsContainer, "display", "none");
+         		domStyle.set(overseasContainer, "display", "block");
+            },
+            showUKAirportsTextContainer: function(ukTextContainer,overseasTextContainer){
+            	ukTextContainer.removeClass('hide').addClass('show');
+         		overseasTextContainer.removeClass('show').addClass('hide');
+            },
+            showOverseasTextContainer: function(ukTextContainer,overseasTextContainer){
+            	ukTextContainer.removeClass('show').addClass('hide');
+         		overseasTextContainer.removeClass('hide').addClass('show');
             },
 
             setHeight :  function(){
@@ -662,7 +493,7 @@ define("tui/searchPanel/view/flights/ArrivalAirportGuide", [
                     if (airportModel) {
 
                     	//Check if clicked check box is related to overseas airport, then needs to remove already selected one from the the list, if one exists.
-                    	//if(clickedCheckboxCountryCode !== "GBR") { //Chiranjeevi: Cmmenting this line for the may release as we need to select only one airport
+                    	if(clickedCheckboxCountryCode !== "GBR") { //Chiranjeevi: Cmmenting this line for the may release as we need to select only one airport
                     		//add the first overseas airport to overseasSwapElement
                     		if(arrivalAirportGuide.searchPanelModel.to.selectedSize > 0){
                     			arrivalAirportGuide.searchPanelModel.to.emptyStore();
@@ -677,12 +508,18 @@ define("tui/searchPanel/view/flights/ArrivalAirportGuide", [
                     			arrivalAirportGuide.searchPanelModel.to.remove(this.overseasSwapElement);
                     			arrivalAirportGuide.overseasSwapElement = clickedCheckboxId;
                     		}
-                    	//}
+                    	}else if(arrivalAirportGuide.searchPanelModel.to.selectedSize > 0 && arrivalAirportGuide.overseasSwapElement){
+                    		arrivalAirportGuide.searchPanelModel.to.emptyStore();
+                    		arrivalAirportGuide.overseasSwapElement = null;
+                	}
 
                         arrivalAirportGuide.animatePill(clickedLabel, dojo.query("#where-to-text", arrivalAirportGuide.widgetController.domNode)[0], function () {
                             // Execute the action after the animation.
                             arrivalAirportGuide.searchPanelModel.to.add(airportModel);
-                            arrivalAirportGuide.updatePillText(airportModel);
+                            arrivalAirportGuide.updatePillText();
+                            if((clickedCheckboxCountryCode == "GBR"&& !arrivalAirportGuide.multiSelect) || clickedCheckboxCountryCode != "GBR"){
+                            	arrivalAirportGuide.closeExpandable();
+                            }
                         });
 
                     }
@@ -695,63 +532,91 @@ define("tui/searchPanel/view/flights/ArrivalAirportGuide", [
 
                 //Chiranjeevi: commenting this part for scope changes in R2 as deselection  of airport is not allowed.
 
-               /*
-                * airportModel = arrivalAirportGuide.searchPanelModel.to.get(clickedCheckboxId);
-                if (airportModel) {
-                    arrivalAirportGuide.searchPanelModel.to.remove(clickedCheckboxId);
-                    arrivalAirportGuide.selectedCountryCode = null;
-                    arrivalAirportGuide.overseasSwapElement = null;
-                    arrivalAirportGuide.itemSelected = null;
+               airportModel = arrivalAirportGuide.searchPanelModel.to.get(clickedCheckboxId);
+               if(airportModel.countryCode == "GBR"){
+	                if (airportModel) {
+	                    arrivalAirportGuide.searchPanelModel.to.remove(clickedCheckboxId);
+	                    arrivalAirportGuide.selectedCountryCode = null;
+	                    arrivalAirportGuide.overseasSwapElement = null;
+	                    arrivalAirportGuide.itemSelected = null;
+	                }
+
+	                var clickedCheckboxChildren = domAttr.get(clickedCheckbox, "data-airportmodel-groups");
+
+	                // Get the airport group list.
+	                if (clickedCheckboxChildren) {
+	                    clickedCheckboxChildren = clickedCheckboxChildren.split(",");
+	                    dojo.forEach(clickedCheckboxChildren, function (id) {
+	                        if (!id) {
+	                            return;
+	                        }
+
+	                        // Query from to see if groups are present.
+	                        var airportGroupModel = arrivalAirportGuide.searchPanelModel.to.get(id);
+	                        if (airportGroupModel) {
+	                            arrivalAirportGuide.searchPanelModel.to.remove(id);
+
+	                            _.each(airportGroupModel.children, function (child) {
+	                                if (clickedCheckboxId !== child) {
+	                                    // select children of group (except for current item)
+	                                    var airportCheckbox = dojo.query("." + child, arrivalAirportGuide.expandableDom)[0];
+	                                    var airportModel = arrivalAirportGuide.getAirportItemAttributes(airportCheckbox);
+
+	                                    // Making sure we're not adding the airport twice.
+	                                    if (!arrivalAirportGuide.searchPanelModel.to.get(airportModel.id)) {
+	                                        arrivalAirportGuide.searchPanelModel.to.add(airportModel);
+	                                    }
+	                                }
+	                            });
+	                        }
+	                    });
+	                }
+               }
+
+                if(arrivalAirportGuide.searchPanelModel.to.data.length < 1){
+                	dojo.query("#wheretoValue", arrivalAirportGuide.domNode).style("display","none");
+                	dojo.query("#wheretoPlaceholder", arrivalAirportGuide.domNode).style("display","block");
                 }
-
-                var clickedCheckboxChildren = domAttr.get(clickedCheckbox, "data-airportmodel-groups");
-
-                // Get the airport group list.
-                if (clickedCheckboxChildren) {
-                    clickedCheckboxChildren = clickedCheckboxChildren.split(",");
-                    dojo.forEach(clickedCheckboxChildren, function (id) {
-                        if (!id) {
-                            return;
-                        }
-
-                        // Query from to see if groups are present.
-                        var airportGroupModel = arrivalAirportGuide.searchPanelModel.to.get(id);
-                        if (airportGroupModel) {
-                            arrivalAirportGuide.searchPanelModel.to.remove(id);
-
-                            _.each(airportGroupModel.children, function (child) {
-                                if (clickedCheckboxId !== child) {
-                                    // select children of group (except for current item)
-                                    var airportCheckbox = dojo.query("." + child, arrivalAirportGuide.expandableDom)[0];
-                                    var airportModel = arrivalAirportGuide.getAirportItemAttributes(airportCheckbox);
-
-                                    // Making sure we're not adding the airport twice.
-                                    if (!arrivalAirportGuide.searchPanelModel.to.get(airportModel.id)) {
-                                        arrivalAirportGuide.searchPanelModel.to.add(airportModel);
-                                    }
-                                }
-                            });
-                        }
-                    });
-                }*/
             },
 
 
             updatePillText: function(airportModel){
 
             	var arrivalAirportGuide = this,
+            		data  = arrivalAirportGuide.searchPanelModel.to.data,
             		pill = dojo.query("#wheretoValue", arrivalAirportGuide.domNode)[0];
             		dojo.query("#wheretoPlaceholder", arrivalAirportGuide.domNode).style("display","none");
             		pill.style.display = "block";
-					pill.innerHTML =  airportModel.name + " (" + airportModel.id + ")" ;
-            		/*
-            		 * pillCnt = dojo.byId("toPillCnt");
-            		 * pillCnt.innerHTML="";
-            		var pill = dojo.create("div", null, pillCnt);
-            		pill.style.display = "block";
-            		pill.style.float = "left"; */
 
+            		if(data.length > 1){
+                		pill.innerHTML =  data.length +" "+ " airports";
+                	}else {
+                		airportModel =  data[0];
+                		pill.innerHTML =  airportModel.name + " (" + airportModel.id + ")" ;
+                	}
             },
+
+            /*
+             * Update selected airport count in airport guide overlay
+             */
+
+            updatedOverlyText : function(){
+	           	 var arrivalAirportGuide = this, airportSize=0;
+	           	 if(arrivalAirportGuide.searchPanelModel.to.selectedSize === 0){
+	           		arrivalAirportGuide.overseasSwapElement = null;
+	           	 }
+
+	           	 if(arrivalAirportGuide.searchPanelModel.to.data.length > 0 && arrivalAirportGuide.searchPanelModel.to.data[0].countryCode !== "GBR"){
+		           		airportSize = arrivalAirportGuide.searchPanelModel.to.selectedSize -1;
+		           	 }else{
+		           		airportSize = arrivalAirportGuide.searchPanelModel.to.selectedSize;
+		           	 };
+	           	 if(arrivalAirportGuide.searchPanelModel.to.selectedSize > 1 || arrivalAirportGuide.searchPanelModel.to.selectedSize === 0 || airportSize===0){
+	           			dojo.query(".airport-guide-count", arrivalAirportGuide.expandableDom).text(airportSize +" "+" Airports selected");
+	           	 }else{
+	           		 	dojo.query(".airport-guide-count", arrivalAirportGuide.expandableDom).text(airportSize  +" "+" Airport selected");
+	           	 }
+           },
 
             updateGuide: function (item, add) {
                 // summary:
@@ -810,7 +675,7 @@ define("tui/searchPanel/view/flights/ArrivalAirportGuide", [
                         if (!dojo.hasClass(label, "selected")) {
                             dojo.addClass(item, "manually-disabled");
                             dojo.addClass(label, "manually-disabled");
-                            //domAttr.set(item, "disabled", true);
+                            domAttr.set(item, "disabled", true);
                         }
                     });
                 } else {
@@ -819,7 +684,7 @@ define("tui/searchPanel/view/flights/ArrivalAirportGuide", [
                         if (dojo.hasClass(label, "manually-disabled")) {
                             dojo.removeClass(item, "manually-disabled");
                             dojo.removeClass(label, "manually-disabled");
-                            //domAttr.set(item, "disabled", false);
+                            domAttr.set(item, "disabled", false);
                         }
                     });
                 }
@@ -832,11 +697,6 @@ define("tui/searchPanel/view/flights/ArrivalAirportGuide", [
                 //console.dir(dojo.query(".empty-airport-model", arrivalAirportGuide.expandableDom)[0]);
                 // Remove inactive class if we have airports which we can remove.
                 var emptyAirportModel = dojo.query(".empty-airport-model", arrivalAirportListOverlay.expandableDom)[0];
-                if (arrivalAirportGuide.searchPanelModel.to.data.length > 0) {
-                    dojo.removeClass(emptyAirportModel, "inactive");
-                } else {
-                    dojo.addClass(emptyAirportModel, "inactive");
-                }
                 // update airport guide selected count.
                 dojo.query(".airport-guide-count", arrivalAirportGuide.expandableDom).text(arrivalAirportGuide.searchPanelModel.to.selectedSize);
 
@@ -859,6 +719,7 @@ define("tui/searchPanel/view/flights/ArrivalAirportGuide", [
                 _.each(checkboxes, function (checkbox) {
                     domAttr.set(checkbox, "checked", false);
                 });
+                arrivalAirportGuide.updatedOverlyText();
             },
 
             removePill : function(){
@@ -869,24 +730,35 @@ define("tui/searchPanel/view/flights/ArrivalAirportGuide", [
 
             },
             highlightTabs: function (){
+            	var arrivalAirportGuide= this,
+        		SearchModel = arrivalAirportGuide.searchPanelModel,
+        		toAirport = SearchModel.to.data[0];
             	try {
-            		var ukAirportTabContainer = dojo.byId("arrivalUkairportsContainer");
-                	var overseasAirportTabContainer = dojo.byId("arrivalOverseasContainer");
-            		if(overseasAirportTabContainer.style.display == "block" || overseasAirportTabContainer.style.display == ""){
-            			dojo.addClass("ukairports-arrival","ukairports-arrival-notselected");
-            			dojo.addClass("overseasairports-arrival","overseasairports-arrival-selected");
-            			dojo.removeClass("ukairports-arrival","ukairports-arrival-selected");
-            			dojo.removeClass("overseasairports-arrival","overseasairports-arrival-notselected");
-            		} else {
-            			dojo.addClass("ukairports-arrival","ukairports-arrival-selected");
-            			dojo.addClass("overseasairports-arrival","overseasairports-arrival-notselected");
-            			dojo.removeClass("ukairports-arrival","ukairports-arrival-notselected");
-            			dojo.removeClass("overseasairports-arrival","overseasairports-arrival-selected");
-            		}
+            		var ukAirportTabContainer = dojo.query("#ukairports-arrival"),
+                	 overseasAirportTabContainer = dojo.query("#overseasairports-arrival");
+                	if(toAirport){
+                		if(toAirport.countryCode === "GBR"){
+                			arrivalAirportGuide.showUKAirportTab(ukAirportTabContainer, overseasAirportTabContainer);
+                		} else{
+                			arrivalAirportGuide.showOverseasAirportTab(ukAirportTabContainer, overseasAirportTabContainer);
+                		}
+                	}else{
+                		//by default overseas tab is highlighted
+                		arrivalAirportGuide.showOverseasAirportTab(ukAirportTabContainer, overseasAirportTabContainer);
+                	}
             	} catch(err){
-            		console.error(err.message)
+            		console.error(err.message);
             	}
+            },
+            showUKAirportTab: function(ukAirportTabContainer, overseasAirportTabContainer){
+            	ukAirportTabContainer.removeClass('ukairports-arrival-notselected').addClass('ukairports-arrival-selected');
+        		overseasAirportTabContainer.removeClass('overseasairports-arrival-selected').addClass('overseasairports-arrival-notselected');
+            },
+            showOverseasAirportTab: function(ukAirportTabContainer, overseasAirportTabContainer){
+            	ukAirportTabContainer.removeClass('ukairports-arrival-selected').addClass('ukairports-arrival-notselected');
+    			overseasAirportTabContainer.removeClass('overseasairports-arrival-notselected').addClass('overseasairports-arrival-selected');
             }
+
 
         });
 

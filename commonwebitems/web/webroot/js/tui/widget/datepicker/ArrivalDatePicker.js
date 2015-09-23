@@ -151,7 +151,7 @@ define("tui/widget/datepicker/ArrivalDatePicker", [
 
     // posOffset: Object
     //		Offset the top, and left position, of datepicker popup.
-    posOffset: {top: 10, left: -598},
+    posOffset: {top: 10, left: -597},
 
     isPositioned: false,
 
@@ -315,6 +315,7 @@ define("tui/widget/datepicker/ArrivalDatePicker", [
         for (var i = 0; i < seasonLength; i++) {
           arrivalDatePicker.monthsAndYears.push({
             value: [curMonth, '/', curYear].join(''),
+            text: [arrivalDatePicker.months[curMonth - 1], ' ', arrivalDatePicker.years[curYear - arrivalDatePicker.year]].join(''),
             label: [arrivalDatePicker.months[curMonth - 1], ' ', arrivalDatePicker.years[curYear - arrivalDatePicker.year]].join(''),
             nextMonthValue: [curNextMonth, '/', curNextMonthsYear].join(''),
             nextMonthLabel: [arrivalDatePicker.months[curMonth - 1], ' ', arrivalDatePicker.years[curYear - arrivalDatePicker.year]].join('')
@@ -330,6 +331,7 @@ define("tui/widget/datepicker/ArrivalDatePicker", [
             curNextMonthsYear++;
           }
         }
+        dojo.global.monthsAndYears = dojo.clone(arrivalDatePicker.monthsAndYears);
       },
 
       setup: function (newdate) {
@@ -694,8 +696,9 @@ define("tui/widget/datepicker/ArrivalDatePicker", [
       arrivalDatePicker.domNode.placeholder = arrivalDatePicker.datePickerPlaceholder;
       arrivalDatePicker.hideWidget(arrivalDatePicker.arrivalDatePickerDOM);
       dojo.removeClass(arrivalDatePicker.domNode, "focus")
-      //comented the below code as it is effecting Desktop site
-      //dojo.query(".tooltip").forEach(dojo.destroy);	//to close tooltips in devices.
+      if(dojo.hasClass(query("html")[0], "touch")){ //Check if it is device or not
+    	  dojo.query(".tooltip").forEach(dojo.destroy);	//to close tooltips in devices.
+      }
     },
 
     setClassOnDate: function (index, classname, selectedmonth, remove) {

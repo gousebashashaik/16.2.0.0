@@ -1,0 +1,22 @@
+<div id="searchResultTabContainer">
+	<div class="selectedDepaFlight">{% if oneWay %}Select your flight  {{titleinfo}}  <b>{{depratingFrom}}{% else %}Select your flights {{titleinfo}}  <b>{{depratingFrom}}</b>{% endif %}</div>
+
+	<!--  Tab Start -->
+	{% if tabAirports.length > 1 %}
+	<div class="span no-bottom-margin  page-tabs">
+		<ul class="tabs">
+				{% if not crossSell %}
+				<li  class="activeTab" id="ALL-tab">
+					<a href="return javascript:void(0)" class="ensLinkTrack tabNavigationAll" analytics-id="COM_FO_SEARCH_RESULTS_PRICE_GRID" analytics-instance="1" analytics-text="ALL SELECTED AIRPORTS"  data-componentid="WF_COM_006-1">ALL SELECTED AIRPORTS</a>
+				</li>
+				{% endif %}
+				{% for airport in tabAirports %}
+				<li  id="{{airport.id}}-tab">
+                    <a href="return javascript:void(0)" class="ensLinkTrack tabNavigation" data-componentid="WF_COM_006-1"  data-airportName="{{airport.name}}"  data-airportId="{{airport.id}}"  analytics-id="COM_FO_SEARCH_RESULTS_PRICE_GRID" analytics-instance="1" analytics-text="{{airport.name}} ({{airport.id}})" >{{airport.name}} ({{airport.id}})</a>
+				</li>
+				{% endfor %}
+		</ul>
+	</div>
+	{% endif %}
+	<!--  Tab End -->
+</div>

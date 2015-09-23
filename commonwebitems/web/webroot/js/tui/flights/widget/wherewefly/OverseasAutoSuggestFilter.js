@@ -22,38 +22,38 @@ define("tui/flights/widget/wherewefly/OverseasAutoSuggestFilter", [
   "dojo/date/locale",
   "tui/widget/_TuiBaseWidget"], function (dojo, overseasautosuggestFilterTmpl, registry, query, string, html, domConstruct, domStyle, event, on, keys, ready,domClass, focusUtil, lang, domAttr, connect, errorTooltip) {
   dojo.declare("tui.flights.widget.wherewefly.OverseasAutoSuggestFilter", [tui.widget._TuiBaseWidget, tui.widget.mixins.Templatable], {
-	  
+
 	  tmpl: overseasautosuggestFilterTmpl,
-	  
+
 	  charNo: 2,
-	  
+
 	  airports: [],
-	  
-	  airportStore: null, 
-	  
+
+	  airportStore: null,
+
 	  airportCodes: [],
-	  
+
 	  airportsList: [],
-	  
+
 	  tipAdvisor: null,
-	  
+
 	  idx: 0,
-	 	  
+
 	  constructor: function(params, srcNodeRef){
 	  	 var overseasautoSuggestFilter = this;
   	  },
-  	  
+
 	  postCreate:function(){
 	  	  var overseasautoSuggestFilter = this;
 	  	overseasautoSuggestFilter.inherited(arguments);
-  		  
+
   		  on(document.body, "click", function(evt){
   			  var targetObj = evt.target || evt.srcElement;
 			  if(targetObj.id === "overseas-airport-filter"){
 				  domClass.add(query("#overseas-airport-filter")[0], "border-sel-active");
-			    	  
+
 				  dojo.xhrGet({
-					  url: "/flights/WhereWeFlyFilter",
+					  url: "/flight/WhereWeFlyFilter",
 					  handleAs: "json",
 					  sync: false,
 					  load: function(data, ioargs){
@@ -64,15 +64,15 @@ define("tui/flights/widget/wherewefly/OverseasAutoSuggestFilter", [
 				  				overseasautoSuggestFilter.airports.push(airportInfo);
 				  			});
 				  		  }
-				  		  
-				  		 /* 
+
+				  		 /*
 				  		  overseasautoSuggestFilter.airportCodes = _.keys(overseasautoSuggestFilter.airportStore);
 				  		  _.each(overseasautoSuggestFilter.airportCodes, function(code){
 							_.each(overseasautoSuggestFilter.airportStore[code], function(airportInfo){
 								overseasautoSuggestFilter.airports.push(airportInfo);
 							});
 				  		  });*/
-				  		  
+
 						  overseasautoSuggestFilter.placeAirportList();
 						  overseasautoSuggestFilter.eventHandlers();
 						  if(targetObj.id !== "overseas-airport-filter") overseasautoSuggestFilter.showAutoSuggestList();
@@ -80,7 +80,7 @@ define("tui/flights/widget/wherewefly/OverseasAutoSuggestFilter", [
 						  focusUtil.focus(query("#overseas-airport-filter")[0]);
 					  },
 					  error: function(error, ioargs){
-					   
+
 					  }
 				  });
 			  }else{
@@ -89,43 +89,43 @@ define("tui/flights/widget/wherewefly/OverseasAutoSuggestFilter", [
 			  }
 		  });
 	  },
-	  
+
 	  onAfterTmplRender:function(){
 		  var overseasautoSuggestFilter = this;
 		  overseasautoSuggestFilter.inherited(arguments);
 		  overseasautoSuggestFilter.airports = [];
 	  },
-	  
+
 	  pickPosition:function(){
 		  var overseasautoSuggestFilter = this;
 		  var pos = html.coords(overseasautoSuggestFilter.domNode);
 		  return pos;
 	  },
-	  
+
 	  placeAirportList: function(){
 		  var overseasautoSuggestFilter = this;
-		  
+
 		  if(query("#overseas-auto-suggest-filter")[0])domConstruct.destroy("overseas-auto-suggest-filter");
-		  
+
 		  var closestParent = query("div.overseasAirports")[0];
-		  
+
 		  if(closestParent){
 			  var node = domConstruct.toDom(overseasautoSuggestFilter.render());
 			  domConstruct.place(node, closestParent, "last");
 		  }
-		  
+
 		  var pos = overseasautoSuggestFilter.pickPosition();
-		  
+
 		  domStyle.set(query("#overseas-auto-suggest-filter")[0], {
 			  "top":"25px"
 		  });
 	  },
-	  
+
 	  eventHandlers: function(){
 		  var overseasautoSuggestFilter = this;
 		  overseasautoSuggestFilter.keyUpEvents();
 	  },
-	  
+
 	  hideAutoSuggestList: function(){
 		  if(query("#overseas-auto-suggest-filter")[0]){
 			  domStyle.set(query("#overseas-auto-suggest-filter")[0], {
@@ -133,17 +133,17 @@ define("tui/flights/widget/wherewefly/OverseasAutoSuggestFilter", [
 			  });
 		  }
 	  },
-	  
+
 	  showAutoSuggestList:function(){
 		  domStyle.set(query("#overseas-auto-suggest-filter")[0], {
 		  	  "display":"block"
 		  });
 	  },
-	  
+
 	  keyUpEvents: function(){
 		  var overseasautoSuggestFilter = this;
 		  var flyingFrom = query("#overseas-airport-filter")[0];
-		  
+
 		  on(flyingFrom, "keypress", function(evt){
 			  var charOrCode = evt.charCode || evt.keyCode;
 			  if (charOrCode === keys.DOWN_ARROW || charOrCode === keys.UP_ARROW) {
@@ -154,11 +154,11 @@ define("tui/flights/widget/wherewefly/OverseasAutoSuggestFilter", [
 		        	overseasautoSuggestFilter.hideAutoSuggestList();
 		      }
      	  });
-		  
+
 		  on(query("#overseas-auto-suggest-filter")[0], "mouseover", function (evt) {
 			    query("#overseas-auto-suggest-filter li.hlight-airport-list").removeClass("hlight-airport-list");
 		  });
-		  
+
 		  on(flyingFrom, "keyup", function(evt){
 			  var charOrCode = evt.charCode || evt.keyCode;
 			  if(charOrCode === keys.ENTER){
@@ -179,7 +179,7 @@ define("tui/flights/widget/wherewefly/OverseasAutoSuggestFilter", [
 			        }
 			    }
 		  });
-		  
+
 		  on(flyingFrom, "keydown", function(evt){
 			  var charOrCode = evt.charCode || evt.keyCode;
 			  if(charOrCode === keys.TAB){
@@ -192,20 +192,20 @@ define("tui/flights/widget/wherewefly/OverseasAutoSuggestFilter", [
 		  query("#overseas-auto-suggest-filter li").forEach(function (elm, i) {
 			    on(elm, "click", function (evt) {
 			    	flyingFrom.value = lang.trim(query(this).text());
-			    	
+
 			    	var hidn = domConstruct.create("input", {
 		    			type:"hidden",
 		    			value:  domAttr.get(elm, "data-country-code"),
 		    			id:"ftselectedCountry"
 		    		});
-		    		
-		    		
+
+
 		    		domConstruct.place(hidn, document.body, "last");
-		    		
+
 			    });
 			});
 	  },
-	  
+
 	  /*----filter out the list of airports-----*/
 	  searchAirportNamesOrCodes: function(val, evt, idx){
 		  var overseasautoSuggestFilter = this;
@@ -213,7 +213,7 @@ define("tui/flights/widget/wherewefly/OverseasAutoSuggestFilter", [
 			if (idx === undefined) {idx = 0;}
 		    var list = query('#overseas-auto-suggest-filter'),
 		        visibleIdx = 0;
-		    dojo.forEach(list.query('li'), function (elm, i) { 
+		    dojo.forEach(list.query('li'), function (elm, i) {
 		        var found = false;
 		        try{
 		        	var regExp = new RegExp(val, 'i');
@@ -238,7 +238,7 @@ define("tui/flights/widget/wherewefly/OverseasAutoSuggestFilter", [
 			        }else{
 			        	domClass.remove(elm, "airport-codes-li-visible");
 			        }
-		        	
+
 		        } else {
 		        	/* var tipAdvise =  new errorTooltip({
 			  			  connectId: "#flying-from",
@@ -249,8 +249,8 @@ define("tui/flights/widget/wherewefly/OverseasAutoSuggestFilter", [
 		        	domClass.remove(elm, "airport-codes-li-visible");
 		        }
 		    });
-		    
-		    if(count == 0 ){ 
+
+		    if(count == 0 ){
 		    	overseasautoSuggestFilter.throwErrorTooltip();
 		    	count = 1;
 		  }
@@ -265,7 +265,7 @@ define("tui/flights/widget/wherewefly/OverseasAutoSuggestFilter", [
             });
 			dojo.byId("overseas-auto-suggest-filter").style.display = "none";
 			try{
-				overseasautoSuggestFilter.errorTooltip = true;   
+				overseasautoSuggestFilter.errorTooltip = true;
 				new errorTooltip({
 		  			  connectId: "#overseas-airport-filter",
 		  			  errorMsg: "Try slecting from the drop down menu or alternatively search by aiport code.",
@@ -273,16 +273,16 @@ define("tui/flights/widget/wherewefly/OverseasAutoSuggestFilter", [
 		  			  dynaId: "#flyingFromFilter"
 		  		  });
 			}catch(e){}*/
-			
+
 	  },
-		
+
 	  render: function(){
 		  var overseasautoSuggestFilter = this;
 		  var html = overseasautoSuggestFilter.renderTmpl(overseasautoSuggestFilter.tmpl);
 		  return html;
 	  }
-  
+
   });
-  
+
   return tui.flights.widget.wherewefly.OverseasAutoSuggestFilter;
 });

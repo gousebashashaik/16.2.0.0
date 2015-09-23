@@ -39,9 +39,11 @@ define("tui/searchPanel/view/flights/ArrivalFlightSearchMonthBar", [
 			domConstruct.place(monthSelc,document.body,"last");
 
 			/*generate previous Season dates*/
-			arrivalFlightSearchMonthBar.getPreviousSeasonDate();
+			//arrivalFlightSearchMonthBar.getPreviousSeasonDate();
 
 			/*generate months ahead..*/
+
+			arrivalFlightSearchMonthBar.createPreviousYr(arrivalFlightSearchMonthBar.seasonStartDate);
 			for(var i=0; i < arrivalFlightSearchMonthBar.seasonLength; i++) {
 				var arr = [];
 
@@ -93,7 +95,7 @@ define("tui/searchPanel/view/flights/ArrivalFlightSearchMonthBar", [
 					arrivalFlightSearchMonthBar.generateMonthCell(flightstr,activeKlass);
 				}
 
-				arrivalFlightSearchMonthBar.createPreviousYr(arrivalFlightSearchMonthBar.seasonStartDate);
+
 		},
 
 		generateMonthCell : function(flightstr,activeKlass){
@@ -216,7 +218,9 @@ define("tui/searchPanel/view/flights/ArrivalFlightSearchMonthBar", [
 			var pos = elm.l;
 			pos = pos - 17;
 			var yr = dojo.create("span", {
+				"class":"spanyear",
 				innerHTML:"|" + yr
+
 			});
 			domStyle.set(yr, {
 				"position":"absolute",

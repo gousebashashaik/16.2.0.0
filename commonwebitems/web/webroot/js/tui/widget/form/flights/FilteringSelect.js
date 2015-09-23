@@ -13,7 +13,7 @@ define(["dojo/_base/declare",
 
             required: false, // if this is true, this field is required
 
-            autoComplete: true, //if true selects first option in the dropdown
+            autoComplete: false, //if true selects first option in the dropdown
 
             doValidation: false, // overriden method for validate, whether todo validation or not
 
@@ -26,6 +26,10 @@ define(["dojo/_base/declare",
             invalidMessage: "", // to show any invalid messages
 
             missingMessage:"", // to show a message when this field is mandatory
+
+            searchDelay : null, //Delay after user types in
+
+            queryExpr: "*${0}*",
 
             /** Properties End **/
 
@@ -51,7 +55,7 @@ define(["dojo/_base/declare",
              */
 
             _startSearchFromInput: function(){
-                if ((this.focusNode.value.length < this.minKeyCount)) {
+                if ((dojo.trim(this.focusNode.value.replace(" ","")).length < this.minKeyCount)) {
                     this.closeDropDown();
                     return;
                 }
@@ -77,8 +81,13 @@ define(["dojo/_base/declare",
             _startSearch: function(){
             	var _this = this;
             	_this.inherited(arguments);
-            	_this.attachScrollPanel();
 
+            },
+
+            _showResultList: function(){
+            	var _this = this;
+            	_this.inherited(arguments);
+            	_this.attachScrollPanel();
             },
 
             /*
@@ -87,15 +96,16 @@ define(["dojo/_base/declare",
 
             attachScrollPanel: function(){
             	var _this = this;
-            	setTimeout(function(){
-            		if(_this.dropDown._started == undefined || query(".dijitMenuItem",_this.dropDown.domNode).length < 3){
+            	//setTimeout(function(){
+            		if(_this._started == undefined && query(".dijitMenuItem",_this.dropDown.domNode).length < 3){
             			return
             		};
-        			_this.addScrollerPanel(_this.dropDown.domNode.parentNode);
-        			_this.scrollPanels[0].updateScrollerPosition(0);
-        			_this.adjustHeight();
-        			_this.scrollPanels[0].update();
-            	},100)
+        				_this.addScrollerPanel(_this.dropDown.domNode.parentNode)
+        				_this.scrollPanels[0].updateScrollerPosition(0);
+            			_this.adjustHeight();
+            			_this.scrollPanels[0].update();
+
+            	//},570)
 
             },
 
@@ -106,10 +116,21 @@ define(["dojo/_base/declare",
             adjustHeight: function(){
             	var _this = this;
             	var viewPortHeight = domGeometry.position(query(".viewport",_this.dropDown.domNode.parentNode.parentNode)[0]).h;
-            	var dijitPopupHeight = domGeometry.position(query(".dijitComboBoxMenu",_this.dropDown.domNode.parentNode.parentNode)[0]).h;
+            	//var dijitPopupHeight = domGeometry.position(query(".dijitComboBoxMenu",_this.dropDown.domNode.parentNode.parentNode)[0]).h;
+            	var dijitPopupItemLength = query(".dijitReset.dijitMenuItem",_this.dropDown.domNode.parentNode.parentNode).length;
+
+            	var dijitMenuItemHeight = domGeometry.position(query(".dijitReset.dijitMenuItem",_this.dropDown.domNode.parentNode.parentNode)[0]).h
+            	var dijitPopupHeight;
+            	if(dijitPopupItemLength > 2 ){
+            		dijitPopupHeight = dijitPopupItemLength * dijitMenuItemHeight;
+            		dojo.style(_this.dropDown.containerNode,"height",dijitPopupHeight + 'px');
+            	} else {
+            		dijitPopupHeight = domGeometry.position(query(".dijitComboBoxMenu",_this.dropDown.domNode.parentNode.parentNode)[0]).h;
+            	}
             	console.log(viewPortHeight,dijitPopupHeight);
             	if(dijitPopupHeight < viewPortHeight || viewPortHeight < dijitPopupHeight){
             		query(".viewport",_this.dropDown.domNode.parentNode.parentNode).style("height",dijitPopupHeight+"px");
+            		if(dijitPopupHeight < 375 && dojo.isIE > 7) query(".track",_this.dropDown.domNode.parentNode.parentNode).style("display","none");
             	} else if(dijitPopupHeight > 200){
             		query(".viewport",_this.dropDown.domNode.parentNode.parentNode).style("height","200px");
             	}

@@ -1,10 +1,10 @@
-define([
+define("tui/widget/pagination/Pagination",[
   "dojo/_base/declare",
   "dojo/_base/lang",
   "dojo/Evented",
   "dojo/dom-attr",
   "dojo/dom-class",
-  "dojo/i18n!js/tui//widget/pagination/nls/Pagination.js",
+  "dojo/i18n!../js/tui/widget/pagination/nls/Pagination.js",
   "dojo/on",
   "dojo/query",
   "dojo/text!./templates/Pagination.html",
@@ -116,10 +116,10 @@ define([
         this._helipText = '';
         this._totalMiddlePages = (2 * this.pagesPerSide) + 1;
         this._helipText = i18n.pagination.helip || "";
-        this.currentResultStart = this.currentPage * this.resultsPerPage;
+        this.currentResultStart = (this.currentPage-1) * this.resultsPerPage;
         this.currentResultEnd = this.currentResultStart + this.resultsPerPage;
         // if pagination is necessary
-        if (this.resultsPerPage && (this.totalResults > this.resultsPerPage)) {
+        if (this.resultsPerPage) { //&& (this.totalResults > this.resultsPerPage)
           // determine offset links
           if (this.currentPage) {
             this._currentIndex = parseInt(this.currentPage, 10);

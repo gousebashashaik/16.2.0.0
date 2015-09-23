@@ -4,37 +4,36 @@
     </div>
     <div class="content tui-theme">
 
-        <span class="select-duration">
-		<span data-dojo-type="dijit.form.RadioButton" class="radio" id="radioOne" value="Within 7 days"> </span>
-        <label for="radioOne" class="per-radio labelHover">Within 7 days</label>
+        <span class="select-duration"  analytics-id="COM_FO_DEALS_SEARCH" analytics-instance="1" analytics-text="FO_SevenDays">
+		<span data-dojo-type="dijit.form.RadioButton" class="radio" id="sevenDays" value="7"> </span>
+        <label for="sevenDays" class="per-radio labelHover">Within 7 days</label>
         </span>
-        <span class="select-duration">
-		<span data-dojo-type="dijit.form.RadioButton" class="radio" id="radioTwo" value="Within 2 weeks"> </span>
-        <label for="radioTwo" class="per-radio labelHover">Within 2 weeks</label>
+        <span class="select-duration" analytics-id="COM_FO_DEALS_SEARCH" analytics-instance="1" analytics-text="FO_TwoWeeks">
+		<span data-dojo-type="dijit.form.RadioButton" class="radio" id="twoWeeks" value="14" > </span>
+        <label for="twoWeeks" class="per-radio labelHover">Within 2 weeks</label>
         </span>
-        <span class="select-duration">
-		<span data-dojo-type="dijit.form.RadioButton" class="radio" id="radioThree" value="Within 6 weeks"> </span>
-        <label for="radioThree" class="per-radio labelHover">Within 6 weeks</label>
+        <span class="select-duration"  analytics-id="COM_FO_DEALS_SEARCH" analytics-instance="1" analytics-text="FO_SixWeeks">
+		<span data-dojo-type="dijit.form.RadioButton" class="radio" id="sixWeeks" value="43"> </span>
+        <label for="sixWeeks" class="per-radio labelHover">Within 6 weeks</label>
         </span>
-        <span class="select-duration">
-		<span data-dojo-type="dijit.form.RadioButton" class="radio" id="radioFour" value="Within 3 months"> </span>
-        <label for="radioFour" class="per-radio labelHover">Within 3 months</label>
+        <span class="select-duration" analytics-id="COM_FO_DEALS_SEARCH" analytics-instance="1" analytics-text="FO_ThreeMonths">
+		<span data-dojo-type="dijit.form.RadioButton" class="radio" id="threeMonths" value="93" > </span>
+        <label for="threeMonths" class="per-radio labelHover">Within 3 months</label>
         </span>
-        <div class="horizantal-line"></div>
     </div>
+    <div class="horizantal-line"></div>
     <div class="content2 tui-theme">
         <div class="title-bar">
             <h3>OR SELECT A MONTH</h3>
         </div>
         <div class="flexible">
-            <select id="monthSelect" name="monthSelect" class="dropdown totalAdults" tabindex="0" data-dojo-type="tui.widget.form.SelectOption">
-                <option> </option>
-            </select>
+            <select id="monthSelect" name="monthSelect" class="dropdown" tabindex="0" data-dojo-type="tui.widget.form.SelectOption"  analytics-id="COM_FO_DEALS_SEARCH" analytics-instance="1" analytics-text="FO_MonthSelect">
+                <option value="" selected="selected">Please Select</option>
+			</select>
             <span class="oneWay-Checkbox">
-		<span data-dojo-type="dijit.form.CheckBox"  id="flexible"> </span>
-            <label for="flexible" class="labelHover">Flexible by +/- 1 month</label>
+				<span data-dojo-type="dijit.form.CheckBox" disabled id="flexible" analytics-id="COM_FO_DEALS_SEARCH" analytics-instance="1" analytics-text="FO_Month_Flexible"> </span>
+            	<label for="flexible" class="labelHover">Flexible by +/- 1 month</label>
             </span>
         </div>
     </div>
-</div>
 </div>

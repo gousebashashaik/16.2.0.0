@@ -1,0 +1,25 @@
+<div class="tui-theme">
+		<div class="searchPaneComp flyfrom">
+			<label for="flyFrom">FLYING FROM</label>
+			<div id="timeTableFlyFrom" data-dojo-type="tui.flights.timetable.TimeTableFlyFromAutoSuggest" tabindex=0></div>
+		</div>
+		<div class="searchPaneComp flyto">
+			<label for="flyTo">FLYING TO</label>
+			<div id="timeTableFlyTo" data-dojo-type="tui.flights.timetable.TimeTableFlyToAutoSuggest" tabindex=0></div>
+		</div>
+		<div class="searchPaneComp">
+			<label for="whenTimeTable">WHEN</label>
+			<select id="whenTimeTable" class="select dropdown" data-dojo-type="tui.widget.form.SelectOption" tabindex=0>
+				<option value="ps" disabled>Select a month</option>
+			</select>
+			<!-- <div class="auto-comp-items">
+				<div class="inputholders">
+					<input id="whenCal" placeholder="Select a Month" data-dojo-type="tui.flights.widget.MonthPullDown" readonly/>
+					<img id="month-pull-down-arrow" src="images/dd_arrow.png" /></div>
+			</div> -->
+		</div>
+		<div class="searchPaneComp viewBtn" >
+				<div data-dojo-type="tui.flights.utils.FlightTimeTableViewButton"></div>
+		</div>
+		<div style="clear:both"></div>
+</div>

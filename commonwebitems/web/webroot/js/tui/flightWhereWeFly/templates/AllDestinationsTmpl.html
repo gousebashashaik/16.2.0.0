@@ -1,0 +1,20 @@
+ <ul id="verticalScrollContent">
+			<li class="alldestinations active">
+				<a href="#" onclick="return false;">All {{continentName}}</a>
+			</li>
+ {% if airportData %}
+ 	{% for country in airportData %}
+		<li class="destinations" id="{{country.name}}" data-longitude="{{country.longitude}}" data-latitude="{{country.latitude}}"><a href="#" onclick="return false;">{{country.name}}</a>
+			<ul>
+				{% for airport in country.airports %}
+					<li>
+						<a href="#" class="chkOpenToggle" id={{airport.code}} data-longitude="{{airport.longitude}}" data-latitude="{{airport.latitude}}" data-airport-code="{{airport.code}}" onclick="return false;">
+							{{airport.name}} ({{airport.code}})
+						</a>
+					</li>
+				{% endfor %}
+			</ul>
+		</li>
+	{% endfor %}
+{% endif %}
+</ul>

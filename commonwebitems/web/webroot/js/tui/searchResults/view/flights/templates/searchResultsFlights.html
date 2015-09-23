@@ -1,5 +1,5 @@
 {% if itineraries %}
-<div id="resultinfoCnt" class="pp"  analytics-id={{componentId}} analytics-instance="1" analytics-text="Individual Results">	
+<div id="resultinfoCnt" class="pp"  analytics-id={{componentId}} analytics-instance="1" analytics-text="Individual Results">
 	<!-- result col Start-->
 	{% if itineraries.length > 0 %}
 	<div class="result-header">
@@ -8,10 +8,10 @@
 	{% else %}
 	<div class="flightCount_cnt">We've found <span class="flightCount">{{itineraries.length}}</span> flight on the selected date</div>
 	{% endif %}
-	<div class="toggle-slide_sliderCtn" analytics-id="{{componentId}}">		
+	<div class="toggle-slide_sliderCtn" analytics-id="{{componentId}}">
 		 <div class="budget-view toggle-group" data-dojo-type="tui.searchResults.view.PriceToggle" data-dojo-props='priceView:"pp"'>
            <label class="toggle-label left js-budget-view-total active" for="budget-view-total" data-label="total" data-target="pp" analytics-id="{{componentId}}" analytics-instance="1" analytics-text="TotalPriceToggle">Total Price</label>
-           <div class="toggle-slide toggle-slide-alt pp" data-value="pp">
+           <div class="toggle-slide toggle-slide-alt pp" data-value="pp" analytics-id="{{componentId}}" analytics-instance="1" analytics-text="Maintoggle">
                <input type="radio" name="budget-view" value="total" id="budget-view-total" checked />
                <input type="radio" name="budget-view" value="pp" id="budget-view-pp" />
                <a class="toggle-button off" href="javascript:void(0);" analytics-id="{{componentId}}" analytics-instance="1" analytics-text="Maintoggle"><i class="icon icon-handle">||</i></a>
@@ -27,35 +27,35 @@
         	<!-- Items starts-->
         	<ul class="items">
         		<!-- Item 1 -->
-        		
+
         		<li  analytics-id="{{componentId}}"  analytics-instance="1" analytics-text="Individual Flight Results">
-                    <div class="flight-col1"  analytics-id="{{componentId}}" analytics-instance="1" analytics-text="Individual Flight  Details">                            
-                    	<span class="flightNumber"><img class = "fnimg" src="./images/corner.png" />{{itinerary.outbound.flightno}}</span>       
+                    <div class="flight-col1"  analytics-id="{{componentId}}" analytics-instance="1" analytics-text="Individual Flight  Details">
+                    	<span class="flightNumber"><img class = "fnimg" src="{{contextpath}}/images/corner.png" />{{itinerary.outbound.flightno}}</span>
                          <ul class="flightResultlist">
 							<li class="icon flightdeptIcon">&nbsp;</li>
 							<li class="flightdeptTxt">{{itinerary.outbound.departureAirport.name}} <span>({{itinerary.outbound.departureAirport.code}})</span></li>
 							<li class="icon arrowbig">&nbsp;</li>
 							<li class="flightarrTxt">{{itinerary.outbound.arrivalAirport.name}}  <span>({{itinerary.outbound.arrivalAirport.code}})</span></li>
-							<li class="flightdptarrDate">{{itinerary.outbound.schedule.depObj.day}}  <span>{{itinerary.outbound.schedule.depObj.date}} </span> {{itinerary.outbound.schedule.depObj.month}} </li>
+							<li class="flightdptarrDate">{{itinerary.outbound.depObj.day}}  <span>{{itinerary.outbound.depObj.date}} </span> {{itinerary.outbound.depObj.month}} </li>
 							<li class="flightdpttime">
 								<div class="timetxt"> {{itinerary.outbound.schedule.departureTime}} <span class="icon arrowsml">&nbsp;</span>{{itinerary.outbound.schedule.arrivalTime}}</div>
 								{% ifnotequal itinerary.outbound.journeyDays 0 %}
 									<div class="durationStyle">(Arrives +{{itinerary.outbound.journeyDays}} day)</div>
 								{% endifnotequal %}
-								
+
 								<div class="durationStyle">Direct: {{itinerary.outbound.journeyDuration}}</div>
 							</li>
 						 </ul>
 						 <div class="bt-border">&nbsp;</div>
-				
+
 					{% if itinerary.inbound.departureAirport  %}
-						<span class="flightNumber"><img class = "fnimg" src="./images/corner.png" />{{itinerary.inbound.flightno}}</span>
+						<span class="flightNumber"><img class = "fnimg" src="{{contextpath}}/images/corner.png" />{{itinerary.inbound.flightno}}</span>
 						<ul class="flightResultlist inbound">
 							<li class="icon flightarrivalIcon">&nbsp;</li>
 							<li class="flightdeptTxt">{{itinerary.inbound.departureAirport.name}} <span>({{itinerary.inbound.departureAirport.code}})</span></li>
 							<li class="icon arrowbig">&nbsp;</li>
 							<li class="flightarrTxt">{{itinerary.inbound.arrivalAirport.name}}  <span>({{itinerary.inbound.arrivalAirport.code}})</span></li>
-							<li class="flightdptarrDate">{{itinerary.inbound.schedule.depObj.day}}  <span>{{itinerary.inbound.schedule.depObj.date}} </span> {{itinerary.inbound.schedule.depObj.month}} </li>
+							<li class="flightdptarrDate">{{itinerary.inbound.depObj.day}}  <span>{{itinerary.inbound.depObj.date}} </span> {{itinerary.inbound.depObj.month}} </li>
 							<li class="flightdpttime">
 								<div class="timetxt"> {{itinerary.inbound.schedule.departureTime}} <span class="icon arrowsml">&nbsp;</span>{{itinerary.inbound.schedule.arrivalTime}}</div>
 								{% ifnotequal itinerary.inbound.journeyDays 0 %}
@@ -63,11 +63,11 @@
 								{% endifnotequal %}
 								<div class="durationStyle">Direct: {{itinerary.inbound.journeyDuration}}</div>
 							</li>
-						 </ul>	
+						 </ul>
 						 {% else %}
 						 <ul class="flightResultlist">
 						 	<li class="oneWayCnt">One way only </li>
-						 </ul>					 				
+						 </ul>
 					{% endif %}
 					 	{% if itinerary.dreamliner %}
 						 <ul class="dreamlinerStyle" analytics-id="{{componentId}}" analytics-instance="1" analytics-text="Individual Flights dreamliner">
@@ -76,41 +76,41 @@
 						 	<span data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="tooltipTitle: '{{dreamliner.contentValue.extra_detail_1}}',list: '<li>{{dreamliner.contentValue.usp1}}</li><li>{{dreamliner.contentValue.usp2}}</li><li>{{dreamliner.contentValue.usp3}}</li><li>{{dreamliner.contentValue.usp4}}</li><li>{{dreamliner.contentValue.usp5}}</li><li>{{dreamliner.contentValue.usp6}}</li><li>{{dreamliner.contentValue.usp7}}</li>' , listClass:'bullets ', width: 'jumbo'">THOMSON {{dreamliner.contentValue.display_name}}</span>
 						  </ul>
 						 {% endif %}
-					
+
                     </div>
-                   
-					
-					<div class="price-col1"  analytics-id="{{componentId}}" analytics-instance="1" analytics-text="Individual Flight Price Details">   
-						<div class="bt-border">                    
+
+
+					<div class="price-col1"  analytics-id="{{componentId}}" analytics-instance="1" analytics-text="Individual Flight Price Details">
+						<div class="bt-border">
 							<div class="price">
-									<span class="txt_bold">{{currency}}</span><span class="price-value total-price">{{itinerary.price|floatformat:2}}</span><span class="price-value pp-price"> {{itinerary.pricePP|floatformat:2}} </span>                                
+									<span class="txt_bold">{{currency}}</span><span class="price-value total-price">{{itinerary.price|floatformat:2}}</span><span class="price-value pp-price"> {{itinerary.pricePP|floatformat:2}} </span>
 							</div>
 							<!-- <span class="info-block" lang="en" data-dojo-props="text: 'Per person price = total party price divided by number of adults &amp;amp; children (excluding infants)'" data-dojo-type="tui.searchResults.view.Tooltips" > -->
 							<div class="ppStyleCnt">
-								<span class="ppStyle pp-price"><span data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: 'Per person price = total party price divided by number of adults & children(excluding infants)' ">Per person </span></span>
+								<span class="ppStyle pp-price"><span data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '<span class=availabelStyle>Per person price = total party price divided by number of adults & children(excluding infants).</span>',className:'perPerson-tooltip' ">Per person </span></span>
 								<span class=" pp-price"><span>{{currency}}</span>{{itinerary.price|floatformat:2}} Total</span>
 								<span class="ppStyle total-price"  >Total Price</span>
 								<span class="total-price"><span>{{currency}}</span>{{itinerary.pricePP|floatformat:2}} pp</span>
 							</div>
 						 </div>
-						 
-						 <div class="bt-border discountCnt"> 
-						 <span class="l-border"></span> 
-						 		{% ifnotequal itinerary.discount 0 %} 
+
+						 <div class="bt-border discountCnt">
+						 <span class="l-border"></span>
+						 		{% ifnotequal itinerary.discount 0 %}
 									<span class="discount" >
 									<span class="circle bgred">{{currency}}</span> Includes <span>{{currency}}</span><span class="total-discount">{{itinerary.discount}}</span><span class="pp-discount">{{itinerary.discountPP}}pp</span>
 									 discount</span>
-								{% endifnotequal %}	 
+								{% endifnotequal %}
 								<span class="discount charges"><span class="circle">%</span> Includes taxes and charges</span>
-							
+
 								{% if itinerary.limAvail %}
 								<span class="discount left">
-									<span class="circle">!</span> <span data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '<span class=availabelStyle>This shows how many of the seat type are available for your flights at the moment. There may be more of the seat type available for different flight dates and combinations. We may also occasionally put more seats on sale at a later date.</span>',width: 'jumbo' "><span class= "bottom">Only {{ itinerary.minAvail}} seats left</span></span>	 
+									<span class="circle">!</span> <span data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="text: '<span class=availabelStyle>This shows how many of the seat type are available for your flights at the moment. There may be more of the seat type available for different flight dates and combinations. We may also occasionally put more seats on sale at a later date.</span>',width: 'jumbo' "><span class= "bottom">Only {{ itinerary.minAvail}} seats left</span></span>
 								{% else %}
 								<span class="discount displayNone">
 									<span class="circle">!</span> <span class= "bottom">Only {{ itinerary.minAvail}} seats left
-								</span> 
-								{% endif %} 
+								</span>
+								{% endif %}
 								</span>
 							</span>
 							<span class="lb-border"></span>
@@ -126,11 +126,11 @@
 						 		&nbsp;
 						 	</div>
 						 {% endif %}
-						 	
+
                     </div>
         		</li>
         		<!-- Item 1 ends-->
-        		
+
         	</ul>
         	<!-- Items ends-->
 
@@ -138,12 +138,11 @@
 	<!-- result col Start-->
 {% endfor %}
 		{%if noResultFlag %}
-			<div class="search-result-items noFlightStyle">			               
+			<div class="search-result-items noFlightStyle">
 	        			<div class="icon flightdeptIcon">&nbsp;</div>
-	        			<div class="noresultInfo"> Sorry, there are no flights  for your selected date. <br/> Please choose one of the alternative flights shown above. </div>	        		
-		        	
+	        			<div class="noresultInfo"> Sorry, there are no flights  for your selected date. <br/> Please choose one of the alternative flights shown above. </div>
+
 			</div>
 		{% endif %}
 {% endif %}
 
- 

@@ -15,29 +15,30 @@ define("tui/flights/utils/ReverseAirportsLinkUtil", [
   "tui/flights/view/FlightActions",
   'tui/flights/view/FlightsMonthBar',
   "tui/flights/widget/MonthPullDown",
-  "tui/widget/_TuiBaseWidget"], function (dojo, reverseLinkTMPL, query, domConstruct, domStyle, on, keys, ready, domClass, domGeom, html, lang, flightTimetableValidations, flightActions, flightMonthBar, monthPullDown) {
+  "dijit/registry",
+  "tui/widget/_TuiBaseWidget"], function (dojo, reverseLinkTMPL, query, domConstruct, domStyle, on, keys, ready, domClass, domGeom, html, lang, flightTimetableValidations, flightActions, flightMonthBar, monthPullDown,registry) {
   dojo.declare("tui.flights.utils.ReverseAirportsLinkUtil", [tui.widget._TuiBaseWidget, tui.widget.mixins.Templatable], {
-	  
+
 	  tmpl: reverseLinkTMPL,
 	  reverseAirportLink : 0,
 	  errorMsg : "This field cannot be left blank",
-	  
+
 	  constructor: function(){
 	  //console.clear();
 	  		var reverseAirportsLinkUtil = this;
 	  		reverseAirportsLinkUtil.inherited(arguments);
   	  },
-  	  
+
   	  postCreate: function(){
   		var reverseAirportsLinkUtil = this;
   		reverseAirportsLinkUtil.inherited(arguments);
-  		
-  		
+
+
   		reverseAirportsLinkUtil.domNode.innerHTML = reverseAirportsLinkUtil.render();
-  		
+
   		query(reverseAirportsLinkUtil.domNode).on("click", function(){
-  			
-  	/*		
+
+  	/*
   				var flyingFromObj = new flightTimetableValidations({
   					attachId:"#flying-from",
   					dynaId: "flyingFrom",
@@ -60,63 +61,57 @@ define("tui/flights/utils/ReverseAirportsLinkUtil", [
   				if(flyingFromObj.validated === false || flyingToObj.validated === false || monthPullDownObj.validated === false){
   					return false;
   				}else{
-  					
+
   					flightTimetableViewButton.changeHdrLabels();
   				}*/
-  			var mpD = new monthPullDown();
-  			mpD.generateMonthPullDownData();
-  			
+
+
   			reverseAirportsLinkUtil.changeHdrLabels();
-  			
+
   		});
   	  },
-  	  
-  	  changeHdrLabels: function(){
-  		  
-  		  /*var fromAir = query("#from-airport")[0];
-  		  var toAir = query("#to-airport")[0];*/
-   			
-  		   var toAir;
-		  var fromAir;
-		  if(this.reverseAirportLink%2 == 0){
-			   toAir = query("#from-airport")[0];
-			   fromAir = query("#to-airport")[0];
-		  }
-		  else{
-			 fromAir = query("#from-airport")[0];
-	  		 toAir = query("#to-airport")[0];
-		  }
 
-		  this.reverseAirportLink++;
-  		  
-  		  query(fromAir).text(""); query(toAir).text("");	
-  		  query(fromAir).text(query("#flying-from")[0].value);
-  		  query(toAir).text(query("#flying-to")[0].value);
-  		  
+  	  changeHdrLabels: function(){
+
+  		var toAir, fromAir,fromAirport,toAirport,fromAirportName,toAirportName,mpD;
+		 fromAir = query("#from-airport")[0];
+		 toAir = query("#to-airport")[0];
+		 fromAirportName = fromAir.textContent;
+		 toAirportName = toAir.textContent;
+ 		 query(fromAir).text(toAirportName);
+		 query(toAir).text(fromAirportName);
+
+		 flyAiport = fromAirportName.split("(")[1].split(")")[0];
+		 toAirport = toAirportName.split("(")[1].split(")")[0];
+
+
+		 	var mpD = new monthPullDown();
+			mpD.generateMonthPullDownData(flyAiport,toAirport);
+
   		  domStyle.set(query(".flight-results")[0], {
   			  display:"block"
   		  });
-  		  
-  		  query(".monthSelector")[0].innerHTML = "";
+
+  		  query(".timeTableMonthSelector")[0].innerHTML = "";
   		  query(".spacer-center")[0].innerHTML = "";
-  	
-  		  
-  		 var fa = new flightActions();
-		 fa.showSearchBox();
-  		  
+
+
+  		// var fa = new flightActions();
+		// fa.showSearchBox();
+
   		  /*call json here*/
   	  },
-  	  
+
   	  callJson: function(){
-  		  
+
   	  },
-  	  
+
   	  render: function(){
   		  var reverseAirportsLinkUtil = this;
 		  var html = reverseAirportsLinkUtil.renderTmpl(reverseAirportsLinkUtil.tmpl);
 		  return html;
   	  }
   });
-  
+
   	return tui.flights.utils.ReverseAirportsLinkUtil;
   });

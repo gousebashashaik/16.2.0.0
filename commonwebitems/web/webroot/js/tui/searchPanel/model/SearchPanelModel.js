@@ -43,7 +43,7 @@ define("tui/searchPanel/model/SearchPanelModel", [
     // search has valid route (boolean)
     validRoute: true,
 
-   // searchType (search or smerch) 
+   // searchType (search or smerch)
     searchType : "search",
 
     // reference for saved search object
@@ -134,14 +134,14 @@ define("tui/searchPanel/model/SearchPanelModel", [
           emptyFromTo: searchPanelModel.searchMessaging[dojoConfig.site].errors.emptyFromTo
         });
       }
-		else{								
-			// validate that only from field is not empty.	
+		else{
+			// validate that only from field is not empty.
 			if(searchPanelModel.searchApi === "searchPanel"){
-		     if (searchPanelModel.from.data.length === 0) {							
+		     if (searchPanelModel.from.data.length === 0) {
 				searchPanelModel.searchErrorMessages.set("from", {
 					emptyFrom: searchPanelModel.searchMessaging[dojoConfig.site].errors.emptyFrom
-				});				
-			  }	
+				});
+			  }
 			}
 	   }
 
@@ -232,13 +232,13 @@ define("tui/searchPanel/model/SearchPanelModel", [
       var searchPanelModel = this;
       if(dojo.query("select#howLong").length){
       if( !dojo.query("select#howLong option[value='"+ searchPanelModel.duration +"']").length ){
-			
+
     	   	var searchKey = dojoConfig.site+"/search/main";
-    	    var jsnObj = localStorage[searchKey] ? JSON.parse(localStorage[searchKey]) : null;    	  
-			
+    	    var jsnObj = localStorage[searchKey] ? JSON.parse(localStorage[searchKey]) : null;
+
 			var select = dojo.query("select[name='howLong']")[0];
 			if(!jsnObj || jsnObj.duration !=  select.options[select.selectedIndex].value ){
-				
+
 				searchPanelModel.duration = select.options[select.selectedIndex].value;
 			}else{
 				searchPanelModel.duration = jsnObj.duration;

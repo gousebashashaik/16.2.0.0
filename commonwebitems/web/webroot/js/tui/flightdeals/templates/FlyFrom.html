@@ -1,18 +1,32 @@
 <div>
 	<h3>PLEASE SELECT ONE OR MORE AIRPORTS</h3>
 	<span class="anyAirport">
-	<span data-dojo-type="dijit.form.CheckBox" class="anyAirport" id="anyAirport" value="anyAirport"> </span>
-	<label for="anyAirport" class="labelHover">ANY AIRPORT</label>
+	<span data-dojo-type="dijit.form.CheckBox" class="anyUKAirport" id="anyUKAirport" value="anyUKAirport"
+	{% if dealsPanelModel.flyFromAllAirports %}
+     	checked=checked
+    {% endif %}
+	> </span>
+	<label for="anyUKAirport" class="labelHover">ANY AIRPORT</label>
 	</span>
 	<div class="horizantal-line"></div>
 	<div class="col">
 		<ul>
- 			{% for airport in ukairportList %} 
+ 			{% for airport in ukairportList %}
 		 		<li>
 		 	 		{% ifequal airport.cFlag true%}
+
              			<span class="grpHeading">
-             			<span data-dojo-type="dijit.form.CheckBox" class="{{ airport.group[0].id}}" id="{{ airport.countryName }}" value="anyUk"></span>
-             			<label for="{{ airport.countryName }}" class="labelHover">{{ airport.countryName }}(ANY)</label>
+             			<span data-dojo-type="dijit.form.CheckBox" data-countryCode="{{airport.group[0].id}}" class="{{ airport.group[0].id}}" id="{{ airport.countryNameId}}" value="{{ airport.countryName }}"
+             			    {% for fromAirport in dealsPanelModel.fromAirportGpName %}
+                         			{% ifequal fromAirport airport.countryName %}
+                         		  		checked=checked
+                         			{% endifequal %}
+                    		{% endfor %}
+             			></span>
+             			<label for="{{ airport.countryNameId}}"  class="labelHover
+             			 {% for fromAirport in dealsPanelModel.fromAirportGpName %}
+	                     	{% ifequal fromAirport airport.countryName %}selected {% endifequal %}
+                    	 {% endfor %}"> {% ifequal airport.showAny true%}ANY {% endifequal %} {{ airport.countryName }} </label>
              			</span>
              		{% endifequal %}
              			<span class="childCountry">
@@ -22,21 +36,38 @@
 	                         data-airportmodel-groups="{{airport.group}}"
 	                         data-airportmodel-countryCode="{{airport.countryCode}}"
 	                         name="{{ airport.group[0].id}}"
-	                         id="{{airport.id}}"
+	                         id="{{airport.ids}}"
 	                         value="{{airport.id}}"
-	                         class="{{airport.id}} labelHover {{ airport.group[0].id }}" 
-	                         {% if not airport.available %} disabled {% endif %}  />
-	                         <label for="{{airport.id}}" class=" "> {{airport.name}} ({{airport.id}})</label>
+	                         title= "{{airport.name}}"
+	                         class="{{airport.id}} {{ airport.group[0].id }}"
+	                         {% if not airport.available %} disabled {% endif %}
+	                         {% for fromAirport in dealsPanelModel.fromAirports %}
+								{% if fromAirport.length > 0 %}
+                         			{% ifequal fromAirport airport.id %}
+                         		  		checked=checked
+                         			{% endifequal %}
+                        		{% endif %}
+                    		{% endfor %}
+	                          />
+
+	                      <label for="{{airport.ids}}" class="{% if not airport.available %}disabled {% endif %} labelHover
+	                      		 {% for fromAirport in dealsPanelModel.fromAirports %}
+	                      		 	{% if fromAirport.length > 0 %}
+	                      		 		{% ifequal fromAirport airport.id %}selected {% endifequal %}
+	                      		 	{% endif %}
+                    			{% endfor %}"
+                    			> {{airport.name}} ({{airport.id}})</label>
+
                          </span>
-		 		</li>   
+		 		</li>
 		 	   		{% ifequal airport.nextCol true %}
            			 {% if not forloop.last   %}
           </ul>
        </div>
        	<div class="col">
           <ul>
-           			 {% endif %} 
-               		{% endifequal %}         
+           			 {% endif %}
+               		{% endifequal %}
         	{% endfor %}
           </ul>
        	</div>

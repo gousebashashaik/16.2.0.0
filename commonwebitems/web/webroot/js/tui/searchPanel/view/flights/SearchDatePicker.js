@@ -128,6 +128,7 @@ define("tui/searchPanel/view/flights/SearchDatePicker", [
 
       searchDatePicker.tagElement(searchDatePicker.domNode, "Dep-Date");
       dojo.global.isWhenErrorMessageNew=true;
+      dojo.global.seasonLength = searchDatePicker.seasonLength //For easy reference in other controllers and to avoid http request.
     },
 
     seasonDateFormat : function(){

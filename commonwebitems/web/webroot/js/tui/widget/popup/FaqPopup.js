@@ -3,7 +3,8 @@ define('tui/widget/popup/FaqPopup', [
     "dojo/query",
     "dojo/parser",
     "dojo/dom-style",
-    'tui/widget/popup/Popup'], function(dojo, query, parser, domStyle) {
+    "dojo/html",
+    'tui/widget/popup/Popup'], function(dojo, query, parser, domStyle,html) {
     dojo.declare('tui.widget.popup.FaqPopup', [tui.widget.popup.Popup], {
 
         // ----------------------------------------------------------------------------- properties
@@ -27,7 +28,8 @@ define('tui/widget/popup/FaqPopup', [
 		                dojo.xhrGet({
 		                		url: FaqPopup.href,
 		                		load: function(tmplStr){
-		                			var body = dojo.create("html", {innerHTML: tmplStr}).children[1];
+		                				var body = dojo.create("html");
+		                			html.set(body, tmplStr).children[1];
 		                			//var context= '<div class="popup modal-window remote-content">' + body.innerHTML + '<a href="javascript:void(0);" class="close sprite-img-grp-1">Close</a>'+'</div>'
 									var context= '<div class="popup modal-window remote-content faq-popupclose">' + body.innerHTML + '<a href="javascript:void(0);" class="close sprite-img-grp-1">Close</a>'+'</div>'
 		                			FaqPopup.tmpl = context;  

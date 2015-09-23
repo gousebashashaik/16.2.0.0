@@ -12,24 +12,27 @@ define("tui/searchResults/view/flights/FlightSearchResultController", [
 	  "dojo/parser",
 	  "dojo/dom-construct",
 	  "dojo/text!tui/searchResults/view/flights/templates/searchResultsGrid.html",
-	  "dojo/text!tui/searchResults/view/flights/templates/searchResultsFlights.html",
 	  "tui/search/store/SearchPanelMemory",
 	  "tui/searchPanel/model/flights/SearchPanelModel",
 	  "tui/searchPanel/model/AirportModel",
 	  "tui/searchPanel/model/DestinationModel",
 	  "tui/utils/LocalStorage",
 	  "dojo/_base/json",
+	  "tui/searchResults/view/flights/FlightTabNavigation",
+	  "tui/searchResults/view/flights/SelectedFlightDetails",
+	  "tui/searchResults/view/flights/SearchResultNextPreviousCalls",
+	  "tui/searchResults/view/flights/SearchResultCellActions",
 	  "tui/search/nls/Searchi18nable",
 	  "tui/mvc/Controller",
 	  "tui/widget/mixins/Templatable",
 	  "tui/widget/_TuiBaseWidget",
 	  "dojo/NodeList-traverse",
 	  "tui/searchResults/view/Tooltips",
-	  "tui/searchResults/view/PriceToggle"
-	  ], function (dojo, has, on, query, topic, connect, lang, domAttr, ioQuery, domClass, parser, domConstruct,searchResultsGridTmpl,searchResultsFlightsTmpl ,SearchPanelMemory, SearchPanelModel, AirportModel,DestinationModel, localStorage, json) {
+	  "tui/searchResults/view/PriceToggle",
+	  "tui/widget/taggable/Navigation"
+	  ], function (dojo, has, on, query, topic, connect, lang, domAttr, ioQuery, domClass, parser, domConstruct,searchResultsGridTmpl,SearchPanelMemory, SearchPanelModel, AirportModel,DestinationModel, localStorage, json , FlightTabNavigation, SelectedFlightDetails, SearchResultNextPreviousCalls, SearchResultCellActions) {
 
-
-	dojo.declare("tui.searchResults.view.flights.FlightSearchResultController", [tui.widget._TuiBaseWidget, tui.widget.mixins.Templatable, tui.mvc.Controller, tui.search.nls.Searchi18nable], {
+	dojo.declare("tui.searchResults.view.flights.FlightSearchResultController", [tui.widget._TuiBaseWidget, tui.widget.mixins.Templatable, tui.mvc.Controller, tui.search.nls.Searchi18nable, FlightTabNavigation, SelectedFlightDetails, SearchResultNextPreviousCalls, SearchResultCellActions], {
 
 
 		 tmpl: searchResultsGridTmpl,
@@ -86,7 +89,8 @@ define("tui/searchResults/view/flights/FlightSearchResultController", [
 
 		 individualComponentId : "COM_FO_SEARCH_RESULTS_INDIVIDUAL",
 
-		 /******* Properties *******/
+
+		/******* Properties *******/
 		constructor: function () {
 			var searchController = this;
 				searchController.itinerarys =searchController.jsonData.itinerary;
@@ -99,19 +103,25 @@ define("tui/searchResults/view/flights/FlightSearchResultController", [
 
 		postCreate:function(){
 			var searchController = this;
-				searchController.currency = searchController.currency;
+				searchController.inherited(arguments);
 				searchController.reGenerateSavedSearchObject();
+				searchController.searchPanelModel.prePopulateSearchCriteria(searchController.jsonData.flightSearchCriteria);
+				searchController.backtoSearchValidation(searchController.savedSearch.searchCriteriaType);
+				searchController.currency = searchController.currency;
+				searchController.getTabAiports();
 				searchController.itinerarys = searchController.reGenerateItineraryObject(searchController.itinerarys);
 				searchController.itinerarys = _.sortBy(searchController.itinerarys, function(o) { return o.pricePP; });
-				searchController.searchPanelModel.prePopulateSearchCriteria(searchController.jsonData.flightSearchCriteria);
 				searchController.resultsGridStore = new SearchPanelMemory({data: searchController.itinerarys});
 				searchController.createSelectedDatesCalObject();
 				searchController.createCompareCalObject();
 				localStorage.removeItem(searchController.savedCompId);
+				searchController.renderGridTabNavigation();
+				searchController.setActiveTab();
+				searchController.selectPreviousTab(searchController.savedSearch.searchCriteriaType);
 				searchController.renderSearchResults();
-				searchController.renderFllightsResults();
+				searchController.getSelectedFlightDetails()
 				searchController.attachEvents();
-				searchController.inherited(arguments);
+				searchController.tabAttachEvents();
 				searchController.onLazyLoad();
 				searchController.tagElement(searchController.domNode, "PriceGrid");
 				dojo.addOnLoad(function(){
@@ -131,6 +141,7 @@ define("tui/searchResults/view/flights/FlightSearchResultController", [
 		      }, 300);
 		    },
 
+
 		reGenerateSavedSearchObject :  function(){
 			var searchController = this;
 
@@ -145,32 +156,37 @@ define("tui/searchResults/view/flights/FlightSearchResultController", [
 			}
 		},
 
-		reGenerateItineraryObject : function(itinerarys){
+		reGenerateItineraryObject : function(itinerarys, flightDetails){
 			var searchController = this;
 
 				return _.map(lang.clone(itinerarys), function (itinerary, index) {
-					itinerary.showComp = true;
+						itinerary.showComp = true;
 
-					if (itinerary.outbound ) {
-						itinerary.outDepartureDate = searchController.removeHoursFromDateObject(itinerary.outbound.schedule.departureDate);
-			    		itinerary.outbound.schedule.depDate = new Date(itinerary.outbound.schedule.departureDate).toDateString();
-			    		itinerary.outbound.schedule.depObj = searchController.splitDateString(new Date(itinerary.outbound.schedule.departureDate));
+					    if(flightDetails){
+					    	departureDt = itinerary.outbound.schedule.departureDate;
+					    }else{
+					    	departureDt = itinerary.departureDt;
+					    }
 
-			    		itinerary.outbound.schedule.arrDate = new Date(itinerary.outbound.schedule.arrivalDate).toDateString();
-			    		itinerary.outbound.schedule.arrObj = searchController.splitDateString(new Date(itinerary.outbound.schedule.arrivalDate));
+						itinerary.outDepartureDate = searchController.removeHoursFromDateObject(departureDt);
+			    		itinerary.outbound.depDate = new Date(departureDt).toDateString();
+			    		itinerary.outbound.depObj = searchController.splitDateString(new Date(departureDt));
 
-					}
+					    if (!searchController.savedSearch.oneWay) {
 
-				    if (itinerary.inbound) {
-				    		itinerary.inDepartureDate = searchController.removeHoursFromDateObject(itinerary.inbound.schedule.departureDate);
-				    		itinerary.inbound.schedule.depDate = new Date(itinerary.inbound.schedule.departureDate).toDateString();
-				    		itinerary.inbound.schedule.depObj = searchController.splitDateString(new Date(itinerary.inbound.schedule.departureDate));
+					    	 if(flightDetails){
+					    		returnDt = itinerary.inbound.schedule.departureDate;
+							 }else{
+							    returnDt = itinerary.returnDt;
+							    itinerary.inbound=[];
+							 }
 
-				    		itinerary.inbound.schedule.arrDate = new Date(itinerary.inbound.schedule.arrivalDate).toDateString();
-				    		itinerary.inbound.schedule.arrObj = searchController.splitDateString(new Date(itinerary.inbound.schedule.arrivalDate));
+				    		itinerary.inDepartureDate = searchController.removeHoursFromDateObject(returnDt);
+				    		itinerary.inbound.depDate = new Date(returnDt).toDateString();
+				    		itinerary.inbound.depObj = searchController.splitDateString(new Date(returnDt));
+					    }
 
-				    }
-					return itinerary;
+						return itinerary;
 				});
 		},
 
@@ -181,8 +197,9 @@ define("tui/searchResults/view/flights/FlightSearchResultController", [
 		    		return newDate;
 		    },
 
+
 		  removeHoursFromDateObject : function(dateObj){
-		    	var searchController = this,
+		    	var searchController = this,newDt;
 		    		newDt = new Date(dateObj);
 		    		return  new Date(newDt.setHours(0,0,0,0))
 		    },
@@ -331,7 +348,8 @@ define("tui/searchResults/view/flights/FlightSearchResultController", [
 		  },
 
 		splitDateString : function(dt){
-			var obj={},tempdate,
+			var searchController= this,
+				obj={},tempdate,
 				dateObj = dt.toDateString();
 				obj['dateValue'] = dt.valueOf();
 				obj['curDate'] =  dateObj;
@@ -339,6 +357,7 @@ define("tui/searchResults/view/flights/FlightSearchResultController", [
 				obj['month'] = dateObj.substring(4,7);
 				tempdate= dateObj.substring(8,10).replace(/^\s+|\s+$/g, '');
 				obj['date'] = (tempdate.length > 1) ? tempdate : "0"+tempdate;
+				obj['reqFormat'] = searchController.reqDateFormat(dt);
 				return obj
 		},
 
@@ -354,7 +373,7 @@ define("tui/searchResults/view/flights/FlightSearchResultController", [
 				for(var k = 0; k < itinerarys.length; k++){
 					var itinerary = itinerarys[k];
 
-					if(dept.curDate == itinerary.outbound.schedule.depDate){
+					if(dept.curDate == itinerary.outbound.depDate){
 								if(deptObj[i].itinerary ){
 									itinerary = searchController.checkOnewayLowPriceObject(deptObj[i].itinerary ,itinerary);
 									deptObj[i].itinerary.push(itinerary);
@@ -376,7 +395,7 @@ define("tui/searchResults/view/flights/FlightSearchResultController", [
 			 var searchController= this;
 
 			 for(var i =0; i< arrayObj.length; i++ ){
-				 if(arrayObj[i].outbound.schedule.depDate == obj.outbound.schedule.depDate){
+				 if(arrayObj[i].outbound.depDate == obj.outbound.depDate){
 				 	var price1 = parseInt(arrayObj[i].pricePP);
 					var price2 = parseInt(obj.pricePP);
 
@@ -393,9 +412,6 @@ define("tui/searchResults/view/flights/FlightSearchResultController", [
 				 }
 			 }
 
-
-
-
 			 return obj;
 		 },
 
@@ -408,57 +424,56 @@ define("tui/searchResults/view/flights/FlightSearchResultController", [
 				itinerarys = searchController.itinerarys;
 
 
-			for(var i = 0; i < deptObj.length; i++ ){
-				var dept  = deptObj[i];
-				for(var k = 0; k < itinerarys.length; k++){
-					var itinerary = itinerarys[k];
+				for(var i = 0; i < deptObj.length; i++ ){
+					var dept  = deptObj[i];
+					for(var k = 0; k < itinerarys.length; k++){
+						var itinerary = itinerarys[k];
 
-					if(dept.curDate == itinerary.outbound.schedule.depDate){
+						if(dept.curDate == itinerary.outbound.depDate){
 
-						for(var j = 0; j<retunObj.length; j++ ){
-							var retun = retunObj[j];
+							for(var j = 0; j<retunObj.length; j++ ){
+								var retun = retunObj[j];
 
-							if(retun.curDate == itinerary.inbound.schedule.depDate ){
+								if(retun.curDate == itinerary.inbound.depDate ){
+									if(itinerary.duration < 2){
+										itinerary.durationFlag = true;
+									}else{
+										itinerary.durationFlag = false;
+									}
+									//Get Selected dates Itinery Object
+									if(calSelectedDeptDate.toDateString() === dept.curDate && calSelectedRetuDate.toDateString() === retun.curDate){
+										itinerary.selectedDateObj = true;
+										searchController.selectedDateItinerary.push(itinerary);
+									}
+									//Push selected itinery to return date object
+									if(retunObj[j].itinerary){
+										itinerary = searchController.checkTwowayLowPriceObject(retunObj[j].itinerary ,itinerary);
+										retunObj[j].itinerary.push(itinerary);
+									}else{
+										retunObj[j]['itinerary'] = [];
+										retunObj[j]['itinerary'].push(itinerary);
+									}
 
-								if(itinerary.duration < 2){
-									itinerary.durationFlag = true;
-								}else{
-									itinerary.durationFlag = false;
+									//Push selected itinery to departing date object
+									if(deptObj[i].itinerary ){
+										deptObj[i].itinerary.push(itinerary);
+									}else{
+										deptObj[i]['itinerary'] = [];
+										deptObj[i]['itinerary'].push(itinerary);
+									}
+
 								}
-								//Get Selected dates Itinery Object
-								if(calSelectedDeptDate.toDateString() === dept.curDate && calSelectedRetuDate.toDateString() === retun.curDate){
-									itinerary.selectedDateObj = true;
-									searchController.selectedDateItinerary.push(itinerary);
-								}
-								//Push selected itinery to return date object
-								if(retunObj[j].itinerary){
-									itinerary = searchController.checkTwowayLowPriceObject(retunObj[j].itinerary ,itinerary);
-									retunObj[j].itinerary.push(itinerary);
-								}else{
-									retunObj[j]['itinerary'] = [];
-									retunObj[j]['itinerary'].push(itinerary);
-								}
-
-								//Push selected itinery to departing date object
-								if(deptObj[i].itinerary ){
-									deptObj[i].itinerary.push(itinerary);
-								}else{
-									deptObj[i]['itinerary'] = [];
-									deptObj[i]['itinerary'].push(itinerary);
-								}
-
 							}
 						}
 					}
 				}
-			}
 		 },
 
 		 checkTwowayLowPriceObject : function(arrayObj , obj){
 			 var searchController= this;
 
 			 for(var i =0; i< arrayObj.length; i++ ){
-				 if(arrayObj[i].inbound.schedule.depDate === obj.inbound.schedule.depDate && arrayObj[i].outbound.schedule.depDate == obj.outbound.schedule.depDate){
+				 if(arrayObj[i].inbound.depDate === obj.inbound.depDate && arrayObj[i].outbound.depDate == obj.outbound.depDate){
 				 	var price1 = parseInt(arrayObj[i].pricePP);
 					var price2 = parseInt(obj.pricePP);
 
@@ -478,28 +493,24 @@ define("tui/searchResults/view/flights/FlightSearchResultController", [
 
 
 		renderSearchResults: function(){
-			var searchController = this,html,data,selectedDeptDate,selectedRetuDate,
+			var searchController = this,html,data,selectedDeptDate,selectedRetuDate,tabCnt,
 			localSavedSearch = searchController.getPreviousCellobject();
 			if(localSavedSearch){
 				selectedDeptDate = localSavedSearch.selectedDeptDate
 				selectedRetuDate = localSavedSearch.selectedRetuDate
 			}
-
 			data = {
-					 departureDates:searchController.departingObject,
-			 		 returnDates :searchController.returningObject,
-			 		 currency : searchController.currency,
-			 		 templateview : searchController.templateview,
-			 		 depratingFrom : searchController.savedSearch.to.name,
-			 		 departingFromCode : searchController.savedSearch.to.id,
-			 		 calSelectedDeptDate :searchController.calSelectedDeptDate.toDateString(),
-			 		 componentId : searchController.pricegridComponentId,
-			 		 calSelectedRetuDate : (searchController.savedSearch.returnDate) ? searchController.calSelectedRetuDate.toDateString() : false,
-			 		 selectedDeptDate: selectedDeptDate,
-			 		 selectedRetuDate : selectedRetuDate
-
-
+					 departureDates		:	searchController.departingObject,
+			 		 returnDates 		:	searchController.returningObject,
+			 		 currency 			: 	searchController.currency,
+			 		 templateview 		: 	searchController.templateview,
+			 		 calSelectedDeptDate:	searchController.calSelectedDeptDate.toDateString(),
+			 		 componentId 		: 	searchController.pricegridComponentId,
+			 		 calSelectedRetuDate:	(searchController.savedSearch.returnDate) ? searchController.calSelectedRetuDate.toDateString() : false,
+			 		 selectedDeptDate	:	selectedDeptDate,
+			 		 selectedRetuDate 	:	selectedRetuDate
 			};
+
 			html = dojo.trim(tui.dtl.Tmpl.createTmpl(data, searchResultsGridTmpl));
 			searchController.calendarDom = dojo.place(html, query('#searchResultContainer', searchController.domNode)[0],"replace");
 			dojo.query(".srMultiAirport", searchController.domNode).prev("div.srTdcnt").children(".priceperperson").addClass("multiAirport");
@@ -510,9 +521,9 @@ define("tui/searchResults/view/flights/FlightSearchResultController", [
 
 			searchController.seasonEndDateValidate();
 
+
 			//Highlight Cells of the grid when exact search criteria is found
 			searchController.highlightMiddleCells();
-			searchController.highlightpreviousCell();
 			dojo.removeClass(query('.loadingDivCnt', searchController.domNode)[0],"loading");
 			if(!searchController.savedSearch.returnDate){
 	  			dojo.addClass(dojo.byId("searchResult"),"oneWayOverlay");
@@ -526,37 +537,15 @@ define("tui/searchResults/view/flights/FlightSearchResultController", [
 		 		}
 		 	}
 
-		 },
+		 	searchController.highlightpreviousCell();
 
-		 renderFllightsResults : function(){
-			 var searchController = this,html,data;
-			data = {
-					itineraries : searchController.selectedDateItinerary,
-			 		currency : searchController.currency,
-			 		noResultFlag : (searchController.selectedDateItinerary.length > 0 ) ? false : true,
-			 		dreamliner : searchController.dreamLiner,
-			 		showFlights : (searchController.selectedDateItinerary.length > 1 ) ? true : false,
-			 		componentId : searchController.individualComponentId
-
-			 };
-			 html = dojo.trim(tui.dtl.Tmpl.createTmpl(data, searchResultsFlightsTmpl));
-
-			 searchController.selectedFlightDetails = dojo.place(html, query('#resultinfoCnt', searchController.domNode)[0], "replace");
-
-			 parser.parse(searchController.domNode);
-
-			 if(searchController.selectedDateItinerary.length > 0) {
-				 connect.publish("tui:channel=refreshPriceToggle");
-			 }
-
-			 searchController.tagElement(searchController.domNode, "individualResults");
 		 },
 
 
 		 seasonStartDateValidate: function(){
 			var searchController =this,
 				leftArrow = dojo.query(".prev", searchController.domNode)[0];
-			 if(searchController.calDeptStartDate.valueOf() < new Date().valueOf()){
+			 	if(searchController.calDeptStartDate.valueOf() < new Date().valueOf()){
 	        		dojo.addClass(leftArrow, "arrInactive");
 				}else{
 					dojo.query(leftArrow).removeClass("arrInactive");
@@ -577,8 +566,8 @@ define("tui/searchResults/view/flights/FlightSearchResultController", [
 				var searchController = this;
 				 	on(searchController.domNode, "td:click", function (event) {
 				 		dojo.stopEvent(event);
-						if(dojo.query(event.target).closest(".noResultDiv").length === 1) return false;
-				 		searchController.getSelectedFlightDetails(this);
+				 		if(dojo.query(event.target).closest(".noResultDiv").length === 1) return false;
+				 		searchController.getSelectedFlightDetails(this, true);
 				 		searchController.highlightselectedCell(this);
 				     });
 
@@ -587,7 +576,6 @@ define("tui/searchResults/view/flights/FlightSearchResultController", [
 				 		searchController.getNextDateFlightsDetails();
 				     });
 
-
 				 	on(searchController.domNode, on.selector("#leftArrow", "click"), function (event) {
 				 		dojo.stopEvent(event);
 				 		searchController.getPreviousDateFlightsDetails();
@@ -595,267 +583,11 @@ define("tui/searchResults/view/flights/FlightSearchResultController", [
 
 				 	//Attach onmouseover and mouseout effects;
 				 	searchController.mouseOverCellhiglight();
-
-
 		},
 
-		mouseOverCellhiglight : function(){
-			 var searchController = this;
-			dojo.query(".searchResultTable tr td.flex-grid-cell").on("mouseover,mouseout",function(tdElem){
-				var closestTd = dojo.query(tdElem.target).closest("td")[0];
-				if(searchController.savedSearch.returnDate){
-			 		//Get Selected cells of the top rows
-
-
-			 		dojo.query(closestTd.parentNode).prevAll().children(':nth-child(' + (closestTd.cellIndex+1) + ')').toggleClass("hover");
-			 		//Get Selected cells of the left td's
-			 		dojo.query(closestTd).prevAll().toggleClass("hover");
-
-			 		if(dojo.query(closestTd).children(".srTdcnt").length !== 0) {
-			 			if(!dojo.hasClass(closestTd,"srDefault") && !dojo.hasClass(closestTd,"srClicked"))
-			 			dojo.query(closestTd).toggleClass("srBodySelectedDate");
-			 		} else {
-			 			dojo.query(closestTd).toggleClass("hover");
-			 		}
-			 		dojo.query(".SRdeptTblHeader").removeClass("hover");
-			 		if(closestTd.parentNode.rowIndex !== 1){
-			 			dojo.toggleClass(dojo.query(".searchResultTable tr")[closestTd.parentNode.rowIndex+15].children[0],"hover");
-			 		}else {
-			 			dojo.toggleClass(dojo.query(".searchResultTable tr")[closestTd.parentNode.rowIndex+8].children[1],"hover");
-			 		}
-				} else {
-					if(dojo.query(closestTd).children(".srTdcnt").length !== 0){
-						if(!dojo.hasClass(closestTd,"srDefault") && !dojo.hasClass(closestTd,"srClicked") && !dojo.hasClass(closestTd,"blank-cell")  )
-						dojo.query(closestTd).toggleClass("srBodySelectedDate");
-					}
-				}
-		 		});
-		},
-
-		  highlightselectedCell : function(tdObj){
-			  var searchController = this;
-			  if(dojo.hasClass(tdObj,"SRrettTblHeader") || dojo.hasClass(tdObj,"SRdeptTblHeader") || dojo.hasClass(tdObj,"noResultDiv") || dojo.hasClass(tdObj,"searchResultDeptDatesTd") || dojo.hasClass(tdObj,"caption-left")) return;
-			  if(tdObj.children.length < 1) return;
-			 /* if(tdObj.children.length > 0 && tdObj.children[0].children.length < 1) return;*/
-			  if(!dojo.query(".srTdcnt",tdObj) || dojo.hasClass(tdObj, "arrowstyle") || dojo.hasClass(tdObj, "blank-cell")) return;
-			  if(dojo.query(".srBodySelectedDate",searchController.domNode).length > 0){
-				  dojo.query(".srBodySelectedDate",searchController.domNode).removeClass("srBodySelectedDate srClicked srDefault");
-			  }
-			  dojo.addClass(tdObj,"srBodySelectedDate srClicked");
-			  if(searchController.savedSearch.returnDate){
-				  searchController.highlightActiveCells(tdObj);
-			  }
-		  },
-		  highlightActiveCells: function(tdObj){
-			var searchController = this;
-			dojo.query("#searchResultContainer .active",searchController.domNode).removeClass("active");
-
-			dojo.query(tdObj.parentNode).prevAll().children(':nth-child(' + (tdObj.cellIndex+1) + ')').addClass("active");
-			dojo.query(tdObj).prevAll().addClass("active");
-
-			dojo.query(".SRdeptTblHeader").removeClass("active");
-
-			if(tdObj.parentNode.rowIndex !== 1){
-				dojo.toggleClass(dojo.query(".searchResultTable tr")[tdObj.parentNode.rowIndex+15].children[0],"active");
-			}else {
-				dojo.toggleClass(dojo.query(".searchResultTable tr")[tdObj.parentNode.rowIndex+8].children[1],"active");
-			}
-
-		  },
-
-		  highlightMiddleCells: function(){
-			  var searchController = this,tdObj;
-			  if(searchController.savedSearch.returnDate){
-				  if(dojo.query(".srBodySelectedDate",searchController.domNode).length === 0 && dojo.query(".noResultDiv",searchController.domNode).length === 0){
-					  return;
-				  } else {
-					  	if(dojo.query(".srBodySelectedDate",searchController.domNode)[0] !== undefined){
-						  tdObj = dojo.query(".srBodySelectedDate",searchController.domNode)[0];
-				  		} else {
-				  			tdObj = dojo.query(".noResultDiv",searchController.domNode)[0];
-				  		}
-				  }
-
-				  searchController.highlightActiveCells(tdObj);
-			  }
-		  },
-		  highlightpreviousCell : function(){
-				var searchController = this,localSavedSearch;
-
-					localSavedSearch = searchController.getPreviousCellobject();
-					if(localSavedSearch){
-						dojo.query(".srBodySelectedDate",searchController.domNode).removeClass("srBodySelectedDate srDefault");
-						if(dojo.query("#"+localSavedSearch.compId).length>0){
-							tdObj = dojo.query("#"+localSavedSearch.compId)[0];
-							dojo.addClass(tdObj.parentNode,"srBodySelectedDate srDefault");
-
-						}
-					}
-
-			  },
-		  getSelectedFlightDetails : function(tdObj){
-			  	var searchController = this,
-			  	compId="";
-			  	searchController.selectedDateItinerary =[];
-			  	/*
-		  		 * if arrow select or blank cell select or grid heading select on need to get the flight details
-		  		 */
-				if(dojo.hasClass(tdObj,"arrowstyle") || dojo.hasClass(tdObj,"SRdeptTblHeader") || dojo.hasClass(tdObj,"blank-cell") || dojo.hasClass(tdObj,"SRrettTblHeader") || dojo.hasClass(tdObj,"caption-left") || tdObj.children.length === 0){
-			  		return false;
-		  		}
-				
-				for(var i=0; i< tdObj.children.length; i++){
-		  			var childObj = tdObj.children[i];
-		  			if(childObj.hasAttribute("data-componentId")){
-		  				compId =childObj.getAttribute("data-componentId");
-		  				searchController.selectedDateItinerary.push(searchController.resultsGridStore.get(compId));
-		  			}
-
-		  		}
-			  if(searchController.selectedDateItinerary.length >0){
-			  		searchController.renderFllightsResults();
-			  		if(searchController.savedSearch.returnDate){
-			  			window.scrollTo(0, 967);
-			  		} else {
-			  			window.scrollTo(0, 567);
-			  		}
-			  }
-
-		  },
-
-		  getNextDateFlightsDetails : function(){
-			var searchController = this,startDate,rightArrow,
-				savedSearch = searchController.savedSearch,
-				resultlastDate,returnDate,departDate;
-				searchController.calDeptStartDate = dojo.date.add(new Date( searchController.calDeptStartDate),"day",1);
-				searchController.calDeptEndDate = dojo.date.add(new Date( searchController.calDeptEndDate),"day",1);
-				startDate =  searchController.calDeptStartDate;
-				searchController.departingObject= searchController.generateDateObject(startDate);
-
-
-				if(searchController.calDeptEndDate.valueOf() > searchController.seasonEndDate.valueOf() ){
-					rightArrow = dojo.query(".next", searchController.domNode)[0];
-	        		dojo.addClass(rightArrow, "arrInactive");
-	        		searchController.calDeptStartDate = dojo.date.add(new Date( searchController.calDeptStartDate),"day",-1);
-					searchController.calDeptEndDate = dojo.date.add(new Date( searchController.calDeptEndDate),"day",-1);
-	        		return;
-				}
-
-				if(savedSearch.returnDate){
-					if(dojo.date.difference(searchController.calRetuEndDate,searchController.seasonEndDate) === 0){
-						searchController.calRetuStartDate = dojo.date.add(new Date(searchController.calRetuStartDate),"day",-1);
-						searchController.calRetuEndDate = dojo.date.add(new Date(searchController.calRetuEndDate),"day",-1);
-					}
-				}
-
-				resultlastDate = dojo.date.add(new Date(savedSearch.departureDate),"day",searchController.setNextServiceCallDays);
-
-				if(searchController.calDeptEndDate.valueOf() > resultlastDate.valueOf()  ){
-
-
-					//departDate= dojo.date.add(new Date(searchController.calDeptEndDate),"day",3);
-
-					if(savedSearch.returnDate){
-						returnDate = dojo.date.add(new Date(searchController.calRetuEndDate),"day",1);
-					}
-					searchController.callServiceforNextDateFlightsDetails(searchController.calDeptEndDate,returnDate,"forward");
-					searchController.getPreviousSelectedCellID();
-				} else{
-
-				if(savedSearch.returnDate){
-					searchController.templateview="twoWayResult";
-					searchController.calRetuStartDate = dojo.date.add(new Date(searchController.calRetuStartDate),"day",1);
-					searchController.calRetuEndDate = dojo.date.add(new Date(searchController.calRetuEndDate),"day",1);
-
-					startDate = searchController.calRetuStartDate;
-					searchController.returningObject =searchController.generateDateObject(startDate );
-					searchController.createTwoWayMapObject();
-				}else{
-					searchController.templateview="oneWayResult";
-					searchController.createOneWayMapObject();
-				}
-				searchController.getPreviousSelectedCellID();
-				searchController.renderSearchResults();
-				searchController.mouseOverCellhiglight();
-				}
-		  },
 
 
 
-		  getPreviousDateFlightsDetails : function(){
-			var searchController = this,startDate,
-				savedSearch = searchController.savedSearch,
-				resultStartDate,returnDate,departDate,leftArrow;
-				searchController.calDeptStartDate = dojo.date.add(new Date( searchController.calDeptStartDate),"day",-1);
-				searchController.calDeptEndDate = dojo.date.add(new Date( searchController.calDeptEndDate),"day",-1);
-				startDate =  searchController.calDeptStartDate;
-				searchController.departingObject= searchController.generateDateObject(startDate );
-
-				//previous dates Validation
-				if(searchController.calDeptStartDate.valueOf() <= new Date().valueOf() || searchController.calDeptStartDate.valueOf() <= searchController.tracsEndDate.valueOf()){
-					leftArrow = dojo.query(".prev", searchController.domNode)[0];
-	        		dojo.addClass(leftArrow, "arrInactive");
-	        		searchController.calDeptStartDate = dojo.date.add(new Date( searchController.calDeptStartDate),"day",1);
-					searchController.calDeptEndDate = dojo.date.add(new Date( searchController.calDeptEndDate),"day",1);
-	        		return;
-				}
-
-				resultStartDate = dojo.date.add(new Date(savedSearch.departureDate),"day",searchController.setPrevServiceCallDays);
-
-				if(searchController.calDeptStartDate.valueOf() < resultStartDate.valueOf()){
-
-					//departDate= dojo.date.add(new Date(searchController.calDeptStartDate),"day",-3);
-
-					if(savedSearch.returnDate){
-						returnDate = dojo.date.add(new Date(searchController.calRetuStartDate),"day",-1);
-					}
-					searchController.callServiceforNextDateFlightsDetails(searchController.calDeptStartDate,returnDate,"backward");
-					searchController.getPreviousSelectedCellID();
-				}else{
-					if(savedSearch.returnDate){
-						searchController.templateview="twoWayResult";
-						searchController.calRetuStartDate = dojo.date.add(new Date(searchController.calRetuStartDate),"day",-1);
-						searchController.calRetuEndDate = dojo.date.add(new Date(searchController.calRetuEndDate),"day",-1);
-
-						startDate = searchController.calRetuStartDate;
-						searchController.returningObject =searchController.generateDateObject(startDate );
-						searchController.createTwoWayMapObject();
-					}else{
-						searchController.templateview="oneWayResult";
-						searchController.createOneWayMapObject();
-					}
-
-				searchController.getPreviousSelectedCellID();
-				searchController.renderSearchResults();
-				searchController.mouseOverCellhiglight();
-				}
-		  },
-
-		  getPreviousSelectedCellID : function(){
-			var searchController = this,compId,Itinerary,properties,
-			  	tdObj = dojo.query(".srBodySelectedDate",searchController.domNode)[0];
-				if(tdObj){
-					compId = tdObj.children[0].id;
-					Itinerary = searchController.resultsGridStore.get(compId);
-
-					if(searchController.savedSearch.returnDate){
-						properties = {
-							 	compId: compId,
-							 	selectedDeptDate: Itinerary.outbound.schedule.depDate,
-						        selectedRetuDate : Itinerary.inbound.schedule.depDate
-						      };
-					}else{
-						properties = {
-							 	compId: compId,
-							 	selectedDeptDate: Itinerary.outbound.schedule.depDate
-						      	};
-					}
-					 properties.timestamp = (new Date()).getTime();
-
-					searchController.setPreviousCellobject(properties);
-				}
-
-		  },
 
 		  checkNoResultCondition: function(){
 			  var searchController = this,temptdObj,
@@ -881,166 +613,6 @@ define("tui/searchResults/view/flights/FlightSearchResultController", [
 			  		dojo.addClass(tdObj, 'noResultDiv');
 			  		tdObj.innerHTML = "<div><span>Sorry, no</br>flights available</span><div>";
 			  }
-		  },
-
-		  callServiceforNextDateFlightsDetails : function(departDate,returnDate,direction){
-			  	var searchController = this,
-			  		params,
-			  		results,
-			  		dateStoreData,
-			  		itinerarys=[],
-			  		infantsAge="",
-			  		childAge="",
-			  		deptDate="",
-			  		retDate="",
-			  		savedSearch = searchController.savedSearch;
-			  		targetUrl = dojoConfig.paths.webRoot+"/ws/searchnav?";
-
-
-
-			  		deptDate =   dojo.date.locale.format(departDate, {
-			          selector: "date",
-			          datePattern: "yyyy-MM-dd"
-			        });
-
-			  		if(returnDate){
-			  			retDate =   dojo.date.locale.format(returnDate, {
-					          selector: "date",
-					          datePattern: "yyyy-MM-dd"
-					        });
-			  		}
-
-
-			  		dojo.addClass(query('.loadingDivCnt', searchController.domNode)[0],"loading");
-			  		if(!searchController.savedSearch.returnDate){
-			  			dojo.addClass(query('.loadingDivCnt', searchController.domNode)[0],"oneWayOverlay");
-			  		}
-
-			  		params = {
-			  			flyingFrom		: 	savedSearch.departureAirportCode[0],
-			  			flyingTo		: 	savedSearch.arrivalAirportCode[0],
-			  			depDate			: 	deptDate,
-			  			returnDate		: 	retDate,
-						adults			: 	savedSearch.adultCount,
-						children		: 	savedSearch.childCount,
-						childAge		: 	(savedSearch.childages) ? savedSearch.childages.toString() : "",
-						infants			: 	savedSearch.infantCount,
-						infantAge		: 	(savedSearch.infantAges) ? savedSearch.infantAges.toString() : "",
-						isOneWay 		: 	JSON.parse(savedSearch.oneWay),
-						isPriceGrid		:	'Y'
-				      };
-
-
-
-
-			  		results = dojo.xhr("GET", {
-			  			url: targetUrl+ ioQuery.objectToQuery(params),
-			  			handleAs: "json"
-			  		});
-
-			  		 dojo.when(results, function (dateResultsData) {
-			  			searchController.nextPrevServiceItineraryDataProcessing(dateResultsData.itinerary,direction);
-			  	      });
-
-		  },
-
-		  nextPrevServiceItineraryDataProcessing : function(resultsItinerarys, direction){
-			  	var searchController = this,
-			  		days=0;
-			  		searchController.itinerarys = searchController.reGenerateItineraryObject(resultsItinerarys);
-
-				  	/*for(var i= 0; i< itinerarys.length; i++){
-				  			searchController.itinerarys[searchController.itinerarys.length] =  itinerarys[i];
-				  		}*/
-				  	searchController.itinerarys = _.sortBy(searchController.itinerarys, function(o) { return o.pricePP; });
-
-
-
-				  	if(direction== "forward"){
-			  			days =1;
-
-			  			if(searchController.setNextServiceCallDays == 3 && searchController.tracsDays > 2){
-			  				searchController.setPrevServiceCallDays = -2;
-			  			}
-			  			if(searchController.setNextServiceCallDays == 2  && searchController.tracsDays > 2){
-			  				searchController.setPrevServiceCallDays = -3;
-			  			}
-
-			  			searchController.setNextServiceCallDays = searchController.setNextServiceCallDays + 7;
-
-			  			if(searchController.setNextServiceCallDays == 10 && searchController.setPrevServiceCallDays == -10){
-			  				searchController.setPrevServiceCallDays = -3;
-			  				searchController.compareCalStartDate = dojo.date.add(new Date(searchController.compareCalStartDate),"day",7);
-			  			}
-			  			if(searchController.setNextServiceCallDays > 10 || searchController.setPrevServiceCallDays  < -10){
-			  				searchController.compareCalStartDate = dojo.date.add(new Date(searchController.compareCalStartDate),"day",7);
-			  				searchController.setPrevServiceCallDays = searchController.setPrevServiceCallDays +7;
-			  			}
-			  			searchController.compareCalEndtDate = dojo.date.add(new Date(searchController.compareCalEndtDate),"day",7);
-			  		}
-			  		else{
-			  			days =-1;
-
-			  			if(searchController.setPrevServiceCallDays == -3){
-			  				searchController.setNextServiceCallDays = 2;
-			  			}if(searchController.setPrevServiceCallDays == -2){
-			  				searchController.setNextServiceCallDays = 3;
-			  			}
-
-			  			searchController.setPrevServiceCallDays = searchController.setPrevServiceCallDays - 7;
-
-			  			if(searchController.setNextServiceCallDays == 10 && searchController.setPrevServiceCallDays == -10 ){
-			  				searchController.setNextServiceCallDays = 3;
-			  				searchController.compareCalEndtDate = dojo.date.add(new Date(searchController.compareCalEndtDate),"day",-7);
-			  			}
-			  			if(searchController.setPrevServiceCallDays  < -10 || searchController.setNextServiceCallDays > 10){
-			  				searchController.compareCalEndtDate = dojo.date.add(new Date(searchController.compareCalEndtDate),"day",-7);
-			  				searchController.setNextServiceCallDays = searchController.setNextServiceCallDays -7;
-			  			}
-			  			searchController.compareCalStartDate = dojo.date.add(new Date(searchController.compareCalStartDate),"day",-7);
-			  		}
-
-
-				  	//searchController.removeOldItinerarys();
-
-			  		searchController.resultsGridStore = new SearchPanelMemory({data: searchController.itinerarys});
-			  		searchController.calRetuStartDate = dojo.date.add(new Date(searchController.calRetuStartDate),"day",days);
-					searchController.calRetuEndDate = dojo.date.add(new Date(searchController.calRetuEndDate),"day",days);
-
-					startDate = searchController.calRetuStartDate;
-					searchController.returningObject =searchController.generateDateObject(startDate );
-
-					if(searchController.savedSearch.returnDate){
-						searchController.templateview="twoWayResult";
-						searchController.createTwoWayMapObject();
-					}else{
-						searchController.templateview="oneWayResult";
-						searchController.createOneWayMapObject();
-					}
-
-			  		searchController.renderSearchResults();
-			  		searchController.mouseOverCellhiglight();
-		  },
-
-
-		  findItineryStartDate: function(){
-			  	var searchController = this, ItinerarysStartDateArray;
-			  		ItinerarysDateSortArray = _.sortBy(searchController.itinerarys, function(o) { return o.outbound.schedule.departureDate; });
-			  		searchController.itinerarysStartDate = ItinerarysDateSortArray[0].outbound.schedule.departureDate;
-			  		searchController.itinerarysEndDate = ItinerarysDateSortArray[ItinerarysDateSortArray.length-1].outbound.schedule.departureDate;
-
-
-		  },
-
-		  removeOldItinerarys : function(){
-			  	var searchController = this,
-			  		itinerarys = searchController.itinerarys;
-					  for(var i = itinerarys.length-1; i >= 0  ;i--){
-						  var itinerary = itinerarys[i];
-						  if(searchController.compareCalStartDate.valueOf() > itinerary.outDepartureDate.valueOf()  || itinerary.outDepartureDate.valueOf() > searchController.compareCalEndtDate.valueOf()   ){
-							  searchController.itinerarys.splice(i,1);
-						  }
-					  }
 		  },
 
 
@@ -1080,7 +652,67 @@ define("tui/searchResults/view/flights/FlightSearchResultController", [
 					savedSearch = searchController.savedSearch;
 					searchController.compareCalStartDate = dojo.date.add(new Date(savedSearch.departureDate),"day",searchController.calStartDays);
 					searchController.compareCalEndtDate = dojo.date.add(new Date(savedSearch.departureDate),"day",searchController.calEndDays);
+			},
+
+
+
+			parserJsonData : function(fromAiports, toAirports, departDate,returnDate, searchType){
+				var searchController = this,
+			  		params,
+			  		infantsAge="",
+			  		childAge="",
+			  		deptDate="",
+			  		retDate="",
+			  		savedSearch = searchController.savedSearch;
+
+					deptDate = searchController.reqDateFormat(departDate);
+
+			  		if(returnDate){
+			  			retDate = searchController.reqDateFormat(returnDate);
+			  		}
+
+			  		params = {
+			  			'flyingFrom[]'	: 	fromAiports,
+			  			'flyingTo[]'	: 	toAirports,
+			  			depDate			: 	deptDate,
+			  			returnDate		: 	retDate,
+						adults			: 	savedSearch.adultCount,
+						children		: 	savedSearch.childCount,
+						childAge		: 	(savedSearch.childages) ? savedSearch.childages.toString() : "",
+						infants			: 	savedSearch.infantCount,
+						infantAge		: 	(savedSearch.infantAges) ? savedSearch.infantAges.toString() : "",
+						isOneWay 		: 	JSON.parse(savedSearch.oneWay),
+						searchType		:	searchType
+
+				      };
+
+		  		return params;
+			},
+
+			reqDateFormat : function(dateObj){
+				var searchController = this;
+				return dojo.date.locale.format(dateObj, {
+			          selector: "date",
+			          datePattern: "yyyy-MM-dd"
+			        });
+			},
+
+			backtoSearchValidation : function(backtoSearch){
+				var searchController = this;
+
+				if(backtoSearch && backtoSearch === "backtosearch") {
+					searchController.savedSearch.oldDepartureDate = searchController.savedSearch.departureDate
+					searchController.savedSearch.departureDate = searchController.setDateFormat(searchController.savedSearch.selDepDate);
+					if(!searchController.savedSearch.oneWay){
+						searchController.savedSearch.oldReturnDate = searchController.savedSearch.returnDate;
+						searchController.savedSearch.returnDate = searchController.setDateFormat(searchController.savedSearch.selArrDate);
+					}
+				}
+
+
 			}
+
+
 
 
 	});

@@ -58,14 +58,17 @@ define("tui/searchPanel/view/flights/AirportListOverlay", [
                  	if (airportListOverlay.expandableDom === null || !airportListOverlay.isShowing(airportListOverlay.expandableDom)) {
                  		airportListOverlay.closeExpandable();
  	                }
-
-                 	if (document.activeElement.id === airportListOverlay.id) {
+                 	try{
+                 		var activeClosest=dojo.query(document.activeElement).closest("#where-from-text")[0];
+                 	if (activeClosest && activeClosest.id === airportListOverlay.id) {
 
                  		if(airportListOverlay.expandableDom){
                  			if(airportListOverlay.isShowing(airportListOverlay.expandableDom)){
                  				airportListOverlay.setHeight();
                  			}
-                 			setTimeout(function(){airportListOverlay.highlightTabs(),1000});
+                 			if(event.target.id === "ukairports" || event.target.id === "overseasairports"){
+                 					setTimeout(function(){airportListOverlay.highlightTabs(),1000});
+                 			}
                  		}
                  		return;
                  	}
@@ -76,6 +79,10 @@ define("tui/searchPanel/view/flights/AirportListOverlay", [
                  	else {
                  		airportListOverlay.closeExpandable();
                  	}
+                 	} catch(err){
+                 		console.log(err);
+                 	}
+
 
 
                  });
@@ -108,11 +115,15 @@ define("tui/searchPanel/view/flights/AirportListOverlay", [
 	            			});
             			}
 
+            			dojo.query(".UKAiportCnt").removeClass('hide').addClass('show');
+            			dojo.query(".OverseasairportsCnt").removeClass('show').addClass('hide');
+
+
             			dojo.addClass("ukairports","ukairports-selected");
             			dojo.addClass("overseasairports","overseasairports-notselected");
             			dojo.removeClass("ukairports","ukairports-notselected");
             			dojo.removeClass("overseasairports","overseasairports-selected");
-            		} else {
+            		} else if(evt.target.id == "overseasairports"){
 
             			dojo.style(dojo.query(".guide .wrapper .ukairports-container")[0], {
             				"display":"none"
@@ -120,6 +131,11 @@ define("tui/searchPanel/view/flights/AirportListOverlay", [
             			dojo.style(dojo.query(".guide .wrapper .overseas-container")[0], {
             				"display":"block"
             			});
+
+
+            			dojo.query(".UKAiportCnt").removeClass('show').addClass('hide');
+            			dojo.query(".OverseasairportsCnt").removeClass('hide').addClass('show');
+
             			airportListOverlay.setHeight();
             			dojo.addClass("ukairports","ukairports-notselected");
             			dojo.addClass("overseasairports","overseasairports-selected");
@@ -150,19 +166,30 @@ define("tui/searchPanel/view/flights/AirportListOverlay", [
                 //console.dir(dojo.query(".empty-airport-model", airportGuide.expandableDom)[0]);
                 // Remove inactive class if we have airports which we can remove.
                 var emptyAirportModel = dojo.query(".empty-airport-model", airportListOverlay.expandableDom)[0];
-                if (airportListOverlay.searchPanelModel.from.data.length > 0) {
+                var clearSelection=dojo.query(".empty-airport-model", airportListOverlay.expandableDom)[1];
+
+                if (airportListOverlay.searchPanelModel.from.data.length > 0 && airportListOverlay.searchPanelModel.from.data[0].countryCode == 'GBR' ) {
                     dojo.removeClass(emptyAirportModel, "inactive");
+
                 } else {
                     dojo.addClass(emptyAirportModel, "inactive");
                 }
+
+                //clear  selection overseas
+                if (airportListOverlay.searchPanelModel.from.data.length > 0 && airportListOverlay.searchPanelModel.from.data[0].countryCode != 'GBR') {
+                    dojo.removeClass(clearSelection, "inactive");
+
+                } else {
+                    dojo.addClass(clearSelection, "inactive");
+                }
+
                 // update airport guide selected count.
                 //dojo.query(".airport-guide-count", airportListOverlay.expandableDom).text(airportListOverlay.searchPanelModel.from.selectedSize);
-                if(airportListOverlay.searchPanelModel.from.selectedSize === 0 ){                	
+                if(airportListOverlay.searchPanelModel.from.selectedSize === 0 ){
 					dojo.query("#wherefromPlaceholder").style("display","block");
                 	dojo.query("#wherefromValue").style("display","none");
                 }else if(airportListOverlay.searchPanelModel.from.selectedSize > 0){
-                	airportListOverlay.closeExpandable();
-                	airportListOverlay.updatePillText(airportListOverlay.searchPanelModel.from.data[0]);
+                	airportListOverlay.updatePillText();
                 }
             },
 

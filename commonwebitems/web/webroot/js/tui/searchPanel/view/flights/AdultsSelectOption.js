@@ -10,7 +10,7 @@ define("tui/searchPanel/view/flights/AdultsSelectOption", [
 			var adultsSelectOption = this;
 			adultsSelectOption.inherited(arguments);
 			adultsSelectOption.addDropdownEventlistener();
-            adultsSelectOption.tagElement(adultsSelectOption.domNode, "adults");
+            adultsSelectOption.tagElement(adultsSelectOption.domNode, "adult");
             dojo.global.isPartyCompositionErrorNew=true;
 		},
 
@@ -44,12 +44,12 @@ define("tui/searchPanel/view/flights/AdultsSelectOption", [
         key: key,
         floatWhere: "position-bottom-left"
       });
-  
+
       // publish error for listeners
       if (_.size(newError) === 1) {
         dojo.publish("tui/searchPanel/view/PartyCompositionView/Errors", [seniorsSelectOption.widgetController, true]);
       }
-      //dojo.global.isPartyCompositionErrorNew=false; 
+      //dojo.global.isPartyCompositionErrorNew=false;
     }
       if (_.size(newError) === 0) {
           dojo.publish("tui/searchPanel/view/PartyCompositionView/Errors", [seniorsSelectOption.widgetController, false]);

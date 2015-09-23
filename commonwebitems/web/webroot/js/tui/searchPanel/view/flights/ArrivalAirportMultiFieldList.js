@@ -37,14 +37,14 @@ define("tui/searchPanel/view/flights/ArrivalAirportMultiFieldList", [
       arrivalAirportMultiFieldList.itemsSelected = arrivalAirportMultiFieldList.searchMessaging.to.itemsSelected;
 
       arrivalAirportMultiFieldList.inherited(arguments);
-      
+
      // dojo.query(arrivalAirportMultiFieldList.multifieldInfo).text(arrivalAirportMultiFieldList.searchMessaging.addMore);
-      
-      
+
+
       //building pills for textbox
       var resultSet = arrivalAirportMultiFieldList.searchPanelModel.to.query();
-      
-      //Airport pills adding code 
+
+      //Airport pills adding code
      /* resultSet.observe(function (airportModel, remove, add) {
         var action = (add > -1) ? "addNewTextbox" : "removeTextbox";
         arrivalAirportMultiFieldList[action]({
@@ -90,7 +90,7 @@ define("tui/searchPanel/view/flights/ArrivalAirportMultiFieldList", [
         }
       });
 
-      arrivalAirportMultiFieldList.tagElement(arrivalAirportMultiFieldList.domNode, "FlyingtoSearch2");
+      arrivalAirportMultiFieldList.tagElement(arrivalAirportMultiFieldList.domNode, "FlyingtoSearch");
     },
 
   /*  toggleEmptyAlert: function (name, oldError, newError) {
@@ -99,8 +99,8 @@ define("tui/searchPanel/view/flights/ArrivalAirportMultiFieldList", [
         dojo[action](arrivalAirportMultiFieldList.domNode, "error");
         dojo[action](arrivalAirportMultiFieldList.placeholder, "error");
       },*/
-      
-      
+
+
     /*  displayToError: function (name, oldError, newError) {
           // displays ' to' validation message if validation error occurs
           var destinationMultiFieldList = this;
@@ -113,7 +113,7 @@ define("tui/searchPanel/view/flights/ArrivalAirportMultiFieldList", [
             key: "emptyTo"
           });
         },*/
-      
+
    /* displayFromToError: function (name, oldError, newError) {
       // displays 'from, to' validation message if validation error occurs
       var arrivalAirportMultiFieldList = this;
@@ -125,7 +125,7 @@ define("tui/searchPanel/view/flights/ArrivalAirportMultiFieldList", [
         key: "emptyFromTo"
       });
     },*/
-    
+
     // displays Invalid Airport Combination Error
     displayInvalidArrivalAirportCombinationError: function (name, oldError, newError) {
       var arrivalAirportMultiFieldList = this;
@@ -138,7 +138,7 @@ define("tui/searchPanel/view/flights/ArrivalAirportMultiFieldList", [
         key: "invalidArrivalAirportCombination"
       });
     },
-        
+
     displayInvalidFromAndToFlyingCombinationError: function (name, oldError, newError) {
         var arrivalAirportMultiFieldList = this;
         arrivalAirportMultiFieldList.validateErrorMessage(newError.invalidFromAndToFlyingCombination, {
@@ -149,8 +149,8 @@ define("tui/searchPanel/view/flights/ArrivalAirportMultiFieldList", [
           field: "invalidFromAndToFlyingCombination",
           key: "invalidFromAndToFlyingCombination"
         });
-      },   
-   
+      },
+
     displayRouteError: function (name, oldError, newError) {
       var arrivalAirportMultiFieldList = this;
       // no errors to show, so close popup if opened.
@@ -283,6 +283,7 @@ define("tui/searchPanel/view/flights/ArrivalAirportMultiFieldList", [
       arrivalAirportMultiFieldList.hasException = false;
       arrivalAirportMultiFieldList.searchPanelModel.to.emptyStore();
       arrivalAirportMultiFieldList.searchPanelModel.to.add(selectData.listData);
+      dijit.byId("where-to-text").closeExpandable();
       return true;
     },
 
@@ -356,7 +357,7 @@ define("tui/searchPanel/view/flights/ArrivalAirportMultiFieldList", [
     	  //alert("alert called");
     	  //airportMultiFieldList.domNode.focus();
       });
-      
+
       // delete no match error
       arrivalAirportMultiFieldList.searchPanelModel.searchErrorMessages.set("to", {});
 
@@ -392,13 +393,13 @@ define("tui/searchPanel/view/flights/ArrivalAirportMultiFieldList", [
     },
 
     /*updatePlaceholder: function () {
-    	
+
      var arrivalAirportMultiFieldList = this,
           maxTextWidth = 140,
           count = arrivalAirportMultiFieldList.searchPanelModel.to.summariseCount(),
           text = arrivalAirportMultiFieldList.defaultPlaceholderTxt,
           label = arrivalAirportMultiFieldList.textboxes.length ? arrivalAirportMultiFieldList.textboxes[0].label : arrivalAirportMultiFieldList.defaultPlaceholderTxt;
-          
+
       if (arrivalAirportMultiFieldList.getTextWidth(label) > maxTextWidth) {
         label = strings.truncatewords(arrivalAirportMultiFieldList.textboxes[0].label, 3);
       } else {

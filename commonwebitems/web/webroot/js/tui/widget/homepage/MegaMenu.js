@@ -5,7 +5,8 @@ define('tui/widget/homepage/MegaMenu', [
   'tui/thirdparty/fastclick.min',
   'dojo/_base/lang',
   'dojo/html',
-  'tui/widget/_TuiBaseWidget'
+  'tui/widget/_TuiBaseWidget',
+  'dojo/NodeList-traverse'
 ], function(dojo, query , on, FastClick) {
 
   dojo.declare('tui.widget.homepage.MegaMenu', [tui.widget._TuiBaseWidget], {
@@ -31,8 +32,8 @@ define('tui/widget/homepage/MegaMenu', [
     postCreate: function() {
       var megaMenu = this;
       megaMenu.inherited(arguments);
-      megaMenu.touchSupport = dojo.hasClass(document.body, "touch");
-      if(tuiSiteName == "thomson" ) {
+      megaMenu.touchSupport = dojo.hasClass(query("html")[0], "touch");
+      if(tuiSiteName == "thomson" || tuiSiteName == "flights"  ) {
      	 megaMenu.THholidaysMenu();
       }else if(tuiSiteName == "falcon" ){
     	  megaMenu.FJholidaysMenu();
@@ -152,7 +153,7 @@ define('tui/widget/homepage/MegaMenu', [
    		 	var divInfo = dojo.position(displayTmpl, true),
    		    liInfo = dojo.position(hoverElement, true);
    		 	var liHeight = dojo.getStyle(query(".homepage-main-nav")[0], 'height');
-   		 	var liYPos = liInfo.y + liHeight - 4;
+   		 	var liYPos = liInfo.y + liHeight -1;
    		 	dojo.style(displayTmpl, {
    		      top: liYPos + "px"
    		 	});
@@ -172,12 +173,10 @@ define('tui/widget/homepage/MegaMenu', [
         });
    	 on(hoverElement, "mouseout", function (event) {
    		 clearTimeout(megaMenu.clearTimeOut);
-       		 dojo.setStyle(arrowElement, 'border-top', '5px solid #119ca6');
-       		 dojo.setStyle(hoverElement, {
-    			    'color': '#FFFFFF',
-    			    'background': '#a0c8e6',
-    			    'text-decoration': 'none'
-    			  });
+       		 dojo.setStyle(arrowElement, 'border-top', '5px solid #ffffff');
+
+       		 megaMenu.BrandMenuBackgroundChange(hoverElement);
+
        		 if(dojo.hasClass(htmlElement, "nav-holiday-active")){
    				 dojo.setStyle(hoverElement,  'background', '#73AFDC');
    	    		};
@@ -199,11 +198,9 @@ define('tui/widget/homepage/MegaMenu', [
    	 on(displayTmpl, "mouseleave", function(event){
        		 megaMenu.mouseOutFromMegamenu = setTimeout(function(){
        			 dojo.setStyle(arrowElement, 'border-top', '5px solid #FFFFFF');
-       			 dojo.setStyle(hoverElement, {
-       	 			    'color': '#FFFFFF',
-       	 			    'background': '#a0c8e6',
-       	 			    'text-decoration': 'none'
-       	 			  });
+
+       			 megaMenu.BrandMenuBackgroundChange(hoverElement);
+
        			 if(dojo.hasClass(htmlElement, "nav-holiday-active")){
        				 dojo.setStyle(hoverElement,  'background', '#73AFDC');
        	    		};
@@ -225,21 +222,41 @@ define('tui/widget/homepage/MegaMenu', [
        			 dojo.setStyle(displayTmpl, "visibility", "visible");
        			 megaMenu.check = false;
        		 }
-       		 else {
-       			 dojo.setStyle(arrowElement, 'border-top', '5px solid #FFFFFF');
-       			 dojo.setStyle(hoverElement, {
-     	 			    'color': '#FFFFFF',
-     	 			    'background': '#a0c8e6',
-     	 			    'text-decoration': 'none'
-       			 	});
-       			 if(dojo.hasClass(htmlElement, "nav-holiday-active")){
-       				 dojo.setStyle(hoverElement,  'background', '#73AFDC');
-       	    		};
-       			 dojo.setStyle(displayTmpl, "visibility", "hidden");
-       			 megaMenu.check = true;
-       		 }
+
+       		 query("html, #wrapper, #footer").on("click", function(e){
+      		   if( !dojo.query(e.target).parents(".homepage-main-nav").length){
+      			   dojo.removeClass( hoverElement, "hover");
+      			 dojo.setStyle(displayTmpl, "visibility", "hidden");
+      			dojo.setStyle(arrowElement, 'border-top', '5px solid #ffffff');
+      			megaMenu.BrandMenuBackgroundChange(hoverElement);
+      			   megaMenu.check = true;
+      		   }
+         	  });
+
+
        	});
         }
+    },
+
+    BrandMenuBackgroundChange: function(hoverElement){
+    	var megaMenu = this;
+    	 if(tuiSiteName == "flights" ){
+   			 dojo.setStyle(hoverElement, {
+ 			    'color': '#FFFFFF',
+ 			    'background': '#73AFDC',
+ 			    'text-decoration': 'none'
+ 			  });
+   			dojo.setStyle(dojo.query(hoverElement).first(), {
+ 			    'border-top': '5px solid #FFFFFF'
+ 			  });
+   		 }else{
+   			dojo.setStyle(hoverElement, {
+ 			    'color': '#FFFFFF',
+ 			    'background': '#a0c8e6',
+ 			    'text-decoration': 'none'
+ 			  });
+   		 }
+
     },
 
     FCholidaysMenu: function(){

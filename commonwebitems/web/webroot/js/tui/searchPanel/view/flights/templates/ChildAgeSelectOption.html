@@ -1,5 +1,5 @@
 {% if searchPanelModel.children != 0 %}
-<p class="child-age-label">{{searchMessaging.childAges.label}}</p>
+<p class="child-age-label"> {% if searchPanelModel.oneWayOnly==="true" %}{{searchMessaging.ChildAgesOneWay.label}}{% else %}{{searchMessaging.childAges.label}}{% endif %}</p>
 <div class="item child-age-selector">
 {% for childAge in searchPanelModel.childAges %}
     <span class="child-age">

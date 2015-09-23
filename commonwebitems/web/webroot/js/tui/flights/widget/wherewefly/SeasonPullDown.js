@@ -16,26 +16,26 @@ define("tui/flights/widget/wherewefly/SeasonPullDown", [
   "dojo/date/locale",
   "tui/widget/_TuiBaseWidget"], function (dojo, seasonPullDownTmpl, query, html, domConstruct, domStyle, on, domClass, lang, connect, domAttr, flightScheduler, flightMonthBar) {
   dojo.declare("tui.flights.widget.wherewefly.SeasonPullDown", [tui.widget._TuiBaseWidget, tui.widget.mixins.Templatable], {
-	  
+
 	  tmpl: seasonPullDownTmpl,
-	  
-	  seasonLength: 18,
-	  
+
+	  seasonLength: dojo.global.seasonLength,
+
 	  status: null,
-	  
+
 	  months: [],
-	  
+
 	  tempAvailableMonths: [],
-	  
+
 	  constructor:function(){
 	  	  var seasonPullDown = this;
 	  	seasonPullDown.inherited(arguments);
   	  },
-  	  
+
   	  postCreate: function(){
   		  var seasonPullDown = this;
   		  seasonPullDown.inherited(arguments);
-  		  
+
   		  seasonPullDown.attachEventMonthPullDown();
   		  on(document.body, "click", function(evt){
 	  			var evtId = evt.target || evt.srcElement;
@@ -46,37 +46,37 @@ define("tui/flights/widget/wherewefly/SeasonPullDown", [
 	  				seasonPullDown.hideMonthPullDown()
 	  			}
 	  	  });
-	  		
+
   	  },
-  	  
+
   	 onAfterTmplRender:function(){
 		  var seasonPullDown = this;
 		  seasonPullDown.inherited(arguments);
-		  
+
 		  seasonPullDown.months = [];
 	  },
-  	  
+
   	 attachEventMonthPullDown: function(){
 	  		var seasonPullDown = this;
-	  		
+
 	  		on(query("#airports-lists-filter-when")[0], "click", function(evt){
 	  			seasonPullDown.validateFields();
 			});
-	  		
+
 	  		on(query("#flying-from-filter-when")[0], "click", function(evt){
 	  			seasonPullDown.validateFields();
 			});
 
 	  },
-  	  
+
 	  validateFields: function(){
 		  var seasonPullDown = this;
-		  
+
 		  seasonPullDown.months = [];
-		  
+
 		  /*domClass.add(query("#flying-from-filter-when")[0], "border-sel-active");
 		  var fromAirport = query("#flying-from-filter")[0],
-			
+
 		  if(fromAirport.value === "" && toAirport.value === ""){
 			  seasonPullDown.populateMonths();
 		  }else if(fromAirport.value === "" || toAirport.value === ""){
@@ -84,13 +84,13 @@ define("tui/flights/widget/wherewefly/SeasonPullDown", [
 		  }else if(fromAirport.value !== "" && toAirport.value !== ""){
 			  seasonPullDown.renderMonthPullDown();
 		  }*/
-		  
+
 		  seasonPullDown.populateMonths();
 	  },
-	  
+
   	  populateMonths: function(){
            var seasonPullDown = this;
-		   
+
 	  	   var fs = new flightScheduler();
 			for(var i = 0;i < seasonPullDown.seasonLength; i++){
 			   var monthAndYear = fs.getFullMonths(i);
@@ -110,7 +110,7 @@ define("tui/flights/widget/wherewefly/SeasonPullDown", [
 			});
 			seasonPullDown.showMonthPullDown();
   	  },
-  	  
+
   	 renderMonthPullDown: function(){
    		var seasonPullDown = this;
    		var fs = new flightScheduler();
@@ -133,7 +133,7 @@ define("tui/flights/widget/wherewefly/SeasonPullDown", [
 		  					   			tmpX = false;
 		  					   		}
 		  				   		}
-		  				});			   
+		  				});
 		  			   obj.mon = arr[1]; obj.year = arr[0];
 		  			 seasonPullDown.months.push(obj);
 		  			}
@@ -148,7 +148,7 @@ define("tui/flights/widget/wherewefly/SeasonPullDown", [
 		  			seasonPullDown.showMonthPullDown();
    			  },
    			  error: function(error, ioargs){
-   				  
+
    			  }
    		});
    	  },
@@ -174,7 +174,7 @@ define("tui/flights/widget/wherewefly/SeasonPullDown", [
   		  					   			tmpX = false;
   		  					   		}
   		  				   		}
-  		  				});			   
+  		  				});
   		  			   obj.mon = arr[1]; obj.year = arr[0];
   		  			   seasonPullDown.months.push(obj);
   		  			}
@@ -183,20 +183,20 @@ define("tui/flights/widget/wherewefly/SeasonPullDown", [
   		  			var renderedNode = domConstruct.toDom(seasonPullDown.render());
   		 			var closestParent = query("div.inputfilters")[1];
   		 			domConstruct.place(renderedNode, closestParent, "last");
-  		 			
-  		 		  
+
+
 	  				  var fb = new flightMonthBar();
 	  				  fb.generateMonths();
-	  				  
+
 	  				  fa = new flightActions();
 	  		  		  fa.showSearchBox();
      			  },
      			  error: function(error, ioargs){
-     				  
+
      			  }
      		});
       },
-  	  
+
   	  showMonthPullDown: function(){
   		  var seasonPullDown = this;
   		  domStyle.set(query("#seasons-pull-down")[0], {
@@ -204,14 +204,14 @@ define("tui/flights/widget/wherewefly/SeasonPullDown", [
   		  });
   		  seasonPullDown.hideMonthPullDownLists();
   	  },
-  	  
+
   	 hideMonthPullDownLists: function(){
-	  		var seasonPullDown = this; 
+	  		var seasonPullDown = this;
 	  		query("#seasons-pull-down li").forEach(function (elm, i) {
 			    on(elm, "click", function (evt) {
 			    	if(!domClass.contains(elm, "disable-list-select")){
 			    		query("#flying-from-filter-when").attr( "value", lang.trim(query(elm).text()) );
-			    		if(dojo.byId("ftselectedMonth"))domConstruct.destroy("ftselectedMonth"); 
+			    		if(dojo.byId("ftselectedMonth"))domConstruct.destroy("ftselectedMonth");
 			    		var mon = domAttr.get(this, "data-mon");
 			    		var yr = domAttr.get(this, "data-yr");
 			    		var hid = domConstruct.create("input", {
@@ -225,7 +225,7 @@ define("tui/flights/widget/wherewefly/SeasonPullDown", [
 			    });
 			});
 	  },
-	  
+
   	  hideMonthPullDown: function(){
 		  if(query("#seasons-pull-down")[0]){
 		  		domStyle.set(query("#seasons-pull-down")[0], {
@@ -233,14 +233,14 @@ define("tui/flights/widget/wherewefly/SeasonPullDown", [
 				 });
 		  }
   	  },
-  	  
+
   	  render: function(){
 	  		var seasonPullDown = this;
 			var html = seasonPullDown.renderTmpl(seasonPullDown.tmpl);
 			return html;
 	  }
-	  
+
   });
-  
+
   return tui.flights.widget.wherewefly.SeasonPullDown;
 });

@@ -22,38 +22,38 @@ define("tui/flights/widget/wherewefly/AutoSuggestFilter", [
   "dojo/date/locale",
   "tui/widget/_TuiBaseWidget"], function (dojo, autosuggestFilterTmpl, registry, query, string, html, domConstruct, domStyle, event, on, keys, ready,domClass, focusUtil, lang, domAttr, connect, errorTooltip) {
   dojo.declare("tui.flights.widget.wherewefly.AutoSuggestFilter", [tui.widget._TuiBaseWidget, tui.widget.mixins.Templatable], {
-	  
+
 	  tmpl: autosuggestFilterTmpl,
-	  
+
 	  charNo: 2,
-	  
+
 	  airports: [],
-	  
-	  airportStore: null, 
-	  
+
+	  airportStore: null,
+
 	  airportCodes: [],
-	  
+
 	  airportsList: [],
-	  
+
 	  tipAdvisor: null,
-	  
+
 	  idx: 0,
-	 	  
+
 	  constructor: function(params, srcNodeRef){
 	  	 var autoSuggestFilter = this;
   	  },
-  	  
+
 	  postCreate:function(){
 	  	  var autoSuggestFilter = this;
   		  autoSuggestFilter.inherited(arguments);
-  		  
+
   		  on(document.body, "click", function(evt){
   			  var targetObj = evt.target || evt.srcElement;
 			  if(targetObj.id === "airports-lists-filter" || targetObj.id === "flying-from-filter"){
 				  domClass.add(query("#flying-from-filter")[0], "border-sel-active");
-			    	  
+
 				  dojo.xhrGet({
-					  url: "/flights/WhereWeFlyFilter",
+					  url: "/flight/WhereWeFlyFilter",
 					  handleAs: "json",
 					  sync: false,
 					  load: function(data, ioargs){
@@ -64,15 +64,15 @@ define("tui/flights/widget/wherewefly/AutoSuggestFilter", [
 				  				autoSuggestFilter.airports.push(airportInfo);
 				  			});
 				  		  }
-				  		  
-				  		 /* 
+
+				  		 /*
 				  		  autoSuggestFilter.airportCodes = _.keys(autoSuggestFilter.airportStore);
 				  		  _.each(autoSuggestFilter.airportCodes, function(code){
 							_.each(autoSuggestFilter.airportStore[code], function(airportInfo){
 								autoSuggestFilter.airports.push(airportInfo);
 							});
 				  		  });*/
-				  		  
+
 						  autoSuggestFilter.placeAirportList();
 						  autoSuggestFilter.eventHandlers();
 						  if(targetObj.id !== "flying-from-filter") autoSuggestFilter.showAutoSuggestList();
@@ -80,7 +80,7 @@ define("tui/flights/widget/wherewefly/AutoSuggestFilter", [
 						  focusUtil.focus(query("#flying-from-filter")[0]);
 					  },
 					  error: function(error, ioargs){
-					   
+
 					  }
 				  });
 			  }else{
@@ -89,43 +89,43 @@ define("tui/flights/widget/wherewefly/AutoSuggestFilter", [
 			  }
 		  });
 	  },
-	  
+
 	  onAfterTmplRender:function(){
 		  var autoSuggestFilter = this;
 		  autoSuggestFilter.inherited(arguments);
 		  autoSuggestFilter.airports = [];
 	  },
-	  
+
 	  pickPosition:function(){
 		  var autoSuggestFilter = this;
 		  var pos = html.coords(autoSuggestFilter.domNode);
 		  return pos;
 	  },
-	  
+
 	  placeAirportList: function(){
 		  var autoSuggestFilter = this;
-		  
+
 		  if(query("#auto-suggest-list-filter")[0])domConstruct.destroy("auto-suggest-list-filter");
-		  
+
 		  var closestParent = query("div.inputfilters")[0];
-		  
+
 		  if(closestParent){
 			  var node = domConstruct.toDom(autoSuggestFilter.render());
 			  domConstruct.place(node, closestParent, "last");
 		  }
-		  
+
 		  var pos = autoSuggestFilter.pickPosition();
-		  
+
 		  domStyle.set(query("#auto-suggest-list-filter")[0], {
 			  "top":"25px"
 		  });
 	  },
-	  
+
 	  eventHandlers: function(){
 		  var autoSuggestFilter = this;
 		  autoSuggestFilter.keyUpEvents();
 	  },
-	  
+
 	  hideAutoSuggestList: function(){
 		  if(query("#auto-suggest-list-filter")[0]){
 			  domStyle.set(query("#auto-suggest-list-filter")[0], {
@@ -133,17 +133,17 @@ define("tui/flights/widget/wherewefly/AutoSuggestFilter", [
 			  });
 		  }
 	  },
-	  
+
 	  showAutoSuggestList:function(){
 		  domStyle.set(query("#auto-suggest-list-filter")[0], {
 		  	  "display":"block"
 		  });
 	  },
-	  
+
 	  keyUpEvents: function(){
 		  var autoSuggestFilter = this;
 		  var flyingFrom = query("#flying-from-filter")[0];
-		  
+
 		  on(flyingFrom, "keypress", function(evt){
 			  var charOrCode = evt.charCode || evt.keyCode;
 			  if (charOrCode === keys.DOWN_ARROW || charOrCode === keys.UP_ARROW) {
@@ -154,18 +154,18 @@ define("tui/flights/widget/wherewefly/AutoSuggestFilter", [
 		        	autoSuggestFilter.hideAutoSuggestList();
 		      }
      	  });
-		  
+
 		  on(query("#auto-suggest-list-filter")[0], "mouseover", function (evt) {
 			    query("#auto-suggest-list-filter li.hlight-airport-list").removeClass("hlight-airport-list");
 		  });
-		  
+
 		  on(flyingFrom, "keyup", function(evt){
 			  var errtips = query(".tooltip", query(".inputfilters")[0]);
 				if(errtips){
 					domClass.remove("flying-from-filter", "error-tool-tip");
 					errtips.forEach(domConstruct.destroy);
 				}
-				
+
 			  var charOrCode = evt.charCode || evt.keyCode;
 			  if(charOrCode === keys.ENTER){
 					return;
@@ -185,7 +185,7 @@ define("tui/flights/widget/wherewefly/AutoSuggestFilter", [
 			        }
 			    }
 		  });
-		  
+
 		  on(flyingFrom, "keydown", function(evt){
 			  var charOrCode = evt.charCode || evt.keyCode;
 			  if(charOrCode === keys.TAB){
@@ -198,20 +198,20 @@ define("tui/flights/widget/wherewefly/AutoSuggestFilter", [
 		  query("#auto-suggest-list-filter li").forEach(function (elm, i) {
 			    on(elm, "click", function (evt) {
 			    	flyingFrom.value = lang.trim(query(this).text());
-			    	
+
 			    	var hidn = domConstruct.create("input", {
 		    			type:"hidden",
 		    			value:  domAttr.get(elm, "data-country-code"),
 		    			id:"ftselectedCountry"
 		    		});
-		    		
-		    		
+
+
 		    		domConstruct.place(hidn, document.body, "last");
-		    		
+
 			    });
 			});
 	  },
-	  
+
 	  /*----filter out the list of airports-----*/
 	  searchAirportNamesOrCodes: function(val, evt, idx){
 		  var autoSuggestFilter = this;
@@ -219,7 +219,7 @@ define("tui/flights/widget/wherewefly/AutoSuggestFilter", [
 			if (idx === undefined) {idx = 0;}
 		    var list = query('#auto-suggest-list-filter'),
 		        visibleIdx = 0;
-		    dojo.forEach(list.query('li'), function (elm, i) { 
+		    dojo.forEach(list.query('li'), function (elm, i) {
 		        var found = false;
 		        try{
 		        	var regExp = new RegExp(val, 'i');
@@ -244,7 +244,7 @@ define("tui/flights/widget/wherewefly/AutoSuggestFilter", [
 			        }else{
 			        	domClass.remove(elm, "airport-codes-li-visible");
 			        }
-		        	
+
 		        } else {
 		        	/* var tipAdvise =  new errorTooltip({
 			  			  connectId: "#flying-from",
@@ -255,8 +255,8 @@ define("tui/flights/widget/wherewefly/AutoSuggestFilter", [
 		        	domClass.remove(elm, "airport-codes-li-visible");
 		        }
 		    });
-		    
-		    if(count == 0 ){ 
+
+		    if(count == 0 ){
 		    	autoSuggestFilter.throwErrorTooltip();
 		    	count = 1;
 		  }
@@ -264,32 +264,32 @@ define("tui/flights/widget/wherewefly/AutoSuggestFilter", [
 	  throwErrorTooltip: function(){
 			var autoSuggestFilter = this;
 			dojo.byId("auto-suggest-list-filter").style.display = "none";
-			
+
 			try{
 				autoSuggestFilter.errorTooltip = true;
-				
+
 				var errtips = query(".tooltip", query(".inputfilters")[0]);
 				if(errtips){
 					errtips.forEach(domConstruct.destroy);
 				}
-				
+
 				new errorTooltip({
 		  			  connectId: "#flying-from-filter",
 		  			  errorMsg: "Try slecting from the drop down menu or alternatively search by aiport code.",
 		  			  errorHeaderMsg: "No Matches Found",
 		  			  dynaId: "#flyingFromErr"
 		  		});
-				
+
 			}catch(e){}
 	  },
-		
+
 	  render: function(){
 		  var autoSuggestFilter = this;
 		  var html = autoSuggestFilter.renderTmpl(autoSuggestFilter.tmpl);
 		  return html;
 	  }
-  
+
   });
-  
+
   return tui.flights.widget.wherewefly.AutoSuggestFilter;
 });

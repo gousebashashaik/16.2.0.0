@@ -1,0 +1,87 @@
+<div class="flightresults">
+	{% for itinerary  in itinerarys %}
+
+		<div class="dealsMainContent">
+		            <div class="dealsResultCnt">
+		                <div id="label"  class="label">
+		                    From <b>{{itinerary.outbound.departureAirport.name}} ({{itinerary.outbound.departureAirport.code}}) </b> to <b>{{itinerary.outbound.arrivalAirport.name}} ({{itinerary.outbound.arrivalAirport.code}}){% if itinerary.inbound %},
+		                    		</b> return to <b>{{itinerary.outbound.departureAirport.name}} ({{itinerary.outbound.departureAirport.code}})</b>
+		                     	{% endif %}
+		                </div>
+		                {% if itinerary.inbound %}
+		                <div class="itenaryCnt outboundCnt">
+		                    <div class="planedepartimage"></div>
+		                    <div class="calinfo">
+		                        <ul>
+		                            <li class="callabel"><span class="cal">{{itinerary.outbound.schedule.depDate}}</span></li>
+		                            <li class="timelabel"><span class="time">{{itinerary.outbound.schedule.departureTime}} <span class="arrSymbol">&nbsp;</span> {{itinerary.outbound.schedule.arrivalTime}}</span> </li>
+		                        </ul>
+		                    </div>
+		                    {% ifnotequal itinerary.outbound.journeyDays 0 %} <div class="arrivalStyle">(Arrives +1 day)</div> {% endifnotequal %}
+		                </div>
+
+		                <div class="itenaryCnt inboundCnt">
+		                    <div class="planedepartimage"></div>
+		                    <div class="calinfo">
+		                        <ul>
+		                            <li class="callabel"><span class="cal">{{itinerary.inbound.schedule.depDate}}</span></li>
+		                            <li class="timelabel"><span class="time">{{itinerary.inbound.schedule.departureTime}} <span class="arrSymbol">&nbsp;</span> {{itinerary.inbound.schedule.arrivalTime}}</span></li>
+		                        </ul>
+		                    </div>
+		                     {% ifnotequal itinerary.inbound.journeyDays 0 %}   <div class="arrivalStyle">(Arrives +1 day)</div> {% endifnotequal %}
+		                </div>
+		                {% else %}
+		                 <div class="itenaryCnt onewayResults">
+		                    <div class="planedepartimage"></div>
+		                    <div class="calinfo">
+		                        <ul>
+		                            <li class="callabel"><span class="cal">{{itinerary.outbound.schedule.depDate}}</span></li>
+		                            <li class="timelabel"><span class="time">{{itinerary.outbound.schedule.departureTime}} <span class="arrSymbol">&nbsp;</span> {{itinerary.outbound.schedule.arrivalTime}}</span>
+		                            {% ifnotequal itinerary.outbound.journeyDays 0 %} <div class="arrivalStyle onewayArrivalStyle">(Arrives +1 day)</div> {% endifnotequal %}
+									</li>
+		                        </ul>
+		                    </div>
+
+		                </div>
+
+		                {% endif %}
+		            </div>
+		            <div class="dealsDaysCnt">
+		            	{% if itinerary.inbound  %}
+		            	{% ifnotequal itinerary.duration 0 %}
+		                <div class="dayslabel">
+		                    <span class="day">{{itinerary.duration}}</span>
+		                    <span class="nightslabel">NIGHTS</span>
+		                </div>
+		                {% endifnotequal %}
+		               {% endif %}
+		            </div>
+
+		            <div class="dealsSeatsCnt {% ifequal itinerary.inbound none %}oneway{% endifequal %}">
+		            	{% if itinerary.limAvail %}
+		            		 <p class="seatslabel" > <span><b>HURRY, ONLY <br> {{itinerary.minAvail}}
+		            		 {% ifequal itinerary.minAvail 1 %} SEAT {% else %} SEATS {% endifequal %} LEFT!</b></span>	<!-- <span data-dojo-type="tui.searchResults.view.Tooltips" data-dojo-props="className:'deal-min-avail' ,floatWhere: 'position-top-center', text: 'This shows how many of this seat type are available for your flights at the moment.<br/> There may be more of this seat type available for different flight dates and <br/>  combinations. We may also occasionally <br/>put more seats on sale at a later date.'"><span><b>HURRY, ONLY <br>{{itinerary.minAvail}} SEATS LEFT!</b></span></span> --></p>
+	            	{% endif %}
+	            </div>
+	            <div class="dealsBtnCnt">
+	               <div class="pricebutton" data-dojo-type="tui.flightdeals.FlightDealsPax"  data-dojo-props='itineraryID:"{{itinerary.id}}"' >
+	                   <a class="pricelabel">
+		                   <div class="price"><span class="currencyStyle">{{currency}}</span>{{itinerary.pricePP}}</div>
+		                   <div class="perpersonlabel">{% if itinerary.inbound  %}return{% endif %} per person</div>
+	                    </a>
+	                </div>
+	            </div>
+			</div>
+
+	<div class="clear"></div>
+	{% endfor %}
+</div>
+ {% if showPagination %}
+ <div class="clear"></div>
+<div class="pagiNate" analytics-id="COM_FO_FLIGHT_DEALS_RESULTS" analytics-instance="1" analytics-text="FO_Deals_Results_pagination" >
+	<div data-dojo-type="tui.widget.pagination.Pagination"  data-dojo-props="totalResults: {{itineraryCount}},  resultsPerPage: 20, pagesPerSide: 1,  showFirstLast: false">
+
+	</div>
+</div>
+ <div class="clear"></div>
+{% endif %}

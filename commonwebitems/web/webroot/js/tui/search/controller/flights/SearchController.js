@@ -76,6 +76,10 @@ define("tui/search/controller/flights/SearchController", ["dojo",
 
       //var mediator = dijit.registry.byId('mediator');
       //mediator ? mediator.registerController(searchController) : null;
+      if(searchController.tracsEndDate){
+    	  searchController.setDateFormat(searchController.tracsEndDate);
+      }
+
 
       searchController.searchResultsPage = searchController.pageId === "searchresultspage" || searchController.pageId === "singleaccomsearchresultspage" || searchController.pageId === "flightSearchResultsPage";
 
@@ -121,7 +125,18 @@ define("tui/search/controller/flights/SearchController", ["dojo",
           });
         });
       }
+
+      searchController.attatchEvents();
     },
+    attatchEvents: function(){
+    	 var searchController = this;
+    	 dojo.query("#oneway").on("click", function(evt){
+				 // 	event.stop(evt);
+				  	searchController.isOnewayChecked(evt);
+				});
+     },
+
+
 
     deferLoading: function (promise) {
       var searchController = this;
@@ -234,6 +249,25 @@ define("tui/search/controller/flights/SearchController", ["dojo",
         // publish update to child-ages, chrome/safari has issues with caching values
         dojo.publish("tui.searchPanel.view.ChildSelectOption.updateChildAgeValues");
       }, 300);
+    },
+
+    setDateFormat : function(dateObj){
+    	var searchController = this,newDate,
+    		parts = dateObj.split('-');
+    		newDate = new Date(parts[2],parts[1]-1,parts[0]);
+    		searchController.searchPanelModel.tracsEndDate =  newDate;
+    		searchController.searchPanelModel.tracsEndDateValidation();
+
+    },
+    isOnewayChecked: function(evt){
+    	var searchController = this;
+    	if(dojo.query(".child-age-label").length != 0 && searchController.searchPanelModel.oneWayOnly === true) {
+    		dojo.query(".child-age-label")[0].innerText = "Child ages (on flying date)";
+    	}
+    	else if(dojo.query(".child-age-label").length != 0) {
+    		dojo.query(".child-age-label")[0].innerText = "Child ages (on return date)";
+    	}
+
     }
 
   });

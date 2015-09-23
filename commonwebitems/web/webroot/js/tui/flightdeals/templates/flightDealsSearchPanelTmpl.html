@@ -2,65 +2,102 @@
     <div class="deals-container" id="deals-container">
         <div class="textContainer" id="textContainer">
             <div class="calimg1"></div>
-            <label class="flydetails">I CAN FLY OUT :</label>
-            <div class="select1" id="dealsExpandable" tabindex="0" data-dojo-type="tui.widget.form.flights.DealsExpandable">
-                <div class="placeholder" id="flyoutPlaceholder">Please Select</div>
+            <label class="flydetails">I CAN FLY OUT:</label>
+            <div class="select1" id="dealsExpandable" tabindex="0" data-klass-id="foDealsExpandable" data-dojo-type="tui.mvc.Klass" >
+                <div class="placeholder" id="flyoutPlaceholder">Please select</div>
             </div>
         </div>
         <div class="textContainer" id="textContainer1">
             <div class="calimg2"></div>
-            <label class="flydetails">FLY FROM :</label>
-           <div class="select2" id="FlyFromDealsExpandable" tabindex="0" data-dojo-type ="tui.flightdeals.FlyFromDealsExpandable">
-                <div class="placeholder" id="flyfromPlaceholder">Any airport</div>
+            <label class="flydetails">FLY FROM:</label>
+           <div class="select2" id="FlyFromDealsExpandable" tabindex="0" data-klass-id="foFlyFromDealsExpandable" data-dojo-type="tui.mvc.Klass" >
+                <div class="placeholder" id="flyfromPlaceholder"><span>Any UK airport</span></div>
             </div>
         </div>
         <div class="textContainer" id="textContainer2">
             <div class="calimg3"></div>
             <label class="flydetails">GO TO:</label>
-            <div class="select3" id="GoToDealsExpandable" tabindex="0" data-dojo-type ="tui.flightdeals.GoToDealsExpandable">
-                <div class="placeholder" id="gotoPlaceholder">Any destination</div>
+            <div class="select3" id="GoToDealsExpandable" tabindex="0"  data-klass-id="foGoToDealsExpandable" data-dojo-type="tui.mvc.Klass" >
+                <div class="placeholder" id="gotoPlaceholder"><span>Any destination</span></div>
             </div>
-        </div>
-        <div class="showbutton">
-            <div class="showdetails">
-            </div>
-        </div>
-        <div class="checks">
-            <span class="per-checkbox">
-				<span data-dojo-type="dijit.form.CheckBox" id="dealsOneWay" disabled> </span>
+            <div class="checks">
+            <span class="per-checkbox" analytics-id="COM_FO_DEALS_SEARCH" analytics-instance="1" analytics-text="FO_One_Way_Only">
+				<span data-dojo-type="dijit.form.CheckBox" id="dealsOneWay"> </span>
 	            <label for="dealsOneWay" class="labelHover">One way only</label>
             </span>
         </div>
+        </div>
+        <div class="showbutton" analytics-id="COM_FO_DEALS_SEARCH" analytics-instance="1" analytics-text="FO_Show_Deals">
+           <a class="button jumbo dealsbutton disabled" id="dealsbutton" data-componentid="WF_COM_308" analytics-id="308" analytics-instance="1" analytics-text="moreDetails" enslinktrackattached="true">SHOW DEALS</a>
+        </div>
+    </div>
 
+    <div class="duration-options dur" id="durationOptionsFliter">
+	    <div id="results" analytics-id="COM_FO_DEALS_SEARCH" analytics-instance="1" analytics-text="FO_More_Filter_Options">
+           <label>DURATION</label>
+           <span class="dur-checkbox" analytics-id="COM_FO_DEALS_SEARCH" analytics-instance="1" analytics-text="FO_AFewDays"> <span data-dojo-type="dijit.form.CheckBox" id="dur1" data-dojo-props="value:'3-5'"></span>
+           <label for="dur1" class="per-checkbox labelHover">A few days</label>
+           </span>
+           <span class="dur-checkbox" analytics-id="COM_FO_DEALS_SEARCH" analytics-instance="1" analytics-text="FO_AroundAWeek"> <span data-dojo-type="dijit.form.CheckBox" id="dur2" data-dojo-props="value:'6-9'"></span>
+           <label for="dur2" class="per-checkbox labelHover">Around a week</label>
+           </span>
+           <span class="dur-checkbox" analytics-id="COM_FO_DEALS_SEARCH" analytics-instance="1" analytics-text="FO_10-11Nights"> <span data-dojo-type="dijit.form.CheckBox" id="dur3" data-dojo-props="value:'10-11'"></span>
+           <label for="dur3" class="per-checkbox labelHover">10 - 11 nights</label>
+           </span>
+           <span class="dur-checkbox" analytics-id="COM_FO_DEALS_SEARCH" analytics-instance="1" analytics-text="FO_Around2Weeks"> <span data-dojo-type="dijit.form.CheckBox" id="dur4" data-dojo-props="value:'12-15'"></span>
+           <label for="dur4" class="per-checkbox labelHover">Around 2 weeks</label>
+           </span>
+           <span class="dur-checkbox last-child" analytics-id="COM_FO_DEALS_SEARCH" analytics-instance="1" analytics-text="FO_LongerDur"> <span data-dojo-type="dijit.form.CheckBox" id="dur5" data-dojo-props="value:'16-99'"></span>
+           <label for="dur5" class="per-checkbox labelHover">Longer durations</label>
+           </span>
+	    </div>
     </div>
     <div class="filter-options">
-        <div id="more-filter">More filter Otions
-            <i class="arrow-down"></i></div>
-        <div id="results">
-            <h3>FLIGHT DEPARTURE TIME | GOING OUT</h3>
-            <span class="night-checkbox"> <span data-dojo-type="dijit.form.CheckBox" id="dept1"></span>
-            <label for="dept1" class="per-checkbox">Morning(06:00-11:59)</label>
-            </span>
-            <span class="night-checkbox"> <span data-dojo-type="dijit.form.CheckBox" id="dept2"></span>
-            <label for="dept2" class="per-checkbox">Afternoon(12:00-17:59)</label>
-            </span>
-            <span class="night-checkbox"> <span data-dojo-type="dijit.form.CheckBox" id="dept3"></span>
-            <label for="dept3" class="per-checkbox">Evening(18:00-20:59)</label>
-            </span>
-            <span class="night-checkbox"> <span data-dojo-type="dijit.form.CheckBox" id="dept4"></span>
-            <label for="dept4" class="per-checkbox">Night(21:00-05:59)</label>
-            </span>
-            <div class="horizantal-line"></div>
-            <span class="less-filter">Less filter options<i class="arrow-up"></i></span>
-        </div>
-        <div id="results">
-            <h3>FLIGHT DEPARTURE TIME | GOING OUT</h3>
-            <span class="night-checkbox"> <input type="checkbox" ><span>Morning(06:00-11:59)</span></span>
-            <span class="night-checkbox"> <input type="checkbox" ><span>Afternoon(12:00-17:59)</span></span>
-            <span class="night-checkbox"> <input type="checkbox" ><span>Evening(18:00-20:59)</span></span>
-            <span class="night-checkbox"> <input type="checkbox" ><span>Night(21:00-05:59)</span></span>
-            <div class="horizantal-line"></div>
-            <span class="less-filter">Less filter options<i class="arrow-up"></i></span>
-        </div>
+        <div id="more-filter" analytics-id="COM_FO_DEALS_SEARCH" analytics-instance="1" analytics-text="FO_More_Filter_Options">More filter options</div>
+
+         <div id="less-filter">
+           <div class="flightDepartureTime" id="departureTimeFliter">
+           		<div id="clear-filter" class="clear-filter disabled">Clear filters</div>
+				<label>FLIGHT DEPARTURE TIME | GOING OUT</label>
+	            <span class="fly-time-checkbox" analytics-id="COM_FO_DEALS_SEARCH" analytics-instance="1" analytics-text="FO_Morning"> <span data-dojo-type="dijit.form.CheckBox" id="dept1" data-dojo-props="value:'A'"></span>
+	            <label for="dept1" class="per-checkbox labelHover">Morning (06:00 - 11:59)</label>
+	            </span>
+	            <span class="fly-time-checkbox" analytics-id="COM_FO_DEALS_SEARCH" analytics-instance="1" analytics-text="FO_Deals_Afternoon"> <span data-dojo-type="dijit.form.CheckBox" id="dept2" data-dojo-props="value:'B'"></span>
+	            <label for="dept2" class="per-checkbox labelHover">Afternoon (12:00 - 17:59)</label>
+	            </span>
+	            <span class="fly-time-checkbox" analytics-id="COM_FO_DEALS_SEARCH" analytics-instance="1" analytics-text="FO_Deals_Evening"> <span data-dojo-type="dijit.form.CheckBox" id="dept3" data-dojo-props="value:'C'"></span>
+	            <label for="dept3" class="per-checkbox labelHover">Evening (18:00 - 20:59)</label>
+	            </span>
+	            <span class="fly-time-checkbox" analytics-id="COM_FO_DEALS_SEARCH" analytics-instance="1" analytics-text="FO_Deals_Night"> <span data-dojo-type="dijit.form.CheckBox" id="dept4" data-dojo-props="value:'D'"></span>
+	            <label for="dept4" class="per-checkbox labelHover">Night (21:00 - 05:59)</label>
+	            </span>
+	            <div id="budgetFilterCnt">
+		            <div class="horizantal-line"></div>
+		            <div id="budgetFilterCmp">
+			          	 <label>BUDGET</label>
+			          	<div class="dark-bg-padding budgetContainer">
+		                    <div class="filter-container"  id="budgetpp"  data-klass-id="foDealsBudgetFilter" data-dojo-type="tui.mvc.Klass" analytics-id="COM_FO_DEALS_SEARCH" analytics-instance="1" analytics-text="FO_Deals_Budget">
+		                         <div class="filter-slider c">
+		                             <ul>
+		                                 <!-- The number for li should be equal to the number of steps (4 for mobile) loop through in tmpl-->
+		                                 <li class="b" data-value='0'>&pound;<span></span></li>
+		                                 <li class="b" data-value='0'><span></span></li>
+		                                 <li class="b" data-value='0'><span></span></li>
+		                                 <li class="b" data-value='0'><span></span></li>
+		                                 <li class="b" data-value='0'>&pound;&pound;<span></span></li>
+		                             </ul>
+		                             <span class="fill" style="width:100%;"></span>
+		                         </div>
+		                     </div>
+		                 </div>
+	                 </div>
+	                 <div class="applyButton" analytics-id="COM_FO_DEALS_SEARCH" analytics-instance="1" analytics-text="FO_Apply">
+	                     <a id="dealsApplybutton" class="button jumbo dealsApplyButton disabled">APPLY</a>
+	                 </div>
+	                 <div class="clear"></div>
+                 </div>
+			</div>
+			<div class="less-filter-text icn">Less filter options</div>
+		</div>
     </div>
 </div>

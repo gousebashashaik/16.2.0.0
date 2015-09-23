@@ -7,7 +7,7 @@
 	   <h3>{{searchMessaging.date.selectArrivalDate}} | </h3>
 	     <a href="javascript:void(0);"  analytics-id="COM_FO_SEARCH_PANEL" analytics-instance="1" analytics-text="ReturningChangeDepDate" class="changeDeparture change-departure">{{searchMessaging.date.changeDepartureDate}}</a>
 	</div>
-	
+
     <ul class="cal-nav cal-row arrivaldate-selector">
         <li class="prev cal-prev cal-nav-item"><a href="javascript:void(0);" title="Previous"  analytics-id="COM_FO_SEARCH_PANEL" analytics-instance="1" analytics-text="LeftScrollDateReturning" class="date-prev arrow-main arrow-left arrow-left-link arrow-lrg ir">&larr;</a></li>
         <li class="cal-month-selector cal-nav-item" analytics-id="COM_FO_SEARCH_PANEL" analytics-instance="1" analytics-text="ReturningDepDate">
@@ -19,8 +19,8 @@
         </li>
         <li class="next cal-next cal-nav-item"><a href="javascript:void(0);" title="Next"  analytics-id="COM_FO_SEARCH_PANEL" analytics-instance="1" analytics-text="RightScrollDateReturning" class="date-next arrow-main arrow-right arrow-right-link arrow-lrg ir">&rarr;</a></li>
     </ul>
-    
-    <table class="datepickertable cal-table first-month">
+
+    <table class="datepickertable cal-table first-month" analytics-id="COM_FO_SEARCH_PANEL" analytics-instance="1" analytics-text="ReturnGrid">
         <thead>
         <tr class="weekdays">
             {% for day in days %}
@@ -45,16 +45,16 @@
         </tr>
         </tbody>
     </table>
-    
+
     <div class="second-month-datepickertable second-month next-month-label">
          {% for monthAndYearLabel in monthAndYearLabelForNextMonth %}
 	       {% ifequal monthAndYearLabel monthAndYearTxtForNextMonth %}
 	           <span>{{monthAndYearTxtForNextMonth}}</span>
 	       {% endifequal %}
 	     {% endfor %}
-	</div> 
-    
-    <table class="second-month-datepickertable cal-table second-month">
+	</div>
+
+    <table class="second-month-datepickertable cal-table second-month"  analytics-id="COM_FO_SEARCH_PANEL" analytics-instance="1" analytics-text="ReturnGrid">
         <thead>
         <tr class="weekdays">
             {% for day in days %}
@@ -79,16 +79,16 @@
         </tr>
         </tbody>
     </table>
-    
+
     {% ifequal widgetController.searchApi 'getPrice' %}<span class="arrow-main arrow-left arrow-left-bg"></span>{% endifequal %}
     {% ifequal widgetController.searchApi 'searchPanel' %}<span class="arrow-main arrival-arrow-top arrow-top-bg"></span>{% endifequal %}
-    <div class="noResultsMonthCnt"></div>   
-    <div class="noResultsNextMonthCnt"></div>    
+    <div class="noResultsMonthCnt"></div>
+    <div class="noResultsNextMonthCnt"></div>
 </div>
 {% endifequal %}
 
 {% ifequal templateview "arrivaldatepickercells" %}
-<table class="datepickertable cal-table first-month">
+<table class="datepickertable cal-table first-month"  analytics-id="COM_FO_SEARCH_PANEL" analytics-instance="1" analytics-text="ReturnGrid">
     <thead>
     <tr class="weekdays">
         {% for day in days %}
@@ -120,9 +120,9 @@
            <span>{{monthAndYearTxtForNextMonth}}</span>
        {% endifequal %}
      {% endfor %}
-</div>    
+</div>
 
-<table class="second-month-datepickertable cal-table second-month">
+<table class="second-month-datepickertable cal-table second-month"  analytics-id="COM_FO_SEARCH_PANEL" analytics-instance="1" analytics-text="ReturnGrid">
     <thead>
     <tr class="weekdays">
         {% for day in days %}
@@ -157,17 +157,17 @@
                <a href="javascript:void(0);" class="first-month-monthbar-link">{{searchMessaging.date.availability}}</a>
            </li>
        </ul>
-   </div> 
-   
+   </div>
+
    <div class="second-month-datepickertable second-month next-month-label">
         {% for monthAndYearLabel in monthAndYearLabelForNextMonth %}
        {% ifequal monthAndYearLabel monthAndYearTxtForNextMonth %}
            <span>{{monthAndYearTxtForNextMonth}}</span>
        {% endifequal %}
      {% endfor %}
-	</div>    
-	
-	<table class="second-month-datepickertable cal-table second-month first-month-not-available">
+	</div>
+
+	<table class="second-month-datepickertable cal-table second-month first-month-not-available"  analytics-id="COM_FO_SEARCH_PANEL" analytics-instance="1" analytics-text="ReturnGrid">
 	    <thead>
 	    <tr class="weekdays">
 	        {% for day in days %}
@@ -195,7 +195,7 @@
 {% endifequal %}
 
 {% ifequal templateview "noavailabilityinsecondmonth" %}
-   <table class="datepickertable cal-table first-month">
+   <table class="datepickertable cal-table first-month"  analytics-id="COM_FO_SEARCH_PANEL" analytics-instance="1" analytics-text="ReturnGrid">
 	    <thead>
 	    <tr class="weekdays">
 	        {% for day in days %}
@@ -235,6 +235,6 @@
 	<div class="mnoth-bar"  analytics-id="COM_FO_SEARCH_PANEL" analytics-instance="1" analytics-text="Sorryoverall">
 	  <p class="month-not-available-message start" >{{monthbarmessagestart}} </p>
 	  <p class="month-not-available-message middle" >{{unAvailableMonthName}} </p>
-	  <p class="month-not-available-message end" >{{monthbarmessageend}} </p>  
+	  <p class="month-not-available-message end" >{{monthbarmessageend}} </p>
 	</div>
 {% endifequal %}

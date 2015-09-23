@@ -1,0 +1,59 @@
+<div class="airport-wrapper">
+<div class="uk-airports show" id="ukAirports-content">
+<div class="col">
+		<ul>
+ 			{% for airport in ukAirports %}
+		 		<li>
+		 	 		{% ifequal airport.cFlag true%}
+             			<span class="grpHeading">
+             			<label>{{ airport.countryName }} </label>
+             			</span>
+             		{% endifequal %}
+	                      <label class="childCountry" > {{airport.name}} ({{airport.id}})</label>
+		 		</li>
+		 	   		{% ifequal airport.nextCol true %}
+           			 {% if not forloop.last   %}
+          </ul>
+       </div>
+       	<div class="col">
+          <ul>
+           			 {% endif %}
+               		{% endifequal %}
+        	{% endfor %}
+          </ul>
+       	</div>
+</div>
+
+<div id="overseasAirports-content">
+
+	<!-- <div class="overseasAirports">
+		<input id="overseas-airport-filter" value="" autocomplete="off"
+			placeholder="Type in airport name or airport code" lang="en"
+			data-dojo-type="tui.flights.widget.wherewefly.OverseasAutoSuggestFilter">
+	</div> -->
+       <div class="col">
+        <ul>
+        	 {% for airport in overseasAirports %}
+        	   <li>
+        	 		{% ifequal airport.cFlag true%}
+             			<span class="grpHeading">
+             				<label>{{ airport.countryName }}</label>
+             			</span>
+             		{% endifequal %}
+                  	<label class="childCountry"> {{airport.name}} ({{airport.id}})</label>
+
+               </li>
+
+          {% ifequal airport.nextCol true %}
+           			 {% if not forloop.last   %}
+          </ul>
+       </div>
+       	<div class="col">
+          <ul>
+           			 {% endif %}
+               		{% endifequal %}
+        	{% endfor %}
+          </ul>
+       	</div>
+	</div>
+</div>

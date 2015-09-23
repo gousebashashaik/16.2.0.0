@@ -1,0 +1,33 @@
+<div>
+    <h3>Whos travelling?</h3>
+    <div class="flight-pax">
+        <div class="sub-col adult" analytics-id="COM_FO_FLIGHT_DEALS_RESULTS" analytics-instance="1" analytics-text="FO_Deals_Adults">
+            <label for="totalAdults">ADULTS</label>
+             <select name="dealsAdults" class="dropdown noborder number-dropdown dealsAdultDropDown" tabindex="0" data-dojo-type="tui.widget.form.SelectOption" data-dojo-props="maxHeight:180">
+                 {% for i in adultsCount %}
+                 	<option value="{{forloop.counter0}}" {% ifequal forloop.counter0  2 %} selected="selected" {% endifequal%}>{{forloop.counter0}}</option>
+                 {% endfor %}
+             </select>
+        </div>
+        <div class="sub-col child" analytics-id="COM_FO_FLIGHT_DEALS_RESULTS" analytics-instance="1" analytics-text="FO_Deals_Children">
+            <label for="totalChildren">CHILDREN
+                <span>(0-15)</span>
+            </label>
+
+			<select  name="dealsTotalChildren" class="dealsTotalChildren dropdown" tabindex="0" data-dojo-type="tui.widget.form.SelectOption" data-dojo-props="maxHeight:180">
+			 	{% for j in childCount %}
+					 <option  value="{{forloop.counter0}}" >{{forloop.counter0}}</option>
+                 {% endfor %}
+            </select>
+
+        </div>
+         <div class="dealsChildPax">
+
+            </div>
+        <div class="sub-col search-col" analytics-id="COM_FO_FLIGHT_DEALS_RESULTS" analytics-instance="1" analytics-text="FO_More_Filter_Options">
+            <a href="javascript:void(0);"  class="button search-submit ensLinkTrack"  tabindex="0">Continue</a>
+        </div>
+    </div>
+    <div class="clear"> </div>
+</div>
+

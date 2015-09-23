@@ -1,13 +1,20 @@
-define([ "dojo",
+define("tui/widget/form/flights/DealsTitlePane" ,[ "dojo",
         "dojo/_base/declare",
         "dijit/TitlePane",
-        "dojo/text!./templates/dealstitlepane.html"
-        ],function(dojo,declare, TitlePane, template){
-		declare("tui.widget.form.flights.DealsTitlePane",[TitlePane],{
+        "dojo/text!./templates/dealstitlepane.html",
+        "tui/widget/_TuiBaseWidget"
+        ],function(dojo,declare, TitlePane, template, _TuiBaseWidget){
+		declare("tui.widget.form.flights.DealsTitlePane",[TitlePane, _TuiBaseWidget],{
 
 			templateString: template,
 
 			secondTitle: "",
+
+			postCreate: function(){
+				var DealsTitlePane=this;
+					DealsTitlePane.inherited(arguments);
+					DealsTitlePane.tagElement(DealsTitlePane.domNode, "FO_Deals_Results_Heading");
+			},
 
 			_setSecondTitleAttr: { node: "secondTitleNode", type: "innerHTML" },	// override default where title becomes a hover tooltip,
 

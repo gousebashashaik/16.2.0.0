@@ -1,8 +1,8 @@
 {% ifequal templateview "twoWayResult" %}
 <div id="searchResultContainer">
-	<div class="selectedDepaFlight">Select your flights to and from  <b>{{depratingFrom}} ({{departingFromCode}})</b></div>
-	<p class="caption-top"><span>DEPARTING</p>
-	<table cellpadding="0" cellspacing="0"align="left" class="searchResultTable">
+	<!-- <p class="caption-top"><span>DEPARTING</p> -->
+	<table cellpadding="0" cellspacing="0"align="left" class="searchResultTable" analytics-id="COM_FO_SEARCH_RESULTS_PRICE_GRID" analytics-instance="1" analytics-text="PriceGrid">
+	<caption class="caption-top">DEPARTING</caption>
 		{% for returnDate in returnDates %}
 			{% if forloop.first %}
 			<tr>
@@ -33,8 +33,8 @@
 										>
 										{% if returnDate.itinerary %}
 											{% for itinerary in returnDate.itinerary%}
-												 	{% ifequal   returnDate.curDate   itinerary.inbound.schedule.depDate %}
-												 		{% ifequal  departureDate.curDate   itinerary.outbound.schedule.depDate%}
+												 	{% ifequal   returnDate.curDate   itinerary.inbound.depDate %}
+												 		{% ifequal  departureDate.curDate   itinerary.outbound.depDate%}
 
 												 			{% ifequal itinerary.showComp false%}
 												 					<div class="srMultiAirport"  data-componentId="{{itinerary.id}}"  id="{{itinerary.id}}">From</div>
@@ -119,7 +119,6 @@
 	</table>
 	<!-- <p class="caption-bottom">&nbsp</p> -->
 	<!--  <p  class="caption-left"><span>RETURNING</span></p> -->
-
 </div>
 {% endifequal %}
 
@@ -127,9 +126,8 @@
 {% ifequal templateview "oneWayResult" %}
 
 <div id="searchResultContainer" class="onewayResultCnt" >
-	<div class="selectedDepaFlight">Select your flights to  <b>{{depratingFrom}} ({{departingFromCode}}) </b></div>
-	<p class="caption-oneway-top"><span>DEPARTING</p>
-	<table cellpadding="0" cellspacing="0"  class="searchResultTable">
+	<table cellpadding="0" cellspacing="0"  class="searchResultTable" analytics-id="COM_FO_SEARCH_RESULTS_PRICE_GRID" analytics-instance="1" analytics-text="PriceGrid">
+	<caption class="caption-top oneway">DEPARTING</caption>
 		<tr>
 
 			<td class="arrowstyle arrActive prev"><div id="leftArrow"  analytics-instance="1" analytics-text="leftClickArrow" analytics-id="{{componentId}}">&nbsp;</div></td>
@@ -156,7 +154,7 @@
 										{% if departureDate.itinerary %}
 											{% for itinerary in departureDate.itinerary%}
 
-												 		{% ifequal  departureDate.curDate   itinerary.outbound.schedule.depDate%}
+												 		{% ifequal  departureDate.curDate   itinerary.outbound.depDate%}
 
 												 			{% ifequal itinerary.showComp false%}
 												 					<div class="srMultiAirport"  id="{{itinerary.id}}"  data-componentId="{{itinerary.id}}">From</div>

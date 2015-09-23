@@ -1,8 +1,12 @@
 <div>
 	<h3>PLEASE SELECT ONE OR MORE DESTINATIONS</h3>
 		<span class="anyAirport">
-	<span data-dojo-type="dijit.form.CheckBox" class="anyOSAirport" id="anyOSAirport" value="anyOSAirport"> </span>
-	<label for="anyOSAirport" class="labelHover">ANY AIRPORT</label>
+	<span data-dojo-type="dijit.form.CheckBox" class="anyOSAirport" id="anyOSAirport" value="anyOSAirport"
+		{% if dealsPanelModel.gotoAllAirports %}
+		 	checked=checked
+		{% endif %}
+	> </span>
+	<label for="anyOSAirport" class="labelHover">ANY DESTINATION</label>
 	</span>
 	<div class="horizantal-line"></div>
 	<div class="col">
@@ -11,8 +15,18 @@
         	   <li>
         	 		{% ifequal airport.cFlag true%}
              			<span class="grpHeading">
-             				<span data-dojo-type="dijit.form.CheckBox" class="{{ airport.countryCode}}" id="{{ airport.countryCode}}" value="anyOS"></span>
-             				<label for="{{airport.countryCode}}" class="labelHover">{{ airport.countryName }}(ANY)</label>
+             				<span data-dojo-type="dijit.form.CheckBox" data-countryCode="{{airport.countryCode}}" class="{{ airport.countryCode}}" id="{{ airport.countryCodeLabel}}" value="{{ airport.countryName }}"
+             				  {% for toAirport in dealsPanelModel.toAirportGpName %}
+                         			{% ifequal toAirport airport.countryName %}
+                         		  		checked=checked
+                         			{% endifequal %}
+                    		{% endfor %}
+
+             				></span>
+             				<label for="{{airport.countryCodeLabel}}" class="labelHover
+             				{% for toAirport in dealsPanelModel.toAirportGpName %}
+	                     	{% ifequal toAirport airport.countryName %}selected {% endifequal %}
+                    	 {% endfor %}">{{ airport.countryName }}</label>
              			</span>
              		{% endifequal %}
              			<span class="childCountry">
@@ -23,13 +37,29 @@
                          data-airportmodel-groups="{{airport.group}}"
                          data-airportmodel-countryCode="{{airport.countryCode}}"
                          name="{{airport.id}}"
-                         id="{{airport.id}}"
+                         id="{{airport.ids}}"
                          value="{{airport.id}}"
-                         class="{{airport.id}} {{ airport.countryCode}}"></span>  
-                  	<label for="{{airport.id}}" class="{% if not airport.available %}disabled {% endif %}"> {{airport.name}} ({{airport.id}})</label>
+                         title="{{airport.name}}"
+                         class="{{airport.id}} {{ airport.countryCode}}"
+                         {% if not airport.available %} disabled {% endif %}
+                         {% for toAirport in dealsPanelModel.toAirports %}
+                         	{% if toAirport.length > 0 %}
+                         		{% ifequal toAirport airport.id %}
+                         		  checked=checked
+                         		{% endifequal %}
+                        	{% endif %}
+                    	{% endfor %}
+                         > </span>
+                  	<label for="{{airport.ids}}" class="{% if not airport.available %}disabled {% endif %} labelHover
+                  	 {% for toAirport in dealsPanelModel.toAirports %}
+                        {% if toAirport.length > 0 %}
+                            	{% ifequal toAirport airport.id %}selected {% endifequal %}
+                        {% endif %}
+                    {% endfor %}
+                  	"> {{airport.name}} ({{airport.id}})</label>
                     </span>
                </li>
-                    
+
             {% ifequal airport.nextCol true %}
             {% if not forloop.last %}
            </ul>
@@ -41,6 +71,6 @@
          {% endfor %}
           </ul>
         </div>
-    
+
 </div>
 

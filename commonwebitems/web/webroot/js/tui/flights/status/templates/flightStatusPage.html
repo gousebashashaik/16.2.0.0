@@ -1,0 +1,52 @@
+<div class="tui-theme">
+		<div class="searchPaneComp">
+			<label>FLIGHT NUMBER</label>
+			<div  id="flightNumber"	data-dojo-type="tui.flights.status.FlightNumAutoSuggest">
+			</div>
+			<!-- <div class="placeholder" id="flightNumberPlaceholder">Type Flight Number. i.e TOM 619</div> -->
+				<div id="errorpopup" class="tooltip error medium nomatch position-bottom-center" analytics-id="300" analytics-instance="3" analytics-text="NO_MATCH_FOUND">
+						<h4><span class="sprite-img-grp-1"></span><b>Flight number not recognised</b></h4>
+						<p>Please check your booking confirmation, or <br>
+						alternatively search by departure/arrival airport.<br/><a>Still can't find your flight? Please contact our  <br> Call Centre on 0203 451 2695</a></p>
+						<span class="arrow" style="top:-7px;"></span>
+				</div>
+		</div>
+		<div class="searchPaneComp statusComp">
+			<label for="flyFromStat">FLYING FROM</label>
+			<div id="flyFromStat" data-dojo-type="tui.flights.status.AutoSuggest" id="flyFromStat">
+			</div>
+			<div id="errorpopupDep"
+						class="tooltip error medium nomatch position-bottom-center"
+						analytics-id="300" analytics-instance="3"
+						analytics-text="NO_MATCH_FOUND">
+						<h4><span class="sprite-img-grp-1"></span><b>No matches Found</b></h4>
+						<p>Try selecting from the drop down menu or <br>
+						alternatively search by flight number.<br/><a>Still can't find your flight? Please contact our  <br> Call Centre on 0203 451 2695</a></p>
+						<span class="arrow"></span>
+				</div>
+			<div class="allFlights">
+					<span class="flightImg flightShowDeptIcon"></span>
+					<a id="allDeps" href="javascript:void(0);">Show all departures</a>
+				</div>
+		</div>
+		<div class="searchPaneComp statusComp rightPad_0">
+			<label for="flyToStat">FLYING TO</label>
+			<div id="flyToStat" data-dojo-type="tui.flights.status.FlyToAutoSuggest">
+
+			</div>
+			<div id="errorpopupArr"
+					class="tooltip error medium nomatch position-bottom-center"
+					analytics-id="300" analytics-instance="3"
+					analytics-text="NO_MATCH_FOUND">
+					<h4><span class="sprite-img-grp-1"></span><b>No matches Found</b></h4>
+					<p>Try selecting from the drop down menu or <br>
+					alternatively search by flight number.<br/><a>Still can't find your flight? Please contact our  <br> Call Centre on 0203 451 2695</a></p>
+					<span class="arrow"></span>
+				</div>
+			<div class="allFlights">
+					<span class="flightImg flightShowArvlIcon"></span>
+					<a id="allArvs" href="javascript:void(0);" >Show all arrivals</a>
+				</div>
+		</div>
+		<div style="clear:both"></div>
+</div>

@@ -2827,14 +2827,136 @@ define({
 	  type: "tui/searchResults/view/flights/NoSearchResultsController",
 	  searchPanelModel: "$foSearchPanelModel"
   },
+
+
+/* Flights Only Deals related controllers*/
+
   foDealsController :{
 	  type: "tui/flightdeals/FlightDealsController",
+	  dealsPanelModel: "$foDealsPanelModel",
+	  scope: "singleton"
+  },
+
+  foDealsPanelModel: {
+		type: "tui/flightdeals/model/DealsPanelModel",
+		dealsSavedSearch: dojoConfig.site + "/deals/search",
+		scope: "singleton"
+	},
+
+	 foDealsExpandable: {
+			type:  "tui/flightdeals/DealsExpandable",
+			dealsPanelModel: "$foDealsPanelModel",
+			scope: "singleton",
+			binds: [
+				      {
+				        target: "dealsPanelModel",
+				        watch: {
+				        	year: ["updateIcanFlyView"],
+				        	days :["updateIcanFlyView"],
+				        	flexible : ["updateIcanFlyView"]
+				        }
+				      }
+				  ]
+	},
+
+	foFlyFromDealsExpandable: {
+		type:  "tui/flightdeals/FlyFromDealsExpandable",
+		dealsPanelModel: "$foDealsPanelModel",
+		scope: "singleton",
+		binds: [
+			      {
+			        target: "dealsPanelModel",
+			        watch: {
+			        	fromAirports: ["updateFlyFromView"],
+			        	fromAirportNames: ["updateFlyFromView"]
+			        }
+			      }
+			  ]
+	},
+
+	foGoToDealsExpandable: {
+		type:  "tui/flightdeals/GoToDealsExpandable",
+		dealsPanelModel: "$foDealsPanelModel",
+		scope: "singleton",
+		binds: [
+			      {
+			        target: "dealsPanelModel",
+			        watch: {
+			        	toAirports: ["updateGoToView"],
+			        	toAirportNames: ["updateGoToView"]
+			        }
+			      }
+			  ]
+	},
+
+
+
+
+  foDealsResultsController :{
+	  type: "tui/flightdeals/FlightDealsResultsController",
+	  dealsPanelModel: "$foDealsPanelModel",
+	  scope: "singleton"
+  },
+
+  /* Flights Only Deals related controllers*/
+  foTimeTableController :{
+	  type: "tui/flights/timetable/FlightTimeTableController",
 	  searchPanelModel: "$foSearchPanelModel"
+  },
+  foDealsBudgetFilter:{
+	  type: "tui/flightdeals/view/sliders/dealsBudgetFilter",
+	  dealsPanelModel: "$foDealsPanelModel",
+	  scope: "singleton"
+  },
+  foNoDealsSearchResultController :{
+	  type: "tui/flightdeals/FlightDealsNoResultsController",
+	  dealsPanelModel: "$foDealsPanelModel",
+	  scope: "singleton"
+
+  },
+  /* Flights Status related controllers*/
+  foStatusController:{
+	  type: "tui/flights/status/FlightStatusController",
+	  searchPanelModel: "$foSearchPanelModel"
+  },
+
+  flightNumber:{
+	  type: "tui/flights/status/FlightNumber",
+	  searchPanelModel: "$foSearchPanelModel"
+  },
+
+/*========================== Flights Search components END ====================================*/
+
+/*========================== Where We Fly components START ====================================*/
+
+  foWhereWeFlyController :{
+	  type: "tui/flightWhereWeFly/WhereWeFlyController",
+	  mapPanelModel : "$foWhereWeFlyPanelModel",
+	  scope: "singleton"
+  },
+
+  foWhereWeFlyPanelModel: {
+		type: "tui/flightWhereWeFly/model/WhereWeFlyPanelModel",
+		scope: "singleton"
+  },
+
+  foWhereWeFlyAutoSuggest: {
+		type: "tui/flightWhereWeFly/WhereWeFlyAutoSuggest",
+		scope: "singleton"
+  },
+
+  foMapComponent: {
+		type: "tui/flightWhereWeFly/MapComponent",
+		mapPanelModel : "$foWhereWeFlyPanelModel",
+		searchPanelModel: "$foSearchPanelModel",
+		scope: "singleton"
   }
 
 
 
-	/*========================== Flights Search components END ====================================*/
 
+
+
+  /*========================== Where We Fly components END ====================================*/
 
 });

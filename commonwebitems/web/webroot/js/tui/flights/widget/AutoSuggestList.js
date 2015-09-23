@@ -22,32 +22,32 @@ define("tui/flights/widget/AutoSuggestList", [
   "dojo/date/locale",
   "tui/widget/_TuiBaseWidget"], function (dojo, autosuggestTmpl, registry, query, string, html, domConstruct, domStyle, event, on, flightAirportStore, keys, ready,domClass, focusUtil, lang, domAttr, connect, errorTooltip) {
   dojo.declare("tui.flights.widget.AutoSuggestList", [tui.widget._TuiBaseWidget, tui.widget.mixins.Templatable], {
-	  
+
 	  /*templatePath: dojo.moduleUrl("tui/flights","templates/AutoSuggestList.html"),*/
-	  
+
 	  tmpl: autosuggestTmpl,
-	  
+
 	  charNo: 2,
-	  
+
 	  airports: [],
-	  
-	  airportStore: null, 
-	  
+
+	  airportStore: null,
+
 	  airportCodes: [],
-	  
+
 	  airportsList: [],
-	  
+
 	  idx: 0,
-	  
+
 	  errorTooltip: false,
-	  
+
 	  constructor: function(params, srcNodeRef){
 	  	 var autoSuggestList = this;
   	  },
-  	  
+
 	  postCreate:function(){
 	  	  var autoSuggestList = this;
-	  	  
+
   		  autoSuggestList.inherited(arguments);
   		  on(document.body, "click", function(evt){
   			  if(autoSuggestList.errorTooltip) {
@@ -57,7 +57,7 @@ define("tui/flights/widget/AutoSuggestList", [
   			  var targetObj = evt.target || evt.srcElement;
 			  if(targetObj.id === "airports-lists" || targetObj.id === "flying-from"){
 				  domClass.add(query("#flying-from")[0], "border-sel-active");
-				  
+
 				  var fromAir = query("#flying-from")[0].value;
 				  var toAir = query("#flying-to")[0].value;
 				  var fromAirValue = "";
@@ -73,20 +73,20 @@ define("tui/flights/widget/AutoSuggestList", [
 				 }else{
 					 whenMonValue = "";
 				 }
-				 
-				 var targetURL = "ws/timetabledeparture?to[]="+toAirValue+"&when="+whenMonValue; 
-				 
+
+				 var targetURL = "ws/timetabledeparture?to[]="+toAirValue+"&when="+whenMonValue;
+
 				  dojo.xhrGet({
 					  url: targetURL,
 					  handleAs: "json",
 					  sync: false,
 					  load: function(data, ioargs){
-				  		  autoSuggestList.airportStore = data;
+				  		  autoSuggestList.airportStore = data.items;
 				  		  /*autoSuggestList.airportCodes = _.keys(autoSuggestList.airportStore);*/
 				  		  /*_.each(autoSuggestList.airportCodes, function(code){*/
 				  		var ukAirportList = [], overseasAirportList = [];
-				  		  
-				  		  _.each(autoSuggestList.airportStore, function(airportInfo){				  			  
+
+				  		  _.each(autoSuggestList.airportStore, function(airportInfo){
 								if(airportInfo.available) {
 									if(airportInfo.countryCode == "GBR"){
 										ukAirportList.push(airportInfo);
@@ -94,8 +94,8 @@ define("tui/flights/widget/AutoSuggestList", [
 										overseasAirportList.push(airportInfo);
 									}
 								}
-							});				  		  
-				  		
+							});
+
 				  		autoSuggestList.airports=ukAirportList.concat(overseasAirportList);
 				  		  /*});*/
 						  autoSuggestList.placeAirportList();
@@ -106,7 +106,7 @@ define("tui/flights/widget/AutoSuggestList", [
 						  focusUtil.focus(query("#flying-from")[0]);
 					  },
 					  error: function(error, ioargs){
-					   
+
 					  }
 				  });
 			  }else{
@@ -115,43 +115,43 @@ define("tui/flights/widget/AutoSuggestList", [
 			  }
 		  });
 	  },
-	  
+
 	  onAfterTmplRender:function(){
 		  var autoSuggestList = this;
 		  autoSuggestList.inherited(arguments);
 		  autoSuggestList.airports = [];
 	  },
-	  
+
 	  pickPosition:function(){
 		  var autoSuggestList = this;
 		  var pos = html.coords(autoSuggestList.domNode);
 		  return pos;
 	  },
-	  
+
 	  placeAirportList: function(){
 		  var autoSuggestList = this;
-		  
+
 		  if(query("#auto-suggest-list")[0])domConstruct.destroy("auto-suggest-list");
-		  
+
 		  var closestParent = query("div.inputholders")[0];
-		  
+
 		  if(closestParent){
 			  var node = domConstruct.toDom(autoSuggestList.render());
 			  domConstruct.place(node, closestParent, "last");
 		  }
-		  
+
 		  var pos = autoSuggestList.pickPosition();
-		  
+
 		  domStyle.set(query("#auto-suggest-list")[0], {
 			  "top":"25px"
 		  });
 	  },
-	  
+
 	  eventHandlers: function(){
 		  var autoSuggestList = this;
 		  autoSuggestList.keyUpEvents();
 	  },
-	  
+
 	  hideAutoSuggestList: function(){
 		  if(query("#auto-suggest-list")[0]){
 			  domStyle.set(query("#auto-suggest-list")[0], {
@@ -159,13 +159,13 @@ define("tui/flights/widget/AutoSuggestList", [
 			  });
 		  }
 	  },
-	  
+
 	  showAutoSuggestList:function(){
 		  domStyle.set(query("#auto-suggest-list")[0], {
 		  	  "display":"block"
 		  });
 	  },
-	  
+
 	  keyUpEvents: function(){
 		  var autoSuggestList = this;
 		  var flyingFrom = query("#flying-from")[0];
@@ -179,12 +179,12 @@ define("tui/flights/widget/AutoSuggestList", [
 		        	autoSuggestList.hideAutoSuggestList();
 		        }
      	  });
-		  
+
 		  on(query("#auto-suggest-list")[0], "mouseover", function (evt) {
 			    query("#auto-suggest-list li.hlight-airport-list").removeClass("hlight-airport-list");
 		  });
-		  
-		  
+
+
 		  on(flyingFrom, "keyup", function(evt){
 			  	var errtips = query(".tooltip", query(".inputholders")[0]);
 				if(errtips){
@@ -196,7 +196,7 @@ define("tui/flights/widget/AutoSuggestList", [
 					return;
 				}else if (lang.trim(flyingFrom.value) === "") {
 					autoSuggestList.hideAutoSuggestList();
-			        
+
 			    }else {
 			        if (charOrCode == keys.DOWN_ARROW && idx < query("#auto-suggest-list li.airport-codes-li-visible").length - 1) {
 			            idx++;
@@ -205,17 +205,17 @@ define("tui/flights/widget/AutoSuggestList", [
 			        } else if (charOrCode !== keys.DOWN_ARROW && charOrCode !== keys.UP_ARROW) {
 			            idx = 0;
 			        }
-			        
+
 			        if(flyingFrom.value.length > autoSuggestList.charNo ){
-			        	
+
 			        	autoSuggestList.showAutoSuggestList();
 			        	autoSuggestList.searchAirportNamesOrCodes(flyingFrom.value, evt, idx);
-				       
+
 			        }
 			    }
-			  
+
 		  });
-		  
+
 		  /**
 		   * handling tab related event
 		   */
@@ -226,28 +226,28 @@ define("tui/flights/widget/AutoSuggestList", [
 					  autoSuggestList.throwErrorTooltip();
 				  }
 				  query("#whenCal")[0].value = "";
-				  
+
 			  }
 		  });
-		  
+
 		  //attach events to each li airports
 		  query("#auto-suggest-list li").forEach(function (elm, i) {
 			    on(elm, "click", function (evt) {
 			    	flyingFrom.value = lang.trim(query(this).text());
-			    	
+
 			    	var hidn = domConstruct.create("input", {
 		    			type:"hidden",
 		    			value:  domAttr.get(elm, "data-country-code"),
 		    			id:"ftselectedCountry"
 		    		});
-		    		
-		    		
+
+
 		    		domConstruct.place(hidn, document.body, "last");
-		    		
+
 			    });
 			});
 	  },
-	  
+
 	  /*----filter out the list of airports-----*/
 	  searchAirportNamesOrCodes: function(val, evt, idx){
 		  var autoSuggestList = this;
@@ -255,7 +255,7 @@ define("tui/flights/widget/AutoSuggestList", [
 			if (idx === undefined) {idx = 0;}
 		    var list = query('#auto-suggest-list'),
 		        visibleIdx = 0;
-		    dojo.forEach(list.query('li'), function (elm, i) { 
+		    dojo.forEach(list.query('li'), function (elm, i) {
 		        var found = false;
 		        try{
 		        	var regExp = new RegExp(val, 'i');
@@ -284,8 +284,8 @@ define("tui/flights/widget/AutoSuggestList", [
 		        	domClass.remove(elm, "airport-codes-li-visible");
 		        }
 		    });
-		    
-		    if(count == 0 ){ 
+
+		    if(count == 0 ){
 		    	autoSuggestList.throwErrorTooltip();
 		    	count = 1;
 		  }
@@ -293,15 +293,15 @@ define("tui/flights/widget/AutoSuggestList", [
 	  throwErrorTooltip: function(){
 			var autoSuggestList = this;
 			dojo.byId("auto-suggest-list").style.display = "none";
-			
+
 			try{
 				autoSuggestList.errorTooltip = true;
-				
+
 				var errtips = query(".tooltip", query(".inputholders")[0]);
 				if(errtips){
 					errtips.forEach(domConstruct.destroy);
 				}
-				
+
 				new errorTooltip({
 		  			  connectId: "#flying-from",
 		  			  errorMsg: "Try slecting from the drop down menu or alternatively search by aiport code.",
@@ -309,16 +309,16 @@ define("tui/flights/widget/AutoSuggestList", [
 		  			  dynaId: "#flyingFrom"
 		  		  });
 			}catch(e){}
-			
+
 	  },
-		
+
 	  render: function(){
 		  var autoSuggestList = this;
 		  var html = autoSuggestList.renderTmpl(autoSuggestList.tmpl);
 		  return html;
 	  }
-  
+
   });
-  
+
   return tui.flights.widget.AutoSuggestList;
 });

@@ -37,14 +37,14 @@ define("tui/searchPanel/view/flights/AirportMultiFieldList", [
       airportMultiFieldList.itemsSelected = airportMultiFieldList.searchMessaging.from.itemsSelected;
 
       airportMultiFieldList.inherited(arguments);
-      
+
      // dojo.query(airportMultiFieldList.multifieldInfo).text(airportMultiFieldList.searchMessaging.addMore);
-      
-      
+
+
       //building pills for textbox
       var resultSet = airportMultiFieldList.searchPanelModel.from.query();
-      
-      //Airport pills adding code 
+
+      //Airport pills adding code
      /* resultSet.observe(function (airportModel, remove, add) {
         var action = (add > -1) ? "addNewTextbox" : "removeTextbox";
         airportMultiFieldList[action]({
@@ -105,7 +105,7 @@ define("tui/searchPanel/view/flights/AirportMultiFieldList", [
         key: "emptyFromTo"
       });
     },*/
-    
+
     // displays Invalid Airport Combination Error
     displayInvalidDepartureAirportCombinationError: function (name, oldError, newError) {
         var airportMultiFieldList = this;
@@ -118,7 +118,7 @@ define("tui/searchPanel/view/flights/AirportMultiFieldList", [
           key: "invalidDepartureAirportCombination"
         });
       },
-      
+
    // displays Invalid Departure and Arrival Airport Combination Error
   displayInvalidDepartureandArrivalAirportCombinationError: function (name, oldError, newError) {
       var airportMultiFieldList = this;
@@ -130,7 +130,7 @@ define("tui/searchPanel/view/flights/AirportMultiFieldList", [
         field: "invalidDepartureandArrivalAirportCombination",
         key: "invalidDepartureandArrivalAirportCombination"
       });
-    },  
+    },
 
     displayRouteError: function (name, oldError, newError) {
       var airportMultiFieldList = this;
@@ -264,6 +264,7 @@ define("tui/searchPanel/view/flights/AirportMultiFieldList", [
       airportMultiFieldList.hasException = false;
       airportMultiFieldList.searchPanelModel.from.emptyStore();
       airportMultiFieldList.searchPanelModel.from.add(selectData.listData);
+      dijit.byId("where-from-text").closeExpandable();
       return true;
     },
 
@@ -327,11 +328,11 @@ define("tui/searchPanel/view/flights/AirportMultiFieldList", [
     onTextboxInputFocus: function (event) {
       var airportMultiFieldList = this;
     	  // delete field errors if present
-      
+
       //Removed error popup
       if(airportMultiFieldList.errorPopup)
     	  airportMultiFieldList.errorPopup.deletePopupDomNode();
-    	        
+
       var fromToError = dojo.clone(airportMultiFieldList.searchPanelModel.searchErrorMessages.get("fromTo"));
       if (fromToError.emptyFromTo) {
         delete fromToError.emptyFromTo;
@@ -342,7 +343,7 @@ define("tui/searchPanel/view/flights/AirportMultiFieldList", [
     	  //alert("alert called");
     	  //airportMultiFieldList.domNode.focus();
       });
-      
+
       // delete no match error
       airportMultiFieldList.searchPanelModel.searchErrorMessages.set("from", {});
 
@@ -378,13 +379,13 @@ define("tui/searchPanel/view/flights/AirportMultiFieldList", [
     },
 
     /*updatePlaceholder: function () {
-    	
+
       var airportMultiFieldList = this,
           maxTextWidth = 140,
           count = airportMultiFieldList.searchPanelModel.from.summariseCount(),
           text = airportMultiFieldList.defaultPlaceholderTxt,
           label = airportMultiFieldList.textboxes.length ? airportMultiFieldList.textboxes[0].label : airportMultiFieldList.defaultPlaceholderTxt;
-          
+
       if (airportMultiFieldList.getTextWidth(label) > maxTextWidth) {
         label = strings.truncatewords(airportMultiFieldList.textboxes[0].label, 3);
       } else {

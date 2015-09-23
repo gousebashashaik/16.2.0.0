@@ -1,219 +1,477 @@
 define("tui/flightdeals/FlyFromDealsExpandable", [
-     "tui/widget/form/flights/DealsExpandable",
+     "tui/widget/form/flights/Expandable",
      "dojo",
      "dojo/on",
+     "dojo/_base/declare",
      "dojo/text!tui/flightdeals/templates/FlyFrom.html",
-     "dojo/NodeList-traverse"
-   ],function(DealsExpandable,dojo,on,flyFromTmpl){
+     "dojo/query",
+     "dijit/registry",
+     "dojo/_base/fx",
+     "dojo/dom",
+     "dojo/has",
+     "dijit/focus",
+     "dojo/NodeList-traverse",
+     "dojo/_base/sniff",
+     "tui/flightdeals/model/DealsPanelModel",
+     "tui/searchPanel/view/flights/AirportListGrouping"
+   ],function(Expandable,dojo,on,declare,flyFromTmpl,query,registry,fx,dom,has,focus){
 
-		dojo.declare("tui.flightdeals.FlyFromDealsExpandable",[DealsExpandable],{
+		declare("tui.flightdeals.FlyFromDealsExpandable",[Expandable, tui.searchPanel.view.flights.AirportListGrouping],{
 			//.............................................Properties
-			airportjson : {"KEN":[{"group":[],"children":[],"countryName":"Kenya","countryCode":"KEN","synonym":"","available":false,"name":"Mombasa","id":"MBA"}],"JAM":[{"group":[],"children":[],"countryName":"Jamaica","countryCode":"JAM","synonym":"","available":true,"name":"Montego Bay","id":"MBJ"}],"IND":[{"group":[],"children":[],"countryName":"India","countryCode":"IND","synonym":"","available":true,"name":"Goa","id":"GOI"}],"PRT":[{"group":[],"children":[],"countryName":"Portugal","countryCode":"PRT","synonym":"","available":true,"name":"Faro","id":"FAO"},{"group":[],"children":[],"countryName":"Portugal","countryCode":"PRT","synonym":"","available":true,"name":"Madeira","id":"FNC"},{"group":[],"children":[],"countryName":"Portugal","countryCode":"PRT","synonym":"","available":true,"name":"Porto Santo","id":"PXO"}],"ABW":[{"group":[],"children":[],"countryName":"Aruba","countryCode":"ABW","synonym":"","available":true,"name":"Aruba International","id":"AUA"}],"HRV":[{"group":[],"children":[],"countryName":"Croatia","countryCode":"HRV","synonym":"","available":true,"name":"Dubrovnik","id":"DBV"},{"group":[],"children":[],"countryName":"Croatia","countryCode":"HRV","synonym":"","available":true,"name":"Pula","id":"PUY"},{"group":[],"children":[],"countryName":"Croatia","countryCode":"HRV","synonym":"","available":true,"name":"Split","id":"SPU"}],"GRC":[{"group":[],"children":[],"countryName":"Greece","countryCode":"GRC","synonym":"","available":true,"name":"Chania","id":"CHQ"},{"group":[],"children":[],"countryName":"Greece","countryCode":"GRC","synonym":"","available":true,"name":"Corfu","id":"CFU"},{"group":[],"children":[],"countryName":"Greece","countryCode":"GRC","synonym":"","available":true,"name":"Heraklion","id":"HER"},{"group":[],"children":[],"countryName":"Greece","countryCode":"GRC","synonym":"","available":true,"name":"Kavala","id":"KVA"},{"group":[],"children":[],"countryName":"Greece","countryCode":"GRC","synonym":"","available":true,"name":"Kefalonia","id":"EFL"},{"group":[],"children":[],"countryName":"Greece","countryCode":"GRC","synonym":"","available":true,"name":"Kos","id":"KGS"},{"group":[],"children":[],"countryName":"Greece","countryCode":"GRC","synonym":"","available":true,"name":"Mykonos","id":"JMK"},{"group":[],"children":[],"countryName":"Greece","countryCode":"GRC","synonym":"","available":true,"name":"Preveza Lefkas","id":"PVK"},{"group":[],"children":[],"countryName":"Greece","countryCode":"GRC","synonym":"","available":true,"name":"Rhodes","id":"RHO"},{"group":[],"children":[],"countryName":"Greece","countryCode":"GRC","synonym":"","available":true,"name":"Samos","id":"SMI"},{"group":[],"children":[],"countryName":"Greece","countryCode":"GRC","synonym":"","available":true,"name":"Santorini","id":"JTR"},{"group":[],"children":[],"countryName":"Greece","countryCode":"GRC","synonym":"","available":true,"name":"Skiathos","id":"JSI"},{"group":[],"children":[],"countryName":"Greece","countryCode":"GRC","synonym":"","available":true,"name":"Thessaloniki","id":"SKG"},{"group":[],"children":[],"countryName":"Greece","countryCode":"GRC","synonym":"","available":true,"name":"Zante","id":"ZTH"}],"CPV":[{"group":[],"children":[],"countryName":"Cape Verde","countryCode":"CPV","synonym":"","available":true,"name":"Boa Vista","id":"BVC"},{"group":[],"children":[],"countryName":"Cape Verde","countryCode":"CPV","synonym":"","available":true,"name":"Sal","id":"SID"}],"ISL":[{"group":[],"children":[],"countryName":"Iceland","countryCode":"ISL","synonym":"","available":true,"name":"Keflavik International","id":"KEF"}],"MAR":[{"group":[],"children":[],"countryName":"Morocco","countryCode":"MAR","synonym":"","available":true,"name":"Agadir","id":"AGA"},{"group":[],"children":[],"countryName":"Morocco","countryCode":"MAR","synonym":"","available":true,"name":"Marrakech","id":"RAK"}],"TUN":[{"group":[],"children":[],"countryName":"Tunisia","countryCode":"TUN","synonym":"","available":true,"name":"Djerba Island","id":"DJE"},{"group":[],"children":[],"countryName":"Tunisia","countryCode":"TUN","synonym":"","available":true,"name":"Enfidha Hammamet","id":"NBE"}],"EGY":[{"group":[],"children":[],"countryName":"Egypt","countryCode":"EGY","synonym":"","available":true,"name":"Hurghada","id":"HRG"},{"group":[],"children":[],"countryName":"Egypt","countryCode":"EGY","synonym":"","available":true,"name":"Luxor","id":"LXR"},{"group":[],"children":[],"countryName":"Egypt","countryCode":"EGY","synonym":"","available":true,"name":"Marsa Alam","id":"RMF"},{"group":[],"children":[],"countryName":"Egypt","countryCode":"EGY","synonym":"","available":true,"name":"Sharm El Sheikh","id":"SSH"}],"CYP":[{"group":[],"children":[],"countryName":"Cyprus","countryCode":"CYP","synonym":"","available":true,"name":"Larnaca","id":"LCA"},{"group":[],"children":[],"countryName":"Cyprus","countryCode":"CYP","synonym":"","available":true,"name":"Paphos","id":"PFO"}],"GBR":[{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":true,"name":"Aberdeen","id":"ABZ"},{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":true,"name":"Belfast City","id":"BHD"},{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":true,"name":"Belfast International","id":"BFS"},{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":true,"name":"Birmingham","id":"BHX"},{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":true,"name":"Bournemouth","id":"BOH"},{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":true,"name":"Bristol","id":"BRS"},{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":true,"name":"Cardiff","id":"CWL"},{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":false,"name":"City of Derry","id":"LDY"},{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":true,"name":"Doncaster Sheffield","id":"DSA"},{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":true,"name":"East Midlands","id":"EMA"},{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":true,"name":"Edinburgh","id":"EDI"},{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":true,"name":"Exeter","id":"EXT"},{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":true,"name":"Glasgow","id":"GLA"},{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":true,"name":"Humberside","id":"HUY"},{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":true,"name":"Leeds Bradford","id":"LBA"},{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":true,"name":"Liverpool John Lennon","id":"LPL"},{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":true,"name":"London Gatwick","id":"LGW"},{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":true,"name":"London Luton","id":"LTN"},{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":true,"name":"London Southend","id":"SEN"},{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":true,"name":"London Stansted","id":"STN"},{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":true,"name":"Manchester","id":"MAN"},{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":true,"name":"Newcastle","id":"NCL"},{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":true,"name":"Norwich","id":"NWI"},{"group":[],"children":[],"countryName":"","countryCode":"GBR","synonym":"","available":true,"name":"Southampton","id":"SOU"}],"TUR":[{"group":[],"children":[],"countryName":"Turkey","countryCode":"TUR","synonym":"","available":true,"name":"Adnan Menderes","id":"ADB"},{"group":[],"children":[],"countryName":"Turkey","countryCode":"TUR","synonym":"","available":true,"name":"Antalya","id":"AYT"},{"group":[],"children":[],"countryName":"Turkey","countryCode":"TUR","synonym":"","available":true,"name":"Dalaman","id":"DLM"},{"group":[],"children":[],"countryName":"Turkey","countryCode":"TUR","synonym":"","available":true,"name":"Milas Bodrum","id":"BJV"}],"USA":[{"group":[],"children":[],"countryName":"United States Of America","countryCode":"USA","synonym":"","available":true,"name":"Orlando Sanford","id":"SFB"}],"DOM":[{"group":[],"children":[],"countryName":"Dominican Republic","countryCode":"DOM","synonym":"","available":true,"name":"Puerto Plata","id":"POP"},{"group":[],"children":[],"countryName":"Dominican Republic","countryCode":"DOM","synonym":"","available":true,"name":"Punta Cana","id":"PUJ"}],"THA":[{"group":[],"children":[],"countryName":"Thailand","countryCode":"THA","synonym":"","available":true,"name":"Phuket","id":"HKT"}],"MUS":[{"group":[],"children":[],"countryName":"Mauritius","countryCode":"MUS","synonym":"","available":true,"name":"Mauritius","id":"MRU"}],"BGR":[{"group":[],"children":[],"countryName":"Bulgaria","countryCode":"BGR","synonym":"","available":true,"name":"Bourgas","id":"BOJ"}],"ITA":[{"group":[],"children":[],"countryName":"Italy","countryCode":"ITA","synonym":"","available":true,"name":"Alghero","id":"AHO"},{"group":[],"children":[],"countryName":"Italy","countryCode":"ITA","synonym":"","available":true,"name":"Cappodichino","id":"NAP"},{"group":[],"children":[],"countryName":"Italy","countryCode":"ITA","synonym":"","available":true,"name":"Fontanarossa","id":"CTA"},{"group":[],"children":[],"countryName":"Italy","countryCode":"ITA","synonym":"","available":true,"name":"Venice","id":"VCE"}],"MLT":[{"group":[],"children":[],"countryName":"Malta","countryCode":"MLT","synonym":"","available":true,"name":"Malta","id":"MLA"}],"CRI":[{"group":[],"children":[],"countryName":"Costa Rica","countryCode":"CRI","synonym":"","available":true,"name":"Liberia","id":"LIR"}],"FIN":[{"group":[],"children":[],"countryName":"","countryCode":"FIN","synonym":"","available":true,"name":"Ivalo","id":"IVL"},{"group":[],"children":[],"countryName":"","countryCode":"FIN","synonym":"","available":true,"name":"Kittila","id":"KTT"},{"group":[],"children":[],"countryName":"","countryCode":"FIN","synonym":"","available":true,"name":"Rovaniemi","id":"RVN"}],"MEX":[{"group":[],"children":[],"countryName":"Mexico","countryCode":"MEX","synonym":"","available":true,"name":"Cancun","id":"CUN"},{"group":[],"children":[],"countryName":"Mexico","countryCode":"MEX","synonym":"","available":true,"name":"Puerto Vallarta","id":"PVR"}],"ESP":[{"group":[],"children":[],"countryName":"Spain","countryCode":"ESP","synonym":"","available":true,"name":"Alicante","id":"ALC"},{"group":[],"children":[],"countryName":"Spain","countryCode":"ESP","synonym":"","available":true,"name":"Almeria","id":"LEI"},{"group":[],"children":[],"countryName":"Spain","countryCode":"ESP","synonym":"","available":true,"name":"Fuerteventura","id":"FUE"},{"group":[],"children":[],"countryName":"Spain","countryCode":"ESP","synonym":"","available":true,"name":"Girona Costa Brava","id":"GRO"},{"group":[],"children":[],"countryName":"Spain","countryCode":"ESP","synonym":"","available":true,"name":"Gran Canaria","id":"LPA"},{"group":[],"children":[],"countryName":"Spain","countryCode":"ESP","synonym":"","available":true,"name":"Ibiza","id":"IBZ"},{"group":[],"children":[],"countryName":"Spain","countryCode":"ESP","synonym":"","available":true,"name":"Jerez","id":"XRY"},{"group":[],"children":[],"countryName":"Spain","countryCode":"ESP","synonym":"","available":true,"name":"La Palma","id":"SPC"},{"group":[],"children":[],"countryName":"Spain","countryCode":"ESP","synonym":"","available":true,"name":"Lanzarote","id":"ACE"},{"group":[],"children":[],"countryName":"Spain","countryCode":"ESP","synonym":"","available":true,"name":"Malaga Costa del Sol","id":"AGP"},{"group":[],"children":[],"countryName":"Spain","countryCode":"ESP","synonym":"","available":true,"name":"Menorca","id":"MAH"},{"group":[],"children":[],"countryName":"Spain","countryCode":"ESP","synonym":"","available":true,"name":"Palma de Mallorca","id":"PMI"},{"group":[],"children":[],"countryName":"Spain","countryCode":"ESP","synonym":"","available":true,"name":"Reus","id":"REU"},{"group":[],"children":[],"countryName":"Spain","countryCode":"ESP","synonym":"","available":true,"name":"Tenerife South","id":"TFS"}],"BRB":[{"group":[],"children":[],"countryName":"Barbados","countryCode":"BRB","synonym":"","available":true,"name":"Barbados","id":"BGI"}]},
 			 airportList: null,
+
 			 ukairportList:null,
+
+			 standby: "",
+
+			 fromSelectedCount  :0,
+
+			 fromDisabledCount  :0,
+
+			 selectedUkAirports : [],
+
+			 flyFromAllAirports : "",
+
 			//.............................................methods
-			onAfterTmplRender:function () {
+			 postCreate:function(){
+				 var flyFromDealsExpandable = this;
+				 flyFromDealsExpandable.inherited(arguments);
+				 flyFromDealsExpandable.getAirports();
+				 flyFromDealsExpandable.tagElement(flyFromDealsExpandable.domNode, "FO_Fly-From");
+
+			 },
+			 onAfterTmplRender: function(){
+				 var flyFromDealsExpandable = this;
+				 flyFromDealsExpandable.renderUKAirports();
+				 flyFromDealsExpandable.standby = flyFromDealsExpandable.standBy(dojo.query(".deals-wrapper div",flyFromDealsExpandable.expandableDom)[0]);
+				 flyFromDealsExpandable.tagElement(flyFromDealsExpandable.expandableDom, "Overall_FO_Fly-From");
+			 },
+			 closeExpandable: function(){
+		    	var flyFromDealsExpandable = this;
+		    		flyFromDealsExpandable.standby.hide();
+		    		flyFromDealsExpandable.inherited(arguments);
+
+		    },
+
+		    updateFlyFromView : function(){
+		    	var flyFromDealsExpandable = this,count;
+
+		    		if(flyFromDealsExpandable.dealsPanelModel.fromAirports){
+		    			count =flyFromDealsExpandable.dealsPanelModel.fromAirports.length;
+		    		}else{
+		    			count =0;
+		    		}
+
+			    	if(count > 1){
+		    			query(".placeholder",flyFromDealsExpandable.domNode)[0].innerHTML = "<span>" + count + " airports</span>";
+		    		}else if(count === 1 && flyFromDealsExpandable.dealsPanelModel.fromAirportNames[0]){
+		    			query(".placeholder",flyFromDealsExpandable.domNode)[0].innerHTML = "<span>" + flyFromDealsExpandable.dealsPanelModel.fromAirportNames[0].name + "("+ flyFromDealsExpandable.dealsPanelModel.fromAirports[0] +")</span>";
+		    		}else if(count === 0){
+		    			query(".placeholder",flyFromDealsExpandable.domNode)[0].innerHTML = "<span> Any UK airport </span>";
+		    		}
+
+		    },
+
+		    populateSignleValue : function(){
 				var flyFromDealsExpandable = this;
-				var tmpl = flyFromDealsExpandable.renderUKAirports();
-    	    	target = dojo.query(".deals-wrapper",flyFromDealsExpandable.expandableDom)[0];
-	    	    dojo.html.set(target,tmpl,{
-	    	    	parseContent: true
-	    	    });
-	    	    flyFromDealsExpandable.attachEvents();
-	    	    flyFromDealsExpandable.attachBodyEvent();
-
-
+				_.each(flyFromDealsExpandable.airportList, function(airport){
+          			if(airport.id === flyFromDealsExpandable.dealsPanelModel.fromAirports[0]){
+          				query(".placeholder",flyFromDealsExpandable.domNode)[0].innerHTML = "<span>" + airport.name + "("+ airport.id +")</span>";
+          			}
+          	});
 			},
-			renderUKAirports:function(){
+
+
+			getAirports:function(){
 				var flyFromDealsExpandable = this,ukAirports,data,html;
-				console.log(flyFromDealsExpandable.airportjson.GBR);
-    	    	 //ukAirports = flyFromDealsExpandable.airportjson.GBR;
-    	    	 var airportsListKeys = Object.keys(flyFromDealsExpandable.airportjson);
-                 var  airportTempList= [];
-                 var	 airportSwapList = [];
-                 _.each(airportsListKeys, function(countryKey){
-                 	airportTempList = flyFromDealsExpandable.airportjson[countryKey];
-                 	var checkCName = "";
-                 	_.each(airportTempList, function(airport){
 
-                 		if(!airport.countryName){
-                 			airport.countryName ="Finland";
-                 		}
+				    	    	 //ukAirports = flyFromDealsExpandable.airportjson.GBR;
+				var def = flyFromDealsExpandable.doXhrPost("ws/dealsdepartureairports");
+				def.then(function(data){
 
-                 		if(airport.countryName == checkCName){
-                 			airport.cFlag = false;
-                 		}else{
-                 			airport.cFlag = true;
+					flyFromDealsExpandable.ukairportList = flyFromDealsExpandable.getDealsUKAiportList(data);
 
-                 		}
-                 		checkCName = airport.countryName;
-                 		airportSwapList.push(airport);
+					if(query("#ukAirportName")[0]){
+						setTimeout(function(){
+							flyFromDealsExpandable.dealsPanelModel.groupedUKAiports = flyFromDealsExpandable.getGroupedUkAirport(data);
+							flyFromDealsExpandable.getSelectedPreviouseGroupsDetails();
+						}, 1000);
 
-                 	});
+					}
 
-                  });
-                 flyFromDealsExpandable.airportList = airportSwapList;
-                 var tempUkairportList=[];
-                 var tempUkairportList_0=[];
-                 var tempUkairportList_1=[];
-    	    	 var counrtyGP=['LN','SE','SW','MD','NE','NW','SC','NI'],
-         		counrtyNames=['London Gatwick','London Luton','London Stansted','London Southend','Norwich','Southampton','Bournemouth','Bristol','Cardiff','Exeter',
-         	              'Birmingham','East Midlands','Doncaster Sheffield','Humberside','Leeds Bradford','Newcastle','Liverpool John Lennon','Manchester',
-         	              'Aberdeen','Edinburgh','Glasgow','Belfast International','Belfast City','City of Derry'],
-         	    counrtyGPNames=['LONDON','SOUTH EAST', 'SOUTH WEST', 'MIDLANDS','NORTH EAST', 'NORTH WEST' , 'SCOTLAND', 'NORTHERN IRELAND'];
-    	    	  _.each(flyFromDealsExpandable.airportList, function(airport,i){
-                  	if(airport.countryCode == "GBR"){
-                  		//_.each(airport.group, function(group,j){
-                      		if(airport.id === 'LGW'){
-                      			flyFromDealsExpandable.airportList[i].group[0] ='LN';
-                      		}
-                      		if(airport.id === 'LTN'){
-                      			flyFromDealsExpandable.airportList[i].group[0] ='LN';
-                      		}
-                      		if(airport.id === 'STN'){
-                      			flyFromDealsExpandable.airportList[i].group[0] ='LN';
-                      		}
-
-                      		if(airport.id === 'SEN'){
-                      			flyFromDealsExpandable.airportList[i].group[0] ='SE';
-                  			}
-                      		if(airport.id === 'NWI'){
-                      			flyFromDealsExpandable.airportList[i].group[0] ='SE';
-                  			}
-                      		if(airport.id === 'SOU'){
-                      			flyFromDealsExpandable.airportList[i].group[0] ='SE';
-                  			}
-
-                      		if(airport.id === 'BOH'){
-                      			flyFromDealsExpandable.airportList[i].group[0] ='SW';
-                  			}
-                      		if(airport.id === 'BRS'){
-                      			flyFromDealsExpandable.airportList[i].group[0] ='SW';
-                  			}
-                      		if(airport.id === 'CWL'){
-                      			flyFromDealsExpandable.airportList[i].group[0] ='SW';
-                  			}
-                      		if(airport.id === 'EXT'){
-                      			flyFromDealsExpandable.airportList[i].group[0] ='SW';
-                  			}
-
-                      		if(airport.id === 'BHX'){
-                      			flyFromDealsExpandable.airportList[i].group[0] ='MD';
-                  			}
-                      		if(airport.id === 'EMA'){
-                      			flyFromDealsExpandable.airportList[i].group[0] ='MD';
-                  			}
-
-                      		if(airport.id === 'DSA'){
-                      			flyFromDealsExpandable.airportList[i].group[0] ='NE';
-                  			}
-                      		if(airport.id === 'NME'){
-                      			flyFromDealsExpandable.airportList[i].group[0] ='NE';
-                  			}
-                      		if(airport.id === 'HUY'){
-                      			flyFromDealsExpandable.airportList[i].group[0] ='NE';
-                  			}
-                      		if(airport.id === 'LBA'){
-                      			flyFromDealsExpandable.airportList[i].group[0] ='NE';
-                  			}
-                      		if(airport.id === 'NCL'){
-                      			flyFromDealsExpandable.airportList[i].group[0] ='NE';
-                  			}
-
-
-                      		if(airport.id === 'MAN'){
-                      			flyFromDealsExpandable.airportList[i].group[0] ='NW';
-                  			}
-
-                      		if(airport.id === 'ABZ'){
-                      			flyFromDealsExpandable.airportList[i].group[0] ='SC';
-                  			}
-                      		if(airport.id === 'EDI'){
-                      			flyFromDealsExpandable.airportList[i].group[0] ='SC';
-                  			}
-                      		if(airport.id === 'GLA'){
-                      			flyFromDealsExpandable.airportList[i].group[0] ='SC';
-                  			}
-
-                      		if(airport.id === 'BFS'){
-                      			flyFromDealsExpandable.airportList[i].group[0]  ='NI';
-                  			}
-
-                      //});
-                  		// null groups
-                  		if(airport.id === 'BHD'){
-                  			flyFromDealsExpandable.airportList[i].group[0] ='NI';
-              			}
-                  		if(airport.id === 'LDY'){
-                  			flyFromDealsExpandable.airportList[i].group[0] ='NI';
-              			}
-                  		if(airport.id === 'LPL'){
-                  			flyFromDealsExpandable.airportList[i].group[0] ='NW';
-              			}
-
-
-                  		tempUkairportList.push(airport);
-                  	}
-                  });
-    	    	  var checkCName = "";
-                  _.each(counrtyGP, function(tempGP, i){
-                  	_.each(tempUkairportList, function(airport ,j){
-                  		if(airport.group[0] === tempGP){
-	                			airport.countryName = counrtyGPNames[i];
-	                			airport.nextCol = false;
-	                			if(airport.id =="EXT" || airport.id =="MAN"){
-                  				airport.nextCol = true;
-                  			}
-
-	                			if(airport.countryName == checkCName){
-	                    			airport.cFlag = false;
-	                    		}else{
-	                    			airport.cFlag = true;
-
-	                    		}
-	                    		checkCName = airport.countryName;
-	                			tempUkairportList_0.push(airport);
-                  		}
-                  	});
-                  });
-
-                  flyFromDealsExpandable.ukairportList = tempUkairportList_0;
-
-    	    	 data = {
-    	    			 ukairportList : flyFromDealsExpandable.ukairportList
-    	    	}
-    	    	html = dojo.trim(tui.dtl.Tmpl.createTmpl(data, flyFromTmpl));
-    	    	 return html;
+				});
 			},
+			renderUKAirports: function(){
+				var flyFromDealsExpandable = this;
+				data = {
+   			 		ukairportList : flyFromDealsExpandable.ukairportList,
+   			 		dealsPanelModel : flyFromDealsExpandable.dealsPanelModel
+			   	}
+		   	 	html = dojo.trim(tui.dtl.Tmpl.createTmpl(data, flyFromTmpl));
+			   	 target = dojo.query(".deals-wrapper",flyFromDealsExpandable.expandableDom)[0];
+				     dojo.html.set(target,html,{
+				    	parseContent: true
+				     });
+				    //flyFromDealsExpandable.setHeight();
+				    flyFromDealsExpandable.attachExpandableEvent();
+				   	flyFromDealsExpandable.attachEvents();
+			},
+
+			updateGroupHeadinginModel : function(){
+				var flyFromDealsExpandable = this,checkedGrpCheckBox,grphead,countryCode,totalCount;
+
+					checkedGrpCheckBox = dojo.query(".grpHeading .dijitChecked",flyFromDealsExpandable.expandableDom);
+					flyFromDealsExpandable.dealsPanelModel.fromAirportGpName=[];
+					//Group Selected Check box update to model
+					if(checkedGrpCheckBox.length > 0){
+						_.forEach(checkedGrpCheckBox,function(item){
+							flyFromDealsExpandable.dealsPanelModel.fromAirportGpName.push(dijit.byNode(item).value);
+						});
+					}
+
+					if(flyFromDealsExpandable.dealsPanelModel.fromAirportGpName.length === 1 && checkedGrpCheckBox.length === 1){
+
+						grphead = dijit.byNode(checkedGrpCheckBox[0]);
+
+						if(grphead.focusNode.dataset !== undefined){
+							countryCode = grphead.focusNode.dataset.countrycode;
+						} else {
+							countryCode = grphead.focusNode.getAttribute("data-countrycode")
+						}
+
+						totalCount = dojo.query("." +countryCode).length;
+						flyFromDealsExpandable.fromDisabledCount = dojo.query("." +countryCode + ".dijitDisabled").length;
+						flyFromDealsExpandable.fromSelectedCount = (totalCount - flyFromDealsExpandable.fromDisabledCount) -1;
+					}
+
+
+					/*if(flyFromDealsExpandable.dealsPanelModel.fromAirportGpName.length === 1 && flyFromDealsExpandable.fromSelectedCount === flyFromDealsExpandable.dealsPanelModel.fromAirports.length){
+						flyFromDealsExpandable.dealsPanelModel.fromAirportGpFlag = true;
+					}else{
+						flyFromDealsExpandable.dealsPanelModel.fromAirportGpFlag = false;
+					}*/
+
+			},
+
 			attachEvents:function(){
 				var flyFromDealsExpandable = this;
+
+				flyFromDealsExpandable.disablingGroupHead();
 				//Connecting event for group checkbox
+
 				dojo.query('.grpHeading .dijitCheckBox').forEach(function(checkBox){
 					on(dijit.byNode(checkBox),"click",function(evt){
-						dojo.query("." +this.class/*CountryName*/).forEach(function(c){
-							if((dijit.byNode(checkBox).checked) && (dijit.byNode(c).disabled===false)){
-								dijit.byNode(c).set("checked",true);
-							}
-							else{
-								dijit.byNode(c).set("checked",false);
-							}
-						});
+						flyFromDealsExpandable.selectedUkAirports = [];
+						flyFromDealsExpandable.fromSelectedCount = -1;
+						flyFromDealsExpandable.fromDisabledCount = 0;
+
+						var countryCode;
+						if(this.focusNode.dataset !== undefined){
+							countryCode = this.focusNode.dataset.countrycode;
+						} else {
+							countryCode = this.focusNode.getAttribute("data-countrycode")
+						}
+
+						flyFromDealsExpandable.fromDisabledCount = dojo.query("." +countryCode + ".dijitDisabled").length;
+						flyFromDealsExpandable.fromSelectedCount = dojo.query("." +countryCode).length;
+
+						 dojo.query("." +countryCode).forEach(function(c){
+								if((dijit.byNode(checkBox).checked) && (dijit.byNode(c).disabled===false)){
+									dijit.byNode(c).set("checked",true);
+								}
+								else{
+									dijit.byNode(c).set("checked",false);
+								}
+
+							});
+						var CheckedCheckBoxes = dojo.query(".childCountry .dijitChecked",flyFromDealsExpandable.expandableDom);
+
+						if(CheckedCheckBoxes.length > 0){
+							_.forEach(CheckedCheckBoxes,function(item){
+								flyFromDealsExpandable.selectedUkAirports.push(dijit.byNode(item).value);
+							});
+
+						}
+
+						//flyFromDealsExpandable.updateGroupHeadinginModel();
+
+						flyFromDealsExpandable.updatePlaceHolder(CheckedCheckBoxes.length);
+
+						//flyFromDealsExpandable.dealsPanelModel.updateBugetState();
 					});
 				});
 				//connecting event for child checkbox
 				dojo.query('.childCountry .dijitCheckBox').forEach(function(childCheckBox){
+					var airportmodelGroups;
+					if(dijit.byNode(childCheckBox).focusNode.dataset !== undefined){
+						airportmodelGroups = dijit.byNode(childCheckBox).focusNode.dataset.airportmodelGroups;
+					} else {
+						airportmodelGroups = dijit.byNode(childCheckBox).focusNode.getAttribute("data-airportmodel-groups")
+					}
 
 					on(dijit.byNode(childCheckBox),"click",function(evt){
-						var grpCheckbox = dojo.query(".grpHeading ." +dijit.byNode(childCheckBox).focusNode.dataset.airportmodelGroups)[0],
-						childCheckbox=dojo.query(".childCountry ." +dijit.byNode(childCheckBox).focusNode.dataset.airportmodelGroups),
-						checkedChildCheckbox=dojo.query(".childCountry .dijitChecked." +dijit.byNode(childCheckBox).focusNode.dataset.airportmodelGroups);
+						flyFromDealsExpandable.selectedUkAirports = [];
+
+						var grpCheckbox = dojo.query(".grpHeading ." + airportmodelGroups)[0],
+						childCheckboxes=dojo.query(".childCountry ." +airportmodelGroups),
+						disabledChildCheckBoxes=dojo.query(".childCountry ." +airportmodelGroups+".dijitCheckBoxDisabled"),
+						enabledChildCheckBoxeslength=childCheckboxes.length-disabledChildCheckBoxes.length,
+						checkedCheckBoxes = dojo.query(".childCountry .dijitChecked",flyFromDealsExpandable.expandableDom),
+						checkedChildCheckboxes=dojo.query(".childCountry .dijitChecked." + airportmodelGroups);
+
 						if(!dijit.byNode(childCheckBox).checked) {
 							dijit.byNode(grpCheckbox).set("checked",false);
 						}else{
-							if(childCheckbox.length===checkedChildCheckbox.length) dijit.byNode(grpCheckbox).set("checked",true);
+							if(enabledChildCheckBoxeslength===checkedChildCheckboxes.length){
+								var parent = dijit.byNode(grpCheckbox).set("checked",true);
+									parent.set("checked",true);
+							}
 						}
+						//Child Selected Check box update to model
+						if(checkedCheckBoxes.length > 0){
+							_.forEach(checkedCheckBoxes,function(item){
+								flyFromDealsExpandable.selectedUkAirports.push(dijit.byNode(item).value);
+							});
+
+						}
+
+						//flyFromDealsExpandable.updateGroupHeadinginModel();
+
+						flyFromDealsExpandable.updatePlaceHolder(checkedCheckBoxes.length);
+						//flyFromDealsExpandable.dealsPanelModel.updateBugetState();
 					});
 				});
+
+				on(dijit.byId("anyUKAirport"),"click",function(){
+						var anyUKAirport = this;
+							flyFromDealsExpandable.selectedUkAirports = [];
+							/*flyFromDealsExpandable.dealsPanelModel.fromAirports = [];
+							flyFromDealsExpandable.dealsPanelModel.fromAirportNames = [];
+							flyFromDealsExpandable.dealsPanelModel.fromAirportGpName = [];*/
+
+							anyUKAirport.checked ? flyFromDealsExpandable.flyFromAllAirports = anyUKAirport.value : flyFromDealsExpandable.flyFromAllAirports = "" ;
+
+							flyFromDealsExpandable.disabledAllAirport();
+
+							flyFromDealsExpandable.updatePlaceHolder(0);
+							flyFromDealsExpandable.disablingGroupHead();
+							//flyFromDealsExpandable.dealsPanelModel.updateBugetState();
+				});
+			},
+
+			disabledAllAirport : function(){
+				var flyFromDealsExpandable = this;
+					dojo.forEach(flyFromDealsExpandable.ukairportList,function(item){
+						if(anyUKAirport.checked){
+							dijit.byId(item.id+"-deals").set("checked",false);
+
+							dijit.byId(item.id+"-deals").set("disabled",true);
+							if(dojo.isIE == 8){
+								query(dijit.byId(item.id+"-deals").domNode).next("label").style("color","#aeaeae");
+							}
+							dojo.query('.grpHeading .dijitCheckBox',flyFromDealsExpandable.expandableDom).forEach(function(item){
+								dijit.byNode(item).set("checked",false);
+								dijit.byNode(item).set("disabled",true);
+
+								if(dojo.isIE == 8) query(item).next("label").style("color","#aeaeae");
+							});
+						} else {
+
+								dijit.byId(item.id+"-deals").set("disabled",!item.available);
+								if(dojo.isIE == 8 && item.available){
+									query(dijit.byId(item.id+"-deals").domNode).next("label").style("color","#666");
+								}
+								dojo.query('.grpHeading .dijitCheckBox',flyFromDealsExpandable.expandableDom).forEach(function(item){
+									dijit.byNode(item).set("disabled",false);
+									if(dojo.isIE == 8) query(item).next("label").style("color","#666");
+								})
+						}
+
+					})
+
+			},
+
+			updatePlaceHolder: function(value,doValidate){ //doValidate is boolean to check whethere show deals button needs to be enabled or not
+				if(doValidate == undefined || doValidate == null) doValidate = true;
+				var flyFromDealsExpandable = this;
+				if(value == 1){
+					var selectedNodeTxt = dojo.query('.childCountry .dijitCheckBoxChecked',flyFromDealsExpandable.expandableDom).next("label").text();
+					query(".placeholder",flyFromDealsExpandable.domNode)[0].innerHTML = "<span>"+selectedNodeTxt+"</span>";
+				} else if(value == 0) {
+					query(".placeholder",flyFromDealsExpandable.domNode)[0].innerHTML = "<span> Any UK airport</span>";
+				} else {
+					query(".placeholder",flyFromDealsExpandable.domNode)[0].innerHTML = "<span>" + value + " airports</span>";
+				}
+
+				//Check if we are results page and enable show deals button on change of search criteria
+		    	if(!flyFromDealsExpandable.dealsPanelModel.dealsFilterStatus && doValidate){
+		    		flyFromDealsExpandable.dealsPanelModel.enableDealsButton();
+		    	}
+
+			},
+			setHeight: function(){
+				var flyFromDealsExpandable = this;
+				if(flyFromDealsExpandable.isShowing()) return;
+				var target = dojo.query(".deals-wrapper",flyFromDealsExpandable.expandableDom).parent()[0];
+
+				var elem = dojo.query(".deals-wrapper",flyFromDealsExpandable.expandableDom)[0];
+
+				var height = dojo.position(elem).h
+
+
+				//dojo.style(target,"max-height",height+"px")
+				if(has("ie")<10){
+					dojo.style(target,"max-height","637px");
+				} else {
+					fx.animateProperty({
+	        			node:target,
+	        			 properties: {
+	        				 maxHeight: 637
+	        			 	}
+	        		}).play();
+				}
+			},
+
+			 onOpenExpandable: function(){
+	    	    	var flyFromDealsExpandable = this;
+
+	    	    	flyFromDealsExpandable.standby.show();
+	    	    	dojo.addClass(flyFromDealsExpandable.standby.domNode, "flyfromDeals");
+	    	    		var def = flyFromDealsExpandable.doXhrPost("ws/dealsdepartureairports");
+		    	    	def.then(function(data){
+		    	    		flyFromDealsExpandable.ukairportList = data.GBR;
+		    	    		flyFromDealsExpandable.dealsPanelModel.fromAirports = flyFromDealsExpandable.dealsPanelModel.validateSavedSearch(flyFromDealsExpandable.ukairportList, flyFromDealsExpandable.dealsPanelModel.fromAirports);
+		    	    		flyFromDealsExpandable.selectedUkAirports =flyFromDealsExpandable.dealsPanelModel.fromAirports;
+		    	    		_.forEach(flyFromDealsExpandable.ukairportList, function(item){
+		    	    			if(dijit.byId("anyUKAirport").checked!=true ){
+		    	    				if(!item.available){
+		    	    					dijit.byId(item.id+"-deals").set("checked",false);
+			    	    				dijit.byId(item.id+"-deals").set("disabled",true);
+			    	    			} else {
+			    	    				;
+			    	    				dijit.byId(item.id+"-deals").set("disabled",false);
+			    	    			}
+		    	    			}
+		    	    		})
+
+		    	    		flyFromDealsExpandable.updatePlaceHolder(dojo.query('.childCountry .dijitCheckBoxChecked',flyFromDealsExpandable.expandableDom).length,false);
+		    	    		flyFromDealsExpandable.checkAllAirportCheckStatus();
+		    	    		flyFromDealsExpandable.disablingGroupHead();
+		    	    		flyFromDealsExpandable.standby.hide();
+		    	    	})
+	    	    },
+
+	    	    checkAllAirportCheckStatus : function() {
+	    	    	var flyFromDealsExpandable = this;
+	    	    		if(dojo.query('.anyAirport #anyUKAirport')[0].checked){
+	    	    			flyFromDealsExpandable.disabledAllAirport();
+	    	    		}
+	    	    },
+
+	    	    disablingGroupHead:function () {
+					var flyFromDealsExpandable = this;
+
+					dojo.query('.grpHeading .dijitCheckBox').forEach(function(checkBox){
+						var grphead=dijit.byNode(checkBox);
+						var countryCode;
+							if(grphead.focusNode.dataset !== undefined){
+								countryCode = grphead.focusNode.dataset.countrycode;
+							} else {
+								countryCode = grphead.focusNode.getAttribute("data-countrycode")
+							}
+						if(grphead!==undefined){
+
+							var disabledlength=dojo.query("." +countryCode + ".dijitDisabled").length;
+							var grouplength=dojo.query("." +countryCode).length;
+							var checkedlength=dojo.query("." +countryCode + ".dijitChecked").length;
+
+
+							dojo.query("." +countryCode).forEach(function(c){
+								var grpCheckbox = dojo.query('.grpHeading .' +countryCode );
+						var childCheckbox = dojo.query('.childCountry .' +countryCode );
+						var childCheckboxlength = childCheckbox.length;
+						var childCheckedlength = dojo.query('.childCountry .dijitChecked.' +countryCode ).length;
+						var childDisabledlength = dojo.query('.childCountry .dijitDisabled.' +countryCode ).length;
+
+						if((childCheckboxlength)===(childDisabledlength)){
+							dijit.byNode(grpCheckbox[0]).set("checked",false);
+							dijit.byNode(grpCheckbox[0]).set("disabled",true);
+							if(dojo.isIE == 8) query(dijit.byNode(grpCheckbox[0]).domNode).next("label").style("color","#aeaeae");
+						}else if(childCheckboxlength===(childCheckedlength+childDisabledlength)){
+							(dijit.byNode(grpCheckbox[0])).set("checked",true);
+						}else if((childCheckboxlength)!=(childDisabledlength)){
+							dijit.byNode(grpCheckbox[0]).set("disabled",false);
+							dijit.byNode(grpCheckbox[0]).set("checked",false);
+						}
+						else{
+							(dijit.byNode(grpCheckbox[0])).set("checked",false);
+							if(dojo.isIE == 8) query(dijit.byNode(grpCheckbox[0]).domNode).next("label").style("color","#666");
+						}
+							});
+
+							}
+					});
+					flyFromDealsExpandable.updateGroupHeadinginModel();
+			},
+
+
+			getSelectedPreviouseGroupsDetails : function(){
+				var flyFromDealsExpandable = this,
+					def,
+					selectedAiports,
+					groupedAirports,
+					responseData,
+					airportList =[],
+					countries=[],
+					allCountries=[],
+					fromAirportGpName=[];
+					fromSelectedGPAirports=[];
+
+					def = flyFromDealsExpandable.doXhrPost("ws/dealsdepartureairports");
+	    	    	def.then(function(data){
+	    	    		groupedAirports = flyFromDealsExpandable.getAvailableGroupedUKAirport(data);
+	    	    		selectedAiports = flyFromDealsExpandable.dealsPanelModel.fromAirports;
+	    	    		responseData	= flyFromDealsExpandable.getAirportSwapList(data);
+						responseData	= flyFromDealsExpandable.getUkAirports(responseData);
+
+						_.each(selectedAiports, function(airports){
+							_.each(responseData, function(tempAirport){
+								if(airports === tempAirport.id){
+									if(tempAirport.available){
+										airportList.push(tempAirport);
+									}
+								}
+							});
+						});
+
+						countries = flyFromDealsExpandable.getCountryNames(airportList);
+
+						allCountries = flyFromDealsExpandable.setAirportMap(airportList ,countries);
+
+						if(allCountries.length === 1){
+							_.each(groupedAirports, function(gpAirport){
+								_.each(allCountries, function(countries){
+									if(gpAirport.countryName===countries.countryName && gpAirport.airports.length === countries.airports.length){
+										fromAirportGpName.push(gpAirport.countryName);
+										fromSelectedGPAirports.push(gpAirport);
+									}
+								});
+							});
+						}
+
+						if(fromSelectedGPAirports.length === 1){
+							dojo.byId("ukAirportName").innerHTML = "any "+ fromAirportGpName[0];
+						}else if(selectedAiports.length === 1){
+							dojo.byId("ukAirportName").innerHTML =  flyFromDealsExpandable.dealsPanelModel.fromAirportNames[0].name + " ("+ selectedAiports[0] +")";
+						}else if(selectedAiports.length > 1){
+							dojo.byId("ukAirportName").innerHTML = selectedAiports.length + " UK airports"
+						}else if(selectedAiports.length === 0){
+							dojo.byId("ukAirportName").innerHTML =  "any UK airport"
+						}
+
+						flyFromDealsExpandable.dealsPanelModel.fromAirportGpName = fromAirportGpName;
+
+	    	    	});
 			}
 
 

@@ -28,14 +28,14 @@ define("tui/searchPanel/view/flights/SubmitButton", [
 
       // trigger model submit (validate > publish)
       on(submitButton.domNode, "click", function (event) {
-  
+
     	  /*TODO: Temporary fix for duplicate search error messages @ search click. */
     	  dojo.global.isFromErrorMessageNew = true;
     	  dojo.global.isToErrorMessageNew = true;
     	  dojo.global.isWhenErrorMessageNew = true;
     	  dojo.global.isReturnErrorMessageNew = true;
     	  dojo.global.isPartyCompositionErrorNew = true;
-    	  
+
         submitButton.searchPanelModel.submit();
       });
 
@@ -76,33 +76,35 @@ define("tui/searchPanel/view/flights/SubmitButton", [
       // summary:
       // populates search form with hidden fields containing search criteria
       var submitButton = this;
-         
 
-     /*
-       airports = [],
-          units = [];
-      .forEach(searchCriteria.airports, function (airport) {
-        airports.push(airport.id)
+
+
+      flyingFromAirports = [],
+      flyingToAirports = [];
+      _.forEach(searchCriteria.flyingFrom, function (from) {
+    	  flyingFromAirports.push(from.id)
       });
-      _.forEach(searchCriteria.units, function (unit) {
-        units.push(unit.id + ":" + unit.type)
+      _.forEach(searchCriteria.flyingTo, function (to) {
+    	  flyingToAirports.push(to.id+ ":" +to.name)
       });
 
-      submitButton.createInput("airports[]", airports.join("|"));
-      submitButton.createInput("units[]", units.join("|"));*/
+      submitButton.createInput("flyingFrom[]", flyingFromAirports.join("|"));
+      submitButton.createInput("flyingTo[]", flyingToAirports.join("|"));
 
       var searchCriteriaCopy = dojo.clone(searchCriteria);
      /* delete searchCriteriaCopy.airports;
       delete searchCriteriaCopy.units;
       */
       _.forEach(searchCriteriaCopy, function (value, key) {
-        submitButton.createInput(key, value);
+    	  if(key !== "flyingFrom" && key !== "flyingTo"){
+    		  submitButton.createInput(key, value);
+    	  }
       });
 
       // send "main search" request type
-      /*submitButton.createInput("searchRequestType", "ins");
-      submitButton.createInput("sp", "true");*/
-      submitButton.createInput("isFlexible", "Y");     
+      submitButton.createInput("searchType", "pricegrid");
+      /*submitButton.createInput("sp", "true");*/
+      submitButton.createInput("isFlexible", "Y");
      /* if(_.size(searchCriteria.units) > 0)
         submitButton.createInput("multiSelect", _.first(searchCriteria.units)['multiSelect']);
       */

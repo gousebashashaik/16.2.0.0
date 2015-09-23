@@ -56,6 +56,10 @@ define("tui/searchPanel/model/flights/SearchPanelModel", [
     //flag for return date filed
     oneWayOnly: false,
 
+    tracsEndDate : null,
+
+    tracsDate : false,
+
     // ----------------------------------------------------------------------------- methods
 
     constructor: function (props) {
@@ -175,9 +179,17 @@ define("tui/searchPanel/model/flights/SearchPanelModel", [
       if ((searchPanelModel.adults + searchPanelModel.childAges) && _.filter(searchPanelModel.childAges,function (age) {
         return age === -1;
       }).length > 0) {
-        searchPanelModel.searchErrorMessages.set("partyChildAges", {
-          childNoAges: searchPanelModel.searchMessaging.errors.childNoAges
-        });
+    	  if(searchPanelModel.oneWayOnly){
+    		  searchPanelModel.searchErrorMessages.set("partyChildAges", {
+    			  childNoAges: searchPanelModel.searchMessaging.flights.errors.childNoAgesOneWay
+    	        });
+    	  }
+    	  else{
+    		  searchPanelModel.searchErrorMessages.set("partyChildAges", {
+    	          childNoAges: searchPanelModel.searchMessaging.errors.childNoAges
+    	        });
+    	  }
+
       }
 
       /*searchPanelModel.subscribe("tui/searchPanel/model/searchPanelModel/invalidAirportCombinationError", function () {
@@ -222,8 +234,8 @@ define("tui/searchPanel/model/flights/SearchPanelModel", [
       }
       return {
 
-			flyingFrom :searchPanelModel.from.data[0].id,
-			flyingTo :searchPanelModel.to.data[0].id,
+			flyingFrom :searchPanelModel.from.getStorageData(["id", "name"]),
+			flyingTo :searchPanelModel.to.getStorageData(["id", "name"]),
 			depDate: dojo.date.locale.format(searchPanelModel.parseToDate(searchPanelModel.date), {
 				  		selector: "date",
 				  		datePattern: "yyyy-MM-dd"
@@ -320,12 +332,19 @@ define("tui/searchPanel/model/flights/SearchPanelModel", [
     onRetrieveSavedObject: function (savedSearch) {
       var searchPanelModel = this;
 
+      if(savedSearch.from.length < 1){
+    	  searchPanelModel.refresh();
+    	  savedSearch="";
+    	 return false;
+      }
       // retrieve all props except from, to, date, timestamp
       for (var prop in savedSearch) {
         if (dojo.indexOf(["from", "to", "date", "when", "returnDate", "timestamp"], prop) === -1) {
           searchPanelModel.set(prop, savedSearch[prop]);
         }
       }
+
+
 
       // retrieve date (if not in past and if set)
       if (savedSearch.date) {
@@ -362,8 +381,17 @@ define("tui/searchPanel/model/flights/SearchPanelModel", [
       if (savedSearch.from.length > 0) {
     	searchPanelModel.from.emptyStore();
         searchPanelModel.from.setStorageData(savedSearch.from, AirportModel);
-        var fromObject = savedSearch.from[0];
-        dojo.query("#wherefromValue").text(fromObject.name  +"  (" + fromObject.id + ")");
+        var fromObject = savedSearch.from;
+        if(fromObject.countryCode != "GBR"){
+        	dojo.global.overseasSwapElement = true;
+        }
+        dojo.query("#wherefromValue").style("display","block");
+
+        if(fromObject.length > 1 ){
+        	 dojo.query("#wherefromValue").text(fromObject.length  +" "+ " airports");
+        }else{
+        	 dojo.query("#wherefromValue").text(fromObject[0].name  +"  (" + fromObject[0].id + ")");
+        }
         dojo.query("#wherefromPlaceholder").style("display","none");
       }
 
@@ -372,8 +400,16 @@ define("tui/searchPanel/model/flights/SearchPanelModel", [
         //searchPanelModel.to.setStorageData(savedSearch.to, DestinationModel);
     	  searchPanelModel.to.emptyStore();
     	  searchPanelModel.to.setStorageData(savedSearch.to, AirportModel);
-    	  var toObject = savedSearch.to[0];
-    	  dojo.query("#wheretoValue").text(toObject.name     +"  (" + toObject.id + ")");
+    	  	var toObject = savedSearch.to;
+    	  	dojo.query("#wheretoValue").style("display","block");
+    	  	if(toObject.countryCode != "GBR"){
+            	dojo.global.overseasSwapElement = true;
+            }
+    	  	if(toObject.length > 1){
+      			dojo.query("#wheretoValue").text(toObject.length +" "+ " airports");
+      		}else {
+      			dojo.query("#wheretoValue").text(toObject[0].name     +"  (" + toObject[0].id + ")");
+      		}
     	  dojo.query("#wheretoPlaceholder").style("display","none");
       }
     },
@@ -399,21 +435,24 @@ define("tui/searchPanel/model/flights/SearchPanelModel", [
 
 	      if (_.has(data, "from")) {
 	        // push airports as AirportModel
-	    	   airports.push(dojo.mixin(new AirportModel(),{
-		            id: data.from.id,
-		            name: data.from.name,
-		            groups: data.from.group,
-		            synonym: data.from.synonym,
-		            children: data.from.children,
-		            countryCode :  data.from.countryCode
+	          _.forEach(data.from, function (airport) {
+	            airports.push(new AirportModel({
+	              id: airport.id,
+	              name: airport.name,
+	              groups: airport.group,
+	              synonym: airport.synonym,
+	              children: airport.children,
+	              countryCode :  airport.countryCode
 		       }));
+	          });
 	      }
 
 	      if (_.has(data, "to")) {
-	    	  units.push(new DestinationModel(data.to));
+	          // push units as DestinationModel
+	          _.forEach(data.to, function (unit) {
+	            units.push(new DestinationModel(unit));
+	          });
 	      }
-
-
 
 
 	     deptDate =   dojo.date.locale.format(new Date(data.departureDate), {
@@ -455,7 +494,24 @@ define("tui/searchPanel/model/flights/SearchPanelModel", [
 	      	searchToSave = searchPanelModel.parse();
 	      	searchPanelModel.saveObject(searchToSave, searchPanelModel.savedSearch);
 
+    },
+
+
+    tracsEndDateValidation : function(){
+    	var searchPanelModel = this,
+    		tracsDays=0,
+    		dt = new Date();
+    		dt.setHours(0,0,0,0);
+
+    		if(searchPanelModel.tracsEndDate){
+	    		tracsDays = dojo.date.difference(searchPanelModel.tracsEndDate, dt);
+	    	}
+
+    		if(tracsDays >= 0){
+    			searchPanelModel.tracsDate= true;
+    		}
     }
+
 
 
   });
