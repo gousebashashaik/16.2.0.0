@@ -1,22 +1,22 @@
 /*
  * Copyright (C)2006 TUI UK Ltd
- * 
+ *
  * TUI UK Ltd, Columbus House, Westwood Way, Westwood Business Park, Coventry, United Kingdom CV4
  * 8TT
- * 
+ *
  * Telephone - (024)76282828
- * 
+ *
  * All rights reserved - The copyright notice above does not evidence any actual or intended
  * publication of this source code.
- * 
+ *
  * $RCSfile: DefaultFlightSearchPanelFacade.java$
- * 
+ *
  * $Revision: $
- * 
+ *
  * $Date: Jan 14, 2015$
- * 
- * 
- * 
+ *
+ *
+ *
  * $Log: $
  */
 package uk.co.portaltech.tui.flights.facades.impl;
@@ -42,6 +42,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
@@ -70,6 +71,7 @@ import uk.co.tui.flights.data.SearchError;
 import uk.co.tui.flights.exception.FlightsServiceException;
 import uk.co.tui.flights.service.FlightSearchService;
 
+
 /**
  * This class is used for search and browse pages.
  *
@@ -95,6 +97,8 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
    @Resource
    private AirportService airportsService;
 
+
+
    private static final String NO_MATCH_FOUND = "NO_MATCH_FOUND";
 
    private static final String INVALID_ROUTE_ON = "INVALID_ROUTE_ON";
@@ -105,14 +109,11 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
 
    private static final String DATE_FORMAT = "dd-MM-yy";
 
-   private static final String NO_ROUTE_FOUND_TO_SELECTED_DESTINATIONS =
-      "No Route Found to selected destinations";
+   private static final String NO_ROUTE_FOUND_TO_SELECTED_DESTINATIONS = "No Route Found to selected destinations";
 
-   private static final String NO_ROUTE_FOUND_FOR_SELECTED_DATES =
-      "No Route Found for selected Dates";
+   private static final String NO_ROUTE_FOUND_FOR_SELECTED_DATES = "No Route Found for selected Dates";
 
-   private static final String NO_MATCH_FOUND_FOR_THE_SEARCH_KEY =
-      "No Match found for the search key";
+   private static final String NO_MATCH_FOUND_FOR_THE_SEARCH_KEY = "No Match found for the search key";
 
    private static final String SIMILAR_SPELLINGS = "Similar spellings";
 
@@ -122,34 +123,35 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
 
    private static final String ERROR_CODE = "6002";
 
-   private static final MapFn<String, LocalDate> LOCATE_DATE_MAPPER =
-      new MapFn<String, LocalDate>()
-      {
-         @Override
-         public LocalDate call(final String date)
-         {
-            return toDate(date);
-         }
-      };
+   private static final String GBR = "GBR";
 
-   private static final MapFn<uk.co.portaltech.travel.model.airport.Airport, AirportData> AIRPORT_TO_AIRPORT_DATA_MAPPER =
-      new MapFn<uk.co.portaltech.travel.model.airport.Airport, AirportData>()
+   private static final String AIRPORT_SERVICE_EXCEPTION = "AirportServiceException";
+
+
+   private static final MapFn<String, LocalDate> LOCATE_DATE_MAPPER = new MapFn<String, LocalDate>()
+   {
+      @Override
+      public LocalDate call(final String date)
       {
-         @Override
-         public AirportData call(final uk.co.portaltech.travel.model.airport.Airport input)
-         {
-            return toAirportSearchData(input);
-         }
-      };
+         return toDate(date);
+      }
+   };
+
+   private static final MapFn<uk.co.portaltech.travel.model.airport.Airport, AirportData> AIRPORT_TO_AIRPORT_DATA_MAPPER = new MapFn<uk.co.portaltech.travel.model.airport.Airport, AirportData>()
+   {
+      @Override
+      public AirportData call(final uk.co.portaltech.travel.model.airport.Airport input)
+      {
+         return toAirportSearchData(input);
+      }
+   };
 
    /**
-    * This method fetches Departure Airport list to be shown in the 'Departing From' airport list
-    * overlay
+    * This method fetches Departure Airport list to be shown in the 'Departing From' airport list overlay
     */
    @Override
-   public Map<String, List<AirportData>> getDepartingFromAirports(
-      final List<String> arrivingAirportCodes, final List<String> departureDates)
-      throws SearchResultsBusinessException
+   public Map<String, List<AirportData>> getDepartingFromAirports(final List<String> arrivingAirportCodes,
+         final List<String> departureDates) throws SearchResultsBusinessException
    {
 
       try
@@ -157,16 +159,12 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
          Map<String, List<AirportData>> departingFromAirportsMap;
          if (checkArrivalsDatesIsEmpty(arrivingAirportCodes, departureDates))
          {
-            departingFromAirportsMap =
-               flightSearchService.fetchDepartingFromAirports(cmsSiteService
-                  .getCurrentCatalogVersion());
+            departingFromAirportsMap = flightSearchService.fetchDepartingFromAirports(cmsSiteService.getCurrentCatalogVersion());
          }
          else
          {
-            departingFromAirportsMap =
-               flightSearchService.fetchDepartingFromAirports(
-                  cmsSiteService.getCurrentCatalogVersion(), arrivingAirportCodes,
-                  toLocalDates(departureDates));
+            departingFromAirportsMap = flightSearchService.fetchDepartingFromAirports(cmsSiteService.getCurrentCatalogVersion(),
+                  arrivingAirportCodes, toLocalDates(departureDates));
          }
 
          return departingFromAirportsMap;
@@ -181,6 +179,7 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
    @Override
    public SearchPanelComponentModel getSearchPanelComponent()
    {
+
       SearchPanelComponentModel component = null;
       try
       {
@@ -190,12 +189,13 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
       {
          LOGGER.error("No search panel component", e);
       }
+
       return component;
+
    }
 
    @Override
-   public <T extends AbstractCMSComponentModel> T getComponent(final String componentUid)
-      throws NoSuchComponentException
+   public <T extends AbstractCMSComponentModel> T getComponent(final String componentUid) throws NoSuchComponentException
    {
       try
       {
@@ -209,19 +209,17 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
    }
 
    /**
-    * Following method is used to fetch departure dates in the Search Panel according to the data
-    * selected in From and To fields
+    * Following method is used to fetch departure dates in the Search Panel according to the data selected in From and
+    * To fields
     */
    @Override
-   public List<String> getFlightDates(final List<String> airportCodeList,
-      final List<String> unitCodeList, final String seasonEndDate)
-      throws SearchResultsBusinessException
+   public List<String> getFlightDates(final List<String> airportCodeList, final List<String> unitCodeList,
+         final String seasonEndDate) throws SearchResultsBusinessException
    {
 
       try
       {
-         final List<String> flightDates =
-            flightRouteIndexService.findDepartureFlightDates(airportCodeList, unitCodeList);
+         final List<String> flightDates = flightRouteIndexService.findDepartureFlightDates(airportCodeList, unitCodeList);
          return filterFlightDates(seasonEndDate, flightDates);
       }
       catch (final IndexingException e)
@@ -241,8 +239,7 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
 
       for (final String dates : flightDates)
       {
-         if (!DateUtils.toDate(dates).isAfter(
-            DateUtils.toDate(seasonEndDate, DEPARTURE_DATE_FORMAT)))
+         if (!DateUtils.toDate(dates).isAfter(DateUtils.toDate(seasonEndDate, DEPARTURE_DATE_FORMAT)))
          {
             validFlightDates.add(dates);
          }
@@ -255,8 +252,7 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
     * This method fetches all departure dates when other fields data is empty
     */
    @Override
-   public List<String> getAllFlightsDates(final String seasonEndDate)
-      throws SearchResultsBusinessException
+   public List<String> getAllFlightsDates(final String seasonEndDate) throws SearchResultsBusinessException
    {
       try
       {
@@ -271,18 +267,16 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
    }
 
    /**
-    * This method fetches all return dates in the search panel according to the data selected in
-    * From, To and Departure date selected
+    * This method fetches all return dates in the search panel according to the data selected in From, To and Departure
+    * date selected
     */
    @Override
-   public List<String> getReturnFlightDates(final List<String> airportCodeList,
-      final List<String> unitCodeList, final String departureDate, final String seasonEndDate)
-      throws SearchResultsBusinessException
+   public List<String> getReturnFlightDates(final List<String> airportCodeList, final List<String> unitCodeList,
+         final String departureDate, final String seasonEndDate) throws SearchResultsBusinessException
    {
       try
       {
-         final List<String> flightReturnDates =
-            flightRouteIndexService.findDepartureFlightDates(airportCodeList, unitCodeList);
+         final List<String> flightReturnDates = flightRouteIndexService.findDepartureFlightDates(airportCodeList, unitCodeList);
 
          if (flightReturnDates != null && departureDate != null)
          {
@@ -318,8 +312,7 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
    private boolean notFutureReturnDate(final String departureDate, final String returnDate)
    {
       final DateTimeFormatter formatter = DateTimeFormat.forPattern(DATE_FORMAT);
-      return formatter.parseDateTime(departureDate).getMillis() >= formatter.parseDateTime(
-         returnDate).getMillis();
+      return formatter.parseDateTime(departureDate).getMillis() >= formatter.parseDateTime(returnDate).getMillis();
    }
 
    /**
@@ -327,7 +320,7 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
     */
    @Override
    public List<String> getAllReturnFlightsDates(final String date, final String seasonEndDate)
-      throws SearchResultsBusinessException
+         throws SearchResultsBusinessException
    {
       final List<String> allFlightDates = flightRouteIndexService.findAllDepartureFlightDates();
 
@@ -341,17 +334,57 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
       return filterFlightDates(seasonEndDate, allFlightDates);
    }
 
+
+
+   @Override
+   public List<AirportData> departureSearch(final String key, final List<String> arrival, final List<String> dates)
+         throws SearchResultsBusinessException
+   {
+
+
+      final List<uk.co.portaltech.travel.model.airport.Airport> airports = new ArrayList<uk.co.portaltech.travel.model.airport.Airport>();
+      List<AirportData> listofAirports = new ArrayList<AirportData>();
+      try
+      {
+         boolean flag = false;
+
+         final String regex = "(?=.*[0-9a-zA-Z]).+$";
+         flag = Pattern.matches(regex, key);
+
+
+         if (key.length() > 2 && flag)
+         {
+            processTimeTableDepartureSearch(key, arrival, dates, airports);
+         }
+         listofAirports = map(airportsService.sortAirports(flightSearchService.verifyInvalidAirports(airports, arrival)),
+               AIRPORT_TO_AIRPORT_DATA_MAPPER);
+         flightSearchService.simillerSpellingValidation(listofAirports);
+
+      }
+      catch (final AirportServiceException ex)
+      {
+         LOGGER.error(AIRPORT_SERVICE_EXCEPTION, ex);
+
+      }
+      return listofAirports;
+
+   }
+
+
+
+
+
+
    /**
-    * Following method is used for Auto suggest functionality in Search Panel 'Departing From' field
-    * under airport list overlay
+    * Following method is used for Auto suggest functionality in Search Panel 'Departing From' field under airport list
+    * overlay
     */
    @Override
-   public AirportSearchResult find(final String key, final List<String> arrivals,
-      final List<String> dates) throws SearchResultsBusinessException
+   public AirportSearchResult find(final String key, final List<String> arrivals, final List<String> dates)
+         throws SearchResultsBusinessException
    {
       final AirportSearchResult searchResult = new AirportSearchResult();
-      final List<uk.co.portaltech.travel.model.airport.Airport> airports =
-         new ArrayList<uk.co.portaltech.travel.model.airport.Airport>();
+      final List<uk.co.portaltech.travel.model.airport.Airport> airports = new ArrayList<uk.co.portaltech.travel.model.airport.Airport>();
 
       try
       {
@@ -359,7 +392,7 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
       }
       catch (final AirportServiceException ex)
       {
-         LOGGER.error("AirportServiceException", ex);
+         LOGGER.error(AIRPORT_SERVICE_EXCEPTION, ex);
          searchResult.setError(new SearchError(NO_MATCH_FOUND, NO_MATCH_FOUND_FOR_THE_SEARCH_KEY));
          searchResult.setAirports(Collections.<AirportData> emptyList());
          return searchResult;
@@ -376,13 +409,12 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
     * temporary fix Added this method to exclude UK airports and groups from lucene results.
     */
    private List<AirportData> getNonUKResultList(final AirportSearchResult searchResult,
-      final List<uk.co.portaltech.travel.model.airport.Airport> airports)
+         final List<uk.co.portaltech.travel.model.airport.Airport> airports)
    {
-      final String[] ukcode = new String[] { "GBR", "IRL" };
-      final List<AirportData> allAirports =
-         map(airportsService.sortAirports(airports), AIRPORT_TO_AIRPORT_DATA_MAPPER);
-      final List<String> ukAirportList =
-         airportsService.getAirportCodesOfCountires(cmsSiteService.getCurrentCatalogVersion(),
+      final String[] ukcode = new String[]
+      { GBR, "IRL" };
+      final List<AirportData> allAirports = map(airportsService.sortAirports(airports), AIRPORT_TO_AIRPORT_DATA_MAPPER);
+      final List<String> ukAirportList = airportsService.getAirportCodesOfCountires(cmsSiteService.getCurrentCatalogVersion(),
             Arrays.asList(ukcode));
       final List<AirportData> nonUkAirportList = new ArrayList<AirportData>();
       ukAirportList.addAll(airportsService.getAllAirportGroupcodes());
@@ -403,9 +435,33 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
       return nonUkAirportList;
    }
 
-   private void processDepartureSearch(final String key, final List<String> arrivals,
-      final List<String> dates, final AirportSearchResult searchResult,
-      final List<uk.co.portaltech.travel.model.airport.Airport> airports)
+   /**
+    * temporary fix Added this method to exclude UK airports and groups from lucene results.
+    */
+   private List<AirportData> getUKResultList(final AirportSearchResult searchResult,
+         final List<uk.co.portaltech.travel.model.airport.Airport> airports)
+   {
+      final List<AirportData> allAirports = map(airportsService.sortAirports(airports), AIRPORT_TO_AIRPORT_DATA_MAPPER);
+      final List<AirportData> nonUkAirportList = new ArrayList<AirportData>();
+      for (final AirportData airportData : allAirports)
+      {
+         if (GBR.equalsIgnoreCase(airportData.getCountryCode()))
+         {
+            nonUkAirportList.add(airportData);
+         }
+
+      }
+
+      if (CollectionUtils.isEmpty(nonUkAirportList))
+      {
+         searchResult.setNomatch(false);
+         searchResult.setError(new SearchError(NO_MATCH_FOUND, NO_MATCH_FOUND_FOR_THE_SEARCH_KEY));
+      }
+      return nonUkAirportList;
+   }
+
+   private void processDepartureSearch(final String key, final List<String> arrivals, final List<String> dates,
+         final AirportSearchResult searchResult, final List<uk.co.portaltech.travel.model.airport.Airport> airports)
    {
 
       boolean isFuzzyResult = false;
@@ -427,8 +483,8 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
                selectedAirports.add(arrival.split(":")[0].toString());
             }
          }
-         final uk.co.portaltech.travel.model.airport.Airports aiportsResult =
-            airportsService.searchDepartureAutoSuggest(key, selectedAirports, toLocalDates(dates));
+         final uk.co.portaltech.travel.model.airport.Airports aiportsResult = airportsService.searchDepartureAutoSuggest(key,
+               selectedAirports, toLocalDates(dates));
          airports.addAll(aiportsResult.airportsWithRoute());
          getupdatedairports(airports, aiportsResult);
          isFuzzyResult = aiportsResult.isNomatch();
@@ -440,11 +496,45 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
       searchResult.setNomatch(isFuzzyResult);
    }
 
-   /**
-    * @param arrivals
-    * @param dates
-    * @return
-    */
+
+   private void processTimeTableDepartureSearch(final String key, final List<String> arrivals, final List<String> dates,
+         final List<uk.co.portaltech.travel.model.airport.Airport> airports)
+   {
+      final AirportSearchResult searchResult = new AirportSearchResult();
+      boolean isFuzzyResult = false;
+
+      if (checkArrivalsDatesIsEmpty(arrivals, dates))
+      {
+         airports.addAll(airportsService.searchDepartureAutoSuggest(key));
+         isFuzzyResult = isFuzzy(airports, isFuzzyResult);
+
+      }
+      else
+      {
+
+         final List<String> selectedAirports = new ArrayList<String>();
+         if (CollectionUtils.isNotEmpty(arrivals))
+         {
+            for (final String arrival : arrivals)
+            {
+               selectedAirports.add(arrival.split(":")[0].toString());
+            }
+         }
+
+         final uk.co.portaltech.travel.model.airport.Airports aiportsResult = airportsService.searchDepartureAutoSuggest(key,
+               selectedAirports, toLocalDates(dates));
+         airports.addAll(aiportsResult.airportsWithRoute());
+         getupdatedairports(airports, aiportsResult);
+         searchResult.setError(searchError(aiportsResult, selectedAirports));
+         checkForNoFlights(searchResult, airports, aiportsResult);
+
+
+
+      }
+   }
+
+
+
    private boolean checkArrivalsDatesIsEmpty(final List<String> arrivals, final List<String> dates)
    {
       return CollectionUtils.isEmpty(arrivals) && CollectionUtils.isEmpty(dates);
@@ -454,8 +544,8 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
     *
     */
    private void checkForNoFlights(final AirportSearchResult searchResult,
-      final List<uk.co.portaltech.travel.model.airport.Airport> airports,
-      final uk.co.portaltech.travel.model.airport.Airports aiportsResult)
+         final List<uk.co.portaltech.travel.model.airport.Airport> airports,
+         final uk.co.portaltech.travel.model.airport.Airports aiportsResult)
    {
       if (checkError(searchResult))
       {
@@ -467,8 +557,10 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
       }
    }
 
+
+
    private void checkEmptyAirports(final AirportSearchResult searchResult,
-      final List<uk.co.portaltech.travel.model.airport.Airport> airports)
+         final List<uk.co.portaltech.travel.model.airport.Airport> airports)
    {
       if (CollectionUtils.isEmpty(airports))
       {
@@ -477,8 +569,7 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
       }
    }
 
-   private boolean isFuzzy(final List<uk.co.portaltech.travel.model.airport.Airport> airports,
-      final boolean isFuzzyResult)
+   private boolean isFuzzy(final List<uk.co.portaltech.travel.model.airport.Airport> airports, final boolean isFuzzyResult)
    {
 
       final Airport dummy = new Airport(NOMATCH, SIMILAR_SPELLINGS);
@@ -490,40 +581,34 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
       return isFuzzyResult;
    }
 
-   private SearchError searchError(
-      final uk.co.portaltech.travel.model.airport.Airports airportsResult,
-      final List<String> arrivals)
+   private SearchError searchError(final uk.co.portaltech.travel.model.airport.Airports airportsResult,
+         final List<String> arrivals)
    {
       return airportsResult.hasRoutes() ? null : determineError(airportsResult, arrivals);
    }
 
-   private SearchError determineError(
-      final uk.co.portaltech.travel.model.airport.Airports airportsResult,
-      final List<String> arrivals)
+   private SearchError determineError(final uk.co.portaltech.travel.model.airport.Airports airportsResult,
+         final List<String> arrivals)
    {
-      final List<AirportData> airportDatas =
-         map(airportsResult.matchedAirports(), AIRPORT_TO_AIRPORT_DATA_MAPPER);
+      final List<AirportData> airportDatas = map(airportsResult.matchedAirports(), AIRPORT_TO_AIRPORT_DATA_MAPPER);
       final List<AirportData> airportEntries = new ArrayList<AirportData>();
       airportEntries.addAll(airportDatas);
 
       final Collection<AirportData> matchedUnits = getMatchedArrivals(arrivals);
 
-      if (!airportsResult.hasAirportsToSelectedDestinations()
-         && !airportsResult.hasAirportsOnSelectedDates())
+      if (!airportsResult.hasAirportsToSelectedDestinations() && !airportsResult.hasAirportsOnSelectedDates())
       {
          return null;
       }
       return airportsResult.hasAirportsToSelectedDestinations() ? new SearchError(INVALID_ROUTE_ON,
-         NO_ROUTE_FOUND_FOR_SELECTED_DATES, airportEntries, toList(matchedUnits))
-         : new SearchError(INVALID_ROUTE_TO, NO_ROUTE_FOUND_TO_SELECTED_DESTINATIONS,
-            airportEntries, toList(matchedUnits));
+            NO_ROUTE_FOUND_FOR_SELECTED_DATES, airportEntries, toList(matchedUnits)) : new SearchError(INVALID_ROUTE_TO,
+            NO_ROUTE_FOUND_TO_SELECTED_DESTINATIONS, airportEntries, toList(matchedUnits));
 
    }
 
    private List<AirportData> getMatchedArrivals(final List<String> arrivalCodes)
    {
-      final Set<uk.co.portaltech.travel.model.airport.Airport> airportList =
-         new HashSet<uk.co.portaltech.travel.model.airport.Airport>();
+      final Set<uk.co.portaltech.travel.model.airport.Airport> airportList = new HashSet<uk.co.portaltech.travel.model.airport.Airport>();
 
       if (null != arrivalCodes)
       {
@@ -536,7 +621,7 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
    }
 
    private List<AirportData> processAirportList(final List<String> airportCodes,
-      final Set<uk.co.portaltech.travel.model.airport.Airport> airportList)
+         final Set<uk.co.portaltech.travel.model.airport.Airport> airportList)
    {
 
       List<uk.co.portaltech.travel.model.airport.Airport> requestedAirports = null;
@@ -559,10 +644,9 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
       return new ArrayList<AirportData>();
    }
 
-   private List<uk.co.portaltech.travel.model.airport.Airport> processRequestedAirports(
-      final List<String> airportCodes,
-      final List<uk.co.portaltech.travel.model.airport.Airport> requestedAirports,
-      final uk.co.portaltech.travel.model.airport.Airport airport)
+   private List<uk.co.portaltech.travel.model.airport.Airport> processRequestedAirports(final List<String> airportCodes,
+         final List<uk.co.portaltech.travel.model.airport.Airport> requestedAirports,
+         final uk.co.portaltech.travel.model.airport.Airport airport)
    {
       for (final String airportCode : airportCodes)
       {
@@ -575,12 +659,11 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
    }
 
    /**
-    * This method is used to get the arrival airport list in the 'Arriving To' field in the search
-    * panel
+    * This method is used to get the arrival airport list in the 'Arriving To' field in the search panel
     */
    @Override
-   public Map<String, List<AirportData>> getArrivalData(final List<String> airports,
-      final List<String> dates) throws SearchResultsBusinessException
+   public Map<String, List<AirportData>> getArrivalData(final List<String> airports, final List<String> dates)
+         throws SearchResultsBusinessException
    {
 
       try
@@ -588,14 +671,12 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
          Map<String, List<AirportData>> arrivalAirportGuide;
          if (checkArrivalsDatesIsEmpty(airports, dates))
          {
-            arrivalAirportGuide =
-               flightSearchService.fetchArrivalAirports(cmsSiteService.getCurrentCatalogVersion());
+            arrivalAirportGuide = flightSearchService.fetchArrivalAirports(cmsSiteService.getCurrentCatalogVersion());
          }
          else
          {
-            arrivalAirportGuide =
-               flightSearchService.fetchArrivalAirports(cmsSiteService.getCurrentCatalogVersion(),
-                  airports, toLocalDates(dates));
+            arrivalAirportGuide = flightSearchService.fetchArrivalAirports(cmsSiteService.getCurrentCatalogVersion(), airports,
+                  toLocalDates(dates));
          }
          return arrivalAirportGuide;
       }
@@ -606,17 +687,43 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
 
    }
 
+   @Override
+   public AirportData validateArrivalAirport(final List<String> depAirports, final String arrAirport, final List<String> dates)
+         throws SearchResultsBusinessException
+   {
+      AirportData airportData = null;
+      boolean isRouteAvailable = false;
+
+      try
+      {
+         airportData = flightSearchService.getAirportDataForCode(arrAirport, cmsSiteService.getCurrentCatalogVersion());
+         airportData.setAvailable(flightSearchService.isArrivalAirportAvailable(arrAirport));
+
+         if (CollectionUtils.isNotEmpty(depAirports) && CollectionUtils.isNotEmpty(dates))
+         {
+            isRouteAvailable = flightSearchService
+                  .validateArrivalAirport(depAirports, arrAirport, map(dates, LOCATE_DATE_MAPPER));
+         }
+         airportData.setRouteAvailable(isRouteAvailable);
+      }
+      catch (final FlightsServiceException e)
+      {
+         throw new SearchResultsBusinessException(ERROR_CODE, e);
+      }
+
+      return airportData;
+   }
+
    /**
-    * Following method is used for Auto suggest functionality in Search Panel 'Arriving To' field
-    * under airport list overlay
+    * Following method is used for Auto suggest functionality in Search Panel 'Arriving To' field under airport list
+    * overlay
     */
    @Override
-   public AirportSearchResult findArriving(final String key, final List<String> departures,
-      final List<String> dates) throws SearchResultsBusinessException
+   public AirportSearchResult findArriving(final String key, final List<String> departures, final List<String> dates)
+         throws SearchResultsBusinessException
    {
       final AirportSearchResult searchResult = new AirportSearchResult();
-      final List<uk.co.portaltech.travel.model.airport.Airport> airports =
-         new ArrayList<uk.co.portaltech.travel.model.airport.Airport>();
+      final List<uk.co.portaltech.travel.model.airport.Airport> airports = new ArrayList<uk.co.portaltech.travel.model.airport.Airport>();
       boolean isFuzzyResult = false;
 
       try
@@ -629,8 +736,8 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
          }
          else
          {
-            final uk.co.portaltech.travel.model.airport.Airports aiportsResult =
-               airportsService.searchArrivalAutoSuggest(key, departures, toLocalDates(dates));
+            final uk.co.portaltech.travel.model.airport.Airports aiportsResult = airportsService.searchArrivalAutoSuggest(key,
+                  departures, toLocalDates(dates));
             airports.addAll(aiportsResult.airportsWithRoute());
 
             getupdatedairports(airports, aiportsResult);
@@ -643,7 +750,7 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
       }
       catch (final AirportServiceException ex)
       {
-         LOGGER.error("AirportServiceException", ex);
+         LOGGER.error(AIRPORT_SERVICE_EXCEPTION, ex);
          searchResult.setError(new SearchError(NO_MATCH_FOUND, NO_MATCH_FOUND_FOR_THE_SEARCH_KEY));
          searchResult.setAirports(Collections.<AirportData> emptyList());
          return searchResult;
@@ -657,16 +764,61 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
       return searchResult;
    }
 
+   @Override
+   public List<AirportData> getWhereWeFlyDeptAirports(final String key, final List<String> dates)
+         throws SearchResultsBusinessException
+   {
+
+
+      final AirportSearchResult searchResult = new AirportSearchResult();
+      final List<uk.co.portaltech.travel.model.airport.Airport> airports = new ArrayList<uk.co.portaltech.travel.model.airport.Airport>();
+      boolean isFuzzyResult = false;
+
+      try
+      {
+         if (CollectionUtils.isEmpty(dates))
+         {
+            airports.addAll(airportsService.searchArrivalAutoSuggest(key));
+            isFuzzyResult = isFuzzy(airports, isFuzzyResult);
+            checkEmptyAirports(searchResult, airports);
+         }
+         else
+         {
+            final uk.co.portaltech.travel.model.airport.Airports aiportsResult = airportsService.searchArrivalAutoSuggest(key,
+                  Collections.EMPTY_LIST, toLocalDates(dates));
+            airports.addAll(aiportsResult.airportsWithRoute());
+
+            getupdatedairports(airports, aiportsResult);
+            isFuzzyResult = aiportsResult.isNomatch();
+            searchResult.setError(searchArrivingError(aiportsResult, Collections.EMPTY_LIST));
+            checkForNoFlights(searchResult, airports, aiportsResult);
+         }
+
+         searchResult.setNomatch(isFuzzyResult);
+      }
+      catch (final AirportServiceException ex)
+      {
+         LOGGER.error(AIRPORT_SERVICE_EXCEPTION, ex);
+
+         return null;
+      }
+
+      // searchResult.setAirports(getUKResultList(searchResult, airports));
+
+      //verifyInvalidRoute(searchResult);
+
+
+      return getUKResultList(searchResult, airports);
+   }
+
    /**
     * @param airports
     * @param aiportsResult
     */
-   private void getupdatedairports(
-      final List<uk.co.portaltech.travel.model.airport.Airport> airports,
-      final uk.co.portaltech.travel.model.airport.Airports aiportsResult)
+   private void getupdatedairports(final List<uk.co.portaltech.travel.model.airport.Airport> airports,
+         final uk.co.portaltech.travel.model.airport.Airports aiportsResult)
    {
-      final List<uk.co.portaltech.travel.model.airport.Airport> updatedairports =
-         new ArrayList<uk.co.portaltech.travel.model.airport.Airport>();
+      final List<uk.co.portaltech.travel.model.airport.Airport> updatedairports = new ArrayList<uk.co.portaltech.travel.model.airport.Airport>();
       updatedairports.addAll(aiportsResult.matchedAirports());
 
       updatedairports.removeAll(airports);
@@ -686,13 +838,13 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
     */
    private void verifyInvalidRoute(final AirportSearchResult searchResult)
    {
-      final String[] ukcodes = { "GBR", "IRL" };
+      final String[] ukcodes =
+      { GBR, "IRL" };
       boolean isUk = false;
 
       if (checkError(searchResult))
       {
-         final List<AirportData> airportDatalist =
-            (List<AirportData>) searchResult.getError().getEntry();
+         final List<AirportData> airportDatalist = (List<AirportData>) searchResult.getError().getEntry();
 
          for (final AirportData ad : airportDatalist)
          {
@@ -716,8 +868,7 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
     * @param isUk
     * @param airportDatalist
     */
-   private void verifyNonUk(final AirportSearchResult searchResult, final boolean isUk,
-      final List<AirportData> airportDatalist)
+   private void verifyNonUk(final AirportSearchResult searchResult, final boolean isUk, final List<AirportData> airportDatalist)
    {
       if (!isUk)
       {
@@ -749,45 +900,39 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
    private boolean checkError(final AirportSearchResult searchResult)
    {
       return searchResult.getError() != null
-         && (INVALID_ROUTE_TO.equals(searchResult.getError().getCode()) || INVALID_ROUTE_ON
-            .equals(searchResult.getError().getCode()));
+            && (INVALID_ROUTE_TO.equals(searchResult.getError().getCode()) || INVALID_ROUTE_ON.equals(searchResult.getError()
+                  .getCode()));
    }
 
-   private SearchError searchArrivingError(
-      final uk.co.portaltech.travel.model.airport.Airports airportsResult,
-      final List<String> departures)
+   private SearchError searchArrivingError(final uk.co.portaltech.travel.model.airport.Airports airportsResult,
+         final List<String> departures)
    {
       return airportsResult.hasRoutes() ? null : determineArrivingError(airportsResult, departures);
    }
 
-   private SearchError determineArrivingError(
-      final uk.co.portaltech.travel.model.airport.Airports airportsResult,
-      final List<String> departures)
+   private SearchError determineArrivingError(final uk.co.portaltech.travel.model.airport.Airports airportsResult,
+         final List<String> departures)
    {
-      final List<AirportData> airportDatas =
-         map(airportsResult.matchedAirports(), AIRPORT_TO_AIRPORT_DATA_MAPPER);
+      final List<AirportData> airportDatas = map(airportsResult.matchedAirports(), AIRPORT_TO_AIRPORT_DATA_MAPPER);
       final List<AirportData> airportEntries = new ArrayList<AirportData>();
 
       airportEntries.addAll(airportDatas);
 
       final Collection<AirportData> matchedUnits = getMatchedDepartures(departures);
 
-      if (!airportsResult.hasAirportsToSelectedDestinations()
-         && !airportsResult.hasAirportsOnSelectedDates())
+      if (!airportsResult.hasAirportsToSelectedDestinations() && !airportsResult.hasAirportsOnSelectedDates())
       {
          return null;
       }
       return airportsResult.hasAirportsToSelectedDestinations() ? new SearchError(INVALID_ROUTE_ON,
-         NO_ROUTE_FOUND_FOR_SELECTED_DATES, airportEntries, toList(matchedUnits))
-         : new SearchError(INVALID_ROUTE_TO, NO_ROUTE_FOUND_TO_SELECTED_DESTINATIONS,
-            airportEntries, toList(matchedUnits));
+            NO_ROUTE_FOUND_FOR_SELECTED_DATES, airportEntries, toList(matchedUnits)) : new SearchError(INVALID_ROUTE_TO,
+            NO_ROUTE_FOUND_TO_SELECTED_DESTINATIONS, airportEntries, toList(matchedUnits));
 
    }
 
    private List<AirportData> getMatchedDepartures(final List<String> departureCodes)
    {
-      final Set<uk.co.portaltech.travel.model.airport.Airport> airportList =
-         new HashSet<uk.co.portaltech.travel.model.airport.Airport>();
+      final Set<uk.co.portaltech.travel.model.airport.Airport> airportList = new HashSet<uk.co.portaltech.travel.model.airport.Airport>();
 
       if (null != departureCodes)
       {
@@ -803,8 +948,8 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
     * This method is used to get Where we fly arriving list according to the season selected
     */
    @Override
-   public Map<String, List<AirportData>> getWhereWeFlyArrivings(final List<String> airports,
-      final String departureDate, final String returnDate) throws SearchResultsBusinessException
+   public Map<String, List<AirportData>> getWhereWeFlyArrivings(final List<String> airports, final String departureDate,
+         final String returnDate) throws SearchResultsBusinessException
    {
       Map<String, List<AirportData>> whereWeFlyArrivings = null;
 
@@ -825,23 +970,18 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
    /**
     *
     */
-   private Map<String, List<AirportData>> fetchWhereWeFlyArrivings(final List<String> airports,
-      final String departureDate, final String returnDate) throws FlightsServiceException
+   private Map<String, List<AirportData>> fetchWhereWeFlyArrivings(final List<String> airports, final String departureDate,
+         final String returnDate) throws FlightsServiceException
    {
       Map<String, List<AirportData>> arrivings = null;
       if (verifyDatesIsNotEmpty(departureDate, returnDate))
       {
-         arrivings =
-            flightSearchService.fetchArrivalAirports(cmsSiteService.getCurrentCatalogVersion(),
-               airports,
+         arrivings = flightSearchService.fetchArrivalAirports(cmsSiteService.getCurrentCatalogVersion(), airports,
                toLocalDates(DateRangeProviderUtil.getSeasonDates(departureDate, returnDate)));
       }
-      else if (CollectionUtils.isNotEmpty(airports)
-         && verifyDatesAreNotEmpty(departureDate, returnDate))
+      else if (CollectionUtils.isNotEmpty(airports) && verifyDatesAreNotEmpty(departureDate, returnDate))
       {
-         arrivings =
-            flightSearchService.fetchArrivalAirports(cmsSiteService.getCurrentCatalogVersion(),
-               airports, null);
+         arrivings = flightSearchService.fetchArrivalAirports(cmsSiteService.getCurrentCatalogVersion(), airports, null);
       }
       return arrivings;
    }
@@ -866,6 +1006,7 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
       return StringUtils.isNotEmpty(departureDate) && StringUtils.isNotEmpty(returnDate);
    }
 
+
    private List<LocalDate> toLocalDates(final List<String> dates)
    {
       return map(dates, LOCATE_DATE_MAPPER);
@@ -884,8 +1025,7 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
       Map<String, List<AirportData>> airportsData;
       try
       {
-         airportsData =
-            flightSearchService.fetchArrivalAirports(cmsSiteService.getCurrentCatalogVersion());
+         airportsData = flightSearchService.fetchArrivalAirports(cmsSiteService.getCurrentCatalogVersion());
       }
       catch (final FlightsServiceException e)
       {
@@ -900,6 +1040,63 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
    public List<String> getAllValidDates(final String departureDate, final int flexibility)
    {
       return flightSearchService.getAllValidDates(departureDate, flexibility);
+   }
+
+   /**
+    * This method used to get time table the departure information
+    *
+    * @throws SearchResultsBusinessException
+    */
+
+   @Override
+   public List<AirportData> getTimeTableDepartureInformation(final List<String> arrivingAirportCodes,
+         final List<String> departureDates) throws SearchResultsBusinessException
+   {
+      boolean isUKCountry = false;
+
+      final Map<String, List<AirportData>> departingAirportsMap = getDepartingFromAirports(arrivingAirportCodes, departureDates);
+
+      if (!CollectionUtils.isEmpty(arrivingAirportCodes))
+      {
+
+         final String country = flightSearchService.getAirportModel(arrivingAirportCodes.get(0));
+         if (GBR.equalsIgnoreCase(country))
+         {
+            isUKCountry = true;
+         }
+         return getSorted(flightSearchService.prepareData(departingAirportsMap, isUKCountry));
+      }
+      else
+      {
+         return getSorted(flightSearchService.prepareDataWithoutselected(departingAirportsMap));
+      }
+
+   }
+
+   /**
+    * This method used to get time table the arrival information
+    */
+   @Override
+   public List<AirportData> getTimeTableArrivalInformation(final List<String> departingAirportCodes,
+         final List<String> departureDates) throws SearchResultsBusinessException
+   {
+      boolean isUKCountry = false;
+      final Map<String, List<AirportData>> departingAirportsMap = getArrivalData(departingAirportCodes, departureDates);
+
+      if (!CollectionUtils.isEmpty(departingAirportCodes))
+      {
+         final String country = flightSearchService.getAirportModel(departingAirportCodes.get(0));
+         if (GBR.equalsIgnoreCase(country))
+         {
+            isUKCountry = true;
+         }
+         return getSorted(flightSearchService.prepareData(departingAirportsMap, isUKCountry));
+      }
+      else
+      {
+         return getSorted(flightSearchService.prepareDataWithoutselected(departingAirportsMap));
+      }
+
    }
 
    private List<AirportData> getSorted(final List<AirportData> airportDatalist)
@@ -922,5 +1119,79 @@ public class DefaultFlightSearchPanelFacade implements FlightSearchPanelFacade
 
       return airportDatalist;
    }
+
+   @Override
+   public List<AirportData> arrivalSearch(final String key, final List<String> departures, final List<String> dates)
+         throws SearchResultsBusinessException
+   {
+      List<AirportData> listofAirports = new ArrayList<AirportData>();
+      boolean flag = false;
+      final String regex = "(?=.*[0-9a-zA-Z]).+$";
+      flag = Pattern.matches(regex, key);
+
+      if (key.length() > 2 && flag)
+      {
+         listofAirports = getTimeTableArrivalAirports(key, departures, dates);
+      }
+      flightSearchService.simillerSpellingValidation(listofAirports);
+      return listofAirports;
+   }
+
+   private List<AirportData> getTimeTableArrivalAirports(final String key, final List<String> departures, final List<String> dates)
+         throws SearchResultsBusinessException
+   {
+
+      final List<String> selectedAirports = new ArrayList<String>();
+      final AirportSearchResult searchResult = new AirportSearchResult();
+      final List<uk.co.portaltech.travel.model.airport.Airport> airports = new ArrayList<uk.co.portaltech.travel.model.airport.Airport>();
+      List<AirportData> listofAirports = new ArrayList<AirportData>();
+      boolean isFuzzyResult = false;
+
+      try
+      {
+         if (checkArrivalsDatesIsEmpty(departures, dates))
+         {
+            airports.addAll(airportsService.searchArrivalAutoSuggest(key));
+            isFuzzyResult = isFuzzy(airports, isFuzzyResult);
+
+         }
+         else
+         {
+
+            processAirports(departures, selectedAirports);
+            final uk.co.portaltech.travel.model.airport.Airports aiportsResult = airportsService.searchArrivalAutoSuggest(key,
+                  selectedAirports, toLocalDates(dates));
+            airports.addAll(aiportsResult.airportsWithRoute());
+            getupdatedairports(airports, aiportsResult);
+            searchResult.setError(searchArrivingError(aiportsResult, selectedAirports));
+            checkForNoFlights(searchResult, airports, aiportsResult);
+
+         }
+
+         listofAirports = map(
+               airportsService.sortAirports(flightSearchService.verifyInvalidAirports(airports, selectedAirports)),
+               AIRPORT_TO_AIRPORT_DATA_MAPPER);
+      }
+      catch (final AirportServiceException ex)
+      {
+         LOGGER.error(AIRPORT_SERVICE_EXCEPTION, ex);
+      }
+
+      return listofAirports;
+   }
+
+
+
+   private void processAirports(final List<String> departures, final List<String> selectedAirports)
+   {
+      if (CollectionUtils.isNotEmpty(departures))
+      {
+         for (final String arrival : departures)
+         {
+            selectedAirports.add(arrival.split(":")[0].toString());
+         }
+      }
+   }
+
 
 }
