@@ -41,37 +41,60 @@ import uk.co.tui.flights.data.AirportSearchResult;
  */
 public interface FlightSearchPanelFacade
 {
-   Map<String, List<AirportData>> getDepartingFromAirports(final List<String> arrivingAirportCodes,
-         final List<String> departureDates) throws SearchResultsBusinessException;
+	Map<String, List<AirportData>> getDepartingFromAirports(final List<String> arrivingAirportCodes,
+			final List<String> departureDates) throws SearchResultsBusinessException;
 
-   SearchPanelComponentModel getSearchPanelComponent();
+	SearchPanelComponentModel getSearchPanelComponent();
 
-   <T extends AbstractCMSComponentModel> T getComponent(final String componentUid) throws NoSuchComponentException;
+	<T extends AbstractCMSComponentModel> T getComponent(final String componentUid) throws NoSuchComponentException;
 
-   List<String> getFlightDates(final List<String> airportCodeList, final List<String> unitCodeList,String seasonEndDate)
-         throws SearchResultsBusinessException;
+	List<String> getFlightDates(final List<String> airportCodeList, final List<String> unitCodeList, String seasonEndDate)
+			throws SearchResultsBusinessException;
 
-   List<String> getAllFlightsDates(String seasonEndDate) throws SearchResultsBusinessException;
+	List<String> getAllFlightsDates(String seasonEndDate) throws SearchResultsBusinessException;
 
-   List<String> getReturnFlightDates(final List<String> airportCodeList, final List<String> unitCodeList,
-         final String departureDate, String seasonEndDate) throws SearchResultsBusinessException;
+	List<String> getReturnFlightDates(final List<String> airportCodeList, final List<String> unitCodeList,
+			final String departureDate, String seasonEndDate) throws SearchResultsBusinessException;
 
-   List<String> getAllReturnFlightsDates(final String date, String seasonEndDate) throws SearchResultsBusinessException;
+	List<String> getAllReturnFlightsDates(final String date, String seasonEndDate) throws SearchResultsBusinessException;
 
-   AirportSearchResult find(final String key, final List<String> arrivals, final List<String> dates)
-         throws SearchResultsBusinessException;
+	AirportSearchResult find(final String key, final List<String> arrivals, final List<String> dates)
+			throws SearchResultsBusinessException;
 
-   Map<String, List<AirportData>> getArrivalData(final List<String> airports, final List<String> dates)
-         throws SearchResultsBusinessException;
+	Map<String, List<AirportData>> getArrivalData(final List<String> airports, final List<String> dates)
+			throws SearchResultsBusinessException;
 
-   AirportSearchResult findArriving(final String key, final List<String> departures, final List<String> dates)
-         throws SearchResultsBusinessException;
+	AirportData validateArrivalAirport(final List<String> depAirports, String arrAirport, final List<String> dates)
+			throws SearchResultsBusinessException;
 
-   Map<String, List<AirportData>> getWhereWeFlyArrivings(final List<String> airports, final String departureDate,
-         final String returnDate) throws SearchResultsBusinessException;
+	AirportSearchResult findArriving(final String key, final List<String> departures, final List<String> dates)
+			throws SearchResultsBusinessException;
 
-   Map<String, List<AirportData>> fetchAllAirports() throws SearchResultsBusinessException;
+	Map<String, List<AirportData>> getWhereWeFlyArrivings(final List<String> airports, final String departureDate,
+			final String returnDate) throws SearchResultsBusinessException;
 
-   List<String> getAllValidDates(final String departureDate, final int flexibility); 
+	Map<String, List<AirportData>> fetchAllAirports() throws SearchResultsBusinessException;
+
+	List<String> getAllValidDates(final String departureDate, final int flexibility);
+
+	List<AirportData> getTimeTableDepartureInformation(final List<String> arrivingAirportCodes, final List<String> departureDates)
+			throws SearchResultsBusinessException;
+
+	List<AirportData> getTimeTableArrivalInformation(final List<String> departingAirportCodes, final List<String> departureDates)
+			throws SearchResultsBusinessException;
+
+	List<AirportData> departureSearch(final String key, final List<String> arrival, final List<String> dates)
+			throws SearchResultsBusinessException;
+
+	List<AirportData> arrivalSearch(final String key, final List<String> departures, final List<String> dates)
+			throws SearchResultsBusinessException;
+
+	/**
+	 * @param key
+	 * @param dates
+	 * @return
+	 * @throws SearchResultsBusinessException
+	 */
+	List<AirportData> getWhereWeFlyDeptAirports(String key, List<String> dates) throws SearchResultsBusinessException;
 
 }

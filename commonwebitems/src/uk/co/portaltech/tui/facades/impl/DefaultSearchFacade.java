@@ -2004,7 +2004,7 @@ public class DefaultSearchFacade implements SearchFacade
       final String aniteStartDate = Config.getString(siteBrand + CommonwebitemsConstants.DOT
             + CommonwebitemsConstants.TRACS_END_DATE_PROPERTY, "01-11-2015");
 
-      if (StringUtils.isNotBlank(departureDate) && DateUtils.isEqualOrAfter(departureDate, aniteStartDate).booleanValue())
+      if (StringUtils.isNotBlank(departureDate) && DateUtils.isEqualOrAfter(departureDate, aniteStartDate))
       {
          return true;
       }

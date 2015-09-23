@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 import uk.co.portaltech.commons.DateUtils;
 import uk.co.tui.exception.SearchResultsBusinessException;
 import uk.co.tui.flights.anite.request.FlightSearchCriteria;
+import uk.co.tui.flights.data.CrossSellAirportData;
 import uk.co.tui.flights.exception.FlightsServiceException;
 import uk.co.tui.flights.service.FlightSearchService;
 import uk.co.tui.flights.web.view.data.DreamLinerTooltipViewData;
@@ -52,14 +53,14 @@ public class FlightSearchResultDecorator
       try
       {
          itineraryViewData.setSeasonEndDate(seasonEndDate);
-         final String[] depAirportCode = (String[]) flightSearchCriteria.getDepartureAirportCode().toArray();
-         itineraryViewData.setDepAirportData(flightSearchService.getAirportDataForCode(depAirportCode[0], catalogVersion));
-         final String[] arrAirportCode = (String[]) flightSearchCriteria.getArrivalAirportCode().toArray();
-         itineraryViewData.setArrAirportData(flightSearchService.getAirportDataForCode(arrAirportCode[0], catalogVersion));
+         itineraryViewData.setDepAirportData(flightSearchService.getAirportDataForCode(flightSearchCriteria.getDepartureAirportCode(), catalogVersion));
+         itineraryViewData.setArrAirportData(flightSearchService.getAirportDataForCode(flightSearchCriteria.getArrivalAirportCode(), catalogVersion));
          itineraryViewData.setFlightSearchCriteria(flightSearchCriteria);
          itineraryViewData.setDreamLiner(dreamlinerData);
          itineraryViewData.setTracsEndDate(DateUtils.formatdate(
                configurationService.getConfiguration().getString(FO_TRACS_END_DATE), DATE_FORMAT_FOR_TRACS, "yyyy-MM-dd"));
+         decorateCrossSellData(itineraryViewData, flightSearchCriteria, catalogVersion);
+
       }
       catch (final FlightsServiceException e)
       {
@@ -67,5 +68,31 @@ public class FlightSearchResultDecorator
       }
       return itineraryViewData;
    }
+
+	/**
+	 * @param itineraryViewData
+	 * @param flightSearchCriteria
+	 * @param catalogVersion
+	 * @throws FlightsServiceException
+	 */
+	private void decorateCrossSellData(final ItineraryViewData itineraryViewData, final FlightSearchCriteria flightSearchCriteria,
+			final CatalogVersionModel catalogVersion) throws FlightsServiceException
+	{
+		if(flightSearchCriteria.isCrossSell())
+		{
+			CrossSellAirportData crossSellAirportData = new CrossSellAirportData();
+			if(flightSearchCriteria.getFlightsonlyType() == 1 || flightSearchCriteria.getFlightsonlyType() == 2)
+			{
+				crossSellAirportData.setDepAirportData(flightSearchService.getAirportDataForCode(flightSearchCriteria.getCrossSellAirportCode(), catalogVersion));
+				crossSellAirportData.setArrAirportData(flightSearchService.getAirportDataForCode(flightSearchCriteria.getArrivalAirportCode(), catalogVersion));
+			}
+			else
+			{
+				crossSellAirportData.setDepAirportData(flightSearchService.getAirportDataForCode(flightSearchCriteria.getDepartureAirportCode(), catalogVersion));
+				crossSellAirportData.setArrAirportData(flightSearchService.getAirportDataForCode(flightSearchCriteria.getCrossSellAirportCode(), catalogVersion));
+			}
+			itineraryViewData.setCrossSellAirportData(crossSellAirportData);
+		}
+	}
 
 }

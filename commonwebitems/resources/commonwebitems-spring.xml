@@ -170,12 +170,79 @@
         class="uk.co.portaltech.tui.flights.facades.impl.DefaultFlightSearchResultsFacade"
         scope="tenant" />
 
+	<bean name="flightDealsResultsFacade"
+        class="uk.co.portaltech.tui.flights.facades.impl.DefaultFlightDealsResultsFacade"
+        scope="tenant" />
+
+        <bean name="dealsSearchPanelFacade"
+        class="uk.co.portaltech.tui.flights.facades.impl.DefaultDealsSearchPanelFacade"
+        scope="tenant" />
+
     <bean name="flightSearchPanelFacade"
         class="uk.co.portaltech.tui.flights.facades.impl.DefaultFlightSearchPanelFacade"
         scope="tenant" />
 
+    <bean name="flightSearchRouteFacade"
+        class="uk.co.portaltech.tui.flights.facades.impl.DefaultFlightRouteFacade"
+        scope="tenant" />
+
+    <bean name="flightStatusFacade"
+        class="uk.co.portaltech.tui.flights.facades.impl.DefaultFlightStatusFacade"
+        scope="tenant" />
+
+    <bean name="flightWhereWeFlyFacade"
+        class="uk.co.portaltech.tui.flights.facades.impl.DefaultFlightWhereWeFlyFacade"
+        scope="tenant" />
+
+	<bean name="flyingWithUsFacade"
+        class="uk.co.portaltech.tui.flights.facades.impl.DefaultFlyingWithUsFacade"
+        scope="tenant" />
+
+    <bean name="airportPageContentFacade"
+        class="uk.co.portaltech.tui.flights.facades.impl.DefaultAirportPageContentFacade"
+        scope="tenant" />
+
+    <bean name="contentFacade"
+        class="uk.co.portaltech.tui.flights.facades.impl.DefaultContentFacade"
+        scope="tenant" />
+
+    <bean name="flightsMapFacade"
+        class="uk.co.portaltech.tui.flights.facades.impl.DefaultFlightsMapFacade"
+        scope="tenant" />
+
     <bean id="itineraryViewDataPopulator"
         class="uk.co.tui.flights.populators.ItineraryViewDataPopulator"
+        scope="prototype" />
+
+	<bean id="beforeYouFlyComponentPopulator"
+        class="uk.co.tui.flights.populators.BeforeYouFlyComponentPopulator"
+        scope="prototype" />
+
+	<bean id="contentValuePopulator"
+        class="uk.co.tui.flights.populators.ContentValuePopulator"
+        scope="prototype" />
+
+	<bean id="mediaContainerPopulator"
+        class="uk.co.tui.flights.populators.MediaContainerPopulator"
+        scope="prototype" />
+
+	<bean id="mediaValuePopulator"
+        class="uk.co.tui.flights.populators.MediaValuePopulator"
+        scope="prototype" />
+
+	<alias name="contentPopulator" alias="contentPopulator" />
+	<bean id="contentPopulator" class="uk.co.tui.flights.populators.ContentPopulator" scope="prototype" />
+
+	<alias name="contentMediaPopulator" alias="contentMediaPopulator" />
+	<bean id="contentMediaPopulator" class="uk.co.tui.flights.populators.ContentMediaDataPopulator"
+		scope="prototype" />
+
+        <bean id="flightSearchPackageDataPopulator"
+        class="uk.co.tui.flights.populators.FlightSearchPackageDataPopulator"
+        scope="prototype" />
+
+     <bean id="flightDealsRequestPopulator"
+        class="uk.co.tui.flights.populators.FlightDealsRequestPopulator"
         scope="prototype" />
 
     <bean id="dreamLinerToolTipDataPopulator"
@@ -184,6 +251,9 @@
 
     <bean id="flightSearchResultDecorator"
         class="uk.co.tui.flights.decorator.FlightSearchResultDecorator"
+        scope="prototype" />
+    <bean id="flightStatusViewDataDecorator"
+        class="uk.co.tui.flights.decorator.FlightStatusViewDataDecorator"
         scope="prototype" />
 
 	<!-- =============================== Non Geo Item ================================ -->

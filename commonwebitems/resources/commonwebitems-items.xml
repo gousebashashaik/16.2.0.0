@@ -603,6 +603,45 @@
 		</enumtype>
 		<!-- TUIEWB Enumtypes end -->
 
+		 <!-- Flightsweb Enumtypes end -->
+		<enumtype generate="true" code="ResultViewType" autocreate="true">
+
+		  <value code="OVERVIEW"></value>
+		  <value code="SHORTHAUL"></value>
+		  <value code="LONGHAUL"></value>
+		  <value code="PREMIUMCLUB"></value>
+		  <value code="KIDS"></value>
+		  <value code="FLEET"></value>
+		</enumtype>
+		<enumtype generate="true" code="RegionViewType" autocreate="true">
+		  <value code="ALLREGIONS"></value>
+		  <value code="EUROPE"></value>
+		  <value code="AFRICA"></value>
+		  <value code="CENTRALAMERICA"></value>
+		  <value code="ASIA"></value>
+		  <value code="CARIBBEAN"></value>
+		  <value code="NORTHAMERICA"></value>
+		</enumtype>
+		<enumtype generate="true" code="EUROPE" autocreate="true">
+		  <value code="EEE"></value>
+		</enumtype>
+		<enumtype generate="true" code="AFRICA" autocreate="true">
+		  <value code="AAA"></value>
+		</enumtype>
+		<enumtype generate="true" code="CARIBBEAN" autocreate="true">
+		  <value code="CCC"></value>
+		</enumtype>
+		<enumtype generate="true" code="ASIA" autocreate="true">
+		  <value code="BBB"></value>
+		</enumtype>
+		<enumtype generate="true" code="CENTRALAMERICA" autocreate="true">
+		  <value code="FFF"></value>
+		</enumtype>
+		<enumtype generate="true" code="NORTHAMERICA" autocreate="true">
+		  <value code="NNN"></value>
+		</enumtype>
+		<!-- Flightsweb Enumtypes end -->
+
 	</enumtypes>
 
 	<maptypes>
@@ -6995,6 +7034,151 @@
 					<persistence type="property" />
 					<modifiers optional="true" />
 				</attribute>
+				<attribute qualifier="flightDealsTitle" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="flightDealsLink" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="flightTimeTableTitle" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="flightTimeTableLink" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="flightStatusHeadingTitle" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="flightStatusHeadingLink" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="flightStatusTitle1" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="flightStatusLink1" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="flightStatusTitle2" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="flightStatusLink2" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="flyingWithUSHeadingTitle" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="flyingWithUSHeadingLink" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="flyingWithTitle1" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="flyingWithLink1" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="flyingWithTitle2" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="flyingWithLink2" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="flyingWithTitle3" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="flyingWithLink3" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="flyingWithTitle4" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="flyingWithLink4" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="flyingWithTitle5" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="flyingWithLink5" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="beforeYouFlyTitle" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="beforeYouFlyLink" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="faqTitle" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="faqLink" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="topDestinationsHeading" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="topDestinationsLinkTitle" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
+		        <attribute qualifier="topDestinationsLinkURL" type="java.lang.String"
+		          generate="true" autocreate="true">
+		          <persistence type="property" />
+		          <modifiers optional="true" />
+		        </attribute>
 			</attributes>
 		</itemtype>
 		<itemtype code="BackToSearchResultsComponent" extends="TUICMSComponent"
@@ -7826,54 +8010,410 @@
 		<!-- ================================ Customer Account Anonymous Shortlisting
 			End ============================= -->
 
-		<!-- ============================= Flights Only Start =============================== -->
-		<itemtype code="FlightSearchResultsComponent" generate="true"
-			extends="SimpleCMSComponent" autocreate="true"
-			jaloclass="uk.co.tui.fo.components.jalo.FlightSearchResultsComponent" />
+<!-- ============================= Flights Only Start =============================== -->
+    <itemtype code="FlightSearchResultsComponent" generate="true"
+      extends="SimpleCMSComponent" autocreate="true"
+      jaloclass="uk.co.tui.flights.components.jalo.FlightSearchResultsComponent" />
 
-		<itemtype code="FlightSeatSoldoutComponent" generate="true"
-			extends="SimpleCMSComponent" autocreate="true"
-			jaloclass="uk.co.tui.fo.components.jalo.FlightSeatSoldoutComponent" />
+    <itemtype code="FlightSeatSoldoutComponent" generate="true"
+      extends="SimpleCMSComponent" autocreate="true"
+      jaloclass="uk.co.tui.flights.components.jalo.FlightSeatSoldoutComponent" />
 
-		<itemtype generate="true" code="SimpleCMSBodyComponent"
-			jaloclass="uk.co.tui.fo.components.jalo.SimpleCMSBodyComponent"
-			extends="SimpleCMSComponent" autocreate="true">
-			<deployment table="SimpleCMSBodyComponent" typecode="25864" />
-			<attributes>
-				<attribute qualifier="myCMSId" type="java.lang.String">
-					<modifiers initial="true" />
-					<persistence type="property" />
-				</attribute>
+    <itemtype generate="true" code="SimpleCMSBodyComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.SimpleCMSBodyComponent"
+      extends="SimpleCMSComponent" autocreate="true">
+      <deployment table="SimpleCMSBodyComponent" typecode="25864" />
+      <attributes>
+        <attribute qualifier="myCMSId" type="java.lang.String">
+          <modifiers initial="true" />
+          <persistence type="property" />
+        </attribute>
 
-				<attribute qualifier="myCMSName" type="java.lang.String">
-					<modifiers initial="true" />
-					<persistence type="property" />
-				</attribute>
+        <attribute qualifier="myCMSName" type="java.lang.String">
+          <modifiers initial="true" />
+          <persistence type="property" />
+        </attribute>
 
-				<attribute qualifier="myCMSLocation" type="java.lang.String">
-					<modifiers initial="true" />
-					<persistence type="property" />
-				</attribute>
+        <attribute qualifier="myCMSLocation" type="java.lang.String">
+          <modifiers initial="true" />
+          <persistence type="property" />
+        </attribute>
 
-			</attributes>
-		</itemtype>
+      </attributes>
+    </itemtype>
 
-		<itemtype code="FlightsDestinationLanding" extends="Category"
-			jaloclass="uk.co.tui.fo.components.jalo.FlightsDestinationLanding"
-			generate="true" jaloonly="false" autocreate="true" />
+    <itemtype code="FlightsDestinationLanding" extends="Category"
+      jaloclass="uk.co.tui.flights.components.jalo.FlightsDestinationLanding"
+      generate="true" jaloonly="false" autocreate="true" />
 
-		<itemtype code="FlightHeaderComponent" extends="SimpleCmsComponent"
-			jaloclass="uk.co.tui.fo.components.jalo.FlightHeaderComponent"
-			autocreate="true" generate="true" />
+    <itemtype code="FlightHeaderComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.FlightHeaderComponent"
+      autocreate="true" generate="true" />
 
-		<itemtype code="FlightPriceGridComponent" generate="true"
-			extends="SimpleCMSComponent" autocreate="true"
-			jaloclass="uk.co.tui.fo.components.jalo.FlightPriceGridComponent" />
+    <itemtype code="FlightPriceGridComponent" generate="true"
+      extends="SimpleCMSComponent" autocreate="true"
+      jaloclass="uk.co.tui.flights.components.jalo.FlightPriceGridComponent" />
 
-		<itemtype code="FlightIndividualComponent" generate="true"
-			extends="SimpleCMSComponent" autocreate="true"
-			jaloclass="uk.co.tui.fo.components.jalo.FlightIndividualComponent" />
-		<!-- ============================= Flights Only End =============================== -->
+    <itemtype code="FlightIndividualComponent" generate="true"
+      extends="SimpleCMSComponent" autocreate="true"
+      jaloclass="uk.co.tui.flights.components.jalo.FlightIndividualComponent" />
+
+    <itemtype code="LiveFlightStatusLanding" extends="Category"
+      jaloclass="uk.co.tui.flights.components.jalo.LiveFlightStatusLanding"
+      generate="true" jaloonly="false" autocreate="true" />
+
+    <itemtype code="FlightTimetable" extends="Category"
+      jaloclass="uk.co.tui.flights.components.jalo.FlightTimetableCategory"
+      generate="true" jaloonly="false" autocreate="true" />
+
+
+    <itemtype code="FlightTimetableComponent" extends="SimpleCMSComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.FlightTimetable"
+      generate="true" jaloonly="false" autocreate="true" />
+
+
+    <itemtype code="FlightStatusComponent" generate="true"
+      extends="SimpleCMSComponent" autocreate="true"
+      jaloclass="uk.co.tui.flights.components.jalo.FlightStatusComponent">
+
+      <attributes>
+        <attribute qualifier="flightNumber" type="java.lang.Integer"
+          generate="true" autocreate="true">
+          <persistence type="property" />
+        </attribute>
+        <attribute qualifier="departingFrom" type="java.lang.String"
+          generate="true" autocreate="true">
+          <persistence type="property" />
+        </attribute>
+        <attribute qualifier="arrivingTo" type="java.lang.String"
+          generate="true" autocreate="true">
+          <persistence type="property" />
+        </attribute>
+        <attribute qualifier="departTime" type="java.util.Date"
+          generate="true" autocreate="true">
+          <persistence type="property" />
+        </attribute>
+        <attribute qualifier="arriveTime" type="java.util.Date"
+          generate="true" autocreate="true">
+          <persistence type="property" />
+        </attribute>
+        <attribute qualifier="status" type="java.lang.String"
+          generate="true" autocreate="true">
+          <persistence type="property" />
+        </attribute>
+
+        <attribute qualifier="lastUpdated" type="java.util.Date"
+          generate="true" autocreate="true">
+          <persistence type="property" />
+        </attribute>
+      </attributes>
+    </itemtype>
+
+    <itemtype code="DealsSearchPanelComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.DealsSearchPanelComponent"
+      autocreate="true" generate="true">
+      <description>Flight Deals Search Panel component</description>
+      <attributes>
+      </attributes>
+    </itemtype>
+
+    <itemtype code="DealsResultsViewComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.DealsResultsViewComponent"
+      autocreate="true" generate="true">
+      <description>Flight Deals Results view component  </description>
+      <attributes>
+      </attributes>
+    </itemtype>
+
+    <itemtype code="DealsNoResultspageComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.DealsNoResultspageComponent"
+      autocreate="true" generate="true">
+      <description>Flight Deals No Results component  </description>
+      <attributes>
+      </attributes>
+    </itemtype>
+
+    <itemtype code="FlightsUtilsFooterComponent" extends="SimpleCMSComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.FlightsUtilsFooterComponent"
+      autocreate="true" generate="true">
+      <description>Contains 'Holiday Extras', 'Find a Local Store', 'You're in Safe Hands', 'Have a Question?'.</description>
+    </itemtype>
+
+    <!-- Item types for Airport Page -->
+
+    <itemtype code="WhereWeFlyPage" extends="ContentPage"
+      jaloclass="uk.co.tui.flights.components.jalo.WhereWeFlyPage"
+      autocreate="true" generate="true" jaloonly="false">
+      <attributes>
+        <attribute qualifier="pageType" type="java.lang.String"
+          generate="true" autocreate="true">
+          <persistence type="property" />
+        </attribute>
+      </attributes>
+    </itemtype>
+
+    <itemtype code="UKAirportPage" extends="ContentPage"
+      jaloclass="uk.co.tui.flights.components.jalo.AirportPage" autocreate="true"
+      generate="true" jaloonly="false" />
+
+    <!-- Components for Airport Pages - Start -->
+
+    <itemtype code="UKDestinationNameEditorialComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.UKDestinationNameEditorialComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+
+    <itemtype code="AirportInformationComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.AirportInformationComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+
+    <itemtype code="DestinationNameComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.DestinationNameComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+
+    <itemtype code="TransferConnectivityComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.ConnectivityComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+
+    <itemtype code="AirportParkingComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.AirportParkingComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+
+    <itemtype code="AirportLoungesComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.AirportLoungesComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+
+    <itemtype code="AirportHotelsComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.AirportHotelsComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+
+    <itemtype code="AirportTransferComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.AirportTransferComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+
+    <itemtype code="FlightsCarHireComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.FlightsCarHireComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+
+    <itemtype code="WeFlyFromAirportsComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.WeFlyFromAirportsComponent"
+      autocreate="true" generate="true" jaloonly="false" />
+
+    <itemtype code="HeroCarouselEditorialComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.HeroCarouselEditorialComponent"
+      autocreate="true" generate="true" jaloonly="false" />
+
+    <itemtype code="AirportExcursionComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.AirportExcursionComponent"
+      autocreate="true" generate="true" jaloonly="false" />
+
+    <itemtype code="ForeignExchangeComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.ForeignExchangeComponent"
+      autocreate="true" generate="true" jaloonly="false" />
+
+    <itemtype code="AirportThumbnailMapComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.AirportThumbnailMapComponent"
+      autocreate="true" generate="true" jaloonly="false" />
+
+    <!-- Components for Airport Pages - End -->
+
+    <!-- Components for Where we fly Page -start -->
+    <itemtype code="WhereWeFlyNameComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.WhereWeFlyNameComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+
+    <itemtype code="WhereWeFlyFilterComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.WhereWeFlyFilterComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+
+    <itemtype code="LowerComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.LowerComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+    <itemtype code="MapComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.MapComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+    <!-- Components for Where we fly Page - End -->
+
+    <!-- Item types defined for Before You Fly Page -START -->
+    <itemtype code="BeforeYouFlyComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.BeforeYouFlyComponent"
+      autocreate="true" generate="true" jaloonly="false" />
+
+    <itemtype code="BeforeYouFlyLowerComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.BeforeYouFlyLowerComponent"
+      autocreate="true" generate="true" jaloonly="false" />
+    <!-- Item types defined for Before You Fly Page -END -->
+
+    <!-- Item types defined for Flying With US START -->
+    <itemtype code="AboutThomson" extends="Category"
+      jaloclass="uk.co.tui.flights.components.jalo.AboutThomson" generate="true"
+      jaloonly="false" autocreate="true" />
+
+    <itemtype code="AboutThomsonPage" extends="ContentPage"
+      jaloclass="uk.co.tui.flights.components.jalo.AboutThomsonPage"
+      autocreate="true" generate="true" jaloonly="false">
+      <attributes>
+        <attribute qualifier="pageType" type="ResultViewType"
+          generate="true" autocreate="true">
+          <persistence type="property" />
+          <defaultvalue>
+                            em().getEnumerationValue("ResultViewType", "OVERVIEW")
+                         </defaultvalue>
+        </attribute>
+      </attributes>
+    </itemtype>
+    <!-- Item types defined for About thomson Overview Page -->
+    <itemtype code="AboutThomsonNameComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.AboutThomsonNameComponent"
+      autocreate="true" generate="true" jaloonly="false">
+      <attributes>
+        <attribute type="java.lang.String" qualifier="epicId">
+          <persistence type="property"></persistence>
+        </attribute>
+        <attribute type="java.lang.String" qualifier="keyId">
+          <persistence type="property"></persistence>
+        </attribute>
+      </attributes>
+    </itemtype>
+    <itemtype code="OverviewEditorialIntroductionComponent"
+      extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.OverviewEditorialIntroductionComponent"
+      autocreate="true" generate="true" jaloonly="false">
+      <attributes>
+        <attribute type="java.lang.String" qualifier="epicId">
+          <persistence type="property"></persistence>
+        </attribute>
+
+        <attribute type="java.lang.String" qualifier="keyId">
+          <persistence type="property"></persistence>
+        </attribute>
+      </attributes>
+    </itemtype>
+    <itemtype code="SideFleetComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.SideFleetComponent"
+      autocreate="true" generate="true" jaloonly="false">
+      <attributes>
+        <attribute type="java.lang.String" qualifier="epicId">
+          <persistence type="property"></persistence>
+        </attribute>
+
+        <attribute type="java.lang.String" qualifier="keyId">
+          <persistence type="property"></persistence>
+        </attribute>
+      </attributes>
+    </itemtype>
+    <itemtype code="AdvertisementComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.AdvertisementComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+
+
+    <!-- Item types defined for Abou thomson Short haul Page -->
+    <itemtype code="ShorthaulNameComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.ShorthaulNameComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+    <itemtype code="FacilitiesComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.FacilitiesComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+    <itemtype code="GlanceComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.GlanceComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+    <itemtype code="ShorthaulLowerComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.ShorthaulLowerComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+
+    <!-- Item types defined for About thomson Long haul Page -->
+    <itemtype code="LonghaulNameComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.LonghaulNameComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+
+    <itemtype code="LonghaulFacilitiesComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.LongHaulFacilitiesComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+
+    <itemtype code="LonghaulGlanceComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.LonghaulGlanceComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+    <itemtype code="LonghaulLowerComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.LonghaulLowerComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+
+    <!-- Item types defined for About thomson Long haul Page -->
+    <itemtype code="PremiumClubNameComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.PremiumClubNameComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+
+    <itemtype code="PremiumClubFacilitiesComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.PremiumClubFacilitiesComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+
+    <itemtype code="PremiumClubGlanceComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.PremiumClubComponent"
+      autocreate="true" generate="true" jaloonly="false">
+
+    </itemtype>
+    <itemtype code="PremiumClubLowerComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.PremiumClubLowerComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+
+    <!-- Item types defined for About thomson Kids Page -->
+    <itemtype code="KidsNameComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.KidsNameComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+    <itemtype code="MainKidsContentComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.MainKidsContentComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+
+
+    <!-- Item types defined for About thomson Fleet Page -->
+    <itemtype code="FleetNameComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.FleetNameComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+    <itemtype code="EnvironmentComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.EnvironmentComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+    <itemtype code="CenterFleetComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.CenterFleetComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+    <itemtype code="BoeingComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.BoeingComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+    <itemtype code="KeyfactsComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.KeyfactsComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
+    <!-- Item types defined for Flying With US END -->
+
+    <!-- ============================= Flights Only End =============================== -->
 
 	</itemtypes>
 

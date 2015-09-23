@@ -21,6 +21,8 @@
  */
 package uk.co.portaltech.tui.flights.facades;
 
+import java.util.List;
+
 import uk.co.tui.exception.SearchResultsBusinessException;
 import uk.co.tui.flights.anite.request.FlightSearchCriteria;
 import uk.co.tui.flights.data.AirportData;
@@ -62,6 +64,12 @@ public interface FlightSearchResultsFacade
     * @param airportCode
     *
     */
-   AirportData getAirportDetailsForCode(final String airportCode) throws SearchResultsBusinessException;
+   List<AirportData> getAirportDetailsForCode(final List<String> airportCode) throws SearchResultsBusinessException;
+
+   /**
+    * @param flightSearchCriteria
+    *
+    */
+   FlightSearchCriteria verifyCrossSell(final FlightSearchCriteria flightSearchCriteria);
 
 }
