@@ -99,7 +99,7 @@ define("tui/flights/view/FlightTinyCalendar", [
 				    	} else {
 				    		html += '<td><div class="tooltipDiv"></div><div style="position: relative;" class="has-tooltip">';
 				    	}
-				      var date = new Date(dojo.byId("season-len-input").value + " " + day);
+				      var date = new Date(day+ " " + dojo.byId("season-len-input").value );
 				      var disableDate = true;
 				      if(dojo.date.difference(flightTinyCalendar.selectedDepartureDate,date) > 93 || dojo.date.difference(flightTinyCalendar.selectedDepartureDate,date) <= 0){
 				    	  disableDate = false;
@@ -178,7 +178,7 @@ define("tui/flights/view/FlightTinyCalendar", [
 	  		  if(fromAir.length != 0 && toAir.length != 0){
 				  var fromAirValue = fromAir.split("(")[1].split(")")[0];
 				  var toAirValue = toAir.split("(")[1].split(")")[0] + ":" + toAir.split("(")[0];
-				  _targetURL = "ws/traveldates?from[]="+fromAirValue+"&multiSelect=";
+				  _targetURL = "ws/traveldates?from[]="+fromAirValue+"&to[]="+toAirValue+"&multiSelect=";
 	  		  }else{
 	  			_targetURL = "ws/traveldates/";
 	  		  }
@@ -208,104 +208,48 @@ define("tui/flights/view/FlightTinyCalendar", [
 
 		attachTooltipEvents: function(){
 			var flightTinyCalendar = this;
-			query("table.flight-tiny-datepicker tr td").on("mouseover,mouseout", function(evt){
-					var isUnavailable = dojo.query(this).children().children(".unavailable").length > 0;
-					if(evt.type === "mouseover"){
-						if(isUnavailable){
-							dojo.addClass(this, 'noBG');
-						}
+			if(!dojo.hasClass(query("html")[0],"touch")){
+				query("table.flight-tiny-datepicker tr td").on("mouseover,mouseout", function(evt){
+						var isUnavailable = dojo.query(this).children().children(".unavailable").length > 0;
+						if(evt.type === "mouseover"){
+							if(isUnavailable){
+								dojo.addClass(this, 'noBG');
+							}
+							if(!isNaN(parseInt(query(this).text()))){
 
-						//query("div.return-tip").forEach(domConstruct.destroy);
-						if(!isNaN(parseInt(query(this).text()))){
-
-							if(query(".available",this)[0]){
-								dojo.addClass(this, 'yellowBG');
-								if(query(".timetable.loaded", this).length > 0) {
-									dijit.byNode(query(".timetable.loaded", this)[0]).open();
-									return;
-								}
-								var hovDate = query(".available",this).text(),
-									kl,
-									monthLength=0,
-									differenceMonths=0,
-									showFlag = false,
-									depatureDateObj = new Date(flightTinyCalendar.year, flightTinyCalendar.month,flightTinyCalendar.departureDate),
-									selectedReturnDateObj = new Date();
-
-									currentHoverDate = new Date(dojo.byId("season-len-input").value+" " +hovDate);
-
-								/*if( (dojo.global.monLastIndx !== '' && dojo.global.yearLastIndx !== '') &&
-										parseInt(flightTinyCalendar.year) === parseInt(dojo.global.yearLastIndx) &&
-										((parseInt(flightTinyCalendar.month) > parseInt(dojo.global.monLastIndx)) ||
-										((parseInt(flightTinyCalendar.month) === parseInt(dojo.global.monLastIndx)) &&
-										(parseInt(query(this).text()) > parseInt(flightTinyCalendar.departureDate))))) {
-
-									showFlag=true;
-									differenceMonths = parseInt(flightTinyCalendar.month) - parseInt(dojo.global.monLastIndx);
-
-									if(differenceMonths > 1){
-										monthLength += flightTinyCalendar.getDifferenceDays(differenceMonths,false);
-
-									}else if(differenceMonths === 0){
-										monthLength=0;
-
-									}else{
-										if (dojo.global.monLastIndx == 1) { // February only!
-												monthLength += flightTinyCalendar.leapYearChecking(dojo.global.monLastIndx);
-										  }else{
-											  	monthLength += flightTinyCalendar.cal_days_in_month[dojo.global.monLastIndx ];
-										  }
+								if(query(".available",this)[0]){
+									dojo.addClass(this, 'yellowBG');
+									if(query(".timetable.loaded", this).length > 0) {
+										dijit.byNode(query(".timetable.loaded", this)[0]).open();
+										return;
 									}
-
-									kl = parseInt(hovDate) + parseInt(monthLength) -  parseInt(flightTinyCalendar.departureDate);
-
-
-								}else if(parseInt(flightTinyCalendar.year) > parseInt(dojo.global.yearLastIndx)){
-
-									showFlag=true;
-									monthLength += flightTinyCalendar.getDifferenceDays(flightTinyCalendar.month, false);
-									differenceMonths = 12 - parseInt(dojo.global.monLastIndx) ;
-									monthLength += flightTinyCalendar.getDifferenceDays(differenceMonths, true);
-
-									kl = parseInt(hovDate) + parseInt(monthLength) -  parseInt(flightTinyCalendar.departureDate);
-
-								}else if(parseInt(query(this).text()) > parseInt(flightTinyCalendar.departureDate)) {
-									showFlag=true;
-									kl = parseInt(hovDate) - parseInt(flightTinyCalendar.departureDate);
-
-
-								}*/
-
-									kl = dojo.date.difference(flightTinyCalendar.selectedDepartureDate ,currentHoverDate, "day" )
-
-
-
-									new tooltips({
-						    			 refId : query("div.tooltipDiv", this)[0],
-						    			 text:  kl == 1 ?  kl + " day" : kl + " days",
-						    			 floatWhere : 'position-top-center',
-						    			 className: "timetable",
-						    			 setPosOffset: function(){
-						    				  this.posOffset = {top: -10, left: 0};
-						    			 }
-						    		 },query("div.tooltipDiv", this)[0]).open();
-									/*query("div.has-tooltip", this)[0].innerHTML = "";
-									query("div.has-tooltip", this)[0].innerHTML = "<div class='return-tip position-top-center'><p id='return-dates-tip'>" + kl + " days</p><span class='arrow'></span></div>"+"<div class='available'>" + hovDate + "</div>";*/
-
-
-						  }
+									var hovDate = query(".available",this).text(),
+										kl,
+										currentHoverDate = new Date(hovDate +" " + dojo.byId("season-len-input").value);
+										kl = dojo.date.difference(flightTinyCalendar.selectedDepartureDate ,currentHoverDate, "day" )
+										new tooltips({
+							    			 refId : query("div.tooltipDiv", this)[0],
+							    			 text:  kl == 1 ?  kl + " day" : kl + " days",
+							    			 floatWhere : 'position-top-center',
+							    			 className: "timetable",
+							    			 setPosOffset: function(){
+							    				  this.posOffset = {top: -10, left: 0};
+							    			 }
+							    		 },query("div.tooltipDiv", this)[0]).open();
+							  }
+							}
+						}else if (evt.type === "mouseout"){
+							if(isUnavailable){
+								dojo.removeClass(this, 'noBG');
+							}
+							dojo.removeClass(this, 'yellowBG');
+							//query("div.return-tip").forEach(domConstruct.destroy);
+							if(query(".timetable.loaded", this).length > 0){
+								dijit.byNode(query(".timetable.loaded", this)[0]).close();
+							}
 						}
-					}else if (evt.type === "mouseout"){
-						if(isUnavailable){
-							dojo.removeClass(this, 'noBG');
-						}
-						dojo.removeClass(this, 'yellowBG');
-						//query("div.return-tip").forEach(domConstruct.destroy);
-						if(query(".timetable.loaded", this).length > 0){
-							dijit.byNode(query(".timetable.loaded", this)[0]).close();
-						}
-					}
-			});
+				});
+			}
 		},
 
 		attachClickEvent:function(){
@@ -318,6 +262,41 @@ define("tui/flights/view/FlightTinyCalendar", [
 						returnDate = new Date(flightTinyCalendar.year,flightTinyCalendar.month,parseInt(query(".available",this).text()))
 						dojo.attr(dojo.byId("season-len-input"),"data-ret-date",dojo.date.locale.format(returnDate, {selector: "date",datePattern: "yyy-MM-dd"}));
 						dojo.query(".dealsPax").remove();
+						if(dojo.hasClass(query("html")[0],"touch")){
+							query("table.flight-tiny-datepicker tr td").removeClass("yellowBG");
+							//query("div.return-tip").forEach(domConstruct.destroy);
+							if(query(".timetable.loaded", query("table.flight-tiny-datepicker")[0]).length > 0){
+
+								query(".timetable.loaded", query("table.flight-tiny-datepicker")[0]).forEach(function(item){
+									dijit.byNode(item).close();
+								})
+							}
+
+							if(!isNaN(parseInt(query(this).text()))){
+
+								if(query(".available",this)[0]){
+									dojo.addClass(this, 'yellowBG');
+									if(query(".timetable.loaded", this).length > 0) {
+										dijit.byNode(query(".timetable.loaded", this)[0]).open();
+										return;
+									}
+									var hovDate = query(".available",this).text(),
+										kl,
+										currentHoverDate = new Date(hovDate +" " + dojo.byId("season-len-input").value);
+										kl = dojo.date.difference(flightTinyCalendar.selectedDepartureDate ,currentHoverDate, "day" )
+										new tooltips({
+							    			 refId : query("div.tooltipDiv", this)[0],
+							    			 text:  kl == 1 ?  kl + " day" : kl + " days",
+							    			 floatWhere : 'position-top-center',
+							    			 className: "timetable",
+							    			 setPosOffset: function(){
+							    				  this.posOffset = {top: -10, left: 0};
+							    			 }
+							    		 },query("div.tooltipDiv", this)[0]).open();
+							  }
+							}
+
+						}
 					//}
 
 				}

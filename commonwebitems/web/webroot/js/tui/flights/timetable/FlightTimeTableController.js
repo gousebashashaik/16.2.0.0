@@ -109,8 +109,10 @@ define("tui/flights/timetable/FlightTimeTableController",[
 				var searchButton = query("input[type='submit']",FlightTimeTableController.domNode)[0];
 				if(flyFromAirport.getValue() == "" || flyToAirport.getValue() == "" || flyingMonth.getSelectedData().value === ""){
 					dojo.removeClass(searchButton,"cta")
+					dojo.addClass(searchButton,"disabled");
 				}else{
 					dojo.addClass(searchButton,"cta");
+					dojo.removeClass(searchButton,"disabled");
 				}
 		},
 		 enableTimeTablePanelForIE8: function(){

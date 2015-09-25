@@ -122,11 +122,11 @@ define("tui/flightdeals/model/DealsPanelModel",[
 						'days'					: 	DealsPanelModel.days,
 						'startDuration' 		:	DealsPanelModel.startDuration,
 						'endDuration'			:	DealsPanelModel.endDuration,
-						'outboundSlots' 		: 	"",
+						//'outboundSlots' 		: 	"",
 						'searchType' 			: 	DealsPanelModel.searchType,
 						'oneWay'				: 	DealsPanelModel.oneWay,
-						'durationFilter'		:	DealsPanelModel.durationFilter,
-						'maxPrice'				: 	""
+						'durationFilter'		:	DealsPanelModel.durationFilter
+						//'maxPrice'				: 	""
 
 	    		}
 	    	}else{

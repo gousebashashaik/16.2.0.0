@@ -69,6 +69,10 @@ define("tui/flights/view/FlightActions", [
 					departureTimeArray = cell.children(".flight-schds").children(".schd-time"),
 					leftMostCell = cell.siblings()[0],
 					topMostCell = cell.parents(".schdbody").siblings().children().children();
+				//remove previous classes
+				query(".click-active").removeClass("click-active");
+				query(".leftMostCell-click-active").removeClass("leftMostCell-click-active");
+				query(".topMostCell-click-active").removeClass("topMostCell-click-active");
 				if(departureTimeArray.length>0){
 					dojo.addClass(cell[0],"click-active");
 					dojo.addClass(leftMostCell,"leftMostCell-click-active");

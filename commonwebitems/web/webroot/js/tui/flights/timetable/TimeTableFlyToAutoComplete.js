@@ -20,8 +20,6 @@ define("tui/flights/timetable/TimeTableFlyToAutoComplete", [
 	  // searchProperty for key search.
 	  searchProperty:'searchKey',
 
-	  maxHeight : 310,
-
 	  searchQuery: true,
     // ---------------------------------------------------------------- autoComplete methods
 	  //ws/timetabledeparture?from=&to=&when=&q=**&start=0&count=Infinity

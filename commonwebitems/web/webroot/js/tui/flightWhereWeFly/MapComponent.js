@@ -411,8 +411,8 @@ define("tui/flightWhereWeFly/MapComponent", [
 					popWinChild =popupWin.prev().children(':nth-child(3)');
 					PopWinSubChild1=popWinChild.children(':nth-child(1)');
 					PopWinSubChild2=popWinChild.children(':nth-child(2)');
-					dojo.style(PopWinSubChild1.children()[0], "background-color", bgColor);
-					dojo.style(PopWinSubChild2.children()[0], "background-color", bgColor);
+					dojo.style(PopWinSubChild1.children(),"background-color",bgColor);
+					dojo.style(PopWinSubChild2.children(),"background-color",bgColor);
 					dojo.style(popupWin[0].parentNode, "top", posTop+"px");
 
 

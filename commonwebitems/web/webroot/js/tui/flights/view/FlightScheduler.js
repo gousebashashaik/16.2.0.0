@@ -171,8 +171,8 @@ define("tui/flights/view/FlightScheduler", [
 
 			flightScheduler.availableDates = [];
 
-			var fromAir = query("#from-airport")[0].innerHTML;
-			var toAir = query("#to-airport")[0].innerHTML;
+			var fromAir = query("#from-airport").text();
+			var toAir = query("#to-airport").text();
 
 			var _targetURL = "";
 

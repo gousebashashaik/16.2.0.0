@@ -195,7 +195,9 @@ define("tui/flights/widget/FlightTimetableSearchBox", [
 	  			 dojo.style(disabledCell,"backgroundColor","#f7f8fa");
 	  		});
 		 }
-		  schd.attachTooltipEvents();
+		 var elm = query("#season-len ul li[data-cur-idx=\'" + curIndex + "\']")[0];
+		 flightTimetableSearchBox.calArrowsEnableDisable(elm);
+		 schd.attachTooltipEvents();
   		  schd.attachClickEvent();
   		  parser.parse(query(".searchpopup")[0],flightTimetableSearchBox.elm);
   		  return pos;
@@ -256,14 +258,24 @@ define("tui/flights/widget/FlightTimetableSearchBox", [
 						}
 	  				 }
 
-	  				if(evtObj.id !== "pull-months" && evtObj.id !== "season-len-input")flightTimetableSearchBox.handleClickOnMonthBox();
+	  				if(evtObj.id !== "pull-months" && evtObj.id !== "season-len-input" && !domClass.contains(evtObj,"month-arrow")){
+	  					flightTimetableSearchBox.handleClickOnMonthBox();
+	  				}
 	  				if(evtObj.id !== "pull-adults")flightTimetableSearchBox.handleClickOnAdultBox();
 	  				if(evtObj.id !== "pull-childs")flightTimetableSearchBox.handleClickOnChildBox();
 	  				if(evtObj.type === "checkbox")flightTimetableSearchBox.handleClickOnCheckBox(evtObj);
 	  			}
 	  		});
 	  		query("#closeble-search-box").on("click", function(evt){
-	  			flightTimetableSearchBox.destroyTinySearchBox();
+
+	  			var tinySearchBox = query("#tiny-search-box"),
+	  				cell = query(tinySearchBox.closest("td")),
+			  		leftMostCell =cell.siblings()[0],
+			  		topMostCell = cell.parents(".schdbody").siblings().children().children();
+				dojo.removeClass(cell[0],"click-active");
+				dojo.removeClass(leftMostCell,"leftMostCell-click-active");
+				dojo.removeClass(topMostCell[cell[0].cellIndex],"topMostCell-click-active");
+				flightTimetableSearchBox.destroyTinySearchBox();
 	  		});
 	//START ---
 	  		dojo.query(".timetableOneWay .dijitCheckBoxInput").on("click", function(){
@@ -326,18 +338,32 @@ define("tui/flights/widget/FlightTimetableSearchBox", [
 	  		});
 
 	  		query("#pull-months").on("click", function(evt){
-	  			domStyle.set(query("#season-len")[0], {display:"block"});
+	  			var curIdx = parseInt(dojo.global.monCurIndx);
+				query("#season-len ul li[data-cur-idx=\'" + curIdx + "\']").addClass("active");
+				if(query("#season-len")[0].style.display == "block"){
+					domStyle.set(query("#season-len")[0], {display:"none"});
+				} else {
+					domStyle.set(query("#season-len")[0], {display:"block"});
+				}
 	  		});
 	  		query("#season-len-input").on("click", function(evt){
-	  			domStyle.set(query("#season-len")[0], {display:"block"});
+	  			var curIdx = parseInt(dojo.global.monCurIndx);
+				query("#season-len ul li[data-cur-idx=\'" + curIdx + "\']").addClass("active");
+				if(query("#season-len")[0].style.display == "block"){
+					domStyle.set(query("#season-len")[0], {display:"none"});
+				} else {
+					domStyle.set(query("#season-len")[0], {display:"block"});
+				}
 	  		});
 
 	  		query("#season-len ul li").forEach(function (elm, i) {
 			    on(elm, "click", function (evt) {
 			    	if(query("#season-len-input")[0].value == query(elm).text()){
+
 			    		domStyle.set(query("#season-len")[0], {display:"none"});
 			    		return;
 			    	}
+			    	query("#season-len ul li.active").removeClass("active");
 			    	query("#season-len-input")[0].value = query(elm).text();
 			    	var mnth = parseInt(domAttr.get(elm, "data-cur-mon")),
 			    		yr = parseInt(domAttr.get(elm, "data-cur-year")),
@@ -363,6 +389,10 @@ define("tui/flights/widget/FlightTimetableSearchBox", [
 			    		schd.attachTooltipEvents();
 			    		schd.attachClickEvent();
 			    });
+			    on(elm, "mouseover", function (evt) {
+			    	var curIdx = parseInt(dojo.global.monCurIndx);
+					query("#season-len ul li[data-cur-idx=\'" + curIdx + "\']").removeClass("active");
+			    })
 			 });
 
 	  		//add next prev months
@@ -537,7 +567,7 @@ define("tui/flights/widget/FlightTimetableSearchBox", [
 			x.startup();
 			x.open();
 			on(customDropodown,"click",function(){
-				domClass.remove(this,"error");
+				customDropodown.removeClass("error");
 				dojo.query(".dealsPax").remove();
 
 
@@ -644,6 +674,8 @@ define("tui/flights/widget/FlightTimetableSearchBox", [
 					curIdx = parseInt(dojo.global.monCurIndx);
 					curIdx++;
 					txtI = query("#season-len ul li[data-cur-idx=\'" + curIdx + "\']")[0];
+					query("#season-len ul li.active").removeClass("active");
+					domClass.add(txtI,"active");
 					yr = parseInt(domAttr.get(txtI, "data-cur-year"));
 
 					flightTimetableSearchBox.getLastMonthandLastYearData(dojo.global.monCurIndx, yr);
@@ -685,7 +717,8 @@ define("tui/flights/widget/FlightTimetableSearchBox", [
 				curIdx--;
 
 				txtI = query("#season-len ul li[data-cur-idx=\'" + curIdx + "\']")[0];
-
+				query("#season-len ul li.active").removeClass("active");
+				domClass.add(txtI,"active");
 
 				flightTimetableSearchBox.calArrowsEnableDisable(txtI);
 
@@ -729,8 +762,10 @@ define("tui/flights/widget/FlightTimetableSearchBox", [
 				 prevObj = query(obj).prev()[0];
 			}catch(e){}
 
-
-  			if(!nextObj){
+			if(!nextObj && !prevObj){
+				domClass.add(nextMonth, "disable-next-months");
+				domClass.add(prevMonth, "disable-prev-months");
+			} else if(!nextObj){
 	  			if(domClass.contains(nextMonth, "enable-next-months")) domClass.remove(nextMonth, "enable-next-months");
 				domClass.add(nextMonth, "disable-next-months");
 				if(domClass.contains(prevMonth, "disable-prev-months")) domClass.remove(prevMonth, "disable-prev-months");
@@ -869,12 +904,13 @@ define("tui/flights/widget/FlightTimetableSearchBox", [
 	  destroyTinySearchBox: function(){
 		  var flightTimetableSearchBox = this,cell,leftMostCell,topMostCell;
 		  		tinySearchBox = query("#tiny-search-box");
-		  		cell = query(tinySearchBox.closest("td"));
-		  		leftMostCell =cell.siblings()[0];
-		  		topMostCell = cell.parents(".schdbody").siblings().children().children();
-				dojo.removeClass(cell[0],"click-active");
-				dojo.removeClass(leftMostCell,"leftMostCell-click-active");
-				dojo.removeClass(topMostCell[cell[0].cellIndex],"topMostCell-click-active");
+		  		var dropDown = dojo.query(".custom-dropdown",flightTimetableSearchBox.elm);
+				if(dropDown!=undefined){
+	    			_.forEach(dropDown,function(item){
+	    				if(registry.byNode(item)!=undefined)
+	    				registry.byNode(item).hideList();
+					});
+				}
 				dojo.query(".dealsPax").remove();
 				domConstruct.destroy(tinySearchBox[0]);
 	  }

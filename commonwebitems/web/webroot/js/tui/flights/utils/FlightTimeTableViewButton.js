@@ -26,6 +26,7 @@ define("tui/flights/utils/FlightTimeTableViewButton", [
 	  constructor: function(){
 	  		var flightTimetableViewButton = this;
 	  		flightTimetableViewButton.inherited(arguments);
+
   	  },
 
   	  postCreate: function(){
@@ -35,31 +36,13 @@ define("tui/flights/utils/FlightTimeTableViewButton", [
   		flightTimetableViewButton.domNode.innerHTML = flightTimetableViewButton.render();
 
   		query(flightTimetableViewButton.domNode).on("click", function(){
-
-  				var flyingFromObj = new flightTimetableValidations({
-  					attachId:"timeTableFlyFrom",
-  					dynaId: "flyingFrom",
-  					msg: "",
-  					headerMsg: flightTimetableViewButton.errorMsg
-  				});
-  				var flyingToObj = new flightTimetableValidations({
-  					attachId:"timeTableFlyTo",
-  					dynaId: "flyingTo",
-  					msg: "",
-  					headerMsg: flightTimetableViewButton.errorMsg
-  				});
-  				var monthPullDownObj = new flightTimetableValidations({
-  					attachId:"whenTimeTable",
-  					dynaId: "days-cal-when",
-  					msg: "",
-  					headerMsg: flightTimetableViewButton.errorMsg
-  				});
-  				if(flyingFromObj.validated === false || flyingToObj.validated === false || monthPullDownObj.validated === false){
-  					return false;
-  				}else{
-
-  					flightTimetableViewButton.changeHdrLabels();
-  				}
+  			searchBtn = dojo.byId("whenField");
+  			if(domClass.contains(searchBtn , "disabled")) {
+  				return;
+  			}
+  			flightTimetableViewButton.changeHdrLabels();
+  			dojo.removeClass(searchBtn,"cta")
+			dojo.addClass(searchBtn,"disabled");
   		});
   	  },
 

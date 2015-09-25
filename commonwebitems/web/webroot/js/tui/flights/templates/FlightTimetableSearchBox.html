@@ -15,7 +15,7 @@
 					<div class="inputholders">
 						<a href="javascript:void(0);" id="prevTinyPicker" title="Previous" class="date-prev month-arrow  mnth-left-arrow disable-prev-months"></a>
 						<input  readonly id="season-len-input"/>
-						<img id="pull-months">
+						<span id="pull-months"></span>
 						<a href="javascript:void(0);" id="nextTinyPicker" title="Next" class="date-next month-arrow mnth-right-arrow"></a>
 						<div id="season-len">
 							<ul>
@@ -34,7 +34,7 @@
 		<p class="popup-header">How many?</p>
 		<div class="cal-column">
 			<div class="sexTitle">ADULTS</div>
-			 <select name="totalAdults1" class="dropdown timeTableAdultDropDown" tabindex="0"  data-dojo-type="tui.widget.form.SelectOption" data-dojo-props="maxHeight:180">
+			 <select name="totalAdults1" class="dropdown timeTableAdultDropDown" tabindex="0"  data-dojo-type="tui.widget.form.SelectOption"  maxHeight="240">
                         {% for cnt in adultArr %}
 								<option value="{{cnt}}" {% ifequal forloop.counter0  2 %} selected {%endifequal%}>{{cnt}}</option>
 						{% endfor %}
@@ -42,7 +42,7 @@
 		</div>
 		<div class="cal-column">
 			<div class="sexTitle">CHILDREN</div>
-			<select name="totalChilds1" class="dropdown totalChilds1" tabindex="0"  data-dojo-type="tui.widget.form.SelectOption" data-dojo-props="maxHeight:180">
+			<select name="totalChilds1" class="dropdown totalChilds1" tabindex="0"  data-dojo-type="tui.widget.form.SelectOption" maxHeight="240">
                         {% for cnt in childArr %}
 							<option value="{{cnt}}">{{cnt}}</option>
 						{% endfor %}

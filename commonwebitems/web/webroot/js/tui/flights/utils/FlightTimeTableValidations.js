@@ -50,7 +50,7 @@ define("tui/flights/utils/FlightTimeTableValidations", [
 		  			  connectId: flightTimetableValidations.attachId,
 		  			  errorMsg: flightTimetableValidations.msg,
 		  			  errorHeaderMsg: flightTimetableValidations.headerMsg,
-		  			  id: flightTimetableValidations.dynaId,
+		  			  id: flightTimetableValidations.dynaId
 		  		  });
 			}catch(e){}
 

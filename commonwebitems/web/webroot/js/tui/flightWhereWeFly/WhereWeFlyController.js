@@ -92,7 +92,7 @@ define("tui/flightWhereWeFly/WhereWeFlyController",[
 				});
 
 				registry.byId("seasonSelect").listData = options;
-	    		registry.byId("seasonSelect").appendOption("<span style='font-style:italic; color:#666; font-size:13.5px;' class='disable-list-select'>All date ranges</span>", "",0);
+	    		registry.byId("seasonSelect").appendOption("<span class='disable-list-select'>All date ranges</span>", "",0);
 	    		registry.byId("seasonSelect").renderList();
 	    		registry.byId("seasonSelect").disableItem(0);
 	    		if(lastIndex > 0) registry.byId("seasonSelect").setSelectedIndex(lastIndex);
@@ -142,8 +142,9 @@ define("tui/flightWhereWeFly/WhereWeFlyController",[
 			 on(dijit.byId("seasonSelect"),"change", function(){
 				 if(whereWeFlyController.stopSeasonOnChange) return;
 				 query(".clear-filter").removeClass("disabled");
-				 if(this.getSelectedIndex() !== 0){
+				 if(this.getSelectedIndex() !== 0) {
 					 whereWeFlyController.getValidAirportData();
+					// query(".clear-filter").addClass("disabled");
 				 }
 			 });
 			/* on(dijit.byId("WWFFlyFrom").autocomplete,"change", function(){

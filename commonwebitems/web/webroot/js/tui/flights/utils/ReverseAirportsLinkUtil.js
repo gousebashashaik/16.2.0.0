@@ -76,8 +76,8 @@ define("tui/flights/utils/ReverseAirportsLinkUtil", [
   		var toAir, fromAir,fromAirport,toAirport,fromAirportName,toAirportName,mpD;
 		 fromAir = query("#from-airport")[0];
 		 toAir = query("#to-airport")[0];
-		 fromAirportName = fromAir.textContent;
-		 toAirportName = toAir.textContent;
+		 fromAirportName = query("#from-airport").text();
+		 toAirportName = query("#to-airport").text();
  		 query(fromAir).text(toAirportName);
 		 query(toAir).text(fromAirportName);
 
