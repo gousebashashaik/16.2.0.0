@@ -45,6 +45,7 @@ import uk.co.portaltech.tui.web.view.data.StraplineViewData;
 import uk.co.portaltech.tui.web.view.data.TabSectionViewData;
 import uk.co.tui.async.logging.TUILogUtils;
 
+
 /**
  * @author venkataharish.k
  *
@@ -166,19 +167,16 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
 
    /*
     * (non-Javadoc)
-    * 
-    * @see uk.co.portaltech.tui.facades.NonGeoItemFacade#getCollectionDiffProdData (java.util.List,
-    * java.lang.String)
+    *
+    * @see uk.co.portaltech.tui.facades.NonGeoItemFacade#getCollectionDiffProdData (java.util.List, java.lang.String)
     */
    @Override
-   public List<ProductPageComponentViewData> getCollectionDiffProdData(
-      final List<Map<String, String>> listofMapsData, final String componentWidth)
+   public List<ProductPageComponentViewData> getCollectionDiffProdData(final List<Map<String, String>> listofMapsData,
+         final String componentWidth)
    {
-      final List<ProductPageComponentViewData> viewDataList =
-         new ArrayList<ProductPageComponentViewData>();
+      final List<ProductPageComponentViewData> viewDataList = new ArrayList<ProductPageComponentViewData>();
       final List<String> epicCodeList = getTracsCodeList(listofMapsData, false);
-      final Map<String, ContentValueModel> contentValueEpicMap =
-         nonGeoItemService.getContentValues(epicCodeList);
+      final Map<String, ContentValueModel> contentValueEpicMap = nonGeoItemService.getContentValues(epicCodeList);
       ProductPageComponentViewData editorialViewData = null;
       final Map<String, String> imageUrlsMap = new HashMap<String, String>();
 
@@ -194,8 +192,8 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
 
          keyCode = tracCode + UNDERSCORE + map.get("1");
          editorialViewData.setFeatureTitle(getValue(contentValueEpicMap, keyCode));
-         imageUrlPopulationForCollectionDiffProdData(componentWidth, contentValueEpicMap,
-            editorialViewData, imageUrlsMap, keyCode);
+         imageUrlPopulationForCollectionDiffProdData(componentWidth, contentValueEpicMap, editorialViewData, imageUrlsMap,
+               keyCode);
 
          keyCode = tracCode + "_" + map.get("2");
          editorialViewData.setDescription(getValue(contentValueEpicMap, keyCode));
@@ -214,9 +212,8 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
     * @param keyCode
     */
    private void imageUrlPopulationForCollectionDiffProdData(final String componentWidth,
-      final Map<String, ContentValueModel> contentValueEpicMap,
-      final ProductPageComponentViewData editorialViewData, final Map<String, String> imageUrlsMap,
-      final String keyCode)
+         final Map<String, ContentValueModel> contentValueEpicMap, final ProductPageComponentViewData editorialViewData,
+         final Map<String, String> imageUrlsMap, final String keyCode)
    {
       String imgUrl = "";
       String imgUrlSmall = "";
@@ -244,17 +241,14 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
    }
 
    @Override
-   public List<ProductPageComponentViewData> getEditorialData(
-      final List<Map<String, String>> listofMapsData, final CMSItemModel component)
+   public List<ProductPageComponentViewData> getEditorialData(final List<Map<String, String>> listofMapsData,
+         final CMSItemModel component)
    {
 
-      final List<ProductPageComponentViewData> viewDataList =
-         new ArrayList<ProductPageComponentViewData>();
+      final List<ProductPageComponentViewData> viewDataList = new ArrayList<ProductPageComponentViewData>();
       final List<String> epicCodeList = getTracsCodeList(listofMapsData, false);
-      final Map<String, ContentValueModel> contentValueEpicMap =
-         nonGeoItemService.getContentValues(epicCodeList);
-      final Map<String, ContentItemModel> contentItemEpicMap =
-         nonGeoItemService.getContentValuesForVideo(epicCodeList);
+      final Map<String, ContentValueModel> contentValueEpicMap = nonGeoItemService.getContentValues(epicCodeList);
+      final Map<String, ContentItemModel> contentItemEpicMap = nonGeoItemService.getContentValuesForVideo(epicCodeList);
       ProductPageComponentViewData editorialViewData = null;
       ProductPageComponentViewData editorialViewDatamain = null;
 
@@ -277,8 +271,7 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
             }
          }
          else if (StringUtils.equalsIgnoreCase(SEN_ID, component.getUid())
-            || StringUtils.equalsIgnoreCase(COU_ID, component.getUid())
-            || checkForComponent(component))
+               || StringUtils.equalsIgnoreCase(COU_ID, component.getUid()) || checkForComponent(component))
          {
 
             final String imgUrl = getValue1(contentValueEpicMap, keyCode, LARGE);
@@ -306,7 +299,7 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
          }
 
          else if ("BrideAndGroomIncentives".equalsIgnoreCase(component.getName())
-            || "WF_COM_005_WED".equalsIgnoreCase(component.getUid()))
+               || "WF_COM_005_WED".equalsIgnoreCase(component.getUid()))
          {
 
             String imageUrl = null;
@@ -318,7 +311,7 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
          }
 
          else if ("ExtraSpeciualTouches".equalsIgnoreCase(component.getName())
-            || "WF_COM_008_WED".equalsIgnoreCase(component.getUid()))
+               || "WF_COM_008_WED".equalsIgnoreCase(component.getUid()))
          {
             editorialViewData.setImageUrl(map.get("3"));
 
@@ -353,12 +346,12 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
             editorialViewData.setEmail(getValue(contentValueEpicMap, keyCode));
 
             keyCode = tracCode + UNDERSCORE + map.get("6");
-            editorialViewData.setCallUsOn(getNumberDataFromString(getValue(contentValueEpicMap,
-               keyCode)));
+            editorialViewData.setCallUsOn(getNumberDataFromString(getValue(contentValueEpicMap, keyCode)));
 
             keyCode = tracCode + UNDERSCORE + map.get("7");
             editorialViewData.setExtraDetails(getValue(contentValueEpicMap, keyCode));
          }
+         checkForEconomyComp(component, contentValueEpicMap, editorialViewData, tracCode, map);
 
          if ("WF_COM_003_LONGHAUL".equalsIgnoreCase(component.getUid()))
          {
@@ -450,16 +443,38 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
       return viewDataList;
    }
 
+   /**
+    * @param component
+    * @param contentValueEpicMap
+    * @param editorialViewData
+    * @param tracCode
+    * @param map
+    */
+   private void checkForEconomyComp(final CMSItemModel component, final Map<String, ContentValueModel> contentValueEpicMap,
+         final ProductPageComponentViewData editorialViewData, final String tracCode, final Map<String, String> map)
+   {
+      String keyCode;
+      if ("WF_COM_LH_EC".equalsIgnoreCase(component.getUid()))
+      {
+         final Map<String, String> usps = new HashMap<String, String>();
+         keyCode = tracCode + UNDERSCORE + map.get("4");
+         usps.put(map.get("4"), getValue(contentValueEpicMap, keyCode));
+         keyCode = tracCode + UNDERSCORE + map.get("5");
+         usps.put(map.get("5"), getValue(contentValueEpicMap, keyCode));
+         keyCode = tracCode + UNDERSCORE + map.get("6");
+         usps.put(map.get("6"), getValue(contentValueEpicMap, keyCode));
+         editorialViewData.setUsps(usps);
+      }
+   }
+
    @Override
-   public Map<String, List<KidsClubComponentData>> getkidsclubData(
-      final List<Map<String, String>> listofMapsData, final String component)
+   public Map<String, List<KidsClubComponentData>> getkidsclubData(final List<Map<String, String>> listofMapsData,
+         final String component)
    {
       final List<String> epicCodeList = getTracsCodeList(listofMapsData, true);
-      final Map<String, ContentValueModel> contentValueEpicMap =
-         nonGeoItemService.getContentValues(epicCodeList);
+      final Map<String, ContentValueModel> contentValueEpicMap = nonGeoItemService.getContentValues(epicCodeList);
 
-      Map<String, List<KidsClubComponentData>> tabMap =
-         new LinkedHashMap<String, List<KidsClubComponentData>>();
+      Map<String, List<KidsClubComponentData>> tabMap = new LinkedHashMap<String, List<KidsClubComponentData>>();
       Map<String, List<KidsClubComponentData>> tabMapTemp = null;
 
       Map<String, String> tabNames = new HashMap();
@@ -495,10 +510,8 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
     * @param tabNames
     * @param map
     */
-   private void fetchKidsClubData(final String component,
-      final Map<String, ContentValueModel> contentValueEpicMap,
-      final Map<String, List<KidsClubComponentData>> tabMap, final Map<String, String> tabNames,
-      final Map<String, String> map)
+   private void fetchKidsClubData(final String component, final Map<String, ContentValueModel> contentValueEpicMap,
+         final Map<String, List<KidsClubComponentData>> tabMap, final Map<String, String> tabNames, final Map<String, String> map)
    {
       KidsClubComponentData editorialViewData;
       String tracCode;
@@ -533,10 +546,9 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
     * @param map
     * @param editorialViewData
     */
-   private void createViewDataForTabbing(final String component,
-      final Map<String, ContentValueModel> contentValueEpicMap,
-      final Map<String, List<KidsClubComponentData>> tabMap, final Map<String, String> map,
-      final KidsClubComponentData editorialViewData)
+   private void createViewDataForTabbing(final String component, final Map<String, ContentValueModel> contentValueEpicMap,
+         final Map<String, List<KidsClubComponentData>> tabMap, final Map<String, String> map,
+         final KidsClubComponentData editorialViewData)
    {
       if (TABBINGCOMPONENT.equals(component))
       {
@@ -554,10 +566,9 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
     * @param map
     * @param editorialViewData
     */
-   private void fetchKidsClubMainSectionData(
-      final Map<String, ContentValueModel> contentValueEpicMap,
-      final Map<String, List<KidsClubComponentData>> tabMap, final Map<String, String> map,
-      final KidsClubComponentData editorialViewData)
+   private void fetchKidsClubMainSectionData(final Map<String, ContentValueModel> contentValueEpicMap,
+         final Map<String, List<KidsClubComponentData>> tabMap, final Map<String, String> map,
+         final KidsClubComponentData editorialViewData)
    {
       String tracCode;
       String keyCode;
@@ -603,10 +614,9 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
     * @param tabMap
     * @param map
     */
-   private void tabSectionViewdataCreationForKidsClub(
-      final Map<String, ContentValueModel> contentValueEpicMap,
-      final KidsClubComponentData editorialViewData,
-      final Map<String, List<KidsClubComponentData>> tabMap, final Map<String, String> map)
+   private void tabSectionViewdataCreationForKidsClub(final Map<String, ContentValueModel> contentValueEpicMap,
+         final KidsClubComponentData editorialViewData, final Map<String, List<KidsClubComponentData>> tabMap,
+         final Map<String, String> map)
    {
       String tracCode;
       String keyCode;
@@ -619,14 +629,12 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
 
       if (map.get(TWO) != null)
       {
-         setFeatureTitleForTabSectionViewdataCreationForKidsClub(contentValueEpicMap,
-            editorialViewData, map, tracCode);
+         setFeatureTitleForTabSectionViewdataCreationForKidsClub(contentValueEpicMap, editorialViewData, map, tracCode);
       }
 
       if (checkCond(map))
       {
-         setFeatureIntroForTabSectionViewdataCreationForKidsClub(contentValueEpicMap,
-            editorialViewData, map, tracCode);
+         setFeatureIntroForTabSectionViewdataCreationForKidsClub(contentValueEpicMap, editorialViewData, map, tracCode);
 
       }
 
@@ -650,8 +658,7 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
     * @param key
     * @return
     */
-   private List<KidsClubComponentData> fetchMapList(
-      final Map<String, List<KidsClubComponentData>> tabMap, final String key)
+   private List<KidsClubComponentData> fetchMapList(final Map<String, List<KidsClubComponentData>> tabMap, final String key)
    {
       List<KidsClubComponentData> viewMapList;
       if (tabMap.containsKey(key))
@@ -671,10 +678,8 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
     * @param map
     * @param tracCode
     */
-   private void setFeatureIntroForTabSectionViewdataCreationForKidsClub(
-      final Map<String, ContentValueModel> contentValueEpicMap,
-      final KidsClubComponentData editorialViewData, final Map<String, String> map,
-      final String tracCode)
+   private void setFeatureIntroForTabSectionViewdataCreationForKidsClub(final Map<String, ContentValueModel> contentValueEpicMap,
+         final KidsClubComponentData editorialViewData, final Map<String, String> map, final String tracCode)
    {
       String keyCode;
       keyCode = tracCode + UNDERSCORE + map.get(THREE);
@@ -691,8 +696,7 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
     */
    private boolean checkCond1(final Map<String, String> map)
    {
-      return map.get(FOUR) != null && !map.get(FOUR).endsWith(JPG)
-         && (map.size() - 1) != NUMBER_FOUR;
+      return map.get(FOUR) != null && !map.get(FOUR).endsWith(JPG) && (map.size() - 1) != NUMBER_FOUR;
    }
 
    /**
@@ -701,8 +705,7 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
     */
    private boolean checkCond(final Map<String, String> map)
    {
-      return map.get(THREE) != null && !map.get(THREE).endsWith(JPG)
-         && (map.size() - 1) != NUMBER_THREE;
+      return map.get(THREE) != null && !map.get(THREE).endsWith(JPG) && (map.size() - 1) != NUMBER_THREE;
    }
 
    /**
@@ -711,10 +714,8 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
     * @param map
     * @param tracCode
     */
-   private void setFeatureTitleForTabSectionViewdataCreationForKidsClub(
-      final Map<String, ContentValueModel> contentValueEpicMap,
-      final KidsClubComponentData editorialViewData, final Map<String, String> map,
-      final String tracCode)
+   private void setFeatureTitleForTabSectionViewdataCreationForKidsClub(final Map<String, ContentValueModel> contentValueEpicMap,
+         final KidsClubComponentData editorialViewData, final Map<String, String> map, final String tracCode)
    {
       String keyCode;
       keyCode = tracCode + UNDERSCORE + map.get(TWO);
@@ -728,10 +729,9 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
     * @param tabMap
     * @param map
     */
-   private void tabSectionViewdataCreationForFunAround(
-      final Map<String, ContentValueModel> contentValueEpicMap,
-      final KidsClubComponentData editorialViewData,
-      final Map<String, List<KidsClubComponentData>> tabMap, final Map<String, String> map)
+   private void tabSectionViewdataCreationForFunAround(final Map<String, ContentValueModel> contentValueEpicMap,
+         final KidsClubComponentData editorialViewData, final Map<String, List<KidsClubComponentData>> tabMap,
+         final Map<String, String> map)
    {
       String tracCode;
       String keyCode;
@@ -781,16 +781,12 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
    }
 
    @Override
-   public List<SlideTesterEditorialViewData> getSlideTesterData(
-      final List<Map<String, String>> listofMapsData)
+   public List<SlideTesterEditorialViewData> getSlideTesterData(final List<Map<String, String>> listofMapsData)
    {
-      final List<SlideTesterEditorialViewData> viewDataList =
-         new ArrayList<SlideTesterEditorialViewData>();
+      final List<SlideTesterEditorialViewData> viewDataList = new ArrayList<SlideTesterEditorialViewData>();
       final List<String> epicCodeList = getTracsCodeList(listofMapsData, false);
-      final Map<String, ContentValueModel> contentValueEpicMap =
-         nonGeoItemService.getContentValues(epicCodeList);
-      final Map<String, ContentItemModel> contentItemEpicMap =
-         nonGeoItemService.getContentValuesForVideo(epicCodeList);
+      final Map<String, ContentValueModel> contentValueEpicMap = nonGeoItemService.getContentValues(epicCodeList);
+      final Map<String, ContentItemModel> contentItemEpicMap = nonGeoItemService.getContentValuesForVideo(epicCodeList);
       SlideTesterEditorialViewData productViewData = null;
 
       String tracCode = null;
@@ -833,7 +829,7 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
 
    /*
     * (non-Javadoc)
-    * 
+    *
     * @see uk.co.portaltech.tui.facades.NonGeoItemFacade#getProductBenefitsData(java.util.List)
     */
    @Override
@@ -841,8 +837,7 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
    {
       final List<BenefitViewData> viewDataList = new ArrayList<BenefitViewData>();
       final List<String> epicCodeList = getTracsCodeList(benefitsData, false);
-      final Map<String, ContentValueModel> contentValueEpicMap =
-         nonGeoItemService.getContentValues(epicCodeList);
+      final Map<String, ContentValueModel> contentValueEpicMap = nonGeoItemService.getContentValues(epicCodeList);
 
       BenefitViewData benefitViewData = null;
 
@@ -873,8 +868,7 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
       if (map.size() > VALUE_TWO)
       {
          imageurl = map.get(String.valueOf(map.size() - VALUE_TWO));
-         if (imageurl != null
-            && (imageurl.endsWith(JPG) || imageurl.endsWith(".gif") || imageurl.endsWith(".png")))
+         if (imageurl != null && (imageurl.endsWith(JPG) || imageurl.endsWith(".gif") || imageurl.endsWith(".png")))
          {
             return imageurl;
          }
@@ -882,8 +876,7 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
       return imageurl;
    }
 
-   private List<String> getTracsCodeList(final List<Map<String, String>> listofMapsData,
-      final boolean isKidsdata)
+   private List<String> getTracsCodeList(final List<Map<String, String>> listofMapsData, final boolean isKidsdata)
    {
       final List<String> tracsCodeList = new ArrayList<String>();
 
@@ -906,9 +899,9 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
     * @param keyCode
     * @return
     */
-   @SuppressWarnings({ "boxing", "javadoc" })
-   private MediaModel getMedia(final Map<String, ContentItemModel> contentItemEpicMap,
-      final String keyCode)
+   @SuppressWarnings(
+   { "boxing", "javadoc" })
+   private MediaModel getMedia(final Map<String, ContentItemModel> contentItemEpicMap, final String keyCode)
    {
       if (keyCode != null)
       {
@@ -949,8 +942,7 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
     * @param medias
     * @return
     */
-   private List<MediaModel> checkMediaConstants(final List<MediaContainerModel> mediasContainers,
-      final List<MediaModel> medias)
+   private List<MediaModel> checkMediaConstants(final List<MediaContainerModel> mediasContainers, final List<MediaModel> medias)
    {
 
       List<MediaModel> newmedia = medias;
@@ -961,8 +953,7 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
       return newmedia;
    }
 
-   private String getValue(final Map<String, ContentValueModel> contentValueEpicMap,
-      final String keyCode)
+   private String getValue(final Map<String, ContentValueModel> contentValueEpicMap, final String keyCode)
    {
       if (keyCode != null)
       {
@@ -986,8 +977,7 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
       return null;
    }
 
-   private String getValue1(final Map<String, ContentValueModel> contentValueEpicMap,
-      final String keyCode, final String size)
+   private String getValue1(final Map<String, ContentValueModel> contentValueEpicMap, final String keyCode, final String size)
    {
       if (keyCode != null && keyCode.indexOf("http") == -1)
       {
@@ -1004,8 +994,7 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
                {
                   for (final MediaModel media : medias)
                   {
-                     if (size.equals(media.getMediaFormat().getName()) && (media.getURL() != null)
-                        && (!media.getURL().isEmpty()))
+                     if (size.equals(media.getMediaFormat().getName()) && (media.getURL() != null) && (!media.getURL().isEmpty()))
                      {
                         return media.getURL();
                      }
@@ -1024,7 +1013,7 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
 
    /*
     * @param StrapLine Data.
-    * 
+    *
     * Return the StraplineViewData having heading and description.
     */
    @Override
@@ -1033,8 +1022,7 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
       final List<String> epicCodeList = getTracsCodeList(strapLineData, false);
       final StraplineViewData viewData = new StraplineViewData();
 
-      final Map<String, ContentValueModel> contentValueEpicMap =
-         nonGeoItemService.getContentValues(epicCodeList);
+      final Map<String, ContentValueModel> contentValueEpicMap = nonGeoItemService.getContentValues(epicCodeList);
 
       for (final Map<String, String> map : strapLineData)
       {
@@ -1057,8 +1045,7 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
     * @param map
     * @return content value.
     */
-   private String getValueForKey(final Map<String, ContentValueModel> contentValueEpicMap,
-      final Map<String, String> map)
+   private String getValueForKey(final Map<String, ContentValueModel> contentValueEpicMap, final Map<String, String> map)
    {
       final String tracCode = map.get("0");
       final String keyCode = tracCode + UNDERSCORE + map.get("1");
@@ -1070,10 +1057,9 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
    public StraplineViewData getDisneyIntro()
    {
 
-      final String epicCodeForDisneyMyMagic =
-         configurationService.getConfiguration().getString("disneymymagic.epicode");
-      final Map<String, ContentValueModel> contentValueEpicMap =
-         nonGeoItemService.getContentForEpicCode(epicCodeForDisneyMyMagic);
+      final String epicCodeForDisneyMyMagic = configurationService.getConfiguration().getString("disneymymagic.epicode");
+      final Map<String, ContentValueModel> contentValueEpicMap = nonGeoItemService
+            .getContentForEpicCode(epicCodeForDisneyMyMagic);
 
       final StraplineViewData straplineViewData = new StraplineViewData();
       straplineViewData.setTitle((String) contentValueEpicMap.get(DISPLAYNAME).getValue());
@@ -1084,19 +1070,17 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
 
    /*
     * (non-Javadoc)
-    * 
+    *
     * @see uk.co.portaltech.tui.facades.NonGeoItemFacade#getParallaxProductData(java.util.List,
     * de.hybris.platform.cms2.model.contents.CMSItemModel)
     */
    @Override
-   public ParallaxProductViewData getParallaxProductData(
-      final List<Map<String, String>> listofMapsData, final CMSItemModel component)
+   public ParallaxProductViewData getParallaxProductData(final List<Map<String, String>> listofMapsData,
+         final CMSItemModel component)
    {
-      final List<ParallaxProductCollectionData> viewDataList =
-         new ArrayList<ParallaxProductCollectionData>();
+      final List<ParallaxProductCollectionData> viewDataList = new ArrayList<ParallaxProductCollectionData>();
       final List<String> epicCodeList = getTracsCodeList(listofMapsData, false);
-      final Map<String, ContentValueModel> contentValueEpicMap =
-         nonGeoItemService.getContentValues(epicCodeList);
+      final Map<String, ContentValueModel> contentValueEpicMap = nonGeoItemService.getContentValues(epicCodeList);
       final ParallaxProductViewData parallaxProductViewData = new ParallaxProductViewData();
       ParallaxProductCollectionData editorialViewData = null;
 
@@ -1192,20 +1176,17 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
 
    /*
     * (non-Javadoc)
-    * 
-    * @see
-    * uk.co.portaltech.tui.facades.NonGeoItemFacade#getProductEditorialImageData(java.util.List,
+    *
+    * @see uk.co.portaltech.tui.facades.NonGeoItemFacade#getProductEditorialImageData(java.util.List,
     * de.hybris.platform.cms2.model.contents.CMSItemModel)
     */
    @Override
-   public ProductEditorialImageViewData getProductEditorialImageData(
-      final List<Map<String, String>> listofMapsData, final CMSItemModel component)
+   public ProductEditorialImageViewData getProductEditorialImageData(final List<Map<String, String>> listofMapsData,
+         final CMSItemModel component)
    {
       final List<String> epicCodeList = getTracsCodeList(listofMapsData, false);
-      final Map<String, ContentValueModel> contentValueEpicMap =
-         nonGeoItemService.getContentValues(epicCodeList);
-      final ProductEditorialImageViewData productEditorialImageViewData =
-         new ProductEditorialImageViewData();
+      final Map<String, ContentValueModel> contentValueEpicMap = nonGeoItemService.getContentValues(epicCodeList);
+      final ProductEditorialImageViewData productEditorialImageViewData = new ProductEditorialImageViewData();
 
       String tracCode = null;
       String keyCode = null;
@@ -1229,8 +1210,7 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
             {
                keyCode = tracCode + UNDERSCORE + map.get(TWO);
                productEditorialImageViewData.setDescription(getValue(contentValueEpicMap, keyCode));
-               productEditorialImageViewData.setImage(getValue1(contentValueEpicMap, keyCode,
-                  XLARGE));
+               productEditorialImageViewData.setImage(getValue1(contentValueEpicMap, keyCode, XLARGE));
             }
             if (DISPLAYNAME.equals(map.get(THREE)))
             {
@@ -1261,24 +1241,21 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
 
    /*
     * (non-Javadoc)
-    * 
+    *
     * @see uk.co.portaltech.tui.facades.NonGeoItemFacade#getSocialMedia(java.util.List,
     * uk.co.portaltech.tui.components.model.SocialMediaLinksComponentModel, java.lang.String)
     */
    @Override
-   public SocialMediaLinksComponentData getSocialMedia(
-      final List<Map<String, String>> listofMapsData,
-      final SocialMediaLinksComponentModel socialMediaLinksComponentModel, final String relativeurl)
+   public SocialMediaLinksComponentData getSocialMedia(final List<Map<String, String>> listofMapsData,
+         final SocialMediaLinksComponentModel socialMediaLinksComponentModel, final String relativeurl)
    {
       final SocialMediaLinksComponentData socialMedia = new SocialMediaLinksComponentData();
-      final List<SocialMediaViewData> socialMediaViewDataList =
-         new ArrayList<SocialMediaViewData>();
+      final List<SocialMediaViewData> socialMediaViewDataList = new ArrayList<SocialMediaViewData>();
       final List<SocialMediaModel> socialMediaList = socialMediaLinksComponentModel.getMediaList();
       SocialMediaViewData socialMediaViewData = null;
 
       final List<String> epicCodeList = getTracsCodeList(listofMapsData, false);
-      final Map<String, ContentValueModel> contentValueEpicMap =
-         nonGeoItemService.getContentValues(epicCodeList);
+      final Map<String, ContentValueModel> contentValueEpicMap = nonGeoItemService.getContentValues(epicCodeList);
 
       String tracCode = null;
       String keyCode = null;
@@ -1322,19 +1299,16 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
 
    /*
     * (non-Javadoc)
-    * 
+    *
     * @see uk.co.portaltech.tui.facades.NonGeoItemFacade#getTabbingComponentViewData(java.util.List)
     */
    @Override
-   public GroupsTabbingComponentViewData getTabbingComponentViewData(
-      final List<Map<String, String>> listofMapsData)
+   public GroupsTabbingComponentViewData getTabbingComponentViewData(final List<Map<String, String>> listofMapsData)
    {
       final List<String> epicCodeList = getTracsCodeList(listofMapsData, true);
-      final Map<String, ContentValueModel> contentValueEpicMap =
-         nonGeoItemService.getContentValues(epicCodeList);
+      final Map<String, ContentValueModel> contentValueEpicMap = nonGeoItemService.getContentValues(epicCodeList);
 
-      final GroupsTabbingComponentViewData groupsTabbingComponentViewData =
-         new GroupsTabbingComponentViewData();
+      final GroupsTabbingComponentViewData groupsTabbingComponentViewData = new GroupsTabbingComponentViewData();
 
       final Map<String, TabSectionViewData> tabs = new LinkedHashMap<String, TabSectionViewData>();
       groupsTabbingComponentViewData.setTabs(tabs);
@@ -1345,8 +1319,7 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
       for (final Map<String, String> map : listofMapsData)
       {
          final TabSectionViewData tabSectionViewData = new TabSectionViewData();
-         final List<ImageSectionViewData> imageSectionViewDatas =
-            new ArrayList<ImageSectionViewData>();
+         final List<ImageSectionViewData> imageSectionViewDatas = new ArrayList<ImageSectionViewData>();
 
          tracCode = map.get(ZERO);
          String imageUrl = EMPTY_STRING;
@@ -1489,17 +1462,14 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
    }
 
    @Override
-   public List<ProductPageComponentViewData> getEditorialDataForProductHeader(
-      final List<Map<String, String>> listofMapsData, final CMSItemModel component)
+   public List<ProductPageComponentViewData> getEditorialDataForProductHeader(final List<Map<String, String>> listofMapsData,
+         final CMSItemModel component)
    {
 
-      final List<ProductPageComponentViewData> viewDataList =
-         new ArrayList<ProductPageComponentViewData>();
+      final List<ProductPageComponentViewData> viewDataList = new ArrayList<ProductPageComponentViewData>();
       final List<String> epicCodeList = getTracsCodeList(listofMapsData, true);
-      final Map<String, ContentValueModel> contentValueEpicMap =
-         nonGeoItemService.getContentValues(epicCodeList);
-      final Map<String, ContentItemModel> contentItemEpicMap =
-         nonGeoItemService.getContentValuesForVideo(epicCodeList);
+      final Map<String, ContentValueModel> contentValueEpicMap = nonGeoItemService.getContentValues(epicCodeList);
+      final Map<String, ContentItemModel> contentItemEpicMap = nonGeoItemService.getContentValuesForVideo(epicCodeList);
       ProductPageComponentViewData editorialViewData = null;
 
       String tracCode = null;
@@ -1536,9 +1506,8 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
          editorialViewData.setImageUrl(imageUrl);
       }
 
-      if ("WF_COM_001_WED".equalsIgnoreCase(component.getUid())
-         || "wedding_sidebar".equalsIgnoreCase(component.getUid())
-         || "wedding_callToAction".equalsIgnoreCase(component.getUid()))
+      if ("WF_COM_001_WED".equalsIgnoreCase(component.getUid()) || "wedding_sidebar".equalsIgnoreCase(component.getUid())
+            || "wedding_callToAction".equalsIgnoreCase(component.getUid()))
       {
          keyCode = tracCode + UNDERSCORE + mapDataForMainSection.get("5");
          editorialViewData.setBlog(getValue(contentValueEpicMap, keyCode));
@@ -1550,8 +1519,7 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
          editorialViewData.setEmail(getValue(contentValueEpicMap, keyCode));
 
          keyCode = tracCode + UNDERSCORE + mapDataForMainSection.get("8");
-         editorialViewData.setCallUsOn(getNumberDataFromString(getValue(contentValueEpicMap,
-            keyCode)));
+         editorialViewData.setCallUsOn(getNumberDataFromString(getValue(contentValueEpicMap, keyCode)));
 
       }
       // Mapping for video
@@ -1566,16 +1534,11 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
          }
       }
       // Mapping for video thumb nail image
-      if ("WF_COM_001_ROB".equalsIgnoreCase(component.getUid())
-         || "WF_COM_011_PLATINUM".equalsIgnoreCase(component.getUid())
-         || "WF_COM_353_SAF".equalsIgnoreCase(component.getUid())
-         || "WF_COM_001_SMR".equalsIgnoreCase(component.getUid())
-         || "WF_COM_001_SEN".equalsIgnoreCase(component.getUid())
-         || "WF_COM_001_COU".equalsIgnoreCase(component.getUid())
-         || "WF_COM_001_FAM".equalsIgnoreCase(component.getUid())
-         || "WF_COM_001_WED".equalsIgnoreCase(component.getUid())
-         || "WF_COM_001_GLD".equalsIgnoreCase(component.getUid())
-         || "WF_COM_001_VIL".equalsIgnoreCase(component.getUid()))
+      if ("WF_COM_001_ROB".equalsIgnoreCase(component.getUid()) || "WF_COM_011_PLATINUM".equalsIgnoreCase(component.getUid())
+            || "WF_COM_353_SAF".equalsIgnoreCase(component.getUid()) || "WF_COM_001_SMR".equalsIgnoreCase(component.getUid())
+            || "WF_COM_001_SEN".equalsIgnoreCase(component.getUid()) || "WF_COM_001_COU".equalsIgnoreCase(component.getUid())
+            || "WF_COM_001_FAM".equalsIgnoreCase(component.getUid()) || "WF_COM_001_WED".equalsIgnoreCase(component.getUid())
+            || "WF_COM_001_GLD".equalsIgnoreCase(component.getUid()) || "WF_COM_001_VIL".equalsIgnoreCase(component.getUid()))
       {
          tracCode = mapDataForMainSection.get("0");
          keyCode = tracCode + UNDERSCORE + mapDataForMainSection.get("1");
@@ -1598,16 +1561,13 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
    }
 
    @Override
-   public DreamLinerPromotionViewData getPromotionData(
-      final List<Map<String, String>> listofMapsData)
+   public DreamLinerPromotionViewData getPromotionData(final List<Map<String, String>> listofMapsData)
    {
 
       final List<String> epicCodeList = getTracsCodeList(listofMapsData, true);
-      final Map<String, ContentValueModel> contentValueEpicMap =
-         nonGeoItemService.getContentValues(epicCodeList);
+      final Map<String, ContentValueModel> contentValueEpicMap = nonGeoItemService.getContentValues(epicCodeList);
 
-      final DreamLinerPromotionViewData dreamLinerPromotionViewData =
-         new DreamLinerPromotionViewData();
+      final DreamLinerPromotionViewData dreamLinerPromotionViewData = new DreamLinerPromotionViewData();
       String tracCode = null;
       String keyCode = null;
       final List<String> bulletPoints = new ArrayList<String>();
@@ -1634,14 +1594,11 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
    }
 
    @Override
-   public ProductEditorialComponentViewData getProductEditorialComponentData(
-      final List<Map<String, String>> listofMapsData)
+   public ProductEditorialComponentViewData getProductEditorialComponentData(final List<Map<String, String>> listofMapsData)
    {
       final List<String> epicCodeList = getTracsCodeList(listofMapsData, false);
-      final Map<String, ContentValueModel> contentValueEpicMap =
-         nonGeoItemService.getContentValues(epicCodeList);
-      final ProductEditorialComponentViewData productEditorialComponentViewData =
-         new ProductEditorialComponentViewData();
+      final Map<String, ContentValueModel> contentValueEpicMap = nonGeoItemService.getContentValues(epicCodeList);
+      final ProductEditorialComponentViewData productEditorialComponentViewData = new ProductEditorialComponentViewData();
 
       final Map<String, String> mapDataForMainSection = listofMapsData.get(0);
       String tracCode = null;
@@ -1683,25 +1640,21 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
     */
    private boolean checkForComponent(final CMSItemModel component)
    {
-      return StringUtils.equalsIgnoreCase(SMR_ID, component.getUid())
-         || StringUtils.equalsIgnoreCase(WED_ID, component.getUid())
-         || StringUtils.equalsIgnoreCase(FAM_ID, component.getUid());
+      return StringUtils.equalsIgnoreCase(SMR_ID, component.getUid()) || StringUtils.equalsIgnoreCase(WED_ID, component.getUid())
+            || StringUtils.equalsIgnoreCase(FAM_ID, component.getUid());
    }
 
    /*
     * (non-Javadoc)
-    * 
-    * @see uk.co.portaltech.tui.facades.NonGeoItemFacade#getCollectionDiffProdData (java.util.List,
-    * java.lang.String)
+    *
+    * @see uk.co.portaltech.tui.facades.NonGeoItemFacade#getCollectionDiffProdData (java.util.List, java.lang.String)
     */
    @Override
-   public ProductPageComponentViewData getCollectionDiffProdData(final Map<String, String> mapData,
-      final String componentWidth)
+   public ProductPageComponentViewData getCollectionDiffProdData(final Map<String, String> mapData, final String componentWidth)
    {
       final List<String> epicCodeList = new ArrayList<String>();
       epicCodeList.add(mapData.get("0"));
-      final Map<String, ContentValueModel> contentValueEpicMap =
-         nonGeoItemService.getContentValues(epicCodeList);
+      final Map<String, ContentValueModel> contentValueEpicMap = nonGeoItemService.getContentValues(epicCodeList);
       ProductPageComponentViewData editorialViewData = null;
       final Map<String, String> imageUrlsMap = new HashMap<String, String>();
 
@@ -1745,12 +1698,10 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
    }
 
    @Override
-   public DestinationGuideCollectionViewData getCollectionProductRangeData(
-      final List<Map<String, String>> listofMapsData)
+   public DestinationGuideCollectionViewData getCollectionProductRangeData(final List<Map<String, String>> listofMapsData)
    {
       final List<String> epicCodeList = getTracsCodeList(listofMapsData, false);
-      final Map<String, ContentValueModel> contentValueEpicMap =
-         nonGeoItemService.getContentValues(epicCodeList);
+      final Map<String, ContentValueModel> contentValueEpicMap = nonGeoItemService.getContentValues(epicCodeList);
       DestinationGuideCollectionViewData editorialViewData = null;
 
       String tracCode = null;
