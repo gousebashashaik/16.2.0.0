@@ -456,13 +456,15 @@ public class NonGeoItemFacadeImpl implements NonGeoItemFacade
       String keyCode;
       if ("WF_COM_LH_EC".equalsIgnoreCase(component.getUid()))
       {
-         final Map<String, String> usps = new HashMap<String, String>();
+         final List<String> usps = new ArrayList<String>();
+         //final Map<String, String> usps = new HashMap<String, String>();
          keyCode = tracCode + UNDERSCORE + map.get("4");
-         usps.put(map.get("4"), getValue(contentValueEpicMap, keyCode));
+         usps.add(getValue(contentValueEpicMap, keyCode));
+
          keyCode = tracCode + UNDERSCORE + map.get("5");
-         usps.put(map.get("5"), getValue(contentValueEpicMap, keyCode));
+         usps.add(getValue(contentValueEpicMap, keyCode));
          keyCode = tracCode + UNDERSCORE + map.get("6");
-         usps.put(map.get("6"), getValue(contentValueEpicMap, keyCode));
+         usps.add(getValue(contentValueEpicMap, keyCode));
          editorialViewData.setUsps(usps);
       }
    }
