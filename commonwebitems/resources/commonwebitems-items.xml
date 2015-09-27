@@ -8391,6 +8391,11 @@
 
 
     <!-- Item types defined for About thomson Fleet Page -->
+
+     <itemtype code="OurFleetCarouselComponent" extends="SimpleCmsComponent"
+      jaloclass="uk.co.tui.flights.components.jalo.OurFleetCarouselComponent"
+      autocreate="true" generate="true" jaloonly="false">
+    </itemtype>
     <itemtype code="FleetNameComponent" extends="SimpleCmsComponent"
       jaloclass="uk.co.tui.flights.components.jalo.FleetNameComponent"
       autocreate="true" generate="true" jaloonly="false">
