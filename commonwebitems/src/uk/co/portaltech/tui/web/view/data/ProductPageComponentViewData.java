@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * @author venkataharish.k
  *
@@ -53,6 +54,25 @@ public class ProductPageComponentViewData
 
    private String title;
 
+   private Map<String, String> usps = new HashMap<String, String>();
+
+   /**
+    * @return the usps
+    */
+   public Map<String, String> getUsps()
+   {
+      return usps;
+   }
+
+   /**
+    * @param usps
+    *           the usps to set
+    */
+   public void setUsps(final Map<String, String> usps)
+   {
+      this.usps = usps;
+   }
+
    /**
     * @return the collectionLinkUrl
     */
@@ -62,7 +82,8 @@ public class ProductPageComponentViewData
    }
 
    /**
-    * @param collectionLinkUrl the collectionLinkUrl to set
+    * @param collectionLinkUrl
+    *           the collectionLinkUrl to set
     */
    public void setCollectionLinkUrl(final String collectionLinkUrl)
    {
@@ -78,7 +99,8 @@ public class ProductPageComponentViewData
    }
 
    /**
-    * @param urlsList the urlsList to set
+    * @param urlsList
+    *           the urlsList to set
     */
    public void setUrlsList(final List<String> urlsList)
    {
@@ -94,7 +116,8 @@ public class ProductPageComponentViewData
    }
 
    /**
-    * @param subTitle the subTitle to set
+    * @param subTitle
+    *           the subTitle to set
     */
    public void setSubTitle(final String subTitle)
    {
@@ -110,7 +133,8 @@ public class ProductPageComponentViewData
    }
 
    /**
-    * @param thunbnailUrl the thunbnailUrl to set
+    * @param thunbnailUrl
+    *           the thunbnailUrl to set
     */
    public void setThunbnailUrl(final String thunbnailUrl)
    {
@@ -126,7 +150,8 @@ public class ProductPageComponentViewData
    }
 
    /**
-    * @param featureCopy the featureCopy to set
+    * @param featureCopy
+    *           the featureCopy to set
     */
    public void setFeatureCopy(final String featureCopy)
    {
@@ -142,7 +167,8 @@ public class ProductPageComponentViewData
    }
 
    /**
-    * @param title the title to set
+    * @param title
+    *           the title to set
     */
    public void setTitle(final String title)
    {
@@ -158,12 +184,14 @@ public class ProductPageComponentViewData
    }
 
    /**
-    * @param videoUrl the videoUrl to set
+    * @param videoUrl
+    *           the videoUrl to set
     */
    public void setVideoUrl(final String videoUrl)
    {
       this.videoUrl = videoUrl;
    }
+
 
    /**
     *
@@ -175,7 +203,8 @@ public class ProductPageComponentViewData
    }
 
    /**
-    * @param featureTitle the featureTitle to set
+    * @param featureTitle
+    *           the featureTitle to set
     */
    public void setFeatureTitle(final String featureTitle)
    {
@@ -191,7 +220,8 @@ public class ProductPageComponentViewData
    }
 
    /**
-    * @param name the name to set
+    * @param name
+    *           the name to set
     */
    public void setName(final String name)
    {
@@ -207,7 +237,8 @@ public class ProductPageComponentViewData
    }
 
    /**
-    * @param imageUrl the imageUrl to set
+    * @param imageUrl
+    *           the imageUrl to set
     */
    public void setImageUrl(final String imageUrl)
    {
@@ -223,7 +254,8 @@ public class ProductPageComponentViewData
    }
 
    /**
-    * @param description the description to set
+    * @param description
+    *           the description to set
     */
    public void setDescription(final String description)
    {
@@ -239,7 +271,8 @@ public class ProductPageComponentViewData
    }
 
    /**
-    * @param isSubImage the isSubImage to set
+    * @param isSubImage
+    *           the isSubImage to set
     */
    public void setSubImage(final boolean isSubImage)
    {
@@ -255,7 +288,8 @@ public class ProductPageComponentViewData
    }
 
    /**
-    * @param blog the blog to set
+    * @param blog
+    *           the blog to set
     */
    public void setBlog(final String blog)
    {
@@ -271,7 +305,8 @@ public class ProductPageComponentViewData
    }
 
    /**
-    * @param brochure the brochure to set
+    * @param brochure
+    *           the brochure to set
     */
    public void setBrochure(final String brochure)
    {
@@ -287,7 +322,8 @@ public class ProductPageComponentViewData
    }
 
    /**
-    * @param email the email to set
+    * @param email
+    *           the email to set
     */
    public void setEmail(final String email)
    {
@@ -303,7 +339,8 @@ public class ProductPageComponentViewData
    }
 
    /**
-    * @param callUsOn the callUsOn to set
+    * @param callUsOn
+    *           the callUsOn to set
     */
    public void setCallUsOn(final String callUsOn)
    {
@@ -319,7 +356,8 @@ public class ProductPageComponentViewData
    }
 
    /**
-    * @param extraDetails the extraDetails to set
+    * @param extraDetails
+    *           the extraDetails to set
     */
    public void setExtraDetails(final String extraDetails)
    {
@@ -335,7 +373,8 @@ public class ProductPageComponentViewData
    }
 
    /**
-    * @param imageUrlsMap the imageUrlsMap to set
+    * @param imageUrlsMap
+    *           the imageUrlsMap to set
     */
    public void setImageUrlsMap(final Map<String, String> imageUrlsMap)
    {
@@ -351,7 +390,8 @@ public class ProductPageComponentViewData
    }
 
    /**
-    * @param url the url to set
+    * @param url
+    *           the url to set
     */
    public void setUrl(final String url)
    {
@@ -367,7 +407,8 @@ public class ProductPageComponentViewData
    }
 
    /**
-    * @param linkText the linkText to set
+    * @param linkText
+    *           the linkText to set
     */
    public void setLinkText(final String linkText)
    {
