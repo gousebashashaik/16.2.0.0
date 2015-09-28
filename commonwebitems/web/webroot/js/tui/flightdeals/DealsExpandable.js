@@ -197,8 +197,8 @@ define("tui/flightdeals/DealsExpandable", [
     	    		if(this.selectNode.value == ""){
     	    			registry.byId("flexible").reset();
     	    			registry.byId("flexible").set("disabled",true);
-    	    			DealsExpandable.dealsPanelModel.month = null;
-    	    			DealsExpandable.dealsPanelModel.year = null;
+    	    			//DealsExpandable.dealsPanelModel.month = null;
+    	    			//DealsExpandable.dealsPanelModel.year = null;
     	    			DealsExpandable.dealsPanelModel.flexible = false;
     	    		} else {
     	    			registry.byId("flexible").set("disabled",false);
